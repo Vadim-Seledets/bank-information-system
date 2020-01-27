@@ -24,6 +24,9 @@
       "label": "Build All - tsc & eslint",
       "type": "shell",
       "command": "npm run build",
+      "options": {
+        "cwd": "${workspaceFolder}/source/front"
+      },
       "problemMatcher": ["$tsc", "$eslint-stylish"],
       "group": "build",
       "presentation": {
@@ -37,6 +40,9 @@
       "label": "Install Modules - npm",
       "type": "shell",
       "command": "npm install",
+      "options": {
+        "cwd": "${workspaceFolder}/source/front"
+      },
       "isBackground": true,
       "group": "build",
       "problemMatcher": [],
@@ -51,6 +57,9 @@
       "label": "Publish",
       "type": "shell",
       "command": "npm run publish",
+      "options": {
+        "cwd": "${workspaceFolder}/source/front"
+      },
       "isBackground": true,
       "group": "build",
       "presentation": {
@@ -65,6 +74,9 @@
       "label": "Fix Rules - eslint",
       "type": "shell",
       "command": "npm run fix",
+      "options": {
+        "cwd": "${workspaceFolder}/source/front"
+      },
       "problemMatcher": ["$tsc", "$eslint-stylish"],
       "group": "build",
       "presentation": {
