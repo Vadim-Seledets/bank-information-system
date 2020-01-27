@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Models" />
+      <Folder Include="Services" />
+      <Folder Include="Validation" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="9.0.0" />
+      <PackageReference Include="FluentValidation" Version="8.6.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BankInformationSystem.Common\BankInformationSystem.Common.csproj" />
+      <ProjectReference Include="..\BankInformationSystem.Data\BankInformationSystem.Data.csproj" />
+    </ItemGroup>
+
+</Project>
