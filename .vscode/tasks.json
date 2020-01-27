@@ -1,0 +1,78 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Server - webpack",
+      "type": "shell",
+      "command": "npm run webpack-start",
+      "options": {
+        "cwd": "${workspaceFolder}/source/front"
+      },
+      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "isBackground": true,
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build All - tsc & eslint",
+      "type": "shell",
+      "command": "npm run build",
+      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Install Modules - npm",
+      "type": "shell",
+      "command": "npm install",
+      "isBackground": true,
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+          "echo": true,
+          "reveal": "always",
+          "focus": true,
+          "panel": "shared"
+      },
+    },
+    {
+      "label": "Publish",
+      "type": "shell",
+      "command": "npm run publish",
+      "isBackground": true,
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      },
+      "problemMatcher": ["$tsc", "$eslint-stylish"],
+    },
+    {
+      "label": "Fix Rules - eslint",
+      "type": "shell",
+      "command": "npm run fix",
+      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    },
+  ]
+}

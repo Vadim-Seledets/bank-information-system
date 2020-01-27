@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    // General
+    "pretty": false, // true causes PROBLEMS panel not recognizing errors in output
+    "watch": false,
+    "listFiles": true,
+    "inlineSources": false,
+    "removeComments": true,
+    // Targets & outputs
+    "target": "es6",
+    "module": "commonjs",
+    //"moduleResolution": "node",
+    "lib": ["es2016", "dom"],
+    "noEmit": false,
+    "noLib": false,
+    "rootDir": "src",
+    "outDir": "build/dist",
+    "declarationDir": "build/dist",
+    "declaration": true,
+    // Debugging
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    // Strictness
+    "strict": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    // Other
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "plugins": [
+      {
+          "name": "typescript-styled-plugin",
+          "lint": {
+              "validProperties": ["label"]
+          }
+      }
+  ]
+},
+  // "include": [
+  //   "src/**/*"
+  // ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}

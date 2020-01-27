@@ -1,0 +1,24 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.exclude": {
+      "node_modules/": true,
+      "dist/": true,
+      "build/": true,
+      "public/": true
+  },
+  "files.watcherExclude": {
+    "node_modules/": true,
+    "dist/": true,
+    "build/": true,
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+  ],
+  "cSpell.enabled": false,
+}

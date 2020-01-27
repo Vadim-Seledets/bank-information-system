@@ -1,0 +1,63 @@
+{
+  "name": "bank-information-system",
+  "version": "0.0.0",
+  "description": "Bank Information System",
+  "author": "Vadim Seledets <Vadik446s@gmail.com>, Arseni Rynkevich, Eugene Dunin",
+  "main": "index.tsx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vadim-Seledets/bank-information-system.git"
+  },
+  "dependencies": {
+    "emotion": "10.0.23",
+    "node-fetch": "2.6.0",
+    "normalize-url": "4.5.0",
+    "prismjs": "1.17.1",
+    "react": "16.12.0",
+    "react-dom": "16.12.0",
+    "reactronic": "0.19.450",
+    "reactronic-toolkit-react": "0.19.81"
+  },
+  "devDependencies": {
+    "@types/node": "12.12.11",
+    "@types/node-fetch": "2.5.3",
+    "@types/prismjs": "1.16.0",
+    "@types/react": "16.9.11",
+    "@types/react-dom": "16.9.4",
+    "awesome-typescript-loader": "5.2.1",
+    "braces": "3.0.2",
+    "babel-cli": "6.26.0",
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-plugin-external-helpers": "6.22.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "1.7.0",
+    "css-loader": "3.2.0",
+    "file-loader": "4.2.0",
+    "html-webpack-plugin": "3.2.0",
+    "insane": "2.6.2",
+    "monaco-editor-webpack-plugin": "1.7.0",
+    "postcss": "7.0.18",
+    "react-hot-loader": "4.12.18",
+    "source-map-loader": "0.2.4",
+    "style-loader": "1.0.0",
+    "stylelint": "12.0.0",
+    "stylelint-config-standard": "19.0.0",
+    "stylelint-webpack-plugin": "1.0.4",
+    "eslint": "6.6.0",
+    "@typescript-eslint/parser": "2.8.0",
+    "@typescript-eslint/eslint-plugin": "2.8.0",
+    "eslint-loader": "3.0.2",
+    "typescript": "3.7.2",
+    "webpack": "4.41.2",
+    "webpack-cli": "3.3.10",
+    "webpack-config": "7.5.0",
+    "webpack-dev-server": "3.9.0"
+  },
+  "scripts": {
+    "build": "eslint **/*.ts **/*.tsx **/*.js && tsc",
+    "fix": "eslint --fix **/*.ts **/*.tsx **/*.js",
+    "webpack-start": "node server.js",
+    "webpack-build": "webpack --mode=production"
+  }
+}
