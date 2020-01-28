@@ -1,10 +1,12 @@
+using System;
+using System.IO;
 using System.Reflection;
 using AutoMapper;
 using BankInformationSystem.Business.Mappings;
 using BankInformationSystem.Business.Services;
 using BankInformationSystem.Business.Validation;
-using BankInformationSystem.DataAccess;
-using BankInformationSystem.DataAccess.Entities;
+using BankInformationSystem.Data;
+using BankInformationSystem.Data.Entities;
 using BankInformationSystem.Filters;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -35,8 +37,8 @@ namespace BankInformationSystem
                 options.Filters.Add(typeof(ExceptionFilter));
             });
             
-            var connectionString = Configuration.GetConnectionString("Default");
-            services.AddEntityFrameworkSqlite().AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString));
+            var connectionString = $"Data Source={Path.Combine(AppContext.BaseDirectory, Configuration["DatabaseFilename"])}";
+            services.AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString));
             
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
             
