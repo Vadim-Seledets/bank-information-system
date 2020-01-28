@@ -41,6 +41,12 @@ export const style = restyle(() => {
       }
     `,
 
+    menu: css`
+      display: flex;
+      align-items: center;
+      background-color: rgb(60, 60, 60);
+    `,
+
     property: css`
       display: flex;
 
