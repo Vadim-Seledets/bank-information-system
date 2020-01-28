@@ -19,6 +19,8 @@ namespace BankInformationSystem
 {
     public class Startup
     {
+        private const string DefaultCorsPolicy = "Default";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -41,7 +43,16 @@ namespace BankInformationSystem
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bank Information System API", Version = "v1" });
-            }); 
+            });
+            
+            services.AddCors(options =>
+            {
+                options.AddPolicy(DefaultCorsPolicy,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin();
+                    });
+            });
             
             // Services
             services.AddScoped<ICustomerService, CustomerService>();
@@ -74,6 +85,8 @@ namespace BankInformationSystem
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            app.UseCors();
         }
     }
 }
