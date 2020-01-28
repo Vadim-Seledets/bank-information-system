@@ -1,9 +1,8 @@
-﻿using BankInformationSystem.DataAccess.Entities;
+﻿using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BankInformationSystem.DataAccess
+namespace BankInformationSystem.Data
 {
-    // TODO: Refactor database structure to add look-ups as required
     public class BankInformationSystemDbContext : DbContext
     {
         public DbSet<Customer> Customers { get; set; }
@@ -21,6 +20,16 @@ namespace BankInformationSystem.DataAccess
         public DbSet<WorkInfo> WorkInfos { get; set; }
 
         public DbSet<IncomePerMonth> IncomesPerMonth { get; set; }
+
+        public DbSet<City> Cities { get; set; }
+
+        public DbSet<Citizenship> CountriesOfCitizenship { get; set; }
+
+        public DbSet<Currency> Currencies { get; set; }
+
+        public DbSet<Disability> Disabilities { get; set; }
+
+        public DbSet<MaritalStatus> MaritalStatuses { get; set; }
 
         public BankInformationSystemDbContext(DbContextOptions options) : base(options)
         {

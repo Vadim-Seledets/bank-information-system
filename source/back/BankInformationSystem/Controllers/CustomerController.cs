@@ -39,6 +39,15 @@ namespace BankInformationSystem.Controllers
             
             return Ok(customer);
         }
+
+        [HttpGet]
+        [Route("auxiliary")]
+        public async Task<ActionResult<CustomerAuxiliaryInfo>> GetCustomerAuxiliaryInfo()
+        {
+            var result = await _customerService.GetCustomerAuxiliaryInfoAsync();
+
+            return Ok(result);
+        }
         
         [HttpPost]
         [Route("")]

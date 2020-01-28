@@ -1,6 +1,6 @@
 ﻿using BankInformationSystem.Common.Models;
 
-namespace BankInformationSystem.DataAccess.Entities
+namespace BankInformationSystem.Data.Entities
 {
     public class Customer
     {
@@ -12,9 +12,7 @@ namespace BankInformationSystem.DataAccess.Entities
         
         public string LastName { get; set; }
 
-        public GenderId GenderId { get; set; }
-
-        public DisabilityId? Disability { get; set; }
+        public Gender Gender { get; set; }
 
         public bool IsRetired { get; set; }
 
@@ -29,5 +27,13 @@ namespace BankInformationSystem.DataAccess.Entities
         public PlaceOfRegistration PlaceOfRegistration { get; set; }
 
         public Contacts Contacts { get; set; }
+
+        public int? DisabilityId { get; set; }
+
+        public Disability Disability { get; set; }
+
+        public int MaritalStatusId { get; set; }
+
+        public MaritalStatus MaritalStatus { get; set; }
     }
 }

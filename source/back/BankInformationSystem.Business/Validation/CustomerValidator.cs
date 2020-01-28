@@ -1,4 +1,4 @@
-﻿using BankInformationSystem.DataAccess.Entities;
+﻿using BankInformationSystem.Data.Entities;
 using FluentValidation;
 
 namespace BankInformationSystem.Business.Validation

@@ -11,21 +11,21 @@ namespace BankInformationSystem.Controllers
     {
         [HttpGet]
         [Route("hello")]
-        public async Task<ActionResult> HelloWorldTest()
+        public ActionResult HelloWorldTest()
         {
             return Ok("Hello world!");
         }
         
         [HttpGet]
         [Route("badrequest")]
-        public async Task<ActionResult> BadRequestTest()
+        public ActionResult BadRequestTest()
         {
             throw new ValidationException("ExceptionFilter works for validation exceptions!");
         }
         
         [HttpGet]
         [Route("servererror")]
-        public async Task<ActionResult> InternalServerErrorTest()
+        public ActionResult InternalServerErrorTest()
         {
             throw new Exception("ExceptionFilter works for common exceptions!");
         }

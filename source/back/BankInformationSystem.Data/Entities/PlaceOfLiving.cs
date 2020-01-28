@@ -1,16 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace BankInformationSystem.DataAccess.Entities
+﻿namespace BankInformationSystem.Data.Entities
 {
     public class PlaceOfLiving
     {
-        [Key]
-        [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
-        
-        public string City { get; set; }
+        public int Id { get; set; }
 
         public string Address { get; set; }
+        
+        public int CustomerId { get; set; }
+
+        public Customer Customer { get; set; }
+
+        public int CityId { get; set; }
+
+        public City City { get; set; }
     }
 }
