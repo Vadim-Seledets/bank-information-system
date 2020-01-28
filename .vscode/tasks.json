@@ -21,6 +21,19 @@
       }
     },
     {
+      "label": "Build back-end server",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration",
+        "Release",
+        "${workspaceFolder}/source/back/BankInformationSystem.sln"
+      ],
+      "problemMatcher": ["$msCompile"],
+      "group": "build",
+    },
+    {
       "label": "Build All - tsc & eslint",
       "type": "shell",
       "command": "npm run build",
