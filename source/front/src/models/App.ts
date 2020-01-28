@@ -1,6 +1,6 @@
 import { Stateful, action } from 'reactronic'
 
-const url = ""
+const url = 'https://localhost:5001/test/hello'
 
 export class App extends Stateful {
   constructor() {
@@ -9,18 +9,9 @@ export class App extends Stateful {
 
   @action
   addCustomer(): void {
-    const data = { firstName: "Vadim" }
-    fetch(url, {
-      method: 'POST',
-      mode: 'cors',
-      cache: 'no-cache',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      redirect: 'follow',
-      referrer: 'no-referrer',
-      body: JSON.stringify(data),
-    }).then(response => response.json())
+    // const data = { firstName: "Vadim" }
+    fetch(url).then((response) => {
+      console.log(response)
+    })
   }
 }
