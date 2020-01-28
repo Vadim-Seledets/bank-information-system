@@ -1,18 +1,16 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BankInformationSystem.DataAccess.Entities
+namespace BankInformationSystem.Data.Entities
 {
     public class BirthInfo
     {
-        [Key]
-        [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
-
+        public int Id { get; set; }
+        
         public string PlaceOfBirth { get; set; }
         
         public DateTime DateOfBirth { get; set; }
+
+        public int CustomerId { get; set; }
         
         public Customer Customer { get; set; }
     }

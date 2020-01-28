@@ -4,7 +4,7 @@ namespace BankInformationSystem.Business.Models
 {
     public class PassportModel
     {
-        public string Citizenship { get; set; }
+        public int CitizenshipId { get; set; }
 
         public string Series { get; set; }
 

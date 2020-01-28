@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using BankInformationSystem.Business.Models;
-using BankInformationSystem.DataAccess;
-using BankInformationSystem.DataAccess.Entities;
+using BankInformationSystem.Data;
+using BankInformationSystem.Data.Entities;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +44,28 @@ namespace BankInformationSystem.Business.Services
                 .FirstOrDefaultAsync();
 
             return customer;
+        }
+
+        public async Task<CustomerAuxiliaryInfo> GetCustomerAuxiliaryInfo()
+        {
+            return new CustomerAuxiliaryInfo
+            {
+                Cities = await _mapper
+                    .ProjectTo<CityModel>(_context.Cities)
+                    .ToListAsync(),
+                CountriesOfCitizenship = await _mapper
+                    .ProjectTo<CitizenshipModel>(_context.CountriesOfCitizenship)
+                    .ToListAsync(),
+                Disabilities = await _mapper
+                    .ProjectTo<DisabilityModel>(_context.Disabilities)
+                    .ToListAsync(),
+                Currencies = await _mapper
+                    .ProjectTo<CurrencyModel>(_context.Currencies)
+                    .ToListAsync(),
+                MaritalStatuses = await _mapper
+                    .ProjectTo<MaritalStatusModel>(_context.MaritalStatuses)
+                    .ToListAsync()
+            };
         }
 
         public async Task<int> CreateCustomerAsync(CustomerCreateUpdateModel model)

@@ -1,19 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using BankInformationSystem.Common.Models;
-
-namespace BankInformationSystem.DataAccess.Entities
+﻿namespace BankInformationSystem.Data.Entities
 {
     public class IncomePerMonth
     {
-        [Key]
-        [ForeignKey(nameof(Customer))]
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
 
         public decimal Amount { get; set; }
 
-        public CurrencyId CurrencyId { get; set; }
+        public int CustomerId { get; set; }
 
         public Customer Customer { get; set; }
+
+        public int CurrencyId { get; set; }
+
+        public Currency Currency { get; set; }
     }
 }

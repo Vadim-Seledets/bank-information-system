@@ -10,9 +10,7 @@ namespace BankInformationSystem.Business.Models
         
         public string LastName { get; set; }
 
-        public GenderId GenderId { get; set; }
-
-        public DisabilityId? Disability { get; set; }
+        public Gender Gender { get; set; }
 
         public bool IsRetired { get; set; }
 
@@ -21,11 +19,15 @@ namespace BankInformationSystem.Business.Models
         public PassportModel Passport { get; set; }
         
         public BirthInfoModel BirthInfo { get; set; }
-
+        
         public AddressModel PlaceOfLiving { get; set; }
 
         public AddressModel PlaceOfRegistration { get; set; }
 
         public ContactsModel Contacts { get; set; }
+
+        public int? DisabilityId { get; set; }
+
+        public int MaritalStatusId { get; set; }
     }
 }
