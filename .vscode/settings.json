@@ -12,6 +12,7 @@
     "node_modules/": true,
     "dist/": true,
     "build/": true,
+    "obj/": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "eslint.validate": [

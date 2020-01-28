@@ -70,6 +70,8 @@ namespace BankInformationSystem
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(DefaultCorsPolicy);
+
             app.UseHttpsRedirection();
             
             // Enable middleware to serve generated Swagger as a JSON endpoint.
@@ -80,15 +82,13 @@ namespace BankInformationSystem
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bank Information System API V1");
-            }); 
+            });
 
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            app.UseCors();
         }
     }
 }
