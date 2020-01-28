@@ -46,7 +46,7 @@ namespace BankInformationSystem.Business.Services
             return customer;
         }
 
-        public async Task<CustomerAuxiliaryInfo> GetCustomerAuxiliaryInfo()
+        public async Task<CustomerAuxiliaryInfo> GetCustomerAuxiliaryInfoAsync()
         {
             return new CustomerAuxiliaryInfo
             {
