@@ -1,4 +1,5 @@
 ﻿using BankInformationSystem.Common.Models;
+using BankInformationSystem.Data.Entities;
 
 namespace BankInformationSystem.Business.Models
 {
@@ -25,6 +26,10 @@ namespace BankInformationSystem.Business.Models
         public AddressModel PlaceOfRegistration { get; set; }
 
         public ContactsModel Contacts { get; set; }
+
+        public IncomePerMonthModel IncomePerMonth { get; set; }
+
+        public WorkInfo WorkInfo { get; set; }
 
         public int? DisabilityId { get; set; }
 

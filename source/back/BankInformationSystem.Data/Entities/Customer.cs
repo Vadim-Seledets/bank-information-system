@@ -25,6 +25,10 @@ namespace BankInformationSystem.Data.Entities
         public PlaceOfLiving PlaceOfLiving { get; set; }
 
         public PlaceOfRegistration PlaceOfRegistration { get; set; }
+        
+        public IncomePerMonth IncomePerMonth { get; set; }
+
+        public WorkInfo WorkInfo { get; set; }
 
         public Contacts Contacts { get; set; }
 
