@@ -1,8 +1,9 @@
-import { Stateful, action } from 'reactronic'
-
-const url = 'https://localhost:5001/test/hello'
+import { Stateful } from 'reactronic'
+import { Api } from './Api'
 
 export class App extends Stateful {
+  api = new Api('')
+
   constructor() {
     super()
   }

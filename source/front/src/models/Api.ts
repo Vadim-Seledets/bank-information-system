@@ -1,7 +1,8 @@
 import { Customer, ICustomer } from "./entities/Customer"
 
 export class Api {
-  baseUrl = ''
+  constructor(public baseUrl: string) {
+  }
 
   async getAllCustomers(): Promise<Array<Customer>> {
     const customersJson = await fetch(`${this.baseUrl}\\customers`).then(response => {
