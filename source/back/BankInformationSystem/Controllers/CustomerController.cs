@@ -33,8 +33,9 @@ namespace BankInformationSystem.Controllers
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(CustomerFullInfoModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<CustomerFullInfoModel>> GetCustomerAsync(int id)
+        public async Task<ActionResult<CustomerFullInfoModel>> GetCustomerByIdAsync(int id)
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
 
@@ -71,7 +72,7 @@ namespace BankInformationSystem.Controllers
         
         [HttpPut]
         [Route("{id}")]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> UpdateCustomerAsync(int id, CustomerUpdateModel model)
@@ -84,7 +85,7 @@ namespace BankInformationSystem.Controllers
         
         [HttpDelete]
         [Route("{id}")]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteCustomerAsync(int id)
