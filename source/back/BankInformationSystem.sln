@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankInformationSystem.Busin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankInformationSystem.Common", "BankInformationSystem.Common\BankInformationSystem.Common.csproj", "{A3372A9F-C654-4ECC-8807-F73134FBE79A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankInformationSystem.Business.Tests", "BankInformationSystem.Business.Tests\BankInformationSystem.Business.Tests.csproj", "{C497CB2B-9F4E-4C76-8CEB-F5B6F4744F5C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{A3372A9F-C654-4ECC-8807-F73134FBE79A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3372A9F-C654-4ECC-8807-F73134FBE79A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3372A9F-C654-4ECC-8807-F73134FBE79A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C497CB2B-9F4E-4C76-8CEB-F5B6F4744F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C497CB2B-9F4E-4C76-8CEB-F5B6F4744F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C497CB2B-9F4E-4C76-8CEB-F5B6F4744F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C497CB2B-9F4E-4C76-8CEB-F5B6F4744F5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

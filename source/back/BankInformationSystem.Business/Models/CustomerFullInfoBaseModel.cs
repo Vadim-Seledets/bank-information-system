@@ -1,5 +1,6 @@
 ﻿using BankInformationSystem.Common.Models;
-using BankInformationSystem.Data.Entities;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace BankInformationSystem.Business.Models
 {
@@ -11,6 +12,7 @@ namespace BankInformationSystem.Business.Models
         
         public string LastName { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public Gender Gender { get; set; }
 
         public bool IsRetired { get; set; }
@@ -29,7 +31,7 @@ namespace BankInformationSystem.Business.Models
 
         public IncomePerMonthModel IncomePerMonth { get; set; }
 
-        public WorkInfo WorkInfo { get; set; }
+        public WorkInfoModel WorkInfo { get; set; }
 
         public int? DisabilityId { get; set; }
 

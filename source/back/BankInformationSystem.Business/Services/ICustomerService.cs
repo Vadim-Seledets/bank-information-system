@@ -12,9 +12,9 @@ namespace BankInformationSystem.Business.Services
 
         Task<CustomerAuxiliaryInfo> GetCustomerAuxiliaryInfoAsync();
 
-        Task<int> CreateCustomerAsync(CustomerCreateUpdateModel model);
+        Task<int> CreateCustomerAsync(CustomerCreateModel model);
 
-        Task UpdateCustomerAsync(int id, CustomerCreateUpdateModel model);
+        Task UpdateCustomerAsync(CustomerUpdateModel model);
 
         Task DeleteCustomerAsync(int id);
     }

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    [Migration("20200128210357_Init")]
+    [Migration("20200129194300_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,23 @@ namespace BankInformationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CountriesOfCitizenship");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Country = "Belarus"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Country = "Russia"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Country = "Ukraine"
+                        });
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.City", b =>
@@ -67,6 +84,73 @@ namespace BankInformationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Minsk"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Vitebsk"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Mogilev"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Gomel"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Brest"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Grodno"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Moscow"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Saint Petersburg"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Kiev"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Name = "Kharkiv"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Name = "Dnipropetrovsk"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Name = "Odessa"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Name = "Vinnytsia"
+                        });
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.Contacts", b =>
@@ -107,6 +191,33 @@ namespace BankInformationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Currencies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "BYN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "RUB"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "UAH"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "EUR"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "USD"
+                        });
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.Customer", b =>
@@ -160,6 +271,38 @@ namespace BankInformationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Disabilities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Physical"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Visual"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Hearing"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Mental"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Intellectual"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Learning"
+                        });
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.IncomePerMonth", b =>
@@ -181,7 +324,8 @@ namespace BankInformationSystem.Data.Migrations
 
                     b.HasIndex("CurrencyId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
 
                     b.ToTable("IncomesPerMonth");
                 });
@@ -198,6 +342,28 @@ namespace BankInformationSystem.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("MaritalStatuses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Married"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Widowed"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Divorced"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Single"
+                        });
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.Passport", b =>
@@ -304,7 +470,8 @@ namespace BankInformationSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
 
                     b.ToTable("WorkInfos");
                 });
@@ -349,8 +516,8 @@ namespace BankInformationSystem.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BankInformationSystem.Data.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .WithOne("IncomePerMonth")
+                        .HasForeignKey("BankInformationSystem.Data.Entities.IncomePerMonth", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -403,8 +570,8 @@ namespace BankInformationSystem.Data.Migrations
             modelBuilder.Entity("BankInformationSystem.Data.Entities.WorkInfo", b =>
                 {
                     b.HasOne("BankInformationSystem.Data.Entities.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .WithOne("WorkInfo")
+                        .HasForeignKey("BankInformationSystem.Data.Entities.WorkInfo", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

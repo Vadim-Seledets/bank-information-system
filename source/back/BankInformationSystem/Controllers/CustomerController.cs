@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using BankInformationSystem.Business.Models;
 using BankInformationSystem.Business.Services;
+using BankInformationSystem.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BankInformationSystem.Controllers
@@ -19,6 +21,8 @@ namespace BankInformationSystem.Controllers
 
         [HttpGet]
         [Route("")]
+        [ProducesResponseType(typeof(IEnumerable<CustomerShortInfoModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<IEnumerable<CustomerShortInfoModel>>> GetCustomersAsync()
         {
             var customers = await _customerService.GetCustomersAsync();
@@ -28,7 +32,9 @@ namespace BankInformationSystem.Controllers
         
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<IEnumerable<CustomerFullInfoModel>>> GetCustomerAsync(int id)
+        [ProducesResponseType(typeof(CustomerFullInfoModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<CustomerFullInfoModel>> GetCustomerAsync(int id)
         {
             var customer = await _customerService.GetCustomerByIdAsync(id);
 
@@ -42,6 +48,8 @@ namespace BankInformationSystem.Controllers
 
         [HttpGet]
         [Route("auxiliary")]
+        [ProducesResponseType(typeof(CustomerAuxiliaryInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<CustomerAuxiliaryInfo>> GetCustomerAuxiliaryInfo()
         {
             var result = await _customerService.GetCustomerAuxiliaryInfoAsync();
@@ -51,7 +59,10 @@ namespace BankInformationSystem.Controllers
         
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<int>> CreateCustomerAsync(CustomerCreateUpdateModel model)
+        [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<int>> CreateCustomerAsync(CustomerCreateModel model)
         {
             var customerId = await _customerService.CreateCustomerAsync(model);
             
@@ -60,15 +71,22 @@ namespace BankInformationSystem.Controllers
         
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> UpdateCustomerAsync(int id, CustomerCreateUpdateModel model)
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult> UpdateCustomerAsync(int id, CustomerUpdateModel model)
         {
-            await _customerService.UpdateCustomerAsync(id, model);
+            model.Id = id;
+            await _customerService.UpdateCustomerAsync(model);
             
             return NoContent();
         }
         
         [HttpDelete]
         [Route("{id}")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> DeleteCustomerAsync(int id)
         {
             await _customerService.DeleteCustomerAsync(id);
