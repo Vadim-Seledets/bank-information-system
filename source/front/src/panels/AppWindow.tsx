@@ -10,7 +10,7 @@ import { CustomerInfoPanel } from './CustomerInfoPanel'
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
-    const customerListPlace = p.app.selectedCustomer ? dim(3, 2, 6, 12) : dim(4, 2, 10, 12)
+    const customerListPlace = p.app.selectedCustomer ? dim(3, 3, 6, 12) : dim(4, 3, 10, 12)
     return (
       <div className={css.main}>
         <div className={css.menu} style={{...dim(1, 1, 12, 1)}}>
@@ -33,7 +33,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
             <div key={i} className={css.customerListElement}
               is-selected={`${v === p.app.selectedCustomer}`}
               onClick={() => p.app.setSelectedCustomer(v)}>
-              {`${v.firstName} ${v.lastName}`}
+              {`${i+1}. ${v.firstName} ${v.lastName}`}
               <div className={'space'} />
               <div className={cx('edit', 'action', 'las la-pen')} style={{marginRight: '0.5em'}} />
               <div className={cx('edit', 'action', 'las la-trash')} />
@@ -41,9 +41,15 @@ export function AppWindow(p: { app: App }): JSX.Element {
           ))}
         </div>
         {p.app.selectedCustomer && (
-          <div className={css.customerInfoPanel} style={{...dim(8, 2, 12, 12), background: 'red'}}>
-            <CustomerInfoPanel customerInfo={p.app.customerInfo} />
-          </div>
+          <React.Fragment>
+            <div className={css.caption} style={{...dim(8, 2, 11, 2)}}>
+              Edit customer information
+            </div>
+            <button className={css.editButton} style={{...dim(12, 2, 12, 2)}}>Edit</button>
+            <div className={css.customerInfoPanel} style={{...dim(8, 3, 12, 12), background: 'red'}}>
+              <CustomerInfoPanel customerInfo={p.app.customerInfo} />
+            </div>
+          </React.Fragment>
         )}
       </div>
     )

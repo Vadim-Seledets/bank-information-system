@@ -12,6 +12,7 @@ export const style = restyle(() => {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      overflow: scroll;
     `,
 
     property: css`
@@ -20,6 +21,12 @@ export const style = restyle(() => {
 
       .propertyName {
 
+      }
+    `,
+
+    inputValue: css`
+      :valid {
+        color: green;
       }
     `,
   }

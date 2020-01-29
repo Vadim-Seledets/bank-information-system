@@ -7,5 +7,5 @@ export class DarkTheme extends Stateful implements ITheme {
   readonly applicationForeground = "#FFFFFF"
   readonly menuBackground = "#2B2C33"
   readonly sidebarBackground = "#2B2C33"
-  readonly highlighter = "green"
+  readonly highlighter = "blue"
 }

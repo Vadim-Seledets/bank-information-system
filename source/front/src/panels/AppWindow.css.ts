@@ -20,7 +20,7 @@ export const style = restyle(() => {
       font-size: calc(16px + (24 - 16) * (100vw - 640px) / (1920 - 640));
       font-weight: 300;
       grid-template-columns: 2fr repeat(11, 1fr);
-      grid-template-rows: 1.5em repeat(11, 1fr);
+      grid-template-rows: 1.5em 1.5em repeat(10, 1fr);
 
       button {
         padding: 0.1em;
@@ -44,6 +44,21 @@ export const style = restyle(() => {
       display: flex;
       align-items: center;
       background-color: ${theme.menuBackground};
+    `,
+
+    caption: css`
+      color: ${theme.applicationForeground};
+      text-align: center;
+      align-self: center;
+    `,
+
+    editButton: css`
+      color: ${theme.applicationForeground};
+      align-self: center;
+
+      &:hover {
+        color: #aaa;
+      }
     `,
 
     sidebar: css`
@@ -83,11 +98,12 @@ export const style = restyle(() => {
     customerListElement: css`
       display: flex;
       box-sizing: border-box;
+      line-height: 1.2em;
       padding: 0.25em 0;
       border-bottom: 1px solid grey;
       
       &[is-selected=true] {
-        border-bottom: 1px solid ${theme.highlighter}
+        border-bottom: 1px solid ${theme.highlighter};
       }
 
       .action {
