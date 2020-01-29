@@ -17,11 +17,11 @@ export class App extends Stateful {
     {firstName: 'Eguni', lastName: 'Dunin'},
     {firstName: 'Max', lastName: 'Rock'},
   )
-  currentTab?: Tab = undefined
   tabs = new Array<Tab>(
     new Tab('Customers'),
     new Tab('Add a new customer'),
   )
+  currentTab?: Tab = this.tabs[0]
   customerInfo = new CustomerInfo()
 
   constructor() {
