@@ -13,16 +13,16 @@ namespace BankInformationSystem.Business.Services
     public class CustomerService : ICustomerService
     {
         private readonly BankInformationSystemDbContext _context;
-        private readonly IValidator<Customer> _customerValidator;
+        private readonly IValidator<CustomerFullInfoBaseModel> _customerFullInfoBaseModelValidator;
         private readonly IMapper _mapper;
 
         public CustomerService(
             BankInformationSystemDbContext context,
-            IValidator<Customer> customerValidator,
+            IValidator<CustomerFullInfoBaseModel> customerFullInfoBaseModelValidator,
             IMapper mapper)
         {
             _context = context;
-            _customerValidator = customerValidator;
+            _customerFullInfoBaseModelValidator = customerFullInfoBaseModelValidator;
             _mapper = mapper;
         }
         
@@ -68,27 +68,42 @@ namespace BankInformationSystem.Business.Services
             };
         }
 
-        public async Task<int> CreateCustomerAsync(CustomerCreateUpdateModel model)
+        public async Task<int> CreateCustomerAsync(CustomerCreateModel model)
         {
+            await _customerFullInfoBaseModelValidator.ValidateAndThrowAsync(model);
+            
             var newCustomer = _mapper.Map<Customer>(model);
-            await _customerValidator.ValidateAndThrowAsync(newCustomer);
-
             _context.Add(newCustomer);
             await _context.SaveChangesAsync();
 
             return newCustomer.Id;
         }
 
-        public async Task UpdateCustomerAsync(int id, CustomerCreateUpdateModel model)
+        public async Task UpdateCustomerAsync(CustomerUpdateModel model)
         {
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Customers
+                .Include(x => x.Passport)
+                .Include(x => x.BirthInfo)
+                .Include(x => x.PlaceOfLiving)
+                .Include(x => x.PlaceOfRegistration)
+                .Include(x => x.IncomePerMonth)
+                .Include(x => x.WorkInfo)
+                .Include(x => x.Contacts)
+                .SingleOrDefaultAsync(x => x.Id == model.Id);
             if (customer == null)
             {
-                throw new ValidationException($"User with id {id} does not exist.");
+                throw new ValidationException($"User with id {model.Id} does not exist.");
             }
 
+            await _customerFullInfoBaseModelValidator.ValidateAndThrowAsync(model);
+            
             _mapper.Map(model, customer);
-            await _customerValidator.ValidateAndThrowAsync(customer);
+            customer.Contacts.CustomerId = customer.Id;
+            customer.Passport.CustomerId = customer.Id;
+            customer.BirthInfo.CustomerId = customer.Id;
+            customer.PlaceOfLiving.CustomerId = customer.Id;
+            customer.IncomePerMonth.CustomerId = customer.Id;
+            customer.WorkInfo.CustomerId = customer.Id;
 
             await _context.SaveChangesAsync();
         }

@@ -10,7 +10,7 @@ namespace BankInformationSystem.Business.Models
 
         public string PassportNumber { get; set; }
 
-        public string IssuedBy { get; set; }
+        public string IssuingAuthority { get; set; }
 
         public DateTime IssuedAt { get; set; }
 

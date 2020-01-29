@@ -280,6 +280,161 @@ namespace BankInformationSystem.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 13, "Vinnytsia" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 12, "Odessa" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 11, "Dnipropetrovsk" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Minsk" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "Vitebsk" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 3, "Mogilev" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 4, "Gomel" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 5, "Brest" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 6, "Grodno" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 7, "Moscow" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 8, "Saint Petersburg" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 9, "Kiev" });
+
+            migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 10, "Kharkiv" });
+
+            migrationBuilder.InsertData(
+                table: "CountriesOfCitizenship",
+                columns: new[] { "Id", "Country" },
+                values: new object[] { 1, "Belarus" });
+
+            migrationBuilder.InsertData(
+                table: "CountriesOfCitizenship",
+                columns: new[] { "Id", "Country" },
+                values: new object[] { 2, "Russia" });
+
+            migrationBuilder.InsertData(
+                table: "CountriesOfCitizenship",
+                columns: new[] { "Id", "Country" },
+                values: new object[] { 3, "Ukraine" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "Code" },
+                values: new object[] { 1, "BYN" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "Code" },
+                values: new object[] { 2, "RUB" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "Code" },
+                values: new object[] { 3, "UAH" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "Code" },
+                values: new object[] { 4, "EUR" });
+
+            migrationBuilder.InsertData(
+                table: "Currencies",
+                columns: new[] { "Id", "Code" },
+                values: new object[] { 5, "USD" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 6, "Learning" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 5, "Intellectual" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 4, "Mental" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 2, "Visual" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 1, "Physical" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 3, "Hearing" });
+
+            migrationBuilder.InsertData(
+                table: "MaritalStatuses",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 3, "Divorced" });
+
+            migrationBuilder.InsertData(
+                table: "MaritalStatuses",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 1, "Married" });
+
+            migrationBuilder.InsertData(
+                table: "MaritalStatuses",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 2, "Widowed" });
+
+            migrationBuilder.InsertData(
+                table: "MaritalStatuses",
+                columns: new[] { "Id", "Description" },
+                values: new object[] { 4, "Single" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_BirthInfos_CustomerId",
                 table: "BirthInfos",
@@ -310,7 +465,8 @@ namespace BankInformationSystem.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_IncomesPerMonth_CustomerId",
                 table: "IncomesPerMonth",
-                column: "CustomerId");
+                column: "CustomerId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Passports_CitizenshipId",
@@ -348,7 +504,8 @@ namespace BankInformationSystem.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_WorkInfos_CustomerId",
                 table: "WorkInfos",
-                column: "CustomerId");
+                column: "CustomerId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

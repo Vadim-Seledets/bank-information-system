@@ -3,10 +3,10 @@ using System.IO;
 using System.Reflection;
 using AutoMapper;
 using BankInformationSystem.Business.Mappings;
+using BankInformationSystem.Business.Models;
 using BankInformationSystem.Business.Services;
 using BankInformationSystem.Business.Validation;
 using BankInformationSystem.Data;
-using BankInformationSystem.Data.Entities;
 using BankInformationSystem.Filters;
 using FluentValidation;
 using Microsoft.AspNetCore.Builder;
@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 
 namespace BankInformationSystem
 {
@@ -32,11 +33,16 @@ namespace BankInformationSystem
         
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options =>
-            {
-                options.Filters.Add(typeof(ExceptionFilter));
-            });
-            
+            services
+                .AddControllers(options =>
+                {
+                    options.Filters.Add(typeof(ExceptionFilter));
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                });
+
             var connectionString = $"Data Source={Path.Combine(AppContext.BaseDirectory, Configuration["DatabaseFilename"])}";
             services.AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString));
             
@@ -60,10 +66,13 @@ namespace BankInformationSystem
             services.AddScoped<ICustomerService, CustomerService>();
             
             // Validators
-            services.AddScoped<IValidator<Customer>, CustomerValidator>();
+            services.AddScoped<IValidator<CustomerFullInfoBaseModel>, CustomerFullInfoBaseModelValidator>();
         }
         
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            BankInformationSystemDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -89,6 +98,8 @@ namespace BankInformationSystem
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+
+            context.Database.EnsureCreated();
         }
     }
 }

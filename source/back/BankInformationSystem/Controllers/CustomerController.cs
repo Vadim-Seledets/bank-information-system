@@ -51,7 +51,7 @@ namespace BankInformationSystem.Controllers
         
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult<int>> CreateCustomerAsync(CustomerCreateUpdateModel model)
+        public async Task<ActionResult<int>> CreateCustomerAsync(CustomerCreateModel model)
         {
             var customerId = await _customerService.CreateCustomerAsync(model);
             
@@ -60,9 +60,10 @@ namespace BankInformationSystem.Controllers
         
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> UpdateCustomerAsync(int id, CustomerCreateUpdateModel model)
+        public async Task<ActionResult> UpdateCustomerAsync(int id, CustomerUpdateModel model)
         {
-            await _customerService.UpdateCustomerAsync(id, model);
+            model.Id = id;
+            await _customerService.UpdateCustomerAsync(model);
             
             return NoContent();
         }
