@@ -1,4 +1,4 @@
-import { css, injectGlobal } from 'emotion'
+import { css } from 'emotion'
 import { restyle } from 'reactronic-toolkit-react'
 import { themes } from '../models/Theme'
 
@@ -9,7 +9,6 @@ export const style = restyle(() => {
       label: main;
 
       background-color: ${theme.applicationBackground};
-      color: ${theme.applicationForeground};
       display: grid;
       position: absolute;
       top: 0;
@@ -20,8 +19,8 @@ export const style = restyle(() => {
       font-family: Calibri, Arial, Tahoma;
       font-size: calc(16px + (24 - 16) * (100vw - 640px) / (1920 - 640));
       font-weight: 300;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 2em 6fr 1fr;
+      grid-template-columns: 2fr repeat(11, 1fr);
+      grid-template-rows: 1.5em repeat(11, 1fr);
 
       button {
         padding: 0.1em;
@@ -44,23 +43,75 @@ export const style = restyle(() => {
     menu: css`
       display: flex;
       align-items: center;
-      background-color: rgb(60, 60, 60);
+      background-color: ${theme.menuBackground};
     `,
 
-    property: css`
+    sidebar: css`
       display: flex;
+      flex-direction: column;
+      background: ${theme.sidebarBackground}
+    `,
 
-      input:focus {
-        border-bottom: 1px solid white;
+    sidebarElement: css`
+      padding: 0.25em 0;
+
+      &[is-selected=true] {
+        color: ${theme.applicationForeground};
+        background: ${theme.applicationBackground};
       }
     `,
 
-    propertyCaption: css`
-      
+    editCustomerButton: css`
+      color: grey;
+      pointer-events: none;
+
+      &[is-enabled=true] {
+        color: white;
+      }
+    `,
+
+    clicable: css`
+      cursor: pointer;
+    `,
+
+    customerList: css`
+      display: flex;
+      flex-direction: column;
+      color: ${theme.applicationForeground};
     `,
     
-    propertyInput: css`
+    customerListElement: css`
+      display: flex;
+      box-sizing: border-box;
+      padding: 0.25em 0;
       border-bottom: 1px solid grey;
+      
+      &[is-selected=true] {
+        border-bottom: 1px solid ${theme.highlighter}
+      }
+
+      .action {
+        display: none;
+        cursor: pointer;
+      }
+
+      .space {
+        flex-grow: 1;
+      }
+
+      .edit {
+
+      }
+
+      &:hover {
+        .action {
+          display: initial;
+        }
+      }
+    `,
+
+    customerInfoPanel: css`
+      display: flex;
     `,
   }
 })
