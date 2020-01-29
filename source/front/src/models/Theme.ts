@@ -4,12 +4,18 @@ export interface ITheme {
   readonly name: string
   readonly applicationBackground: string
   readonly applicationForeground: string
+  readonly menuBackground: string
+  readonly sidebarBackground: string
+  readonly highlighter: string
 }
 
 export class BlankTheme extends Stateful implements ITheme {
   readonly name = "blank"
   readonly applicationBackground = ""
   readonly applicationForeground = ""
+  readonly menuBackground = ""
+  readonly sidebarBackground = ""
+  readonly highlighter = ""
 }
 
 export class Themes extends Stateful {
