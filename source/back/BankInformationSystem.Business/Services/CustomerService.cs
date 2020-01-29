@@ -28,7 +28,10 @@ namespace BankInformationSystem.Business.Services
         
         public async Task<IList<CustomerShortInfoModel>> GetCustomersAsync()
         {
-            var query = _context.Customers.AsNoTracking();
+            var query = _context.Customers.AsNoTracking()
+                .OrderByDescending(x => x.LastName)
+                .ThenByDescending(x => x.FirstName)
+                .ThenByDescending(x => x.MiddleName);
             var customers = await _mapper
                 .ProjectTo<CustomerShortInfoModel>(query)
                 .ToListAsync();
