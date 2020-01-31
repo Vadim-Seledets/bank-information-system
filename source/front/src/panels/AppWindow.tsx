@@ -24,8 +24,10 @@ export function AppWindow(p: { app: App }): JSX.Element {
           {p.app.tabs.map((v, i) => (
             <div key={i} className={cx(css.sidebarElement, css.clicable)}
               is-selected={`${v === p.app.currentTab}`}
-              onClick={() => p.app.setCurrentTab(v)}>
-              {v.caption}
+              onClick={() => p.app.setCurrentTab(v)}
+            >
+              <div className={`icon ${v.icon}`} />
+              <div className={'caption'}>{v.caption}</div>
             </div>
           ))}
         </div>
@@ -51,7 +53,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
         </div>
         {p.app.selectedCustomer && (
           <React.Fragment>
-            <div className={css.caption} style={{...dim(8, 2, 11, 2)}}>
+            <div className={css.editPanelCaption} style={{...dim(8, 2, 11, 2)}}>
               Edit customer information
             </div>
             <div className={css.actionsOnEditPanel} style={{...dim(12, 2, 12, 2)}}>

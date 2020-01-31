@@ -68,7 +68,7 @@ export const style = restyle(() => {
       grid-template-rows: 1.5em repeat(10, 1fr);
     `,
 
-    caption: css`
+    editPanelCaption: css`
       color: ${theme.applicationForeground};
       text-align: center;
       align-self: center;
@@ -99,11 +99,27 @@ export const style = restyle(() => {
     `,
 
     sidebarElement: css`
-      padding: 0.25em 0;
+      display: flex;
+      align-items: center;
+      padding: 0.3em 0 0.25em 0.3em;
+      /* border-bottom: 1px solid grey; */
+
+      &:hover {
+        background: ${theme.applicationBackgroundDemmed};
+      }
 
       &[is-selected=true] {
         color: ${theme.applicationForeground};
         background: ${theme.applicationBackground};
+      }
+
+      .icon {
+        margin-right: 0.5em;
+        font-size: 1.2em;
+      }
+
+      .caption {
+        font-size: 0.9em;
       }
     `,
 

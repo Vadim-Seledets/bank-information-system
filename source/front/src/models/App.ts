@@ -4,7 +4,9 @@ import { CustomerInfo } from './CustomerInfo'
 import { Customer } from './entities/Customer'
 
 export class Tab extends Stateful{
-  constructor(public caption: string) {
+  constructor(
+    public caption: string,
+    public icon: string) {
     super()
   }
 }
@@ -14,10 +16,10 @@ export class App extends Stateful {
   selectedCustomer?: {firstName: string} = undefined
   customers = new Array<{firstName: string}>({firstName: 'Vadim'})
   tabs = new Array<Tab>(
-    new Tab('Customers'),
-    new Tab('Deposits'),
-    new Tab('Loans'),
-    new Tab('ATM'),
+    new Tab('Customers', 'las la-address-book'),
+    new Tab('Deposits', 'las la-percent'),
+    new Tab('Loans', 'las la-credit-card'),
+    new Tab('ATM', 'las la-money-check'),
   )
   currentTab?: Tab = this.tabs[0]
   customerInfo = new CustomerInfo(this)
