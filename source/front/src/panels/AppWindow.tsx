@@ -5,8 +5,8 @@ import { App } from '../models/App'
 import { style } from './AppWindow.css'
 import { themes } from '../models/Theme'
 import { cx } from 'emotion'
-import { CustomerInfoPanel } from './CustomerInfoPanel'
 import { CustomersPageView } from './CustomersPage'
+import { EditCustomerInfoPageView } from './EditCustomerInfoPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -35,18 +35,10 @@ export function AppWindow(p: { app: App }): JSX.Element {
           <CustomersPageView app={p.app} />
         </div>
         {p.app.selectedCustomer && (
-          <React.Fragment>
-            <div className={css.editPanelCaption} style={{...dim(8, 2, 11, 2)}}>
-              Edit customer information
-            </div>
-            <div className={css.actionsOnEditPanel} style={{...dim(12, 2, 12, 2)}}>
-              <button className={css.editButton}>Edit</button>
-              <div className={cx(css.closeEditPanel, 'las la-times')}></div>
-            </div>
-            <div className={css.customerInfoPanel} style={{...dim(8, 3, 11, 12)}}>
-              <CustomerInfoPanel customerInfo={p.app.customerInfo} />
-            </div>
-          </React.Fragment>
+          <div style={{...dim(8, 2, 11, 12)}}>
+            <EditCustomerInfoPageView app={p.app} />
+          </div>
+          // <div className={cx(css.closeEditPanel, 'las la-times')} />
         )}
       </div>
     )
