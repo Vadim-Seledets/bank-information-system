@@ -10,41 +10,135 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
       <div className={css.main}>
         <div className={css.property}>
           <div className='propertyName'>Last name</div>
-          <input className={'propertyValue'} type="text" />
+          <input className={'propertyInput'} type="text" />
         </div>
-        {/* {p.customerInfo.properties.map((v, i) => (
-          <div key={i} className={css.property}>
-            <div className='propertyName'>{v.name}</div>
-            <input className='propertyValue' type='text'
-              onChange={e => p.customerInfo.} />
-          </div>
-        ))} */}
-        {/* //   new CustomerInfoProperty('Last name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('First name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('Middle name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('Date of birth', 'date'),
-  //   new CustomerInfoProperty('Gender', 'radio'),
-  //   new CustomerInfoProperty('Passport series', 'text', '[A-Z]{2}'),
-  //   new CustomerInfoProperty('Passport number', 'text', '\d{7}'),
-  //   new CustomerInfoProperty('Issuing authority', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Issued at', 'date'),
-  //   new CustomerInfoProperty('Id number', 'text', '[A-Z0-9]{14}'),
-  //   new CustomerInfoProperty('PlaceOfBirth', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('PlaceOfLiving', 'list'),
-  //   new CustomerInfoProperty('PlaceOfRegistration', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Home phone number', 'text', '^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$'),
-  //   new CustomerInfoProperty('Mobile phone number', 'text', '^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$'),
-  //   new CustomerInfoProperty('Email', 'text', '^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$'),
-  //   new CustomerInfoProperty('Company', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Position', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('City of registration', 'list'),
-  //   new CustomerInfoProperty('Address of registration', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Marital status', 'list'),
-  //   new CustomerInfoProperty('Citizenship', 'list'),
-  //   new CustomerInfoProperty('Disability', 'list'),
-  //   new CustomerInfoProperty('Is retired', 'checkbox'),
-  //   new CustomerInfoProperty('Amount', 'money', '\d+'),
-  //   new CustomerInfoProperty('Is Liable For Military Service', 'checkbox'), */}
+        <div className={css.property}>
+          <div className='propertyName'>First name</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Middle name</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Date of birth</div>
+          <input className={'propertyInput'} type="date" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Gender</div>
+          <input type="radio" name="gender" value="male" />Male
+          <input type="radio" name="gender" value="female" />Female
+          <input type="radio" name="gender" value="other" />Other
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Passport series</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Passport number</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Issuing authority</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Issued at</div>
+          <input className={'propertyInput'} type="date" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Id number</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Place Of Birth</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Place Of Living</div>
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.cities.map((v, i) => (
+              <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Place Of Registration</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Home Phone Number</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Mobile Phone Number</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Email</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Company</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Position</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>City of registration</div>
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.cities.map((v, i) => (
+              <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Address of registration</div>
+          <input className={'propertyInput'} type="text" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Marital status</div>
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.maritalStatuses.map((v, i) => (
+              <option key={`${v.id}:${v.description}`} value={v.id}>{v.description}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Citizenship</div>
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.countriesOfCitizenship.map((v, i) => (
+              <option key={`${v.id}:${v.country}`} value={v.id}>{v.country}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Disability</div>
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.disabilities.map((v, i) => (
+              <option key={`${v.id}:${v.description}`} value={v.id}>{v.description}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Is retired</div>
+          <input className={'propertyInput'} type="checkbox" />
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Amount</div>
+          <input className={'propertyInput'} type="number" />
+          <select className='propertyInput'>
+            {p.customerInfo.auxiliary.currencies.map((v, i) => (
+              <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
+            ))}
+          </select>
+        </div>
+        <div className={css.property}>
+          <div className='propertyName'>Is Liable For Military Service</div>
+          <input className={'propertyInput'} type="checkbox" />
+        </div>
       </div>
     )
   })
