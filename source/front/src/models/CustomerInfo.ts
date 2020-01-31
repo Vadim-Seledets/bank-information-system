@@ -1,5 +1,7 @@
-import { Stateful, action } from 'reactronic'
+import { Stateful, action, trigger } from 'reactronic'
 import { Customer } from './entities/Customer'
+import { Auxiliary } from './entities/Auxiliary'
+import { App } from './App'
 
 // export class CustomerInfoProperty extends Stateful {
 //   constructor(
@@ -17,7 +19,10 @@ import { Customer } from './entities/Customer'
 // }
 
 export class CustomerInfo extends Stateful {
+  app: App
   customer?: Customer
+  auxiliary: Auxiliary = Auxiliary.Empty
+  
   // properties = Array<CustomerInfoProperty>(
   //   new CustomerInfoProperty('Last name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
   //   new CustomerInfoProperty('First name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
@@ -47,8 +52,13 @@ export class CustomerInfo extends Stateful {
   //   new CustomerInfoProperty('Is Liable For Military Service', 'checkbox'),
   // )
 
-  @action
-  setCustomer(customer: Customer): void {
-    this.customer = customer
+  constructor(app: App) {
+    super()
+    this.app = app
+  }
+
+  @trigger
+  getAuxiliary(): void {
+    this.app.api.getAuxiliaryInfo().then(v => this.auxiliary = v)
   }
 }
