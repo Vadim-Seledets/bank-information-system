@@ -17,10 +17,15 @@ export const style = restyle(() => {
 
     property: css`
       display: flex;
+      justify-content: space-between;
       padding: 0.25em 0 0.25em 0.25em;
 
       .propertyName {
 
+      }
+
+      .propertyInput {
+        border-bottom: 1px solid grey;
       }
     `,
 
