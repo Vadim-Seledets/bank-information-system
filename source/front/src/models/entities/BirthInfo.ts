@@ -1,24 +1,17 @@
 import { Stateful } from "reactronic"
-import { Customer } from "./Customer"
 
 export interface IBirthInfo {
-  customerId: number
   placeOfBirth: string
-  dateOfBirth: number // DateTime
-  customer: Customer
+  dateOfBirth: string // DateTime
 }
 
 export class BirthInfo extends Stateful {
-  customerId: number
   placeOfBirth: string
-  dateOfBirth: number // DateTime
-  customer: Customer
+  dateOfBirth: string
 
   constructor(birthInfo: IBirthInfo) {
     super()
-    this.customerId = birthInfo.customerId
     this.placeOfBirth = birthInfo.placeOfBirth
     this.dateOfBirth = birthInfo.dateOfBirth
-    this.customer = birthInfo.customer
   }
 }
