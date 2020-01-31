@@ -12,27 +12,27 @@ export const style = restyle(() => {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      overflow: scroll;
+      margin-right: 1em;
+      /* overflow: scroll; */
     `,
 
     property: css`
       display: flex;
       justify-content: space-between;
-      padding: 0.25em 0 0.25em 0.25em;
+      padding: 0.25em 0;
 
       .propertyName {
 
       }
 
       .propertyInput {
+        width: 8em;
         border-bottom: 1px solid grey;
       }
     `,
 
     inputValue: css`
-      :valid {
-        color: green;
-      }
+      
     `,
   }
 })
