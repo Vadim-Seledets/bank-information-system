@@ -1,26 +1,30 @@
 import { Stateful } from "reactronic"
-import { GenderId } from "./GenderID"
-import { DisabilityId } from "./DisabilityId"
-import { Passport } from "./Passport"
-import { BirthInfo } from "./BirthInfo"
-import { PlaceOfLiving } from "./PlaceOfLiving"
-import { PlaceOfRegistration } from "./PlaceOfRegistration"
-import { Contacts } from "./Contacts"
+import { Gender } from "./Gender"
+import { IPassport, Passport } from "./Passport"
+import { IBirthInfo, BirthInfo } from "./BirthInfo"
+import { IPlaceOfLiving, PlaceOfLiving } from "./PlaceOfLiving"
+import { IPlaceOfRegistration, PlaceOfRegistration } from "./PlaceOfRegistration"
+import { IContacts, Contacts } from "./Contacts"
+import { IIncomePerMonth, IncomePerMonth } from "./IncomePerMonth"
+import { IWorkInfo, WorkInfo } from "./WorkInfo"
 
 export interface ICustomer {
   id: number
   firstName: string
   middleName: string
   lastName: string
-  genderId: GenderId
-  disability?: DisabilityId
+  gender: Gender
   isRetired: boolean
   isLiableForMilitaryService: boolean
-  passport: Passport
-  birthInfo: BirthInfo
-  placeOfLiving: PlaceOfLiving
-  placeOfRegistration: PlaceOfRegistration
-  contacts: Contacts
+  passport: IPassport
+  birthInfo: IBirthInfo
+  placeOfLiving: IPlaceOfLiving
+  placeOfRegistration: IPlaceOfRegistration
+  contacts: IContacts
+  incomePerMonth: IIncomePerMonth
+  workInfo: IWorkInfo
+  disabilityId: number
+  maritalStatusId: number
 }
 
 export class Customer extends Stateful {
@@ -28,8 +32,7 @@ export class Customer extends Stateful {
   firstName: string
   middleName: string
   lastName: string
-  genderId: GenderId
-  disability?: DisabilityId
+  gender: Gender
   isRetired: boolean
   isLiableForMilitaryService: boolean
   passport: Passport
@@ -37,6 +40,10 @@ export class Customer extends Stateful {
   placeOfLiving: PlaceOfLiving
   placeOfRegistration: PlaceOfRegistration
   contacts: Contacts
+  incomePerMonth: IncomePerMonth
+  workInfo: WorkInfo
+  disabilityId: number
+  maritalStatusId: number
 
   constructor(customer: ICustomer) {
     super()
@@ -44,14 +51,17 @@ export class Customer extends Stateful {
     this.firstName = customer.firstName
     this.middleName = customer.middleName
     this.lastName = customer.lastName
-    this.genderId = customer.genderId
-    this.disability = customer.disability
+    this.gender = customer.gender
     this.isRetired = customer.isRetired
     this.isLiableForMilitaryService = customer.isLiableForMilitaryService
-    this.passport = customer.passport
-    this.birthInfo = customer.birthInfo
-    this.placeOfLiving = customer.placeOfLiving
-    this.placeOfRegistration = customer.placeOfRegistration
-    this.contacts = customer.contacts
+    this.passport = new Passport(customer.passport)
+    this.birthInfo = new BirthInfo(customer.birthInfo)
+    this.placeOfLiving = new PlaceOfLiving(customer.placeOfLiving)
+    this.placeOfRegistration = new PlaceOfRegistration(customer.placeOfRegistration)
+    this.contacts = new Contacts(customer.contacts)
+    this.incomePerMonth = new IncomePerMonth(customer.incomePerMonth)
+    this.workInfo = new WorkInfo(customer.workInfo)
+    this.disabilityId = customer.disabilityId
+    this.maritalStatusId = customer.maritalStatusId
   }
 }
