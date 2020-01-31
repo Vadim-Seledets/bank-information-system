@@ -16,7 +16,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
       <div className={css.main}>
         <div className={css.menu} style={{...dim(1, 1, 12, 1)}}>
           <img style={{margin: '0 0.5em', width: '1.2em'}} src="assets/images/bank.png" onClick={() => themes.next()} />
-          <div>
+          <div style={{color: '#aaaaaa'}}>
             Bank Information System
           </div>
         </div>
