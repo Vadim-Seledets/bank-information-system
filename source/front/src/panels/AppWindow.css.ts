@@ -46,19 +46,50 @@ export const style = restyle(() => {
       background-color: ${theme.menuBackground};
     `,
 
+    actionPanel: css`
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .addNewCustomerButton {
+        color: ${theme.applicationForeground};
+      }
+
+      .search {
+        width: 8.1em;
+        color: ${theme.applicationForeground};
+        border-bottom: 1px solid ${theme.applicationForeground};
+      }
+    `,
+
+    customersPage: css`
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 1.5em repeat(10, 1fr);
+    `,
+
     caption: css`
       color: ${theme.applicationForeground};
       text-align: center;
       align-self: center;
     `,
 
+    actionsOnEditPanel: css`
+      display: flex;
+      align-self: center;
+      align-items: center;
+    `,
+    
     editButton: css`
       color: ${theme.applicationForeground};
-      align-self: center;
 
       &:hover {
         color: #aaa;
       }
+    `,
+
+    closeEditPanel: css`
+      color: ${theme.applicationForeground};
     `,
 
     sidebar: css`
@@ -89,6 +120,12 @@ export const style = restyle(() => {
       cursor: pointer;
     `,
 
+    addCustomerButton: css`
+      color: ${theme.applicationForeground};
+      align-self: center;
+      justify-self: center;
+    `,
+
     customerList: css`
       display: flex;
       flex-direction: column;
@@ -100,8 +137,9 @@ export const style = restyle(() => {
       box-sizing: border-box;
       line-height: 1.2em;
       padding: 0.25em 0;
-      border-bottom: 1px solid grey;
-      
+      border-bottom: 1px solid ${theme.applicationForeground};
+      transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.5s;
+
       &[is-selected=true] {
         border-bottom: 1px solid ${theme.highlighter};
       }
