@@ -3,6 +3,7 @@ import { Stateful, Action, action } from 'reactronic'
 export interface ITheme {
   readonly name: string
   readonly applicationBackground: string
+  readonly applicationBackgroundDemmed: string
   readonly applicationForeground: string
   readonly menuBackground: string
   readonly sidebarBackground: string
@@ -12,6 +13,7 @@ export interface ITheme {
 export class BlankTheme extends Stateful implements ITheme {
   readonly name = "blank"
   readonly applicationBackground = ""
+  readonly applicationBackgroundDemmed = ""
   readonly applicationForeground = ""
   readonly menuBackground = ""
   readonly sidebarBackground = ""

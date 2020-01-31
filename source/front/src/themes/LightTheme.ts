@@ -4,6 +4,7 @@ import { ITheme } from '../models/Theme'
 export class LightTheme extends Stateful implements ITheme {
   readonly name = "light"
   readonly applicationBackground = "#ffffff"
+  readonly applicationBackgroundDemmed = "#17233E"
   readonly applicationForeground = "#101010"
   readonly menuBackground = "#17233E"
   readonly sidebarBackground = "#202F53"
