@@ -5,7 +5,13 @@ import { themes } from '../models/Theme'
 export const style = restyle(() => {
   const theme = themes.active
   return {
-    actionPanel: css`
+    main: css`
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: 1.5em repeat(10, 1fr);
+    `,
+
+    actionsPanel: css`
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -19,12 +25,6 @@ export const style = restyle(() => {
         color: ${theme.applicationForeground};
         border-bottom: 1px solid ${theme.applicationForeground};
       }
-    `,
-
-    customersPage: css`
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 1.5em repeat(10, 1fr);
     `,
 
     customerList: css`

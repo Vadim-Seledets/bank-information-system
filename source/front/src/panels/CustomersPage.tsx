@@ -9,8 +9,8 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
     return (
-      <div className={css.customersPage}>
-        <div className={css.actionPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
+      <div className={css.main}>
+        <div className={css.actionsPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
           <div className='addNewCustomerButton'>
             Add a New Customer
           </div>
