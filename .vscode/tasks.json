@@ -34,7 +34,7 @@
       "group": "build",
     },
     {
-      "label": "Run back-end server",
+      "label": "Start Server - back-end",
       "type": "process",
       "command": "dotnet",
       "args": [
@@ -45,7 +45,7 @@
         "${workspaceFolder}/source/back/BankInformationSystem/BankInformationSystem.csproj"
       ],
       "problemMatcher": ["$msCompile"],
-      "group": "none",
+      "group": "build",
     },
     {
       "label": "Build All - tsc & eslint",
