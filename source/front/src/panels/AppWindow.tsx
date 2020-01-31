@@ -6,12 +6,12 @@ import { style } from './AppWindow.css'
 import { themes } from '../models/Theme'
 import { cx } from 'emotion'
 import { CustomerInfoPanel } from './CustomerInfoPanel'
+import { CustomersPageView } from './CustomersPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
     const customersPagePlace = p.app.selectedCustomer ? dim(3, 2, 6, 12) : dim(4, 2, 10, 12)
-    // const customerListAddButtonPlace = p.app.selectedCustomer ? dim(7, 2, 7, 2) : dim(11, 2, 11, 2)
     return (
       <div className={css.main}>
         <div className={css.menu} style={{...dim(1, 1, 12, 1)}}>
@@ -31,25 +31,8 @@ export function AppWindow(p: { app: App }): JSX.Element {
             </div>
           ))}
         </div>
-        <div className={css.customersPage} style={{...customersPagePlace}}>
-          <div className={css.actionPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
-            <div className='addNewCustomerButton'>
-              Add a New Customer
-            </div>
-            <input className='search' type='text' placeholder='Find a Customer...'/>
-          </div>
-          <div className={css.customerList} style={{... dim(1, 2, 12, 12)}}>
-            {p.app.customers.map((v, i) => (
-              <div key={i} className={css.customerListElement}
-                is-selected={`${v === p.app.selectedCustomer}`}
-                onClick={() => p.app.setSelectedCustomer(v)}>
-                {`${i+1}. ${v.firstName}`}
-                <div className={'space'} />
-                <div className={cx('edit', 'action', 'las la-pen')} style={{marginRight: '0.5em'}} />
-                <div className={cx('edit', 'action', 'las la-trash')} />
-              </div>
-            ))}
-          </div>
+        <div style={{...customersPagePlace}}>
+          <CustomersPageView app={p.app} />
         </div>
         {p.app.selectedCustomer && (
           <React.Fragment>
