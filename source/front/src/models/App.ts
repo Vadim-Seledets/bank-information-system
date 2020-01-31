@@ -1,6 +1,7 @@
 import { Stateful, action } from 'reactronic'
 import { Api } from './Api'
 import { CustomerInfo } from './CustomerInfo'
+import { Customer } from './entities/Customer'
 
 export class Tab extends Stateful{
   constructor(public caption: string) {
@@ -10,26 +11,23 @@ export class Tab extends Stateful{
 
 export class App extends Stateful {
   api = new Api('https://localhost:5001')
-  selectedCustomer?: {firstName: string, lastName: string} = undefined
-  customers = new Array<{firstName: string, lastName: string}>(
-    {firstName: 'Vadim', lastName: 'Seledets'},
-    {firstName: 'Arseni', lastName: 'Rynkevich'},
-    {firstName: 'Eguni', lastName: 'Dunin'},
-    {firstName: 'Max', lastName: 'Rock'},
-  )
+  selectedCustomer?: {firstName: string} = undefined
+  customers = new Array<{firstName: string}>({firstName: 'Vadim'})
   tabs = new Array<Tab>(
     new Tab('Customers'),
-    new Tab('Add a new customer'),
+    new Tab('Deposits'),
+    new Tab('Loans'),
+    new Tab('ATM'),
   )
   currentTab?: Tab = this.tabs[0]
-  customerInfo = new CustomerInfo()
+  customerInfo = new CustomerInfo(this)
 
   constructor() {
     super()
   }
 
   @action
-  setSelectedCustomer(customer: {firstName: string, lastName: string}): void {
+  setSelectedCustomer(customer: {firstName: string}): void {
     this.selectedCustomer = customer
   }
 
