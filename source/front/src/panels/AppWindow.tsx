@@ -24,12 +24,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
           {p.app.tabs.map((v, i) => (
             <div key={i} className={cx(css.sidebarElement, css.clicable)}
               is-selected={`${v === p.app.currentTab}`}
-              onClick={() => {
-                p.app.setCurrentTab(v)
-                if (v.caption === 'Customers') {
-                  p.app.getAllCustomersInShortInfoModel()
-                }
-              }}
+              onClick={() => p.app.setCurrentTab(v)}
             >
               <div className={`icon ${v.icon}`} />
               <div className={'caption'}>{v.caption}</div>
