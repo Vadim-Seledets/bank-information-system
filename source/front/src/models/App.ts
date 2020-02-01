@@ -1,7 +1,7 @@
 import { Stateful, action } from 'reactronic'
 import { Api } from './Api'
 import { CustomerInfo } from './CustomerInfo'
-import { Customer } from './entities/Customer'
+import { Customer, ICustomerFullName } from './entities/Customer'
 
 export class Tab extends Stateful{
   constructor(
@@ -13,8 +13,8 @@ export class Tab extends Stateful{
 
 export class App extends Stateful {
   api = new Api('https://localhost:5001')
-  selectedCustomer?: {firstName: string} = undefined
-  customers = new Array<{firstName: string}>({firstName: 'Vadim'})
+  selectedCustomer?: Customer = undefined
+  customers = new Array<Customer>()
   tabs = new Array<Tab>(
     new Tab('Customers', 'las la-address-book'),
     new Tab('Deposits', 'las la-percent'),
@@ -29,12 +29,20 @@ export class App extends Stateful {
   }
 
   @action
-  setSelectedCustomer(customer: {firstName: string}): void {
+  setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
   }
 
   @action
   setCurrentTab(tab: Tab): void {
     this.currentTab = tab
+  }
+
+  @action
+  async getAllCustomersInShortInfoModel(): Promise<void> {
+    const json = await fetch(`https://localhost:5001/customers`)
+      .then(response => response.json())
+    const customerFullNames = json as ICustomerFullName[]
+    this.customers = customerFullNames.map(cfn => new Customer(cfn))
   }
 }
