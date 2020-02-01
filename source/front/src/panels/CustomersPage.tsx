@@ -20,8 +20,16 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
           {p.app.customers.map((v, i) => (
             <div key={i} className={css.customerListElement}
               is-selected={`${v === p.app.selectedCustomer}`}
-              onClick={() => p.app.setSelectedCustomer(v)}>
-              {`${i+1}. ${v.firstName}`}
+              onClick={() => {
+                if (p.app.selectedCustomer === v) {
+                  p.app.setSelectedCustomer(undefined)
+                } else {
+                  p.app.setSelectedCustomer(v)
+                  v.getFullInfoModel()
+                }
+              }}
+            >
+              {`${i+1}. ${v.firstName} ${v.middleName} ${v.lastName}`}
               <div className={'space'} />
               <div className={cx('edit', 'action', 'las la-pen')} style={{marginRight: '0.5em'}} />
               <div className={cx('edit', 'action', 'las la-trash')} />
