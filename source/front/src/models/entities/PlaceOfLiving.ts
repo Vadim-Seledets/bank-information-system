@@ -6,11 +6,11 @@ export interface IPlaceOfLiving {
 }
 
 export class PlaceOfLiving extends Stateful {
-  cityId: number
-  address: string
+  cityId: number = 1
+  address: string = ''
 
-  constructor(placeOfLiving: IPlaceOfLiving) {
-    super()
+  @action
+  initialize(placeOfLiving: IPlaceOfLiving): void {
     this.cityId = placeOfLiving.cityId
     this.address = placeOfLiving.address
   }

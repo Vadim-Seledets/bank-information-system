@@ -10,15 +10,15 @@ export interface IPassport {
 }
 
 export class Passport extends Stateful {
-  citizenshipId: number
-  series: string
-  passportNumber: string
-  issuingAuthority: string
-  issuedAt: string
-  idNumber: string
+  citizenshipId: number = 1
+  series: string = ''
+  passportNumber: string = ''
+  issuingAuthority: string = ''
+  issuedAt: string = ''
+  idNumber: string = ''
 
-  constructor(passport: IPassport) {
-    super()
+  @action
+  initialize(passport: IPassport): void  {
     this.citizenshipId = passport.citizenshipId
     this.series = passport.series
     this.passportNumber = passport.passportNumber

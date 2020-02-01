@@ -6,11 +6,11 @@ export interface IBirthInfo {
 }
 
 export class BirthInfo extends Stateful {
-  placeOfBirth: string
-  dateOfBirth: string
+  placeOfBirth: string = ''
+  dateOfBirth: string = ''
 
-  constructor(birthInfo: IBirthInfo) {
-    super()
+  @action
+  initialize(birthInfo: IBirthInfo): void {
     this.placeOfBirth = birthInfo.placeOfBirth
     this.dateOfBirth = birthInfo.dateOfBirth
   }

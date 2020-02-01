@@ -6,11 +6,11 @@ export interface IWorkInfo {
 }
 
 export class WorkInfo extends Stateful {
-  company: string
-  position: string
+  company: string = ''
+  position: string = ''
 
-  constructor(workInfo: IWorkInfo) {
-    super()
+  @action
+  initialize(workInfo: IWorkInfo): void {
     this.company = workInfo.company
     this.position = workInfo.position
   }

@@ -4,6 +4,4 @@ export class Auxiliary {
   disabilities: Array<{id: number, description: string}> = []
   currencies: Array<{id: number, code: string}> = []
   maritalStatuses: Array<{id: number, description: string}> = []
-
-  static readonly Empty = new Auxiliary()
 }

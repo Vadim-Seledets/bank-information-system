@@ -6,17 +6,17 @@ export interface IIncomePerMonth {
 }
 
 export class IncomePerMonth extends Stateful {
-  amount: number
-  currencyId: number
+  amount: string = ''
+  currencyId: number = 1
 
-  constructor(incomePerMonth: IIncomePerMonth) {
-    super()
-    this.amount = incomePerMonth.amount
+  @action
+  initialize(incomePerMonth: IIncomePerMonth): void {
+    this.amount = incomePerMonth.amount.toString()
     this.currencyId = incomePerMonth.currencyId
   }
 
   @action
-  setAmount(value: number): void {
+  setAmount(value: string): void {
     this.amount = value
   }
 

@@ -1,21 +1,21 @@
-import { Stateful, action } from "reactronic"
+import { Stateful, action, Action } from "reactronic"
 import { Gender } from "./Gender"
-import { IPassport, Passport } from "./Passport"
-import { IBirthInfo, BirthInfo } from "./BirthInfo"
-import { IPlaceOfLiving, PlaceOfLiving } from "./PlaceOfLiving"
-import { IPlaceOfRegistration, PlaceOfRegistration } from "./PlaceOfRegistration"
-import { IContacts, Contacts } from "./Contacts"
-import { IIncomePerMonth, IncomePerMonth } from "./IncomePerMonth"
-import { IWorkInfo, WorkInfo } from "./WorkInfo"
+import { Passport, IPassport } from "./Passport"
+import { BirthInfo, IBirthInfo } from "./BirthInfo"
+import { PlaceOfLiving, IPlaceOfLiving } from "./PlaceOfLiving"
+import { PlaceOfRegistration, IPlaceOfRegistration } from "./PlaceOfRegistration"
+import { Contacts, IContacts } from "./Contacts"
+import { IncomePerMonth, IIncomePerMonth } from "./IncomePerMonth"
+import { WorkInfo, IWorkInfo } from "./WorkInfo"
 
-export interface ICustomerFullName {
-  id?: number
+export interface ICustomerShortInfo {
+  id: number
   firstName: string
   middleName: string
   lastName: string
 }
 
-export interface ICustomer {
+export interface ICustomerFullInfo {
   id: number
   firstName: string
   middleName: string
@@ -23,70 +23,58 @@ export interface ICustomer {
   gender: Gender
   isRetired: boolean
   isLiableForMilitaryService: boolean
-  passport: Passport
-  birthInfo: BirthInfo
-  placeOfLiving: PlaceOfLiving
-  placeOfRegistration: PlaceOfRegistration
-  contacts: Contacts
-  incomePerMonth: IncomePerMonth
-  workInfo: WorkInfo
+  passport: IPassport
+  birthInfo: IBirthInfo
+  placeOfLiving: IPlaceOfLiving
+  placeOfRegistration: IPlaceOfRegistration
+  contacts: IContacts
+  incomePerMonth: IIncomePerMonth
+  workInfo: IWorkInfo
   disabilityId: number
   maritalStatusId: number
 }
 
 export class Customer extends Stateful {
-  id?: number
-  firstName: string
-  middleName: string
-  lastName: string
-  gender?: Gender
-  isRetired?: boolean
-  isLiableForMilitaryService?: boolean
-  passport?: Passport
-  birthInfo?: BirthInfo
-  placeOfLiving?: PlaceOfLiving
-  placeOfRegistration?: PlaceOfRegistration
-  contacts?: Contacts
-  incomePerMonth?: IncomePerMonth
-  workInfo?: WorkInfo
-  disabilityId?: number
-  maritalStatusId?: number
+  id?: number = undefined
+  firstName: string = ''
+  middleName: string = ''
+  lastName: string = ''
+  gender = Gender.Male
+  isRetired: boolean = false
+  isLiableForMilitaryService: boolean = false
+  passport = new Passport()
+  birthInfo = new BirthInfo()
+  placeOfLiving = new PlaceOfLiving()
+  placeOfRegistration = new PlaceOfRegistration()
+  contacts = new Contacts()
+  incomePerMonth = new IncomePerMonth()
+  workInfo = new WorkInfo()
+  disabilityId: number | null = null
+  maritalStatusId: number = 1
 
-  constructor(fullName: ICustomerFullName) {
-    super()
-    this.id = fullName.id
-    this.firstName = fullName.firstName
-    this.middleName = fullName.middleName
-    this.lastName = fullName.lastName
-    this.gender = undefined
-    this.isRetired = undefined
-    this.isLiableForMilitaryService = undefined
-    this.passport = undefined
-    this.birthInfo = undefined
-    this.placeOfLiving = undefined
-    this.placeOfRegistration = undefined
-    this.contacts = undefined
-    this.incomePerMonth = undefined
-    this.workInfo = undefined
-    this.disabilityId = undefined
-    this.maritalStatusId = undefined
+  @action
+  setShortInfo(info: ICustomerShortInfo): void {
+    this.id = info.id
+    this.firstName = info.firstName
+    this.middleName = info.middleName
+    this.lastName = info.lastName
   }
 
   @action
   async getFullInfoModel(): Promise<void> {
     const json = await fetch(`https://localhost:5001/customers/${this.id}`)
       .then(response => response.json())
-    const customer = json as ICustomer
+    const customer = json as ICustomerFullInfo
     this.gender = customer.gender
     this.isRetired = customer.isRetired
     this.isLiableForMilitaryService = customer.isLiableForMilitaryService
-    this.passport = new Passport(customer.passport)
-    this.birthInfo = new BirthInfo(customer.birthInfo)
-    this.placeOfLiving = new PlaceOfLiving(customer.placeOfLiving)
-    this.placeOfRegistration = new PlaceOfRegistration(customer.placeOfRegistration)
-    this.contacts = new Contacts(customer.contacts)
-    this.incomePerMonth = new IncomePerMonth(customer.incomePerMonth)
-    this.workInfo = new WorkInfo(customer.workInfo)
+    this.passport.initialize(customer.passport)
+    this.birthInfo.initialize(customer.birthInfo)
+    this.placeOfLiving.initialize(customer.placeOfLiving)
+    this.placeOfRegistration.initialize(customer.placeOfRegistration)
+    this.contacts.initialize(customer.contacts)
+    this.incomePerMonth.initialize(customer.incomePerMonth)
+    this.workInfo.initialize(customer.workInfo)
     this.disabilityId = customer.disabilityId
     this.maritalStatusId = customer.maritalStatusId
   }
