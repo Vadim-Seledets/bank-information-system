@@ -19,7 +19,7 @@ import { App } from './App'
 
 export class CustomerInfo extends Stateful {
   app: App
-  auxiliary: Auxiliary = Auxiliary.Empty
+  auxiliary = new Auxiliary()
   
   // properties = Array<CustomerInfoProperty>(
   //   new CustomerInfoProperty('Last name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
