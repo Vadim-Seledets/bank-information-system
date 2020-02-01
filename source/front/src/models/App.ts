@@ -1,7 +1,6 @@
-import { Stateful, action } from 'reactronic'
-import { Api } from './Api'
-import { CustomerInfo } from './CustomerInfo'
+import { Stateful, action, trigger } from 'reactronic'
 import { Customer, ICustomerFullName } from './entities/Customer'
+import { CustomerInfo } from './CustomerInfo'
 
 export class Tab extends Stateful{
   constructor(
@@ -12,20 +11,30 @@ export class Tab extends Stateful{
 }
 
 export class App extends Stateful {
-  api = new Api('https://localhost:5001')
-  selectedCustomer?: Customer = undefined
-  customers = new Array<Customer>()
-  tabs = new Array<Tab>(
-    new Tab('Customers', 'las la-address-book'),
-    new Tab('Deposits', 'las la-percent'),
-    new Tab('Loans', 'las la-credit-card'),
-    new Tab('ATM', 'las la-money-check'),
-  )
-  currentTab?: Tab = this.tabs[0]
-  customerInfo = new CustomerInfo(this)
+  customers: Array<Customer>
+  selectedCustomer?: Customer
+  tabs: Array<Tab>
+  currentTab?: Tab
+  customerInfo: CustomerInfo
 
   constructor() {
     super()
+    this.customers = new Array<Customer>()
+    this.selectedCustomer = undefined
+    this.tabs = new Array<Tab>(
+      new Tab('Customers', 'las la-address-book'),
+      new Tab('Deposits', 'las la-percent'),
+      new Tab('Loans', 'las la-credit-card'),
+      new Tab('ATM', 'las la-money-check'),
+    )
+    this.currentTab = this.tabs[0]
+    this.customerInfo = new CustomerInfo(this)
+  }
+
+  @trigger
+  init(): void {
+    this.customerInfo.getAuxiliaryInfo()
+    this.getAllCustomersInShortInfoModel()
   }
 
   @action
@@ -40,9 +49,8 @@ export class App extends Stateful {
 
   @action
   async getAllCustomersInShortInfoModel(): Promise<void> {
-    const json = await fetch(`https://localhost:5001/customers`)
-      .then(response => response.json())
-    const customerFullNames = json as ICustomerFullName[]
+    const customerFullNames = await fetch(`https://localhost:5001/customers`)
+      .then(response => response.json()) as ICustomerFullName[]
     this.customers = customerFullNames.map(cfn => new Customer(cfn))
   }
 }
