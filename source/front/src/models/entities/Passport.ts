@@ -1,4 +1,4 @@
-import { Stateful } from "reactronic"
+import { Stateful, action } from "reactronic"
 
 export interface IPassport {
   citizenshipId: number
@@ -25,5 +25,35 @@ export class Passport extends Stateful {
     this.issuingAuthority = passport.issuingAuthority
     this.issuedAt = passport.issuedAt
     this.idNumber = passport.idNumber
+  }
+
+  @action
+  setCitizenshipId(value: number): void {
+    this.citizenshipId = value
+  }
+
+  @action
+  setSeries(value: string): void {
+    this.series = value
+  }
+
+  @action
+  setPassportNumber(value: string): void {
+    this.passportNumber = value
+  }
+
+  @action
+  setIssuingAuthority(value: string): void {
+    this.issuingAuthority = value
+  }
+
+  @action
+  setIssuedAt(value: string): void {
+    this.issuedAt = value
+  }
+
+  @action
+  setIdNumber(value: string): void {
+    this.idNumber = value
   }
 }

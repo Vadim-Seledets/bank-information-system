@@ -1,4 +1,4 @@
-import { Stateful } from "reactronic"
+import { Stateful, action } from "reactronic"
 
 export interface IIncomePerMonth {
   amount: number
@@ -13,5 +13,15 @@ export class IncomePerMonth extends Stateful {
     super()
     this.amount = incomePerMonth.amount
     this.currencyId = incomePerMonth.currencyId
+  }
+
+  @action
+  setAmount(value: number): void {
+    this.amount = value
+  }
+
+  @action
+  setCurrencyId(value: number): void {
+    this.currencyId = value
   }
 }

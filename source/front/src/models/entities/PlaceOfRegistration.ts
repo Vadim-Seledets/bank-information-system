@@ -1,4 +1,4 @@
-import { Stateful } from "reactronic"
+import { Stateful, action } from "reactronic"
 
 export interface IPlaceOfRegistration {
   cityId: number
@@ -13,5 +13,15 @@ export class PlaceOfRegistration extends Stateful {
     super()
     this.cityId = placeOfRegistration.cityId
     this.address = placeOfRegistration.address
+  }
+
+  @action
+  setCityId(id: number): void {
+    this.cityId = id
+  }
+
+  @action
+  setAddress(value: string): void {
+    this.address = value
   }
 }

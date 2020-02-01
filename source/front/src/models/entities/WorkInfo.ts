@@ -1,4 +1,4 @@
-import { Stateful } from "reactronic"
+import { Stateful, action } from "reactronic"
 
 export interface IWorkInfo {
   company: string
@@ -13,5 +13,15 @@ export class WorkInfo extends Stateful {
     super()
     this.company = workInfo.company
     this.position = workInfo.position
+  }
+
+  @action
+  setCompany(value: string): void {
+    this.company = value
+  }
+
+  @action
+  setPosition(value: string): void {
+    this.position = value
   }
 }
