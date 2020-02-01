@@ -35,43 +35,43 @@ export const style = restyle(() => {
     `,
 
     customerList: css`
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      grid-template-columns: 1em 3em 1fr 4fr 1fr 3fr 1fr 3em 1em;
       color: ${theme.applicationForeground};
-    `,
-    
-    customerListElement: css`
-      display: flex;
-      cursor: default;
+      font-size: 0.8em;
       user-select: none;
-      box-sizing: border-box;
-      line-height: 1.2em;
-      padding: 0.25em 0;
-      border-bottom: 1px solid ${theme.applicationForeground};
-      transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.5s;
 
-      &[is-selected=true] {
-        border-bottom: 1px solid ${theme.highlighter};
+      .icon {
+        font-size: 1.2em;
+        z-index: 2;
+      }
+
+      .text {
+        z-index: 2;
       }
 
       .action {
-        display: none;
         cursor: pointer;
       }
 
-      .space {
-        flex-grow: 1;
+      .row {
+        z-index: 1;
+        width: 100%;
+        padding: 1em 0;
+        border-bottom: 1px solid black;
       }
 
-      .edit {
-
+      .oddRow {
+        background-color: #F9FAFB;
       }
 
-      &:hover {
-        .action {
-          display: initial;
+      /* .rowHighlighter {
+        &[is-hover] {
+          background-color: #eaebec;
         }
-      }
+      } */
     `,
   }
 })
