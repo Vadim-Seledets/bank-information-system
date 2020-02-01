@@ -13,7 +13,7 @@ export const style = restyle(() => {
       flex-direction: column;
       flex-grow: 1;
       margin-right: 1em;
-      /* overflow: scroll; */
+      font-size: 0.8em;
     `,
 
     property: css`

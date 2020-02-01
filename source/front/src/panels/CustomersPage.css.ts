@@ -35,6 +35,8 @@ export const style = restyle(() => {
     
     customerListElement: css`
       display: flex;
+      cursor: default;
+      user-select: none;
       box-sizing: border-box;
       line-height: 1.2em;
       padding: 0.25em 0;
