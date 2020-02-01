@@ -58,7 +58,9 @@ namespace BankInformationSystem
                 options.AddPolicy(DefaultCorsPolicy,
                     builder =>
                     {
-                        builder.AllowAnyOrigin();
+                        builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
                     });
             });
             
