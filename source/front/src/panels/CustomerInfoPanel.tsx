@@ -14,65 +14,78 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
           <div className={css.main}>
             <div className={css.property}>
               <div className='propertyName'>Last name</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.lastName}
                 onChange={e => customer.setLastName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>First name</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.firstName}
                 onChange={e => customer.setFirstName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Middle name</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.middleName}
                 onChange={e => customer.setMiddleName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Date of birth</div>
+              <div className='space' />
               <input className={'propertyInput'} type="date" defaultValue={customer.birthInfo?.dateOfBirth}
                 onChange={e => customer.birthInfo?.setDateOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Gender</div>
+              <div className='space' />
               {Object.keys(Gender).map((v, i) => (
                 <React.Fragment key={`${i}:${v}`}>
                   <input type="radio" name="gender" checked={v === customer.gender ? true : false}
-                    onChange={() => customer.setGender(v as Gender)} />{v}
+                    style={{marginLeft: '1em'}}
+                    onChange={() => customer.setGender(v as Gender)} />&nbsp;{v}
                 </React.Fragment>
               ))}
             </div>
             <div className={css.property}>
               <div className='propertyName'>Passport series</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.passport?.series}
                 onChange={e => customer.passport?.setSeries(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Passport number</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.passport?.passportNumber}
                 onChange={e => customer.passport?.setPassportNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Issuing authority</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.passport?.issuingAuthority}
                 onChange={e => customer.passport?.setIssuingAuthority(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Issued at</div>
+              <div className='space' />
               <input className={'propertyInput'} type="date" defaultValue={customer.passport?.issuedAt}
                 onChange={e => customer.passport?.setIssuedAt(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Id number</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.passport?.idNumber}
                 onChange={e => customer.passport?.setIdNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Place Of Birth</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.birthInfo?.placeOfBirth}
                 onChange={e => customer.birthInfo?.setPlaceOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Place Of Living</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.placeOfLiving?.cityId}
                 onChange={e => customer.placeOfLiving?.setCityId(parseInt(e.currentTarget.value))}
               >
@@ -83,11 +96,13 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Place Of Living: address</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.placeOfLiving?.address}
                 onChange={e => customer.placeOfLiving?.setAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Place Of Registration</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.placeOfRegistration?.cityId}
                 onChange={e => customer.placeOfRegistration?.setCityId(parseInt(e.currentTarget.value))}
               >
@@ -98,31 +113,37 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Home Phone Number</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.contacts?.homePhoneNumber}
                 onChange={e => customer.contacts?.setHomePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Mobile Phone Number</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.contacts?.mobilePhoneNumber}
                 onChange={e => customer.contacts?.setMobilePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Email</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.contacts?.email}
                 onChange={e => customer.contacts?.setEmail(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Company</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.workInfo?.company}
                 onChange={e => customer.workInfo?.setCompany(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Position</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.workInfo?.position}
                 onChange={e => customer.workInfo?.setPosition(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>City of registration</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.placeOfRegistration?.cityId}
                 onChange={e => customer.placeOfRegistration?.setCityId(parseInt(e.currentTarget.value))}
               >
@@ -133,11 +154,13 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Address of registration</div>
+              <div className='space' />
               <input className={'propertyInput'} type="text" defaultValue={customer.placeOfRegistration?.address}
                 onChange={e => customer.placeOfRegistration?.setAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Marital status</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.maritalStatusId}
                 onChange={e => customer.setMaritalStatusId(parseInt(e.currentTarget.value))}
               >
@@ -148,6 +171,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Citizenship</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.passport?.citizenshipId}
                 onChange={e => customer.passport?.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
@@ -158,6 +182,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Disability</div>
+              <div className='space' />
               <select className='propertyInput' value={customer.disabilityId}
                 onChange={e => customer.setDisabilityId(parseInt(e.currentTarget.value))}
               >
@@ -168,11 +193,13 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Is retired</div>
+              <div className='space' />
               <input className={'propertyInput'} type="checkbox" defaultChecked={customer.isRetired}
                 onChange={e => customer.setIsRetired(e.currentTarget.checked)} />
             </div>
             <div className={css.property}>
               <div className='propertyName'>Amount</div>
+              <div className='space' />
               <input className={'propertyInput'} type="number" defaultValue={customer.incomePerMonth?.amount}
                 onChange={e => customer.incomePerMonth?.setAmount(parseInt(e.currentTarget.value))} />
               <select className='propertyInput' value={customer.incomePerMonth?.currencyId}
@@ -185,6 +212,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyName'>Is Liable For Military Service</div>
+              <div className='space' />
               <input className={'propertyInput'} type="checkbox" defaultChecked={customer.isLiableForMilitaryService}
                 onChange={e => customer.setIsLiableForMilitaryService(e.currentTarget.checked)} />
             </div>

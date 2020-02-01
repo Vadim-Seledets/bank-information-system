@@ -15,6 +15,7 @@ export const style = restyle(() => {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-size: 0.8em;
 
       .addNewCustomerButton {
         color: ${theme.applicationForeground};

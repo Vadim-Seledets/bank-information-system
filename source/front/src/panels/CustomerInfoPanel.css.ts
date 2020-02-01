@@ -18,7 +18,6 @@ export const style = restyle(() => {
 
     property: css`
       display: flex;
-      justify-content: space-between;
       padding: 0.25em 0;
 
       .propertyName {
@@ -26,8 +25,12 @@ export const style = restyle(() => {
       }
 
       .propertyInput {
-        width: 8em;
+        width: 10em;
         border-bottom: 1px solid grey;
+      }
+
+      .space {
+        flex-grow: 1;
       }
     `,
 
