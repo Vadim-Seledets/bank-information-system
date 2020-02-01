@@ -1,5 +1,4 @@
 import { Stateful, action, trigger } from 'reactronic'
-import { Customer } from './entities/Customer'
 import { Auxiliary } from './entities/Auxiliary'
 import { App } from './App'
 
@@ -56,8 +55,9 @@ export class CustomerInfo extends Stateful {
     this.app = app
   }
 
-  @trigger
-  getAuxiliary(): void {
-    this.app.api.getAuxiliaryInfo().then(v => this.auxiliary = v)
+  @action
+  async getAuxiliaryInfo(): Promise<void> {
+    this.auxiliary = await fetch(`https://localhost:5001/customers/auxiliary`)
+      .then(response => response.json())
   }
 }
