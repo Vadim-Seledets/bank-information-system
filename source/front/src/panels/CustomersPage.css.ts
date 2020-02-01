@@ -19,6 +19,12 @@ export const style = restyle(() => {
 
       .addNewCustomerButton {
         color: ${theme.applicationForeground};
+        user-select: none;
+        cursor: pointer;
+
+        &:hover {
+          color: ${theme.buttonHover};
+        }
       }
 
       .search {
