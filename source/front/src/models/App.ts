@@ -1,6 +1,7 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
+import { Errors } from './Errors'
 
 export class Tab extends Stateful{
   constructor(
@@ -63,5 +64,33 @@ export class App extends Stateful {
       customer.setShortInfo(customerShortInfo)
       return customer
     })
+  }
+  
+  @action
+  async editCustomerInfo(): Promise<void> {
+    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: this.selectedCustomer?.getJson(),
+    })
+    if (response.ok) {
+      this.selectedCustomer?.setErrors(undefined)
+    } else {
+      this.selectedCustomer?.setErrors(await response.json() as Errors)
+    }
+  }
+
+  @action
+  async deleteCustomer(): Promise<void> {
+    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
+      method: 'DELETE',
+    })
+    if (response.ok) {
+      this.selectedCustomer?.setErrors(undefined)
+    } else {
+      this.selectedCustomer?.setErrors(await response.json() as Errors)
+    }
   }
 }

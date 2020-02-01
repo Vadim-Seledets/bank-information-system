@@ -38,7 +38,7 @@ export const style = restyle(() => {
       display: grid;
       align-items: center;
       justify-items: center;
-      grid-template-columns: 1em 3em 1fr 4fr 1fr 3fr 1fr 3em 1em;
+      grid-template-columns: 1em 3em 1fr 4fr 1fr 3fr 1fr 4em 1em;
       color: ${theme.applicationForeground};
       font-size: 0.8em;
       user-select: none;
@@ -54,6 +54,32 @@ export const style = restyle(() => {
 
       .action {
         cursor: pointer;
+      }
+
+      .errors {
+        color: red;
+
+        &:hover {
+          .errorsPopUp {
+            display: flex;
+          }
+        }
+
+        .errorsPopUp {
+          z-index: 3;
+          display: none;
+          position: absolute;
+          margin-bottom: -1em;
+          margin-left: -15em;
+          flex-direction: column;
+          font-size: 0.7em;
+          background-color: ${theme.applicationBackground};
+          box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
+        
+          .errorRow {
+            padding: 0.25em;
+          }
+        }
       }
 
       .row {

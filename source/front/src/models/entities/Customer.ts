@@ -7,6 +7,7 @@ import { PlaceOfRegistration, IPlaceOfRegistration } from "./PlaceOfRegistration
 import { Contacts, IContacts } from "./Contacts"
 import { IncomePerMonth, IIncomePerMonth } from "./IncomePerMonth"
 import { WorkInfo, IWorkInfo } from "./WorkInfo"
+import { Errors } from "../Errors"
 
 export interface ICustomerShortInfo {
   id: number
@@ -52,6 +53,8 @@ export class Customer extends Stateful {
   disabilityId: number | null = null
   maritalStatusId: number = 1
 
+  errors?: Errors = undefined
+
   @action
   setShortInfo(info: ICustomerShortInfo): void {
     this.id = info.id
@@ -77,6 +80,51 @@ export class Customer extends Stateful {
     this.workInfo.initialize(customer.workInfo)
     this.disabilityId = customer.disabilityId
     this.maritalStatusId = customer.maritalStatusId
+  }
+
+  @action
+  setFirstName(value: string): void {
+    this.firstName = value
+  }
+
+  @action
+  setMiddleName(value: string): void {
+    this.middleName = value
+  }
+  
+  @action
+  setLastName(value: string): void {
+    this.lastName = value
+  }
+  
+  @action
+  setGender(value: Gender): void {
+    this.gender = value
+  }
+
+  @action
+  setIsRetired(value: boolean): void {
+    this.isRetired = value
+  }
+
+  @action
+  setIsLiableForMilitaryService(value: boolean): void {
+    this.isLiableForMilitaryService = value
+  }
+ 
+  @action
+  setDisabilityId(id: number): void {
+    this.disabilityId = id
+  }
+ 
+  @action
+  setMaritalStatusId(id: number): void {
+    this.maritalStatusId = id
+  }
+
+  @action
+  setErrors(errors?: Errors): void {
+    this.errors = errors
   }
 
   getJson(): string {
@@ -124,46 +172,5 @@ export class Customer extends Stateful {
       maritalStatusId: this.maritalStatusId,
     }
     return JSON.stringify(customer)
-  }
-
-  @action
-  setFirstName(value: string): void {
-    this.firstName = value
-  }
-
-  @action
-  setMiddleName(value: string): void {
-    this.middleName = value
-  }
-  
-  @action
-  setLastName(value: string): void {
-    this.lastName = value
-  }
-  
-  @action
-  setGender(value: Gender): void {
-    this.gender = value
-    console.log(this.gender)
-  }
-
-  @action
-  setIsRetired(value: boolean): void {
-    this.isRetired = value
-  }
-
-  @action
-  setIsLiableForMilitaryService(value: boolean): void {
-    this.isLiableForMilitaryService = value
-  }
- 
-  @action
-  setDisabilityId(id: number): void {
-    this.disabilityId = id
-  }
- 
-  @action
-  setMaritalStatusId(id: number): void {
-    this.maritalStatusId = id
   }
 }

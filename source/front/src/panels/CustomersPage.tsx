@@ -45,6 +45,18 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                   }}
                 />
                 <div className={'las la-trash action'} />
+                {v.errors && (
+                  <div className='errors las la-exclamation'>
+                    <div className='errorsPopUp'>
+                      {v.errors.error && <div className='errorRow'>{v.errors.error}</div>}
+                      {v.errors.errors && (
+                        v.errors.errors.map((e, i) => (
+                          <div key={i} className='errorRow'>{`${e.name}: ${e.message}`}</div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`} />
             </React.Fragment>
