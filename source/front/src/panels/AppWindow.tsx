@@ -38,7 +38,6 @@ export function AppWindow(p: { app: App }): JSX.Element {
           <div style={{...dim(8, 2, 11, 12)}}>
             <EditCustomerInfoPageView app={p.app} />
           </div>
-          // <div className={cx(css.closeEditPanel, 'las la-times')} />
         )}
       </div>
     )
