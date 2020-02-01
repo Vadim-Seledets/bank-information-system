@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start Server - webpack",
+      "label": "Start Server - front",
       "type": "shell",
       "command": "npm run webpack-start",
       "options": {
@@ -34,7 +34,7 @@
       "group": "build",
     },
     {
-      "label": "Start Server - back-end",
+      "label": "Start Server - back",
       "type": "process",
       "command": "dotnet",
       "args": [
