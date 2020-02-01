@@ -11,7 +11,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     return (
       <div className={css.main}>
         <div className={css.actionsPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
-          <div className='addNewCustomerButton'>
+          <div className='addNewCustomerButton' onClick={() => p.app.addNewCustomer()}>
             Add a New Customer
           </div>
           <input className='search' type='text' placeholder='Find a Customer...'/>
@@ -25,7 +25,9 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                   p.app.setSelectedCustomer(undefined)
                 } else {
                   p.app.setSelectedCustomer(v)
-                  v.getFullInfoModel()
+                  if (v.id) {
+                    v.getFullInfoModel()
+                  }
                 }
               }}
             >

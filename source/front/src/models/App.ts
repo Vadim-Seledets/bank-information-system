@@ -1,5 +1,5 @@
 import { Stateful, action, trigger } from 'reactronic'
-import { Customer, ICustomerFullName } from './entities/Customer'
+import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
 
 export class Tab extends Stateful{
@@ -48,9 +48,20 @@ export class App extends Stateful {
   }
 
   @action
+  addNewCustomer(): void {
+    const newCustomer = new Customer()
+    this.customers.push(newCustomer)
+    this.selectedCustomer = newCustomer
+  }
+
+  @action
   async getAllCustomersInShortInfoModel(): Promise<void> {
     const customerFullNames = await fetch(`https://localhost:5001/customers`)
-      .then(response => response.json()) as ICustomerFullName[]
-    this.customers = customerFullNames.map(cfn => new Customer(cfn))
+      .then(response => response.json()) as ICustomerShortInfo[]
+    this.customers = customerFullNames.map(customerShortInfo => {
+      const customer = new Customer()
+      customer.setShortInfo(customerShortInfo)
+      return customer
+    })
   }
 }
