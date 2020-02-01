@@ -9,7 +9,7 @@ import { IIncomePerMonth, IncomePerMonth } from "./IncomePerMonth"
 import { IWorkInfo, WorkInfo } from "./WorkInfo"
 
 export interface ICustomerFullName {
-  id: number
+  id?: number
   firstName: string
   middleName: string
   lastName: string
@@ -35,7 +35,7 @@ export interface ICustomer {
 }
 
 export class Customer extends Stateful {
-  id: number
+  id?: number
   firstName: string
   middleName: string
   lastName: string
@@ -93,7 +93,7 @@ export class Customer extends Stateful {
 
   @action
   setFirstName(value: string): void {
-    this.lastName = value
+    this.firstName = value
   }
 
   @action
