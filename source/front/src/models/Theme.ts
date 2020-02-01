@@ -8,6 +8,9 @@ export interface ITheme {
   readonly buttonHover: string
   readonly menuBackground: string
   readonly sidebarBackground: string
+  readonly sidebarForeground: string
+  readonly sidebarTabSelectedBackground: string
+  readonly sidebarTabSelectedForeground: string
   readonly highlighter: string
 }
 
@@ -19,6 +22,9 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly buttonHover = ""
   readonly menuBackground = ""
   readonly sidebarBackground = ""
+  readonly sidebarForeground = ""
+  readonly sidebarTabSelectedBackground = ""
+  readonly sidebarTabSelectedForeground = ""
   readonly highlighter = ""
 }
 

@@ -20,7 +20,7 @@ export const style = restyle(() => {
       font-size: calc(16px + (24 - 16) * (100vw - 640px) / (1920 - 640));
       font-weight: 300;
       grid-template-columns: 2fr repeat(11, 1fr);
-      grid-template-rows: 1.5em 1.5em repeat(10, 1fr);
+      grid-template-rows: 2em 1.5em repeat(10, 1fr);
 
       button {
         padding: 0.1em;
@@ -49,31 +49,32 @@ export const style = restyle(() => {
     sidebar: css`
       display: flex;
       flex-direction: column;
-      background: ${theme.sidebarBackground}
+      background: ${theme.sidebarBackground};
+      color: ${theme.sidebarForeground};
     `,
 
     sidebarElement: css`
       display: flex;
       align-items: center;
-      padding: 0.3em 0 0.25em 0.3em;
-      /* border-bottom: 1px solid grey; */
+      padding: 0.4em 0;
+      text-transform: uppercase;
 
       &:hover {
         background: ${theme.applicationBackgroundDemmed};
       }
 
       &[is-selected=true] {
-        color: ${theme.applicationForeground};
-        background: ${theme.applicationBackground};
+        color: ${theme.sidebarTabSelectedForeground};
+        background: ${theme.sidebarTabSelectedBackground};
       }
 
       .icon {
-        margin-right: 0.5em;
+        margin: 0 0.5em;
         font-size: 1.2em;
       }
 
       .caption {
-        font-size: 0.9em;
+        font-size: 0.6em;
       }
     `,
 

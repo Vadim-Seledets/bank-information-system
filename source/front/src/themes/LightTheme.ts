@@ -7,7 +7,10 @@ export class LightTheme extends Stateful implements ITheme {
   readonly applicationBackgroundDemmed = "#17233E"
   readonly applicationForeground = "#101010"
   readonly buttonHover = "#666666"
-  readonly menuBackground = "#17233E"
-  readonly sidebarBackground = "#202F53"
-  readonly highlighter = "red"
+  readonly menuBackground = "#16354E"
+  readonly sidebarBackground = "#302F3E"
+  readonly sidebarForeground = "#9897A9"
+  readonly sidebarTabSelectedBackground = "#6DAC37"
+  readonly sidebarTabSelectedForeground = "#FFFFFF"
+  readonly highlighter = "#6DAC37"
 }
