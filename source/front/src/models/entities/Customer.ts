@@ -79,6 +79,53 @@ export class Customer extends Stateful {
     this.maritalStatusId = customer.maritalStatusId
   }
 
+  getJson(): string {
+    const customer = {
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      gender: this.gender,
+      isRetired: this.isRetired,
+      isLiableForMilitaryService: this.isLiableForMilitaryService,
+      passport: {
+        citizenshipId: this.passport.citizenshipId,
+        series: this.passport.series,
+        passportNumber: this.passport.passportNumber,
+        issuingAuthority: this.passport.issuingAuthority,
+        issuedAt: this.passport.issuedAt,
+        idNumber: this.passport.idNumber,
+      },
+      birthInfo: {
+        placeOfBirth: this.birthInfo.placeOfBirth,
+        dateOfBirth: this.birthInfo.dateOfBirth,
+      },
+      placeOfLiving: {
+        cityId: this.placeOfLiving.cityId,
+        address: this.placeOfLiving.address,
+      },
+      placeOfRegistration: {
+        cityId: this.placeOfRegistration.cityId,
+        address: this.placeOfRegistration.address,
+      },
+      contacts: {
+        email: this.contacts.email,
+        homePhoneNumber: this.contacts.homePhoneNumber,
+        mobilePhoneNumber: this.contacts.mobilePhoneNumber,
+      },
+      incomePerMonth: {
+        amount: this.incomePerMonth.amount,
+        currencyId: this.incomePerMonth.currencyId,
+      },
+      workInfo: {
+        company: this.workInfo.company,
+        position: this.workInfo.position,
+      },
+      disabilityId: this.disabilityId,
+      maritalStatusId: this.maritalStatusId,
+    }
+    return JSON.stringify(customer)
+  }
+
   @action
   setFirstName(value: string): void {
     this.firstName = value
