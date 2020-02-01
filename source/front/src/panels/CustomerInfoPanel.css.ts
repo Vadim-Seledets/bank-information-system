@@ -12,30 +12,49 @@ export const style = restyle(() => {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
-      margin-right: 1em;
-      font-size: 0.8em;
+      margin: 0 1em;
+      
+    `,
+
+    propertyGroupCaption: css`
+      font-size: 0.9em;
+      font-weight: bold;
+      padding: 0.5em 0;
     `,
 
     property: css`
       display: flex;
+      flex-direction: column;
+      margin-left: 1em;
       padding: 0.25em 0;
-
+      
       .propertyName {
+        display: flex;
 
+        .name {
+          font-size: 0.7em;
+          color: grey;
+        }
+
+        .error {
+          color: red;
+        }
       }
 
       .propertyInput {
-        width: 10em;
+        height: 1em;
+        font-size: 0.8em;
+        padding: 0.25em 0;
         border-bottom: 1px solid grey;
       }
 
-      .space {
-        flex-grow: 1;
+      .propertyInputHorizontal {
+        display: flex;
+        align-items: baseline;
+        height: 1em;
+        font-size: 0.8em;
+        padding: 0.25em 0;
       }
-    `,
-
-    inputValue: css`
-      
     `,
   }
 })

@@ -10,12 +10,12 @@ export function EditCustomerInfoPageView(p: { app: App }): JSX.Element {
     const css = style.classes
     return (
       <div className={css.main}>
-        <div className={css.actionsPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
-          <div className='editButton'>
+        {/* <div className={css.actionsPanel} style={{...dim(1, 1, 12, 1), color: 'grey'}}>
+          <div className='editButton' onClick={() => p.app.editCustomerInfo()}>
             Edit
           </div>
-        </div>
-        <div style={{...dim(1, 2, 12, 12), display: 'flex', overflow: 'scroll'}}>
+        </div> */}
+        <div style={{...dim(1, 1, 12, 12), display: 'flex', overflow: 'scroll'}}>
           <CustomerInfoPanel customerInfo={p.app.customerInfo} />
         </div>
       </div>
