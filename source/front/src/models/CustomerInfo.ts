@@ -20,7 +20,6 @@ import { App } from './App'
 
 export class CustomerInfo extends Stateful {
   app: App
-  customer?: Customer
   auxiliary: Auxiliary = Auxiliary.Empty
   
   // properties = Array<CustomerInfoProperty>(
