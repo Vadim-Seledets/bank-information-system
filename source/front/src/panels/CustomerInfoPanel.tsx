@@ -25,7 +25,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.lastName}
-                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.LastName')}`}
+                is-invalid={`${!p.customerInfo.validation.isValid('lastName') || customer.errors?.errors?.some(v => v.name === 'Customer.LastName')}`}
                 onChange={e => customer.setLastName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -447,7 +447,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                     </div>
                   </div>
                 )}
-                <input className={'input'} type="checkbox" checked={customer.isRetired}
+                <input className={'input'} style={{alignSelf: 'center'}} type="checkbox" checked={customer.isRetired}
                   is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.IsRetired')}`}
                   onChange={e => customer.setIsRetired(e.currentTarget.checked)} />
               </div>
@@ -462,7 +462,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                     </div>
                   </div>
                 )}
-                <input className={'input'} type="checkbox" checked={customer.isLiableForMilitaryService}
+                <input className={'input'} style={{alignSelf: 'center'}} type="checkbox" checked={customer.isLiableForMilitaryService}
                   is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.IsLiableForMilitaryService')}`}
                   onChange={e => customer.setIsLiableForMilitaryService(e.currentTarget.checked)} />
               </div>

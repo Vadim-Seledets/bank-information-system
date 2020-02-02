@@ -43,7 +43,9 @@ export function AppWindow(p: { app: App }): JSX.Element {
             <button style={{ ...dim(12, 2, 12, 2) }} onClick={() => p.app.setSelectedCustomer(undefined)}>
               Back
             </button>
-            <button style={{ ...dim(11, 12, 12, 12) }} onClick={() => p.app.editOrPublishCustomer()}>
+            <button className={css.editOrPublishButton} style={{ ...dim(11, 12, 12, 12) }} onClick={() => p.app.editOrPublishCustomer()}
+              is-enabled={`${p.app.customerInfo.validation.areAllValid()}`}
+            >
               {p.app.selectedCustomer?.id
                 ? (
                   <React.Fragment>

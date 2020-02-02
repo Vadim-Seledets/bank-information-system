@@ -35,6 +35,8 @@ export interface ICustomerFullInfo {
   maritalStatusId: number
 }
 
+export type CustomerKeys = keyof Customer
+
 export class Customer extends Stateful {
   id?: string = undefined
   firstName: string = ''
