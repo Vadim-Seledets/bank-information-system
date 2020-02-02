@@ -68,7 +68,8 @@ export const style = restyle(() => {
           font-size: 0.7em;
           background-color: ${theme.applicationBackground};
           box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
-        
+          border-radius: 0.3em;
+
           .errorRow {
             padding: 0.25em;
           }
