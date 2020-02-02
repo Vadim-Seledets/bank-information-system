@@ -36,7 +36,7 @@ export interface ICustomerFullInfo {
 }
 
 export class Customer extends Stateful {
-  id?: number = undefined
+  id?: string = undefined
   firstName: string = ''
   middleName: string = ''
   lastName: string = ''
@@ -54,10 +54,11 @@ export class Customer extends Stateful {
   maritalStatusId: number = 1
 
   errors?: Errors = undefined
+  isFullInfoModelLoaded = false
 
   @action
   setShortInfo(info: ICustomerShortInfo): void {
-    this.id = info.id
+    this.id = info.id.toString()
     this.firstName = info.firstName
     this.middleName = info.middleName
     this.lastName = info.lastName
@@ -80,6 +81,12 @@ export class Customer extends Stateful {
     this.workInfo.initialize(customer.workInfo)
     this.disabilityId = customer.disabilityId
     this.maritalStatusId = customer.maritalStatusId
+    this.isFullInfoModelLoaded = true
+  }
+
+  @action
+  setId(id: string): void {
+    this.id = id
   }
 
   @action
