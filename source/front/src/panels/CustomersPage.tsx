@@ -38,7 +38,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                       p.app.setSelectedCustomer(undefined)
                     } else {
                       p.app.setSelectedCustomer(v)
-                      if (v.id) {
+                      if (v.id && !v.isFullInfoModelLoaded) {
                         v.getFullInfoModel()
                       }
                     }

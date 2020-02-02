@@ -56,6 +56,20 @@ export class App extends Stateful {
   }
 
   @action
+  async editOrPublishCustomer(): Promise<void> {
+    if (this.selectedCustomer) {
+      if (this.selectedCustomer.id) {
+        await this.editCustomerInfo()
+      } else {
+        await this.publishNewCustomer()
+      }
+      if (this.selectedCustomer.errors === undefined) {
+        this.setSelectedCustomer(undefined)
+      }
+    }
+  }
+
+  @action
   async getAllCustomersInShortInfoModel(): Promise<void> {
     const customerFullNames = await fetch(`https://localhost:5001/customers`)
       .then(response => response.json()) as ICustomerShortInfo[]
@@ -65,7 +79,24 @@ export class App extends Stateful {
       return customer
     })
   }
-  
+
+  @action
+  async publishNewCustomer(): Promise<void> {
+    const response = await fetch(`https://localhost:5001/customers`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: this.selectedCustomer?.getJson(),
+    })
+    if (response.ok) {
+      this.selectedCustomer?.setId(await response.text())
+      this.selectedCustomer?.setErrors(undefined)
+    } else {
+      this.selectedCustomer?.setErrors(await response.json() as Errors)
+    }
+  }
+
   @action
   async editCustomerInfo(): Promise<void> {
     const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
