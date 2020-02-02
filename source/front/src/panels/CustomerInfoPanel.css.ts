@@ -76,11 +76,7 @@ export const style = restyle(() => {
         padding: 0.25em 0;
         border-bottom: 1px solid grey;
 
-        :invalid {
-          color: red;
-        }
-
-        &[is-invalid-on-back-end=true] {
+        &[is-invalid=true] {
           border-bottom: 1px solid red;
         }
       }

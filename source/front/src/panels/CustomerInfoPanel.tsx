@@ -16,39 +16,73 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Last name</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.LastName') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.LastName')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.lastName}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.LastName')}`}
                 onChange={e => customer.setLastName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>First name</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.FirstName') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.FirstName')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.firstName}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.FirstName')}`}
                 onChange={e => customer.setFirstName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Middle name</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.MiddleName') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.MiddleName')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.middleName}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.MiddleName')}`}
                 onChange={e => customer.setMiddleName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Date of birth</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'BirthInfo.DateOfBirth') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'BirthInfo.DateOfBirth')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.birthInfo.dateOfBirth}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'BirthInfo.DateOfBirth')}`}
                 onChange={e => customer.birthInfo.setDateOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Gender</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.Gender') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.Gender')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className='propertyInputHorizontalLine'>
                 {Object.keys(Gender).map((v, i) => (
@@ -64,9 +98,16 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Citizenship</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.CitizenshipId') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.CitizenshipId')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.passport.citizenshipId}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.CitizenshipId')}`}
                 onChange={e => customer.passport.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.countriesOfCitizenship.map((v, i) => (
@@ -77,58 +118,107 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Passport series</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.Series') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.Series')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passport.series}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.Series')}`}
                 onChange={e => customer.passport.setSeries(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Passport number</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.PassportNumber') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.PassportNumber')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passport.passportNumber}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.PassportNumber')}`}
                 onChange={e => customer.passport.setPassportNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Issuing authority</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.IssuingAuthority') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.IssuingAuthority')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passport.issuingAuthority}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IssuingAuthority')}`}
                 onChange={e => customer.passport.setIssuingAuthority(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Issued at</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.IssuedAt') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.IssuedAt')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.passport.issuedAt}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IssuedAt')}`}
                 onChange={e => customer.passport.setIssuedAt(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Id number</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Passport.IdNumber') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Passport.IdNumber')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passport.idNumber}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IdNumber')}`}
                 onChange={e => customer.passport.setIdNumber(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Contact Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place of birth</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'BirthInfo.PlaceOfBirth') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'BirthInfo.PlaceOfBirth')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.birthInfo.placeOfBirth}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'BirthInfo.PlaceOfBirth')}`}
                 onChange={e => customer.birthInfo.setPlaceOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place of living</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.CityId') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfLiving.CityId')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfLiving.cityId}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.CityId')}`}
                 onChange={e => customer.placeOfLiving.setCityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.cities.map((v, i) => (
@@ -139,17 +229,31 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Address</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.Address') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfLiving.Address')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfLiving.address}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.Address')}`}
                 onChange={e => customer.placeOfLiving.setAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place of registration</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfRegistration.CityId')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistration.cityId}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId')}`}
                 onChange={e => customer.placeOfRegistration.setCityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.cities.map((v, i) => (
@@ -160,9 +264,16 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>City of registration</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfRegistration.CityId')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistration.cityId}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId')}`}
                 onChange={e => customer.placeOfRegistration.setCityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.cities.map((v, i) => (
@@ -173,61 +284,111 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Address of registration</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.Address') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfRegistration.Address')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfRegistration.address}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.Address')}`}
                 onChange={e => customer.placeOfRegistration.setAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Home phone number</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Contacts.HomePhoneNumber') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Contacts.HomePhoneNumber')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.contacts.homePhoneNumber}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.HomePhoneNumber')}`}
                 onChange={e => customer.contacts.setHomePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Mobile phone number</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Contacts.MobilePhoneNumber') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Contacts.MobilePhoneNumber')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.contacts.mobilePhoneNumber}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.MobilePhoneNumber')}`}
                 onChange={e => customer.contacts.setMobilePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Email</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Contacts.Email') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Contacts.Email')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.contacts.email}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.Email')}`}
                 onChange={e => customer.contacts.setEmail(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Job Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Company</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'WorkInfo.Company') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'WorkInfo.Company')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.workInfo.company}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'WorkInfo.Company')}`}
                 onChange={e => customer.workInfo.setCompany(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Position</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'WorkInfo.Position') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'WorkInfo.Position')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.workInfo.position}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'WorkInfo.Position')}`}
                 onChange={e => customer.workInfo.setPosition(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Salary</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'IncomePerMonth.Amount') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'IncomePerMonth.Amount')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className='propertyInputHorizontalLine'>
                 <input className={'propertyInputColumn'} type="number" value={customer.incomePerMonth.amount}
+                  is-invalid={`${customer.errors?.errors?.some(v => v.name === 'IncomePerMonth.Amount')}`}
                   onChange={e => customer.incomePerMonth.setAmount(e.currentTarget.value)} />
                 <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.incomePerMonth.currencyId}
+                  is-invalid={`${customer.errors?.errors?.some(v => v.name === 'IncomePerMonth.CurrencyId')}`}
                   onChange={e => customer.incomePerMonth.setCurrencyId(parseInt(e.currentTarget.value))}
                 >
                   {p.customerInfo.auxiliary.currencies.map((v, i) => (
@@ -239,9 +400,16 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Marital status</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.MaritalStatus') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.MaritalStatus')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.maritalStatusId}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.MaritalStatus')}`}
                 onChange={e => customer.setMaritalStatusId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.maritalStatuses.map((v, i) => (
@@ -252,9 +420,16 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Disability</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.DisabilityId') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.DisabilityId')?.message}</div>
+                    </div>
+                  </div>
+                )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.disabilityId ? customer.disabilityId : ''}
+                is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.DisabilityId')}`}
                 onChange={e => customer.setDisabilityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.disabilities.map((v, i) => (
@@ -265,16 +440,30 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Is retired</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.IsRetired') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.IsRetired')?.message}</div>
+                    </div>
+                  </div>
+                )}
                 <input className={'input'} type="checkbox" checked={customer.isRetired}
+                  is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.IsRetired')}`}
                   onChange={e => customer.setIsRetired(e.currentTarget.checked)} />
               </div>
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Is liable for military service</div>
-                {/* error */}
+                {customer.errors?.errors?.some(v => v.name === 'Customer.IsLiableForMilitaryService') && (
+                  <div className='error las la-exclamation'>
+                    <div className='errorPopUp'>
+                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'Customer.IsLiableForMilitaryService')?.message}</div>
+                    </div>
+                  </div>
+                )}
                 <input className={'input'} type="checkbox" checked={customer.isLiableForMilitaryService}
+                  is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Customer.IsLiableForMilitaryService')}`}
                   onChange={e => customer.setIsLiableForMilitaryService(e.currentTarget.checked)} />
               </div>
             </div>
