@@ -72,7 +72,8 @@ namespace BankInformationSystem.Data
                 new Disability { Id = 3, Description = "Hearing" },
                 new Disability { Id = 4, Description = "Mental" },
                 new Disability { Id = 5, Description = "Intellectual" },
-                new Disability { Id = 6, Description = "Learning" });
+                new Disability { Id = 6, Description = "Learning" },
+                new Disability { Id = 7, Description = "None" });
             
             modelBuilder.Entity<MaritalStatus>().HasData(
                 new MaritalStatus { Id = 1, Description = "Married" },

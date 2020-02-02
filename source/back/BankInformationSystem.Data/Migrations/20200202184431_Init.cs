@@ -84,7 +84,7 @@ namespace BankInformationSystem.Data.Migrations
                     Gender = table.Column<int>(nullable: false),
                     IsRetired = table.Column<bool>(nullable: false),
                     IsLiableForMilitaryService = table.Column<bool>(nullable: false),
-                    DisabilityId = table.Column<int>(nullable: true),
+                    DisabilityId = table.Column<int>(nullable: false),
                     MaritalStatusId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -95,7 +95,7 @@ namespace BankInformationSystem.Data.Migrations
                         column: x => x.DisabilityId,
                         principalTable: "Disabilities",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Customers_MaritalStatuses_MaritalStatusId",
                         column: x => x.MaritalStatusId,
@@ -388,6 +388,11 @@ namespace BankInformationSystem.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Disabilities",
                 columns: new[] { "Id", "Description" },
+                values: new object[] { 7, "None" });
+
+            migrationBuilder.InsertData(
+                table: "Disabilities",
+                columns: new[] { "Id", "Description" },
                 values: new object[] { 6, "Learning" });
 
             migrationBuilder.InsertData(
@@ -398,12 +403,12 @@ namespace BankInformationSystem.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Disabilities",
                 columns: new[] { "Id", "Description" },
-                values: new object[] { 4, "Mental" });
+                values: new object[] { 2, "Visual" });
 
             migrationBuilder.InsertData(
                 table: "Disabilities",
                 columns: new[] { "Id", "Description" },
-                values: new object[] { 2, "Visual" });
+                values: new object[] { 3, "Hearing" });
 
             migrationBuilder.InsertData(
                 table: "Disabilities",
@@ -413,7 +418,7 @@ namespace BankInformationSystem.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Disabilities",
                 columns: new[] { "Id", "Description" },
-                values: new object[] { 3, "Hearing" });
+                values: new object[] { 4, "Mental" });
 
             migrationBuilder.InsertData(
                 table: "MaritalStatuses",

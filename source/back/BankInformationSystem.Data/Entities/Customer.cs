@@ -32,7 +32,7 @@ namespace BankInformationSystem.Data.Entities
 
         public Contacts Contacts { get; set; }
 
-        public int? DisabilityId { get; set; }
+        public int DisabilityId { get; set; }
 
         public Disability Disability { get; set; }
 

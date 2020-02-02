@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    [Migration("20200129194300_Init")]
+    [Migration("20200202184431_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -226,7 +226,7 @@ namespace BankInformationSystem.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DisabilityId")
+                    b.Property<int>("DisabilityId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("FirstName")
@@ -302,6 +302,11 @@ namespace BankInformationSystem.Data.Migrations
                         {
                             Id = 6,
                             Description = "Learning"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "None"
                         });
                 });
 
@@ -498,7 +503,9 @@ namespace BankInformationSystem.Data.Migrations
                 {
                     b.HasOne("BankInformationSystem.Data.Entities.Disability", "Disability")
                         .WithMany()
-                        .HasForeignKey("DisabilityId");
+                        .HasForeignKey("DisabilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BankInformationSystem.Data.Entities.MaritalStatus", "MaritalStatus")
                         .WithMany()

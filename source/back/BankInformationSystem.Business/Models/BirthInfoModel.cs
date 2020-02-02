@@ -1,4 +1,6 @@
 ﻿using System;
+using BankInformationSystem.Business.Utilities;
+using Newtonsoft.Json;
 
 namespace BankInformationSystem.Business.Models
 {
@@ -6,6 +8,7 @@ namespace BankInformationSystem.Business.Models
     {
         public string PlaceOfBirth { get; set; }
         
+        [JsonConverter(typeof(DateTimeToDateConverter))]
         public DateTime DateOfBirth { get; set; }
     }
 }
