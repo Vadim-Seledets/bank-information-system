@@ -28,9 +28,10 @@ export const style = restyle(() => {
       margin-left: 1em;
       padding: 0.25em 0;
       
-      .propertyName {
+      .propertyNameLine {
         display: flex;
-
+        align-items: center;
+        
         .name {
           font-size: 0.7em;
           color: grey;
@@ -39,16 +40,21 @@ export const style = restyle(() => {
         .error {
           color: red;
         }
+
+        .input {
+          margin-left: 1em;
+          height: 1em;
+        }
       }
 
-      .propertyInput {
+      .propertyInputColumn {
         height: 1em;
         font-size: 0.8em;
         padding: 0.25em 0;
         border-bottom: 1px solid grey;
       }
 
-      .propertyInputHorizontal {
+      .propertyInputHorizontalLine {
         display: flex;
         align-items: baseline;
         height: 1em;
