@@ -31,6 +31,16 @@ namespace BankInformationSystem.Data
 
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<DepositType> DepositTypes { get; set; }
+
+        public DbSet<DepositContract> DepositContracts { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         public BankInformationSystemDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -39,6 +49,10 @@ namespace BankInformationSystem.Data
         {
             base.OnModelCreating(modelBuilder);
             
+            modelBuilder.Entity<DepositType>().HasData(
+                new DepositType { Id = 1, Name = "Revocable" },
+                new DepositType { Id = 2, Name = "Irrevocable" });
+
             modelBuilder.Entity<Currency>().HasData(
                 new Currency { Id = 1, Code = "BYN" },
                 new Currency { Id = 2, Code = "RUB" },

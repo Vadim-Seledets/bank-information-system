@@ -1,4 +1,5 @@
-﻿using BankInformationSystem.Common.Models;
+﻿using System.Collections.Generic;
+using BankInformationSystem.Common.Models;
 
 namespace BankInformationSystem.Data.Entities
 {
@@ -39,5 +40,7 @@ namespace BankInformationSystem.Data.Entities
         public int MaritalStatusId { get; set; }
 
         public MaritalStatus MaritalStatus { get; set; }
+        
+        public ICollection<Account> Accounts { get; set; }
     }
 }
