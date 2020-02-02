@@ -48,6 +48,19 @@ export const style = restyle(() => {
 
       .action {
         cursor: pointer;
+        color: #dddddd;
+      }
+
+      .editButton {
+        &[is-hovered=true] {
+          color: #5889D1;
+        }
+      }
+
+      .deleteButton {
+        &[is-hovered=true] {
+          color: red;
+        }
       }
 
       .errors {
@@ -87,11 +100,11 @@ export const style = restyle(() => {
         background-color: #F9FAFB;
       }
 
-      /* .rowHighlighter {
-        &[is-hover] {
+      .rowHighlighter {
+        &[is-hovered=true] {
           background-color: #eaebec;
         }
-      } */
+      }
     `,
   }
 })

@@ -1,4 +1,4 @@
-import { Stateful, action, trigger } from 'reactronic'
+import { Stateful, action, trigger, cached } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
 import { Errors } from './Errors'
@@ -17,6 +17,13 @@ export class App extends Stateful {
   tabs: Array<Tab>
   currentTab?: Tab
   customerInfo: CustomerInfo
+
+  isRowWithCustomerHovered = false
+  isGenderHovered = false
+  isFullNameHovered = false
+  isEmailHovered = false
+  isActionsHovered = false
+  hoveredRowNumber = 0
 
   constructor() {
     super()
@@ -114,14 +121,58 @@ export class App extends Stateful {
   }
 
   @action
-  async deleteCustomer(): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
-      method: 'DELETE',
-    })
-    if (response.ok) {
-      this.selectedCustomer?.setErrors(undefined)
+  async deleteCustomer(customer: Customer): Promise<void> {
+    if (customer.id) {
+      const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
+        method: 'DELETE',
+      })
+      if (response.ok) {
+        customer.setErrors(undefined)
+      } else {
+        customer.setErrors(await response.json() as Errors)
+      }
     } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+      const start = this.customers.indexOf(customer)
+      this.customers.splice(start, 1)
     }
+  }
+
+  @action
+  setIsRowWithCustomerHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isRowWithCustomerHovered = value
+  }
+  
+  @action
+  setIsGenderHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isGenderHovered = value
+  }
+  
+  @action
+  setIsFullNameHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isFullNameHovered = value
+  }
+  
+  @action
+  setIsEmailHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isFullNameHovered = value
+  }
+
+  @action
+  setIsActionsHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isActionsHovered = value
+  }
+
+  isRowHovered(row: number): boolean {
+    return (this.isRowWithCustomerHovered
+      || this.isGenderHovered
+      || this.isFullNameHovered
+      || this.isEmailHovered
+      || this.isActionsHovered
+    ) && this.hoveredRowNumber === row
   }
 }
