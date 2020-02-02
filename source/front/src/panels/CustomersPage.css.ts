@@ -15,19 +15,9 @@ export const style = restyle(() => {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.8em;
-
-      .addNewCustomerButton {
-        color: ${theme.applicationForeground};
-        user-select: none;
-        cursor: pointer;
-
-        &:hover {
-          color: ${theme.buttonHover};
-        }
-      }
 
       .search {
+        font-size: 0.8em;
         width: 8.1em;
         color: ${theme.applicationForeground};
         border-bottom: 1px solid ${theme.applicationForeground};

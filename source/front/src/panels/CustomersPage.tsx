@@ -12,9 +12,10 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     return (
       <div className={css.main}>
         <div className={css.actionsPanel} style={{ ...dim(1, 1, 12, 1), color: 'grey' }}>
-          <div className='addNewCustomerButton' onClick={() => p.app.addNewCustomer()}>
+          <button onClick={() => p.app.addNewCustomer()}>
+            <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             Add a New Customer
-          </div>
+          </button>
           <input className='search' type='text' placeholder='Find a customer...' />
         </div>
         <div className={css.customerList} style={{ ...dim(1, 2, 12, 12) }}>
@@ -32,7 +33,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
               <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='text'>{`${v.firstName} ${v.middleName} ${v.lastName}`}</div>
               <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='text' href={`mailto:${v.contacts.email}`}>{v.contacts.email}</a>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='icon'>
-                <div className={'las la-pen action'} 
+                <div className={'las la-pen action'}
                   onClick={() => {
                     if (p.app.selectedCustomer === v) {
                       p.app.setSelectedCustomer(undefined)

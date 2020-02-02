@@ -23,20 +23,24 @@ export const style = restyle(() => {
       grid-template-rows: 2em 1.5em repeat(10, 1fr);
 
       button {
-        padding: 0.1em;
-        margin: 0 0.25em;
-        min-width: 1.75em;
-        white-space: nowrap;
-      }
-
-      button:hover {
+        align-self: center;
+        justify-self: center;
+        padding: 0.25em 0.75em;
+        font-size: 0.8em;
+        user-select: none;
         cursor: pointer;
+        color: ${theme.sidebarSelectedTabForeground};
+        background-color: ${theme.sidebarSelectedTabBackground};
+        border-radius: 0.2em;
+        white-space: nowrap;
+
+        &:hover {
+          box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
+        }
       }
 
       button, input {
-        transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.5s;
-        box-shadow: 0 0 1px 0 rbga(127, 127, 127, 0.5);
-        padding: 0 0.2em;
+        transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.2s;
       }
     `,
 
@@ -81,22 +85,6 @@ export const style = restyle(() => {
 
     clicable: css`
       cursor: pointer;
-    `,
-
-    buttonBase: css`
-      align-self: center;
-      justify-self: center;
-      padding: 0.25em 0.75em;
-      font-size: 0.8em;
-      user-select: none;
-      cursor: pointer;
-      color: ${theme.sidebarSelectedTabForeground};
-      background-color: ${theme.sidebarSelectedTabBackground};
-      border-radius: 0.2em;
-
-      &:hover {
-        box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
-      }
     `,
   }
 })

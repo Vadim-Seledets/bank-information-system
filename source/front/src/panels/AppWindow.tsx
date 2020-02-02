@@ -11,12 +11,11 @@ import { EditCustomerInfoPageView } from './EditCustomerInfoPage'
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
-    // const customersPagePlace = p.app.selectedCustomer ? dim(3, 2, 6, 12) : dim(4, 2, 10, 12)
     return (
       <div className={css.main}>
         <div className={css.menu} style={{ ...dim(1, 1, 12, 1) }}>
           <img style={{ margin: '0 0.5em', width: '1.2em' }} src="assets/images/bank.png" onClick={() => themes.next()} />
-          <div style={{ color: '#aaaaaa' }}>
+          <div style={{ color: '#dddddd' }}>
             Bank Information System
           </div>
         </div>
@@ -41,14 +40,12 @@ export function AppWindow(p: { app: App }): JSX.Element {
             <div style={{ ...dim(4, 2, 10, 12) }}>
               <EditCustomerInfoPageView app={p.app} />
             </div>
-            <div className={css.buttonBase} style={{ ...dim(12, 2, 12, 2) }}
-              onClick={() => p.app.setSelectedCustomer(undefined)}
-            >Back</div>
-            <div className={css.buttonBase} style={{ ...dim(11, 12, 12, 12) }}
-              onClick={() => p.app.editOrPublishCustomer()}
-            >
+            <button style={{ ...dim(12, 2, 12, 2) }} onClick={() => p.app.setSelectedCustomer(undefined)}>
+              Back
+            </button>
+            <button style={{ ...dim(11, 12, 12, 12) }} onClick={() => p.app.editOrPublishCustomer()}>
               {p.app.selectedCustomer?.id ? 'Edit customer\'s info' : 'Add a new customer'}
-            </div>
+            </button>
           </React.Fragment>
         )}
       </div>
