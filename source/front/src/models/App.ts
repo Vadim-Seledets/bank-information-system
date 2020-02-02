@@ -48,6 +48,7 @@ export class App extends Stateful {
   @action
   setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
+    this.hoveredRowNumber = 0
   }
 
   @action
