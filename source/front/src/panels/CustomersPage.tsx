@@ -31,7 +31,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                 : v.gender === Gender.Male
                   ? 'las la-male' : 'las la-genderless', 'icon')} />
               <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='text'>{`${v.firstName} ${v.middleName} ${v.lastName}`}</div>
-              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='text' href={`mailto:${v.contacts.email}`}>{v.contacts.email}</a>
+              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='text' href={`mailto:${v.email}`}>{v.email}</a>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='icon'>
                 <div className={'las la-pen action'}
                   onClick={() => {

@@ -69,9 +69,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="date" value={customer.birthInfo.dateOfBirth}
+              <input className={'propertyInputColumn'} type="date" value={customer.dateOfBirth}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'BirthInfo.DateOfBirth')}`}
-                onChange={e => customer.birthInfo.setDateOfBirth(e.currentTarget.value)} />
+                onChange={e => customer.setDateOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -106,9 +106,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.passport.citizenshipId}
+              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.citizenshipId}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.CitizenshipId')}`}
-                onChange={e => customer.passport.setCitizenshipId(parseInt(e.currentTarget.value))}
+                onChange={e => customer.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.countriesOfCitizenship.map((v, i) => (
                   <option key={`${v.id}:${v.country}`} value={v.id}>{v.country}</option>
@@ -126,9 +126,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.passport.series}
+              <input className={'propertyInputColumn'} type="text" value={customer.series}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.Series')}`}
-                onChange={e => customer.passport.setSeries(e.currentTarget.value)} />
+                onChange={e => customer.setSeries(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -141,9 +141,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.passport.passportNumber}
+              <input className={'propertyInputColumn'} type="text" value={customer.passportNumber}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.PassportNumber')}`}
-                onChange={e => customer.passport.setPassportNumber(e.currentTarget.value)} />
+                onChange={e => customer.setPassportNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -156,9 +156,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.passport.issuingAuthority}
+              <input className={'propertyInputColumn'} type="text" value={customer.issuingAuthority}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IssuingAuthority')}`}
-                onChange={e => customer.passport.setIssuingAuthority(e.currentTarget.value)} />
+                onChange={e => customer.setIssuingAuthority(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -171,9 +171,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="date" value={customer.passport.issuedAt}
+              <input className={'propertyInputColumn'} type="date" value={customer.issuedAt}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IssuedAt')}`}
-                onChange={e => customer.passport.setIssuedAt(e.currentTarget.value)} />
+                onChange={e => customer.setIssuedAt(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -186,9 +186,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.passport.idNumber}
+              <input className={'propertyInputColumn'} type="text" value={customer.idNumber}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Passport.IdNumber')}`}
-                onChange={e => customer.passport.setIdNumber(e.currentTarget.value)} />
+                onChange={e => customer.setIdNumber(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Contact Information</div>
             <div className={css.property}>
@@ -202,9 +202,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.birthInfo.placeOfBirth}
+              <input className={'propertyInputColumn'} type="text" value={customer.placeOfBirth}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'BirthInfo.PlaceOfBirth')}`}
-                onChange={e => customer.birthInfo.setPlaceOfBirth(e.currentTarget.value)} />
+                onChange={e => customer.setPlaceOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -217,9 +217,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfLiving.cityId}
+              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfLivingCityId}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.CityId')}`}
-                onChange={e => customer.placeOfLiving.setCityId(parseInt(e.currentTarget.value))}
+                onChange={e => customer.setPlaceOfLivingCityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.cities.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
@@ -228,7 +228,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Address</div>
+                <div className='name'>Address of living</div>
                 {customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.Address') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -237,9 +237,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.placeOfLiving.address}
+              <input className={'propertyInputColumn'} type="text" value={customer.placeOfLivingAddress}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfLiving.Address')}`}
-                onChange={e => customer.placeOfLiving.setAddress(e.currentTarget.value)} />
+                onChange={e => customer.setPlaceOfLivingAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -252,16 +252,16 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistration.cityId}
+              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistrationCityId}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId')}`}
-                onChange={e => customer.placeOfRegistration.setCityId(parseInt(e.currentTarget.value))}
+                onChange={e => customer.setPlaceOfRegistrationCityId(parseInt(e.currentTarget.value))}
               >
                 {p.customerInfo.auxiliary.cities.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
             </div>
-            <div className={css.property}>
+            {/* <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>City of registration</div>
                 {customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.CityId') && (
@@ -280,7 +280,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
-            </div>
+            </div> */}
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Address of registration</div>
@@ -292,9 +292,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.placeOfRegistration.address}
+              <input className={'propertyInputColumn'} type="text" value={customer.placeOfRegistrationAddress}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'PlaceOfRegistration.Address')}`}
-                onChange={e => customer.placeOfRegistration.setAddress(e.currentTarget.value)} />
+                onChange={e => customer.setPlaceOfRegistrationAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -307,9 +307,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.contacts.homePhoneNumber}
+              <input className={'propertyInputColumn'} type="text" value={customer.homePhoneNumber}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.HomePhoneNumber')}`}
-                onChange={e => customer.contacts.setHomePhoneNumber(e.currentTarget.value)} />
+                onChange={e => customer.setHomePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -322,9 +322,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.contacts.mobilePhoneNumber}
+              <input className={'propertyInputColumn'} type="text" value={customer.mobilePhoneNumber}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.MobilePhoneNumber')}`}
-                onChange={e => customer.contacts.setMobilePhoneNumber(e.currentTarget.value)} />
+                onChange={e => customer.setMobilePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -337,9 +337,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.contacts.email}
+              <input className={'propertyInputColumn'} type="text" value={customer.email}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'Contacts.Email')}`}
-                onChange={e => customer.contacts.setEmail(e.currentTarget.value)} />
+                onChange={e => customer.setEmail(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Job Information</div>
             <div className={css.property}>
@@ -353,9 +353,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.workInfo.company}
+              <input className={'propertyInputColumn'} type="text" value={customer.company}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'WorkInfo.Company')}`}
-                onChange={e => customer.workInfo.setCompany(e.currentTarget.value)} />
+                onChange={e => customer.setCompany(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -368,9 +368,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   </div>
                 )}
               </div>
-              <input className={'propertyInputColumn'} type="text" value={customer.workInfo.position}
+              <input className={'propertyInputColumn'} type="text" value={customer.position}
                 is-invalid={`${customer.errors?.errors?.some(v => v.name === 'WorkInfo.Position')}`}
-                onChange={e => customer.workInfo.setPosition(e.currentTarget.value)} />
+                onChange={e => customer.setPosition(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
@@ -384,12 +384,12 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <div className='propertyInputHorizontalLine'>
-                <input className={'propertyInputColumn'} type="number" value={customer.incomePerMonth.amount}
+                <input className={'propertyInputColumn'} type="number" value={customer.amount}
                   is-invalid={`${customer.errors?.errors?.some(v => v.name === 'IncomePerMonth.Amount')}`}
-                  onChange={e => customer.incomePerMonth.setAmount(e.currentTarget.value)} />
-                <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.incomePerMonth.currencyId}
+                  onChange={e => customer.setAmount(e.currentTarget.value)} />
+                <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.currencyId}
                   is-invalid={`${customer.errors?.errors?.some(v => v.name === 'IncomePerMonth.CurrencyId')}`}
-                  onChange={e => customer.incomePerMonth.setCurrencyId(parseInt(e.currentTarget.value))}
+                  onChange={e => customer.setCurrencyId(parseInt(e.currentTarget.value))}
                 >
                   {p.customerInfo.auxiliary.currencies.map((v, i) => (
                     <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
