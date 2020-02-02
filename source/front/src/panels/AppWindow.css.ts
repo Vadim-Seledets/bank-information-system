@@ -82,5 +82,21 @@ export const style = restyle(() => {
     clicable: css`
       cursor: pointer;
     `,
+
+    buttonBase: css`
+      align-self: center;
+      justify-self: center;
+      padding: 0.25em 0.75em;
+      font-size: 0.8em;
+      user-select: none;
+      cursor: pointer;
+      color: ${theme.sidebarSelectedTabForeground};
+      background-color: ${theme.sidebarSelectedTabBackground};
+      border-radius: 0.2em;
+
+      &:hover {
+        box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
+      }
+    `,
   }
 })

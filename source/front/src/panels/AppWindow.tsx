@@ -31,14 +31,26 @@ export function AppWindow(p: { app: App }): JSX.Element {
             </div>
           ))}
         </div>
-        <div style={{ ...dim(4, 2, 10, 12) }}>
-          {!p.app.selectedCustomer && (
+        {!p.app.selectedCustomer && (
+          <div style={{ ...dim(4, 2, 10, 12) }}>
             <CustomersPageView app={p.app} />
-          )}
-          {p.app.selectedCustomer && (
-            <EditCustomerInfoPageView app={p.app} />
-          )}
-        </div>
+          </div>
+        )}
+        {p.app.selectedCustomer && (
+          <React.Fragment>
+            <div style={{ ...dim(4, 2, 10, 12) }}>
+              <EditCustomerInfoPageView app={p.app} />
+            </div>
+            <div className={css.buttonBase} style={{ ...dim(12, 2, 12, 2) }}
+              onClick={() => p.app.setSelectedCustomer(undefined)}
+            >Back</div>
+            <div className={css.buttonBase} style={{ ...dim(11, 12, 12, 12) }}
+              onClick={() => p.app.editOrPublishCustomer()}
+            >
+              {p.app.selectedCustomer?.id ? 'Edit customer\'s info' : 'Add a new customer'}
+            </div>
+          </React.Fragment>
+        )}
       </div>
     )
   })
