@@ -60,12 +60,13 @@ export const style = restyle(() => {
       text-transform: uppercase;
 
       &:hover {
-        background: ${theme.applicationBackgroundDemmed};
+        color: ${theme.sidebarSelectedTabForeground};
+        background: ${theme.sidebarHoveredTabBackground};
       }
 
       &[is-selected=true] {
-        color: ${theme.sidebarTabSelectedForeground};
-        background: ${theme.sidebarTabSelectedBackground};
+        color: ${theme.sidebarSelectedTabForeground};
+        background: ${theme.sidebarSelectedTabBackground};
       }
 
       .icon {

@@ -10,7 +10,8 @@ export class DarkTheme extends Stateful implements ITheme {
   readonly menuBackground = "#16354E"
   readonly sidebarBackground = "#35363A"
   readonly sidebarForeground = "#9897A9"
-  readonly sidebarTabSelectedBackground = "#6DAC37"
-  readonly sidebarTabSelectedForeground = "#FFFFFF"
+  readonly sidebarHoveredTabBackground = "#3a3948"
+  readonly sidebarSelectedTabBackground = "#6DAC37"
+  readonly sidebarSelectedTabForeground = "#FFFFFF"
   readonly highlighter = "blue"
 }
