@@ -36,6 +36,10 @@ export const style = restyle(() => {
       .icon {
         font-size: 1.2em;
         z-index: 2;
+
+        &:hover {
+          z-index: 4;
+        }
       }
 
       .text {
@@ -56,7 +60,6 @@ export const style = restyle(() => {
         }
 
         .errorsPopUp {
-          z-index: 3;
           display: none;
           position: absolute;
           margin-bottom: -1em;

@@ -44,7 +44,16 @@ export function AppWindow(p: { app: App }): JSX.Element {
               Back
             </button>
             <button style={{ ...dim(11, 12, 12, 12) }} onClick={() => p.app.editOrPublishCustomer()}>
-              {p.app.selectedCustomer?.id ? 'Edit customer\'s info' : 'Add a new customer'}
+              {p.app.selectedCustomer?.id
+                ? (
+                  <React.Fragment>
+                    <span className='las la-pen' style={{ marginRight: '0.5em' }} />Edit customer&#39;s info
+                  </React.Fragment>)
+                : (
+                  <React.Fragment>
+                    <span className='las la-upload' style={{ marginRight: '0.5em' }} />Add a new customer
+                  </React.Fragment>)
+              }
             </button>
           </React.Fragment>
         )}

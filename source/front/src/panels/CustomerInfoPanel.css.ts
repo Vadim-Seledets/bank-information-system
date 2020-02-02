@@ -6,7 +6,7 @@ export const style = restyle(() => {
   const theme = themes.active
   return {
     main: css`
-      label: main;
+      position: relative;
       background-color: ${theme.applicationBackground};
       color: ${theme.applicationForeground};
       display: flex;
@@ -30,15 +30,38 @@ export const style = restyle(() => {
       
       .propertyNameLine {
         display: flex;
-        align-items: center;
-        
+        align-items: baseline;
+        line-height: 1.1em;
+
         .name {
           font-size: 0.7em;
           color: grey;
         }
 
         .error {
+          font-size: 0.9em;
           color: red;
+
+          &:hover {
+            .errorPopUp {
+              display: flex;
+            }
+          }
+
+          .errorPopUp {
+            z-index: 3;
+            display: none;
+            position: absolute;
+            margin-left: -2em;
+            flex-direction: column;
+            font-size: 0.8em;
+            background-color: ${theme.applicationBackground};
+            box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
+          
+            .errorRow { 
+              padding: 0.25em;
+            }
+          }
         }
 
         .input {
@@ -52,6 +75,14 @@ export const style = restyle(() => {
         font-size: 0.8em;
         padding: 0.25em 0;
         border-bottom: 1px solid grey;
+
+        :invalid {
+          color: red;
+        }
+
+        &[is-invalid-on-back-end=true] {
+          border-bottom: 1px solid red;
+        }
       }
 
       .propertyInputHorizontalLine {
