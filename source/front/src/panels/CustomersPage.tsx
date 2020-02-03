@@ -39,7 +39,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                 onPointerEnter={() => p.app.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsFullNameHovered(false, i + 2)}
               >{`${v.firstName} ${v.middleName} ${v.lastName}`}</div>
-              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='text' href={`mailto:${v.email}`}
+              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='text email' href={`mailto:${v.email}`}
                 onPointerEnter={() => p.app.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsEmailHovered(false, i + 2)}
               >{v.email}</a>
@@ -76,6 +76,11 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                     </div>
                   </div>
                 )}
+                {/* {!v.infoErrors.hasAnyErrors && p.app.customerInfo.validation.areAllValid() && v.id === undefined && (
+                  <div className='uploadButton las la-upload' 
+                    onClick={() => p.app.publishNewCustomer(v)}
+                  />
+                )} */}
               </div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.app.isRowHovered(i + 2)}`}

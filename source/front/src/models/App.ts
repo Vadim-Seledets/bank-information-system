@@ -67,9 +67,9 @@ export class App extends Stateful {
   async editOrPublishCustomer(): Promise<void> {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
-        await this.editCustomerInfo()
+        await this.editCustomerInfo(this.selectedCustomer)
       } else {
-        await this.publishNewCustomer()
+        await this.publishNewCustomer(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
         this.setSelectedCustomer(undefined)
@@ -89,37 +89,37 @@ export class App extends Stateful {
   }
 
   @action
-  async publishNewCustomer(): Promise<void> {
+  async publishNewCustomer(customer: Customer): Promise<void> {
     const response = await fetch(`https://localhost:5001/customers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: this.selectedCustomer?.getJson(),
+      body: customer.getJson(),
     })
     if (response.ok) {
-      this.selectedCustomer?.setId(await response.text())
-      this.selectedCustomer?.infoErrors.setHasErrors(false)
+      customer.setId(await response.text())
+      customer.infoErrors.setHasErrors(false)
     } else {
-      this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
-      this.selectedCustomer?.infoErrors.setHasErrors(true)
+      customer.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+      customer.infoErrors.setHasErrors(true)
     }
   }
 
   @action
-  async editCustomerInfo(): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
+  async editCustomerInfo(customer: Customer): Promise<void> {
+    const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: this.selectedCustomer?.getJson(),
+      body: customer.getJson(),
     })
     if (response.ok) {
-      this.selectedCustomer?.infoErrors.setHasErrors(false)
+      customer.infoErrors.setHasErrors(false)
     } else {
-      this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
-      this.selectedCustomer?.infoErrors.setHasErrors(true)
+      customer.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+      customer.infoErrors.setHasErrors(true)
     }
   }
 

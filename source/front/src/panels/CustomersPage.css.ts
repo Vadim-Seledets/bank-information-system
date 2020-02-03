@@ -46,6 +46,10 @@ export const style = restyle(() => {
         z-index: 2;
       }
 
+      .email {
+        color: #629D30;
+      }
+
       .action {
         cursor: pointer;
         color: #dddddd;
@@ -61,6 +65,10 @@ export const style = restyle(() => {
         &[is-hovered=true] {
           color: red;
         }
+      }
+
+      .uploadButton {
+        color: ${theme.sidebarSelectedTabBackground};
       }
 
       .errors {
