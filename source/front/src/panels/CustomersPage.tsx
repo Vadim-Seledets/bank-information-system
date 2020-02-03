@@ -11,7 +11,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     const css = style.classes
     return (
       <div className={css.main}>
-        <div className={css.actionsPanel} style={{ ...dim(1, 1, 12, 1), color: 'grey' }}>
+        <div className={css.actionsPanel} style={{ ...dim(2, 1, 11, 1), color: 'grey' }}>
           <button onClick={() => p.app.addNewCustomer()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             Add a New Customer
@@ -64,12 +64,12 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                   is-hovered={`${p.app.isRowHovered(i + 2)}`}
                   onClick={() => p.app.deleteCustomer(v)}
                 />
-                {v.errors && (
+                {v.infoErrors.hasAnyErrors && (
                   <div className='errors las la-exclamation'>
                     <div className='errorsPopUp'>
-                      {v.errors.error && <div className='errorRow'>{v.errors.error}</div>}
-                      {v.errors.errors && (
-                        v.errors.errors.map((e, i) => (
+                      {v.infoErrors.error && <div className='errorRow'>{v.infoErrors.error}</div>}
+                      {v.infoErrors.errors && (
+                        v.infoErrors.errors.map((e, i) => (
                           <div key={i} className='errorRow'>{`${e.name}: ${e.message}`}</div>
                         ))
                       )}

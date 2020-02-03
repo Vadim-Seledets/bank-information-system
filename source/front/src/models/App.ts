@@ -1,7 +1,7 @@
-import { Stateful, action, trigger, cached } from 'reactronic'
+import { Stateful, action, trigger } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
-import { Errors } from './Errors'
+import { ICustomerInfoErrors } from './Errors'
 
 export class Tab extends Stateful{
   constructor(
@@ -71,7 +71,7 @@ export class App extends Stateful {
       } else {
         await this.publishNewCustomer()
       }
-      if (this.selectedCustomer.errors === undefined) {
+      if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
         this.setSelectedCustomer(undefined)
       }
     }
@@ -99,9 +99,10 @@ export class App extends Stateful {
     })
     if (response.ok) {
       this.selectedCustomer?.setId(await response.text())
-      this.selectedCustomer?.setErrors(undefined)
+      this.selectedCustomer?.infoErrors.setHasErrors(false)
     } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+      this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+      this.selectedCustomer?.infoErrors.setHasErrors(true)
     }
   }
 
@@ -115,9 +116,10 @@ export class App extends Stateful {
       body: this.selectedCustomer?.getJson(),
     })
     if (response.ok) {
-      this.selectedCustomer?.setErrors(undefined)
+      this.selectedCustomer?.infoErrors.setHasErrors(false)
     } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+      this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+      this.selectedCustomer?.infoErrors.setHasErrors(true)
     }
   }
 
@@ -128,9 +130,10 @@ export class App extends Stateful {
         method: 'DELETE',
       })
       if (response.ok) {
-        customer.setErrors(undefined)
+        this.selectedCustomer?.infoErrors.setHasErrors(false)
       } else {
-        customer.setErrors(await response.json() as Errors)
+        this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+        this.selectedCustomer?.infoErrors.setHasErrors(true)
       }
     } else {
       const start = this.customers.indexOf(customer)

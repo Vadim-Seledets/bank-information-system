@@ -31,13 +31,13 @@ export function AppWindow(p: { app: App }): JSX.Element {
           ))}
         </div>
         {!p.app.selectedCustomer && (
-          <div style={{ ...dim(4, 2, 10, 12) }}>
+          <div style={{ ...dim(3, 2, 11, 12) }}>
             <CustomersPageView app={p.app} />
           </div>
         )}
         {p.app.selectedCustomer && (
           <React.Fragment>
-            <div style={{ ...dim(4, 2, 10, 12) }}>
+            <div style={{ ...dim(3, 2, 10, 12) }}>
               <EditCustomerInfoPageView app={p.app} />
             </div>
             <button style={{ ...dim(12, 2, 12, 2) }} onClick={() => p.app.setSelectedCustomer(undefined)}>

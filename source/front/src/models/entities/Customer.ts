@@ -7,7 +7,7 @@ import { IPlaceOfRegistration } from "./IPlaceOfRegistration"
 import { IContacts } from "./IContacts"
 import { IIncomePerMonth } from "./IIncomePerMonth"
 import { IWorkInfo } from "./IWorkInfo"
-import { Errors } from "../Errors"
+import { CustomerInfoErrors } from "../Errors"
 
 export interface ICustomerShortInfo {
   id: number
@@ -76,7 +76,7 @@ export class Customer extends Stateful {
   company: string = ''
   position: string = ''
 
-  errors?: Errors = undefined
+  infoErrors = new CustomerInfoErrors()
   isFullInfoModelLoaded = false
 
   @action
@@ -171,11 +171,6 @@ export class Customer extends Stateful {
   @action
   setMaritalStatusId(id: number): void {
     this.maritalStatusId = id
-  }
-
-  @action
-  setErrors(errors?: Errors): void {
-    this.errors = errors
   }
 
   // Passport
