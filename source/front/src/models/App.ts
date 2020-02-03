@@ -2,14 +2,7 @@ import { Stateful, action, trigger } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
-
-export class Tab extends Stateful{
-  constructor(
-    public caption: string,
-    public icon: string) {
-    super()
-  }
-}
+import { Tab } from './Tab'
 
 export class App extends Stateful {
   customers: Array<Customer>
@@ -30,10 +23,10 @@ export class App extends Stateful {
     this.customers = new Array<Customer>()
     this.selectedCustomer = undefined
     this.tabs = new Array<Tab>(
-      new Tab('Customers', 'las la-address-book'),
-      new Tab('Deposits', 'las la-percent'),
-      new Tab('Loans', 'las la-credit-card'),
-      new Tab('ATM', 'las la-money-check'),
+      new Tab('customers', 'Customers', 'las la-address-book'),
+      new Tab('deposits', 'Deposits', 'las la-percent'),
+      new Tab('loans', 'Loans', 'las la-credit-card'),
+      new Tab('atm', 'ATM', 'las la-money-check'),
     )
     this.currentTab = this.tabs[0]
     this.customerInfo = new CustomerInfo(this)
