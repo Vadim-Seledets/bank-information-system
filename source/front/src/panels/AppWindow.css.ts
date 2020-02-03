@@ -86,12 +86,5 @@ export const style = restyle(() => {
     clicable: css`
       cursor: pointer;
     `,
-
-    editOrPublishButton: css`
-      &[is-enabled=false] {
-        pointer-events: none;
-        background-color: grey;
-      }
-    `,
   }
 })
