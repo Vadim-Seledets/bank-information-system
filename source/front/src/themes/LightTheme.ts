@@ -14,4 +14,8 @@ export class LightTheme extends Stateful implements ITheme {
   readonly sidebarSelectedTabBackground = "#6dac37"
   readonly sidebarSelectedTabForeground = "#ffffff"
   readonly highlighter = "#6dac37"
+  readonly customerSearchBackground = "#ffffff"
+  readonly customerSearchBorderColor = "grey"
+  readonly customerListOddRowBackground = "#f9fafb"
+  readonly customerListHighlightedRowBackground = "#eaebec"
 }

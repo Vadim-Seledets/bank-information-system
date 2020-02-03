@@ -13,6 +13,10 @@ export interface ITheme {
   readonly sidebarSelectedTabBackground: string
   readonly sidebarSelectedTabForeground: string
   readonly highlighter: string
+  readonly customerSearchBackground: string
+  readonly customerSearchBorderColor: string
+  readonly customerListOddRowBackground: string
+  readonly customerListHighlightedRowBackground: string
 }
 
 export class BlankTheme extends Stateful implements ITheme {
@@ -28,6 +32,10 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly sidebarSelectedTabBackground = ""
   readonly sidebarSelectedTabForeground = ""
   readonly highlighter = ""
+  readonly customerSearchBackground = ""
+  readonly customerSearchBorderColor = ""
+  readonly customerListOddRowBackground = ""
+  readonly customerListHighlightedRowBackground = ""
 }
 
 export class Themes extends Stateful {

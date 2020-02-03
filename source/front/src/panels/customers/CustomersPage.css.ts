@@ -11,17 +11,13 @@ export const style = restyle(() => {
       grid-template-rows: 1.5em repeat(10, 1fr);
     `,
 
-    actionsPanel: css`
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    search: css`
+      padding: 0 0.4em;
 
-      .search {
-        font-size: 0.8em;
-        width: 8.1em;
-        color: ${theme.applicationForeground};
-        border-bottom: 1px solid ${theme.applicationForeground};
-      }
+      color: ${theme.applicationForeground};
+      background-color: ${theme.customerSearchBackground};
+      border-bottom: 1px solid ${theme.customerSearchBorderColor};
+      border-radius: 0.2em;
     `,
 
     customerList: css`
@@ -105,12 +101,12 @@ export const style = restyle(() => {
       }
 
       .oddRow {
-        background-color: #F9FAFB;
+        background-color: ${theme.customerListOddRowBackground};
       }
 
       .rowHighlighter {
         &[is-hovered=true] {
-          background-color: #eaebec;
+          background-color: ${theme.customerListHighlightedRowBackground};
         }
       }
     `,

@@ -15,7 +15,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
           <span className='las la-plus' style={{ marginRight: '0.5em' }} />
           Add a New Customer
         </button>
-        <input style={{ ...dim(10, 1, 11, 1) }} className='search' type='text' placeholder='Find a customer...' />
+        <input style={{ ...dim(10, 1, 11, 1) }} className={css.search} type='text' placeholder='Search' />
         <div className={css.customerList} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
