@@ -1,6 +1,6 @@
 import { css } from 'emotion'
 import { restyle } from 'reactronic-toolkit-react'
-import { themes } from '../models/Theme'
+import { themes } from '../../models/Theme'
 
 export const style = restyle(() => {
   const theme = themes.active

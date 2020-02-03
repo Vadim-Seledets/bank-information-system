@@ -1,24 +1,22 @@
 import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
-import { dim } from '../common/css'
-import { App } from '../models/App'
+import { dim } from '../../common/css'
+import { App } from '../../models/App'
 import { style } from './CustomersPage.css'
 import { cx } from 'emotion'
-import { Gender } from '../models/entities/Gender'
+import { Gender } from '../../models/entities/Gender'
 
 export function CustomersPageView(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
     return (
       <div className={css.main}>
-        <div className={css.actionsPanel} style={{ ...dim(2, 1, 11, 1), color: 'grey' }}>
-          <button onClick={() => p.app.addNewCustomer()}>
-            <span className='las la-plus' style={{ marginRight: '0.5em' }} />
-            Add a New Customer
-          </button>
-          <input className='search' type='text' placeholder='Find a customer...' />
-        </div>
-        <div className={css.customerList} style={{ ...dim(1, 2, 12, 12) }}>
+        <button style={{ ...dim(2, 1, 3, 1) }} onClick={() => p.app.addNewCustomer()}>
+          <span className='las la-plus' style={{ marginRight: '0.5em' }} />
+          Add a New Customer
+        </button>
+        <input style={{ ...dim(10, 1, 11, 1) }} className='search' type='text' placeholder='Find a customer...' />
+        <div className={css.customerList} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>

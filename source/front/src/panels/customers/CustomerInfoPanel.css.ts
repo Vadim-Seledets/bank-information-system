@@ -1,6 +1,6 @@
 import { css } from 'emotion'
 import { restyle } from 'reactronic-toolkit-react'
-import { themes } from '../models/Theme'
+import { themes } from '../../models/Theme'
 
 export const style = restyle(() => {
   const theme = themes.active
@@ -11,7 +11,7 @@ export const style = restyle(() => {
       color: ${theme.applicationForeground};
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
+      /* flex-grow: 1; */
       margin: 0 1em;
       
     `,
