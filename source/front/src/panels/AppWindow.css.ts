@@ -23,6 +23,9 @@ export const style = restyle(() => {
       grid-template-rows: 2em 1.5em repeat(10, 1fr);
 
       button {
+        align-self: center;
+        justify-self: center;
+        font-size: 0.8em;
         padding: 0.25em 0.75em;
         user-select: none;
         cursor: pointer;
@@ -37,9 +40,6 @@ export const style = restyle(() => {
       }
 
       button, input {
-        align-self: center;
-        justify-self: center;
-        font-size: 0.8em;
         transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.2s;
       }
     `,
