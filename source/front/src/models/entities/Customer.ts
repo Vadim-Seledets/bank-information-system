@@ -14,6 +14,8 @@ export interface ICustomerShortInfo {
   firstName: string
   middleName: string
   lastName: string
+  email: string
+  gender: Gender
 }
 
 export interface ICustomerFullInfo {
@@ -45,7 +47,7 @@ export class Customer extends Stateful {
   gender = Gender.Male
   isRetired: boolean = false
   isLiableForMilitaryService: boolean = false
-  disabilityId: number | null = null
+  disabilityId: number = 1
   maritalStatusId: number = 1
   // Passport
   citizenshipId: number = 1
@@ -83,6 +85,8 @@ export class Customer extends Stateful {
     this.firstName = info.firstName
     this.middleName = info.middleName
     this.lastName = info.lastName
+    this.email = info.email
+    this.gender = info.gender
   }
 
   @action
