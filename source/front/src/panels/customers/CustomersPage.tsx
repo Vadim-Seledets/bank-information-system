@@ -11,7 +11,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     const css = style.classes
     return (
       <div className={css.main}>
-        <button style={{ ...dim(2, 1, 3, 1) }} onClick={() => p.app.addNewCustomer()}>
+        <button className={css.addNewCustomerButton} style={{ ...dim(2, 1, 3, 1) }} onClick={() => p.app.addNewCustomer()}>
           <span className='las la-plus' style={{ marginRight: '0.5em' }} />
           Add a New Customer
         </button>
@@ -60,10 +60,6 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                       }
                     }
                   }}
-                />
-                <div className={'las la-trash action deleteButton'}
-                  is-hovered={`${p.app.isRowHovered(i + 2)}`}
-                  onClick={() => p.app.deleteCustomer(v)}
                 />
                 {v.infoErrors.hasAnyErrors && (
                   <div className='errors las la-exclamation'>

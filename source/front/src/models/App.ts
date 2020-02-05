@@ -17,6 +17,7 @@ export class App extends Stateful {
   isEmailHovered = false
   isActionsHovered = false
   hoveredRowNumber = 0
+  deleteIsRequested = false
 
   constructor() {
     super()
@@ -117,20 +118,25 @@ export class App extends Stateful {
   }
 
   @action
-  async deleteCustomer(customer: Customer): Promise<void> {
-    if (customer.id) {
-      const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
-        method: 'DELETE',
-      })
-      if (response.ok) {
-        this.selectedCustomer?.infoErrors.setHasErrors(false)
+  async deleteCustomer(customer?: Customer): Promise<void> {
+    if (customer) {
+      if (customer.id) {
+        const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
+          method: 'DELETE',
+        })
+        if (response.ok) {
+          this.selectedCustomer?.infoErrors.setHasErrors(false)
+        } else {
+          this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+          this.selectedCustomer?.infoErrors.setHasErrors(true)
+        }
       } else {
-        this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
-        this.selectedCustomer?.infoErrors.setHasErrors(true)
+        const start = this.customers.indexOf(customer)
+        this.customers.splice(start, 1)
       }
-    } else {
-      const start = this.customers.indexOf(customer)
-      this.customers.splice(start, 1)
+      if (customer === this.selectedCustomer) {
+        this.setSelectedCustomer(undefined)
+      }
     }
   }
 
@@ -162,6 +168,11 @@ export class App extends Stateful {
   setIsActionsHovered(value: boolean, row: number): void {
     this.hoveredRowNumber = row
     this.isActionsHovered = value
+  }
+
+  @action
+  setDeleteIsRequested(value: boolean): void {
+    this.deleteIsRequested = value
   }
 
   isRowHovered(row: number): boolean {

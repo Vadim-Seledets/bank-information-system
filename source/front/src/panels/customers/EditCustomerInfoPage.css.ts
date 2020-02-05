@@ -23,10 +23,33 @@ export const style = restyle(() => {
     `,
 
     editOrPublishButton: css`
+      color: ${theme.sidebarSelectedTabForeground};
+      background-color: ${theme.sidebarSelectedTabBackground};
+
       &[is-enabled=false] {
         pointer-events: none;
         background-color: grey;
       }
+    `,
+
+    deleteButton: css`
+      display: flex;
+      justify-content: space-around;
+      width: 8em;
+      align-self: center;
+      justify-self: center;
+      font-size: 0.8em;
+      padding: 0.25em 0.75em;
+      user-select: none;
+      cursor: pointer;
+      border-radius: 0.2em;
+      white-space: nowrap;
+      background-color: red;
+    `,
+
+    backButton: css`
+      color: ${theme.sidebarSelectedTabForeground};
+      background-color: ${theme.sidebarSelectedTabBackground};
     `,
   }
 })

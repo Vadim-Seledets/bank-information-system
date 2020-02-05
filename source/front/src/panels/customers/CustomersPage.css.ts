@@ -22,14 +22,11 @@ export const style = restyle(() => {
       border-bottom: 1px solid ${theme.customerSearchBorderColor};
       border-radius: 0.2em;
       font-size: 0.8em;
+    `,
 
-      .icon {
-
-      }
-
-      .input {
-        
-      }
+    addNewCustomerButton: css`
+      color: ${theme.sidebarSelectedTabForeground};
+      background-color: ${theme.sidebarSelectedTabBackground};
     `,
 
     customerList: css`
