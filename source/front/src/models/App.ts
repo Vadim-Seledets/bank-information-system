@@ -61,17 +61,21 @@ export class App extends Stateful {
   }
 
   @action
-  addOrEditCustomer(): void {
+  addNewCustomer(): void {
+    const newCustomer = new Customer()
+    this.customers.push(newCustomer)
+    this.selectedCustomer = newCustomer
+    this.setCurrentPageName('EditCustomerPage')
+  }
+
+  @action
+  editCustomer(): void {
     if (this.selectedCustomer) {
-      if (!this.selectedCustomer.isFullInfoModelLoaded) {
+      if (this.selectedCustomer.id && !this.selectedCustomer.isFullInfoModelLoaded) {
         this.selectedCustomer.getFullInfoModel()
       }
-    } else {
-      const newCustomer = new Customer()
-      this.customers.push(newCustomer)
-      this.selectedCustomer = newCustomer
+      this.setCurrentPageName('EditCustomerPage')
     }
-    this.setCurrentPageName('EditCustomerPage')
   }
 
   @action

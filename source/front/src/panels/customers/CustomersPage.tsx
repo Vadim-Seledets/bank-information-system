@@ -12,12 +12,12 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.addOrEditCustomer()}>
+          <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.addNewCustomer()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             Add a New Customer
           </button>
           {p.app.selectedCustomer && (
-            <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.addOrEditCustomer()}>
+            <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.editCustomer()}>
               <span className='las la-pen' style={{ marginRight: '0.5em' }} />
               Edit Customer
             </button>
