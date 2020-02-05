@@ -83,7 +83,7 @@ export class App extends Stateful {
         await this.publishNewCustomer(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
-        this.setSelectedCustomer(undefined)
+        this.setCurrentPageName('CustomersListPage')
       }
     }
   }
