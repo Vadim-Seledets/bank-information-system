@@ -12,8 +12,8 @@ R.repetitiveReadWarningThreshold = 0
 R.performanceWarningThreshold = 0
 
 Action.run("themes.register", () => themes.register(
-  new LightTheme(),
   new DarkTheme(),
+  new LightTheme(),
 ))
 
 const app: App = Action.run("new App", () => new App())
