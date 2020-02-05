@@ -44,25 +44,18 @@ export const style = restyle(() => {
     `,
 
     deleteButton: css`
-      align-self: center;
       justify-self: left;
-      padding: 0.25em 0.75em;
-      font-size: 0.8em;
-      user-select: none;
-      cursor: pointer;
-      white-space: nowrap;
       display: flex;
       align-items: center;
-      /* margin-left: 1em; */
       color: ${theme.sidebarSelectedTabForeground};
       background-color: #ee3333;
       border-radius: 0.2em;
-      width: 7.5em;
+      /* width: 9em; */
       transition: width 0.2s ease;
       
-      &[is-visible=true] {
+      /* &[is-visible=true] {
         width: 12.5em;
-      }
+      } */
     `,
 
     deleteButtonYesNoButtonsContainer: css`
@@ -75,8 +68,16 @@ export const style = restyle(() => {
         display: none;
       }
 
-      .yesNoButton {
+      .yesButton {
         padding: 0 0.5em;
+
+        &:hover {
+          color: ${theme.highlighter};
+        }
+      }
+
+      .noButton {
+        padding-left: 0.5em;
 
         &:hover {
           color: ${theme.highlighter};

@@ -23,19 +23,20 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
             </button>
           )}
           {p.app.selectedCustomer && (
-            <div className={css.deleteButton} is-visible={`${p.app.deleteIsRequested}`}>
+            <button className={css.deleteButton} is-visible={`${p.app.deleteIsRequested}`}>
+              <span className='las la-trash' style={{ marginRight: '0.5em' }} />
               <div onClick={() => p.app.setDeleteIsRequested(!p.app.deleteIsRequested)}>Delete Customer</div>
               <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.app.deleteIsRequested}`}>
-                <div className='yesNoButton'
+                <div className='yesButton'
                   onClick={() => {
                     p.app.deleteCustomer(p.app.selectedCustomer)
                     p.app.setDeleteIsRequested(false)
                   }}>Yes</div>
-                <div className='yesNoButton'
+                <div className='noButton'
                   onClick={() => p.app.setDeleteIsRequested(false)}
                 >No</div>
               </div>
-            </div>
+            </button>
           )}
           <div className='space' />
           <div className={css.search}>
