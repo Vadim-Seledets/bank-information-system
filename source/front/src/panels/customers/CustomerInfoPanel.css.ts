@@ -11,9 +11,6 @@ export const style = restyle(() => {
       color: ${theme.applicationForeground};
       display: flex;
       flex-direction: column;
-      /* flex-grow: 1; */
-      margin: 0 1em;
-      
     `,
 
     propertyGroupCaption: css`
@@ -25,7 +22,6 @@ export const style = restyle(() => {
     property: css`
       display: flex;
       flex-direction: column;
-      margin-left: 1em;
       padding: 0.25em 0;
       
       .propertyNameLine {

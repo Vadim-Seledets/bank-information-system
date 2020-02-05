@@ -8,17 +8,15 @@ export const style = restyle(() => {
     main: css`
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 1.5em repeat(10, 1fr);
+      grid-template-rows: 2em repeat(10, 1fr);
     `,
 
-    actionsPanel: css`
+    headLine: css`
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-wrap: wrap;
 
-      .editButton {
-        color: ${theme.applicationForeground};
-        border-bottom: 1px solid ${theme.applicationForeground};
+      .space {
+        flex-grow: 1;
       }
     `,
 
