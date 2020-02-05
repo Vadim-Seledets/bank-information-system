@@ -8,12 +8,25 @@ export const style = restyle(() => {
     main: css`
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 1.5em repeat(10, 1fr);
+      grid-template-rows: 2em repeat(11, 1fr);
     `,
 
+    headLine: css`
+      display: flex;
+      flex-wrap: wrap;
+
+      .headLineItem {
+        margin-right: 1em;
+      }
+
+      .space {
+        flex-grow: 1;
+      }
+    `,
+    
     search: css`
       align-self: center;
-      justify-self: center;
+      justify-self: right;
       display: flex;
       align-items: center;
       padding: 0.1em 0.3em;
@@ -25,6 +38,7 @@ export const style = restyle(() => {
     `,
 
     addNewOrEditCustomerButton: css`
+      justify-self: left;
       color: ${theme.sidebarSelectedTabForeground};
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
@@ -39,12 +53,12 @@ export const style = restyle(() => {
       white-space: nowrap;
       display: flex;
       align-items: center;
-      margin-left: 1em;
+      /* margin-left: 1em; */
       color: ${theme.sidebarSelectedTabForeground};
       background-color: #ee3333;
       border-radius: 0.2em;
       width: 7.5em;
-      transition: all 0.2s ease;
+      transition: width 0.2s ease;
       
       &[is-visible=true] {
         width: 12.5em;
@@ -88,11 +102,17 @@ export const style = restyle(() => {
         }
       }
 
-      .text {
+      .fullName {
         z-index: 2;
+
+        &:hover {
+          color: ${theme.highlighter};
+          cursor: pointer;
+        }
       }
 
       .email {
+        z-index: 2;
         color: #629D30;
       }
 

@@ -4,7 +4,7 @@ import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
 import { Tab } from './Tab'
 
-export type PageName = 'CustomersListPage' | 'EditCustomerPage'
+export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
 
 export class App extends Stateful {
   customers: Array<Customer>
@@ -15,7 +15,7 @@ export class App extends Stateful {
   currentPageName: PageName
 
   deleteIsRequested = false
-
+  
   isRowWithCustomerHovered = false
   isGenderHovered = false
   isFullNameHovered = false
