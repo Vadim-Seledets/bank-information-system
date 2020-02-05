@@ -24,7 +24,7 @@ export const style = restyle(() => {
 
       button {
         align-self: center;
-        justify-self: center;
+        /* justify-self: center; */
         font-size: 0.8em;
         padding: 0.25em 0.75em;
         user-select: none;

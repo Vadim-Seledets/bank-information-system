@@ -32,12 +32,12 @@ export function AppWindow(p: { app: App }): JSX.Element {
         </div>
         {p.app.currentTab?.name === 'customers' && (
           <React.Fragment>
-            {!p.app.selectedCustomer && (
+            {p.app.currentPageName === 'CustomersListPage' && (
               <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
                 <CustomersPageView app={p.app} />
               </div>
             )}
-            {p.app.selectedCustomer && (
+            {p.app.currentPageName === 'EditCustomerPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
                   <EditCustomerInfoPageView app={p.app} />

@@ -24,9 +24,50 @@ export const style = restyle(() => {
       font-size: 0.8em;
     `,
 
-    addNewCustomerButton: css`
+    addNewOrEditCustomerButton: css`
       color: ${theme.sidebarSelectedTabForeground};
       background-color: ${theme.sidebarSelectedTabBackground};
+    `,
+
+    deleteButton: css`
+      align-self: center;
+      justify-self: left;
+      padding: 0.25em 0.75em;
+      font-size: 0.8em;
+      user-select: none;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      margin-left: 1em;
+      color: ${theme.sidebarSelectedTabForeground};
+      background-color: #ee3333;
+      border-radius: 0.2em;
+      width: 7.5em;
+      transition: all 0.2s ease;
+      
+      &[is-visible=true] {
+        width: 12.5em;
+      }
+    `,
+
+    deleteButtonYesNoButtonsContainer: css`
+      display: flex;
+      align-items: center;
+      margin-left: 0.5em;
+      border-left: 1px solid #aa2222;
+
+      &[is-visible=false] {
+        display: none;
+      }
+
+      .yesNoButton {
+        padding: 0 0.5em;
+
+        &:hover {
+          color: ${theme.highlighter};
+        }
+      }
     `,
 
     customerList: css`
@@ -115,7 +156,12 @@ export const style = restyle(() => {
 
       .rowHighlighter {
         &[is-hovered=true] {
+          background-color: ${theme.customerListHoveredRowBackground};
+        }
+        
+        &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
+          /* z-index: 1000; */
         }
       }
     `,

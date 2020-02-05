@@ -4,12 +4,17 @@ import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
 import { Tab } from './Tab'
 
+export type PageName = 'CustomersListPage' | 'EditCustomerPage'
+
 export class App extends Stateful {
   customers: Array<Customer>
   selectedCustomer?: Customer
   tabs: Array<Tab>
   currentTab?: Tab
   customerInfo: CustomerInfo
+  currentPageName: PageName
+
+  deleteIsRequested = false
 
   isRowWithCustomerHovered = false
   isGenderHovered = false
@@ -17,7 +22,6 @@ export class App extends Stateful {
   isEmailHovered = false
   isActionsHovered = false
   hoveredRowNumber = 0
-  deleteIsRequested = false
 
   constructor() {
     super()
@@ -31,6 +35,7 @@ export class App extends Stateful {
     )
     this.currentTab = this.tabs[0]
     this.customerInfo = new CustomerInfo(this)
+    this.currentPageName = 'CustomersListPage'
   }
 
   @trigger
@@ -51,10 +56,22 @@ export class App extends Stateful {
   }
 
   @action
-  addNewCustomer(): void {
-    const newCustomer = new Customer()
-    this.customers.push(newCustomer)
-    this.selectedCustomer = newCustomer
+  setCurrentPageName(pageName: PageName): void {
+    this.currentPageName = pageName
+  }
+
+  @action
+  addOrEditCustomer(): void {
+    if (this.selectedCustomer) {
+      if (!this.selectedCustomer.isFullInfoModelLoaded) {
+        this.selectedCustomer.getFullInfoModel()
+      }
+    } else {
+      const newCustomer = new Customer()
+      this.customers.push(newCustomer)
+      this.selectedCustomer = newCustomer
+    }
+    this.setCurrentPageName('EditCustomerPage')
   }
 
   @action
@@ -173,6 +190,12 @@ export class App extends Stateful {
   @action
   setDeleteIsRequested(value: boolean): void {
     this.deleteIsRequested = value
+  }
+
+  @trigger
+  dropDeleteRequest(): void {
+    this.selectedCustomer /* Sensetivity list item */
+    this.setDeleteIsRequested(false)
   }
 
   isRowHovered(row: number): boolean {

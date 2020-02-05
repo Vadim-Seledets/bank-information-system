@@ -11,19 +11,46 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
     const css = style.classes
     return (
       <div className={css.main}>
-        <button className={css.addNewCustomerButton} style={{ ...dim(2, 1, 3, 1) }} onClick={() => p.app.addNewCustomer()}>
-          <span className='las la-plus' style={{ marginRight: '0.5em' }} />
-          Add a New Customer
+        <button className={css.addNewOrEditCustomerButton} style={{ ...dim(2, 1, 3, 1) }} onClick={() => p.app.addOrEditCustomer()}>
+          {!p.app.selectedCustomer
+            ? (
+              <React.Fragment>
+                <span className='las la-plus' style={{ marginRight: '0.5em' }} />
+                Add a New Customer
+              </React.Fragment>
+            )
+            : (
+              <React.Fragment>
+                <span className='las la-pen' style={{ marginRight: '0.5em' }} />
+                Edit Customer
+              </React.Fragment>
+            )
+          }
         </button>
+        {p.app.selectedCustomer && (
+          <div className={css.deleteButton} style={{ ...dim(4, 1, 5, 1) }} is-visible={`${p.app.deleteIsRequested}`}>
+            <div onClick={() => p.app.setDeleteIsRequested(true)}>Delete Customer</div>
+            <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.app.deleteIsRequested}`}>
+              <div className='yesNoButton' 
+                onClick={() => {
+                  p.app.deleteCustomer(p.app.selectedCustomer)
+                  p.app.setDeleteIsRequested(false)
+                }}>Yes</div>
+              <div className='yesNoButton'
+                onClick={() => p.app.setDeleteIsRequested(false)}
+              >No</div>
+            </div>
+          </div>
+        )}
         <div className={css.search} style={{ ...dim(10, 1, 11, 1) }}>
-          <div className='las la-search icon'/>
+          <div className='las la-search icon' />
           <input className='input' type='text' placeholder='Search' />
         </div>
         <div className={css.customerList} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>
-          <div style={{ ...dim(8, 1, 8, 1) }}>Actions</div>
+          {/* <div style={{ ...dim(8, 1, 8, 1) }}>Actions</div> */}
           <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
           {p.app.customers.map((v, i) => (
             <React.Fragment key={i}>
@@ -48,19 +75,6 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                 onPointerEnter={() => p.app.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsActionsHovered(false, i + 2)}
               >
-                <div className={'las la-pen action editButton'}
-                  is-hovered={`${p.app.isRowHovered(i + 2)}`}
-                  onClick={() => {
-                    if (p.app.selectedCustomer === v) {
-                      p.app.setSelectedCustomer(undefined)
-                    } else {
-                      p.app.setSelectedCustomer(v)
-                      if (v.id && !v.isFullInfoModelLoaded) {
-                        v.getFullInfoModel()
-                      }
-                    }
-                  }}
-                />
                 {v.infoErrors.hasAnyErrors && (
                   <div className='errors las la-exclamation'>
                     <div className='errorsPopUp'>
@@ -73,14 +87,17 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                     </div>
                   </div>
                 )}
-                {/* {!v.infoErrors.hasAnyErrors && p.app.customerInfo.validation.areAllValid() && v.id === undefined && (
-                  <div className='uploadButton las la-upload' 
-                    onClick={() => p.app.publishNewCustomer(v)}
-                  />
-                )} */}
               </div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.app.isRowHovered(i + 2)}`}
+                is-selected={`${p.app.selectedCustomer === v}`}
+                onClick={() => {
+                  if (p.app.selectedCustomer === v) {
+                    p.app.setSelectedCustomer(undefined)
+                  } else {
+                    p.app.setSelectedCustomer(v)
+                  }
+                }}
                 onPointerEnter={() => p.app.setIsRowWithCustomerHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsRowWithCustomerHovered(false, i + 2)}
               />
