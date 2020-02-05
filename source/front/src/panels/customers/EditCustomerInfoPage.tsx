@@ -10,7 +10,7 @@ export function EditCustomerInfoPageView(p: { app: App }): JSX.Element {
     const css = style.classes
     return (
       <div className={css.main}>
-        <button className={css.backButton} style={{ ...dim(12, 1, 12, 1) }} onClick={() => p.app.setCurrentPageName('CustomersListPage')}>
+        <button className={css.backButton} style={{ ...dim(11, 1, 11, 1) }} onClick={() => p.app.setCurrentPageName('CustomersListPage')}>
           Back
         </button>
         <button className={css.editOrPublishButton} style={{ ...dim(2, 1, 3, 1) }}
