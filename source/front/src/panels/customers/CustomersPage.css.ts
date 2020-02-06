@@ -37,25 +37,29 @@ export const style = restyle(() => {
       font-size: 0.8em;
     `,
 
-    addNewOrEditCustomerButton: css`
+    button: css`
       justify-self: left;
       color: ${theme.sidebarSelectedTabForeground};
+      transition: opacity 0.2s ease;
+
+      &[is-visible=false] {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      &[is-visible=true] {
+        opacity: 1;
+      }
+    `,
+
+    addNewOrEditCustomerButton: css`
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
 
     deleteButton: css`
-      justify-self: left;
       display: flex;
       align-items: center;
-      color: ${theme.sidebarSelectedTabForeground};
       background-color: #ee3333;
-      border-radius: 0.2em;
-      /* width: 9em; */
-      transition: width 0.2s ease;
-      
-      /* &[is-visible=true] {
-        width: 12.5em;
-      } */
     `,
 
     deleteButtonYesNoButtonsContainer: css`
@@ -115,27 +119,6 @@ export const style = restyle(() => {
       .email {
         z-index: 2;
         color: #629D30;
-      }
-
-      .action {
-        cursor: pointer;
-        color: #dddddd;
-      }
-
-      .editButton {
-        &[is-hovered=true] {
-          color: #5889D1;
-        }
-      }
-
-      .deleteButton {
-        &[is-hovered=true] {
-          color: red;
-        }
-      }
-
-      .uploadButton {
-        color: ${theme.sidebarSelectedTabBackground};
       }
 
       .errors {

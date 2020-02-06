@@ -24,20 +24,21 @@ export const style = restyle(() => {
 
       button {
         align-self: center;
-        /* justify-self: center; */
         font-size: 0.8em;
         padding: 0.25em 0.75em;
-        user-select: none;
-        cursor: pointer;
         border-radius: 0.2em;
         white-space: nowrap;
+        user-select: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
 
         &:hover {
           box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
         }
       }
 
-      button, input {
+      input {
         transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.2s;
       }
     `,
