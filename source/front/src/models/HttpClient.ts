@@ -1,5 +1,4 @@
 import { HeadersInit } from "node-fetch"
-import { sleep } from "reactronic"
 
 export interface Response<TData, TErrorData> {
   data: TData | undefined
