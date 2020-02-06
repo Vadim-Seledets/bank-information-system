@@ -1,5 +1,5 @@
 import { Stateful, action, trigger, isolated, cached } from 'reactronic'
-import { Customer, ICustomerShortInfo } from './entities/Customer'
+import { Customer, ICustomerShortInfo } from './customers/Customer'
 import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
 import { Tab } from './Tab'

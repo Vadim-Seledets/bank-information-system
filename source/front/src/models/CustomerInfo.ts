@@ -1,8 +1,8 @@
 import { Stateful, action, trigger } from 'reactronic'
-import { Auxiliary } from './entities/Auxiliary'
+import { Auxiliary } from './customers/Auxiliary'
 import { App } from './App'
 import { Validation, PropertyValidator } from './Validation'
-import { CustomerKeys } from './entities/Customer'
+import { CustomerKeys } from './customers/Customer'
 
 export class CustomerInfo extends Stateful {
   app: App
