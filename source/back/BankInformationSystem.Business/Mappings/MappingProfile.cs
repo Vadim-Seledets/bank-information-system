@@ -19,7 +19,8 @@ namespace BankInformationSystem.Business.Mappings
             
             CreateMap<Customer, CustomerFullInfoModel>();
             
-            CreateMap<Customer, CustomerShortInfoModel>();
+            CreateMap<Customer, CustomerShortInfoModel>()
+                .ForMember(d => d.Email, m => m.MapFrom(d => d.Contacts.Email));
 
             CreateMap<AddressModel, PlaceOfLiving>()
                 .ForMember(x => x.Id, m => m.Ignore())

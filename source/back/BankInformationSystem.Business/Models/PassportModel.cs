@@ -1,4 +1,6 @@
 ﻿using System;
+using BankInformationSystem.Business.Utilities;
+using Newtonsoft.Json;
 
 namespace BankInformationSystem.Business.Models
 {
@@ -12,6 +14,7 @@ namespace BankInformationSystem.Business.Models
 
         public string IssuingAuthority { get; set; }
 
+        [JsonConverter(typeof(DateTimeToDateConverter))]
         public DateTime IssuedAt { get; set; }
 
         public string IdNumber { get; set; }

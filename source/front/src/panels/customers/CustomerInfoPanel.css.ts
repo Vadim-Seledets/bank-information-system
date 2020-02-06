@@ -1,6 +1,6 @@
 import { css } from 'emotion'
 import { restyle } from 'reactronic-toolkit-react'
-import { themes } from '../models/Theme'
+import { themes } from '../../models/Theme'
 
 export const style = restyle(() => {
   const theme = themes.active
@@ -11,9 +11,6 @@ export const style = restyle(() => {
       color: ${theme.applicationForeground};
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-      margin: 0 1em;
-      
     `,
 
     propertyGroupCaption: css`
@@ -25,7 +22,6 @@ export const style = restyle(() => {
     property: css`
       display: flex;
       flex-direction: column;
-      margin-left: 1em;
       padding: 0.25em 0;
       
       .propertyNameLine {
@@ -57,7 +53,8 @@ export const style = restyle(() => {
             font-size: 0.8em;
             background-color: ${theme.applicationBackground};
             box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
-          
+            border-radius: 0.3em;
+            
             .errorRow { 
               padding: 0.25em;
             }

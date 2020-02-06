@@ -33,7 +33,7 @@ namespace BankInformationSystem.Business.Models
 
         public WorkInfoModel WorkInfo { get; set; }
 
-        public int? DisabilityId { get; set; }
+        public int DisabilityId { get; set; }
 
         public int MaritalStatusId { get; set; }
     }

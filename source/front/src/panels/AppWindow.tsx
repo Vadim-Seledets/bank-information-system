@@ -5,8 +5,9 @@ import { App } from '../models/App'
 import { style } from './AppWindow.css'
 import { themes } from '../models/Theme'
 import { cx } from 'emotion'
-import { CustomersPageView } from './CustomersPage'
-import { EditCustomerInfoPageView } from './EditCustomerInfoPage'
+import { CustomersPageView } from './customers/CustomersPage'
+import { EditCustomerInfoPageView } from './customers/EditCustomerInfoPage'
+import { CustomerInfoPageView } from './customers/CustomerInfoPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -30,31 +31,27 @@ export function AppWindow(p: { app: App }): JSX.Element {
             </div>
           ))}
         </div>
-        {!p.app.selectedCustomer && (
-          <div style={{ ...dim(4, 2, 10, 12) }}>
-            <CustomersPageView app={p.app} />
-          </div>
-        )}
-        {p.app.selectedCustomer && (
+        {p.app.currentTab?.name === 'customers' && (
           <React.Fragment>
-            <div style={{ ...dim(4, 2, 10, 12) }}>
-              <EditCustomerInfoPageView app={p.app} />
-            </div>
-            <button style={{ ...dim(12, 2, 12, 2) }} onClick={() => p.app.setSelectedCustomer(undefined)}>
-              Back
-            </button>
-            <button style={{ ...dim(11, 12, 12, 12) }} onClick={() => p.app.editOrPublishCustomer()}>
-              {p.app.selectedCustomer?.id
-                ? (
-                  <React.Fragment>
-                    <span className='las la-pen' style={{ marginRight: '0.5em' }} />Edit customer&#39;s info
-                  </React.Fragment>)
-                : (
-                  <React.Fragment>
-                    <span className='las la-upload' style={{ marginRight: '0.5em' }} />Add a new customer
-                  </React.Fragment>)
-              }
-            </button>
+            {p.app.currentPageName === 'CustomersListPage' && (
+              <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                <CustomersPageView app={p.app} />
+              </div>
+            )}
+            {p.app.currentPageName === 'EditCustomerPage' && (
+              <React.Fragment>
+                <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                  <EditCustomerInfoPageView app={p.app} />
+                </div>
+              </React.Fragment>
+            )}
+            {p.app.currentPageName === 'CustomerInfoPage' && (
+              <React.Fragment>
+                <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                  <CustomerInfoPageView app={p.app} />
+                </div>
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </div>

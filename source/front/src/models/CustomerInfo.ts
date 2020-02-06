@@ -1,58 +1,46 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { Auxiliary } from './entities/Auxiliary'
 import { App } from './App'
-
-// export class CustomerInfoProperty extends Stateful {
-//   constructor(
-//     public name: string,
-//     public type: string,
-//     public validation?: string,
-//   ) {
-//     super()
-//   }
-
-//   @action
-//   validate(value: string): boolean {
-//     return this.validation ? RegExp(this.validation).test(value) : true
-//   }
-// }
+import { Validation, PropertyValidator } from './Validation'
+import { CustomerKeys } from './entities/Customer'
 
 export class CustomerInfo extends Stateful {
   app: App
-  auxiliary = new Auxiliary()
-  
-  // properties = Array<CustomerInfoProperty>(
-  //   new CustomerInfoProperty('Last name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('First name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('Middle name', 'text', '[A-Z][a-z]*([\'\- ][A-Z][a-z]+)*'),
-  //   new CustomerInfoProperty('Date of birth', 'date'),
-  //   new CustomerInfoProperty('Gender', 'radio'),
-  //   new CustomerInfoProperty('Passport series', 'text', '[A-Z]{2}'),
-  //   new CustomerInfoProperty('Passport number', 'text', '\d{7}'),
-  //   new CustomerInfoProperty('Issuing authority', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Issued at', 'date'),
-  //   new CustomerInfoProperty('Id number', 'text', '[A-Z0-9]{14}'),
-  //   new CustomerInfoProperty('PlaceOfBirth', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('PlaceOfLiving', 'list'),
-  //   new CustomerInfoProperty('PlaceOfRegistration', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Home phone number', 'text', '^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$'),
-  //   new CustomerInfoProperty('Mobile phone number', 'text', '^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$'),
-  //   new CustomerInfoProperty('Email', 'text', '^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$'),
-  //   new CustomerInfoProperty('Company', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Position', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('City of registration', 'list'),
-  //   new CustomerInfoProperty('Address of registration', 'text', '[A-Za-z ]+'),
-  //   new CustomerInfoProperty('Marital status', 'list'),
-  //   new CustomerInfoProperty('Citizenship', 'list'),
-  //   new CustomerInfoProperty('Disability', 'list'),
-  //   new CustomerInfoProperty('Is retired', 'checkbox'),
-  //   new CustomerInfoProperty('Amount', 'money', '\d+'),
-  //   new CustomerInfoProperty('Is Liable For Military Service', 'checkbox'),
-  // )
+  auxiliary: Auxiliary
+  validation: Validation
 
   constructor(app: App) {
     super()
     this.app = app
+    this.auxiliary = new Auxiliary()
+    this.validation = new Validation(new Map<CustomerKeys, PropertyValidator>([
+      ['lastName', new PropertyValidator(this.app, 'lastName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
+      ['firstName', new PropertyValidator(this.app, 'firstName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
+      ['middleName', new PropertyValidator(this.app, 'middleName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
+      ['dateOfBirth', new PropertyValidator(this.app, 'dateOfBirth', /^\d{4}-\d{2}-\d{2}$/)],
+      ['gender', new PropertyValidator(this.app, 'gender')],
+      ['series', new PropertyValidator(this.app, 'series', /^([A-Z]{2})?$/)],
+      ['passportNumber', new PropertyValidator(this.app, 'passportNumber', /^(\d{7})?$/)],
+      ['issuingAuthority', new PropertyValidator(this.app, 'issuingAuthority', /^[A-Za-z' ]*$/)],
+      ['issuedAt', new PropertyValidator(this.app, 'issuedAt', /^\d{4}-\d{2}-\d{2}$/)],
+      ['idNumber', new PropertyValidator(this.app, 'idNumber', /^([A-Z0-9]{14})?$/)],
+      ['placeOfBirth', new PropertyValidator(this.app, 'placeOfBirth', /^[A-Za-z ]*$/)],
+      ['placeOfLivingCityId', new PropertyValidator(this.app, 'placeOfLivingCityId')],
+      ['placeOfLivingAddress', new PropertyValidator(this.app, 'placeOfLivingAddress')],
+      ['placeOfRegistrationCityId', new PropertyValidator(this.app, 'placeOfRegistrationCityId')],
+      ['placeOfRegistrationAddress', new PropertyValidator(this.app, 'placeOfRegistrationAddress', /[A-Za-z ]*/)],
+      ['homePhoneNumber', new PropertyValidator(this.app, 'homePhoneNumber', /^(\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*)?$/)],
+      ['mobilePhoneNumber', new PropertyValidator(this.app, 'mobilePhoneNumber', /^(\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*)?$/)],
+      ['email', new PropertyValidator(this.app, 'email', /^((([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,}))?$/)],
+      ['company', new PropertyValidator(this.app, 'company', /^[A-Za-z ]*$/)],
+      ['position', new PropertyValidator(this.app, 'position', /^[A-Za-z ]*$/)],
+      ['maritalStatusId', new PropertyValidator(this.app, 'maritalStatusId')],
+      ['citizenshipId', new PropertyValidator(this.app, 'citizenshipId')],
+      ['disabilityId', new PropertyValidator(this.app, 'disabilityId')],
+      ['isRetired', new PropertyValidator(this.app, 'isRetired')],
+      ['amount', new PropertyValidator(this.app, 'amount', /^\d*$/)],
+      ['isLiableForMilitaryService', new PropertyValidator(this.app, 'isLiableForMilitaryService')],    
+    ]))
   }
 
   @action

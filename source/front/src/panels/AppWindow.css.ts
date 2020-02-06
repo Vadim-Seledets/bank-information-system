@@ -24,13 +24,11 @@ export const style = restyle(() => {
 
       button {
         align-self: center;
-        justify-self: center;
-        padding: 0.25em 0.75em;
+        /* justify-self: center; */
         font-size: 0.8em;
+        padding: 0.25em 0.75em;
         user-select: none;
         cursor: pointer;
-        color: ${theme.sidebarSelectedTabForeground};
-        background-color: ${theme.sidebarSelectedTabBackground};
         border-radius: 0.2em;
         white-space: nowrap;
 

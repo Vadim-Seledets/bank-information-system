@@ -1,35 +1,43 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
-import { Errors } from './Errors'
+import { ICustomerInfoErrors } from './Errors'
+import { Tab } from './Tab'
+import { HttpClient } from './HttpClient'
 
-export class Tab extends Stateful{
-  constructor(
-    public caption: string,
-    public icon: string) {
-    super()
-  }
-}
+export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
 
 export class App extends Stateful {
+  httpClient = new HttpClient()
   customers: Array<Customer>
   selectedCustomer?: Customer
   tabs: Array<Tab>
   currentTab?: Tab
   customerInfo: CustomerInfo
+  currentPageName: PageName
+
+  deleteIsRequested = false
+  
+  isRowWithCustomerHovered = false
+  isGenderHovered = false
+  isFullNameHovered = false
+  isEmailHovered = false
+  isActionsHovered = false
+  hoveredRowNumber = 0
 
   constructor() {
     super()
     this.customers = new Array<Customer>()
     this.selectedCustomer = undefined
     this.tabs = new Array<Tab>(
-      new Tab('Customers', 'las la-address-book'),
-      new Tab('Deposits', 'las la-percent'),
-      new Tab('Loans', 'las la-credit-card'),
-      new Tab('ATM', 'las la-money-check'),
+      new Tab('customers', 'Customers', 'las la-address-book'),
+      new Tab('deposits', 'Deposits', 'las la-percent'),
+      new Tab('loans', 'Loans', 'las la-credit-card'),
+      new Tab('atm', 'ATM', 'las la-money-check'),
     )
     this.currentTab = this.tabs[0]
     this.customerInfo = new CustomerInfo(this)
+    this.currentPageName = 'CustomersListPage'
   }
 
   @trigger
@@ -41,6 +49,7 @@ export class App extends Stateful {
   @action
   setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
+    this.hoveredRowNumber = 0
   }
 
   @action
@@ -49,79 +58,149 @@ export class App extends Stateful {
   }
 
   @action
+  setCurrentPageName(pageName: PageName): void {
+    this.currentPageName = pageName
+  }
+
+  @action
   addNewCustomer(): void {
     const newCustomer = new Customer()
     this.customers.push(newCustomer)
     this.selectedCustomer = newCustomer
+    this.setCurrentPageName('EditCustomerPage')
+  }
+
+  @action
+  editCustomer(): void {
+    if (this.selectedCustomer) {
+      if (this.selectedCustomer.id && !this.selectedCustomer.isFullInfoModelLoaded) {
+        this.selectedCustomer.getFullInfoModel()
+      }
+      this.setCurrentPageName('EditCustomerPage')
+    }
   }
 
   @action
   async editOrPublishCustomer(): Promise<void> {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
-        await this.editCustomerInfo()
+        await this.editCustomerInfo(this.selectedCustomer)
       } else {
-        await this.publishNewCustomer()
+        await this.publishNewCustomer(this.selectedCustomer)
       }
-      if (this.selectedCustomer.errors === undefined) {
-        this.setSelectedCustomer(undefined)
+      if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
+        this.setCurrentPageName('CustomersListPage')
       }
     }
   }
 
   @action
   async getAllCustomersInShortInfoModel(): Promise<void> {
-    const customerFullNames = await fetch(`https://localhost:5001/customers`)
-      .then(response => response.json()) as ICustomerShortInfo[]
-    this.customers = customerFullNames.map(customerShortInfo => {
-      const customer = new Customer()
-      customer.setShortInfo(customerShortInfo)
-      return customer
-    })
-  }
-
-  @action
-  async publishNewCustomer(): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: this.selectedCustomer?.getJson(),
-    })
-    if (response.ok) {
-      this.selectedCustomer?.setId(await response.text())
-      this.selectedCustomer?.setErrors(undefined)
-    } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+    const customersInfo = await this.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
+    if (customersInfo.successful && customersInfo.data) {
+      this.customers = this.customers.concat(
+        customersInfo.data.map(customerShortInfo => {
+          const customer = new Customer()
+          customer.setShortInfo(customerShortInfo)
+          return customer
+        })
+      )
     }
   }
 
   @action
-  async editCustomerInfo(): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: this.selectedCustomer?.getJson(),
-    })
-    if (response.ok) {
-      this.selectedCustomer?.setErrors(undefined)
-    } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+  async publishNewCustomer(customer: Customer): Promise<void> {
+    const response = await this.httpClient.post<string, ICustomerInfoErrors>(
+      `https://localhost:5001/customers`, customer.getJson())
+    if (response.successful && response.data) {
+      customer.setId(response.data)
+      customer.infoErrors.setHasErrors(false)
+    } else if (!response.successful && response.errorData) {
+      customer.infoErrors.initialize(response.errorData)
+      customer.infoErrors.setHasErrors(true)
     }
   }
 
   @action
-  async deleteCustomer(): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers/${this.selectedCustomer?.id}`, {
-      method: 'DELETE',
-    })
-    if (response.ok) {
-      this.selectedCustomer?.setErrors(undefined)
-    } else {
-      this.selectedCustomer?.setErrors(await response.json() as Errors)
+  async editCustomerInfo(customer: Customer): Promise<void> {
+    const response = await this.httpClient.put<any, ICustomerInfoErrors>(
+      `https://localhost:5001/customers/${customer.id}`, customer.getJson())
+    if (response.successful) {
+      customer.infoErrors.setHasErrors(false)
+    } else if (!response.successful && response.errorData) {
+      customer.infoErrors.initialize(response.errorData)
+      customer.infoErrors.setHasErrors(true)
     }
+  }
+
+  @action
+  async deleteCustomer(customer?: Customer): Promise<void> {
+    if (customer) {
+      if (customer.id) {
+        const response = await this.httpClient.delete<any, ICustomerInfoErrors>(
+          `https://localhost:5001/customers/${customer.id}`)
+        if (response.successful) {
+          customer.infoErrors.setHasErrors(false)
+        } else if (!response.successful && response.errorData) {
+          customer.infoErrors.initialize(response.errorData)
+          customer.infoErrors.setHasErrors(true)
+        }
+      }
+      const start = this.customers.indexOf(customer)
+      this.customers.splice(start, 1)
+      if (customer === this.selectedCustomer) {
+        this.setSelectedCustomer(undefined)
+      }
+    }
+  }
+
+  @action
+  setIsRowWithCustomerHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isRowWithCustomerHovered = value
+  }
+  
+  @action
+  setIsGenderHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isGenderHovered = value
+  }
+  
+  @action
+  setIsFullNameHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isFullNameHovered = value
+  }
+  
+  @action
+  setIsEmailHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isFullNameHovered = value
+  }
+
+  @action
+  setIsActionsHovered(value: boolean, row: number): void {
+    this.hoveredRowNumber = row
+    this.isActionsHovered = value
+  }
+
+  @action
+  setDeleteIsRequested(value: boolean): void {
+    this.deleteIsRequested = value
+  }
+
+  @trigger
+  dropDeleteRequest(): void {
+    this.selectedCustomer /* Sensetivity list item */
+    this.setDeleteIsRequested(false)
+  }
+
+  isRowHovered(row: number): boolean {
+    return (this.isRowWithCustomerHovered
+      || this.isGenderHovered
+      || this.isFullNameHovered
+      || this.isEmailHovered
+      || this.isActionsHovered
+    ) && this.hoveredRowNumber === row
   }
 }
