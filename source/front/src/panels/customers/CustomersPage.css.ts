@@ -169,6 +169,7 @@ export const style = restyle(() => {
         width: 100%;
         padding: 1em 0;
         border-bottom: 1px solid black;
+        transition: background-color ease 0.2s;
       }
 
       .oddRow {
