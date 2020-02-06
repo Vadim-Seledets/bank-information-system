@@ -5,6 +5,7 @@ using AutoMapper;
 using BankInformationSystem.Business.Mappings;
 using BankInformationSystem.Business.Models;
 using BankInformationSystem.Business.Services;
+using BankInformationSystem.Business.Utilities;
 using BankInformationSystem.Business.Validation;
 using BankInformationSystem.Data;
 using BankInformationSystem.Filters;
@@ -44,7 +45,7 @@ namespace BankInformationSystem
                 });
 
             var connectionString = $"Data Source={Path.Combine(AppContext.BaseDirectory, Configuration["DatabaseFilename"])}";
-            services.AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString));
+            services.AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString), ServiceLifetime.Transient);
             
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
             
@@ -66,7 +67,11 @@ namespace BankInformationSystem
             
             // Services
             services.AddScoped<ICustomerService, CustomerService>();
-            
+            services.AddScoped<IBankOperationsService, BankOperationsService>();
+
+            services.AddScoped<ICurrentDateTimeProvider, VirtualDateTimeProvider>();
+            services.AddScoped<IVirtualDateTimeManager, VirtualDateTimeProvider>();
+
             // Validators
             services.AddScoped<IValidator<CustomerFullInfoBaseModel>, CustomerFullInfoBaseModelValidator>();
         }

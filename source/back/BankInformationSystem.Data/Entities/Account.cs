@@ -12,6 +12,8 @@ namespace BankInformationSystem.Data.Entities
 
         public AccountType Type { get; set; }
 
+        public int CurrencyId { get; set; }
+
         public Currency Currency { get; set; }
 
         public decimal Debit { get; set; }

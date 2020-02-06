@@ -1,4 +1,5 @@
-﻿using BankInformationSystem.Data.Entities;
+﻿using BankInformationSystem.Common.Models;
+using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankInformationSystem.Data
@@ -50,8 +51,8 @@ namespace BankInformationSystem.Data
             base.OnModelCreating(modelBuilder);
             
             modelBuilder.Entity<DepositType>().HasData(
-                new DepositType { Id = 1, Name = "Revocable" },
-                new DepositType { Id = 2, Name = "Irrevocable" });
+                new DepositType { Id = (int)MainDepositType.Revocable, Name = "Revocable" },
+                new DepositType { Id = (int)MainDepositType.Irrevocable, Name = "Irrevocable" });
 
             modelBuilder.Entity<Currency>().HasData(
                 new Currency { Id = 1, Code = "BYN" },
