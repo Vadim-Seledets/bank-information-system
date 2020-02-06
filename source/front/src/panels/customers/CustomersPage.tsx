@@ -14,30 +14,29 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.addNewCustomer()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
-            Add a New Customer
+            <div>Add a New Customer</div>
           </button>
-          {p.app.selectedCustomer && (
-            <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.app.editCustomer()}>
-              <span className='las la-pen' style={{ marginRight: '0.5em' }} />
-              Edit Customer
-            </button>
-          )}
-          {p.app.selectedCustomer && (
-            <button className={css.deleteButton} is-visible={`${p.app.deleteIsRequested}`}>
-              <span className='las la-trash' style={{ marginRight: '0.5em' }} />
-              <div onClick={() => p.app.setDeleteIsRequested(!p.app.deleteIsRequested)}>Delete Customer</div>
-              <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.app.deleteIsRequested}`}>
-                <div className='yesButton'
-                  onClick={() => {
-                    p.app.deleteCustomer(p.app.selectedCustomer)
-                    p.app.setDeleteIsRequested(false)
-                  }}>Yes</div>
-                <div className='noButton'
-                  onClick={() => p.app.setDeleteIsRequested(false)}
-                >No</div>
-              </div>
-            </button>
-          )}
+          <button className={cx(css.button, css.addNewOrEditCustomerButton, 'headLineItem')}
+            is-visible={`${p.app.selectedCustomer !== undefined}`}
+            onClick={() => p.app.editCustomer()}
+          >
+            <span className='las la-pen' style={{ marginRight: '0.5em' }} />
+            <div>Edit Customer</div>
+          </button>
+          <button className={cx(css.button, css.deleteButton)} is-visible={`${p.app.selectedCustomer !== undefined}`}>
+            <span className='las la-trash icon' style={{ marginRight: '0.5em' }} />
+            <div onClick={() => p.app.setDeleteIsRequested(!p.app.deleteIsRequested)}>Delete Customer</div>
+            <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.app.deleteIsRequested}`}>
+              <div className='yesButton'
+                onClick={() => {
+                  p.app.deleteCustomer(p.app.selectedCustomer)
+                  p.app.setDeleteIsRequested(false)
+                }}>Yes</div>
+              <div className='noButton'
+                onClick={() => p.app.setDeleteIsRequested(false)}
+              >No</div>
+            </div>
+          </button>
           <div className='space' />
           <div className={css.search}>
             <div className='las la-search icon' />
