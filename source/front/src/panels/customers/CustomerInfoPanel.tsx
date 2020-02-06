@@ -2,7 +2,7 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { style } from './CustomerInfoPanel.css'
 import { CustomerInfo as CustomerInfo } from '../../models/CustomerInfo'
-import { Gender } from '../../models/entities/Gender'
+import { Gender } from '../../models/customers/Gender'
 
 export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Element {
   return reactive(() => {
