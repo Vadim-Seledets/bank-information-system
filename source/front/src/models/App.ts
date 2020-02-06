@@ -3,10 +3,12 @@ import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
 import { Tab } from './Tab'
+import { HttpClient } from './HttpClient'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
 
 export class App extends Stateful {
+  httpClient = new HttpClient()
   customers: Array<Customer>
   selectedCustomer?: Customer
   tabs: Array<Tab>
@@ -94,46 +96,39 @@ export class App extends Stateful {
 
   @action
   async getAllCustomersInShortInfoModel(): Promise<void> {
-    const customerFullNames = await fetch(`https://localhost:5001/customers`)
-      .then(response => response.json()) as ICustomerShortInfo[]
-    this.customers = customerFullNames.map(customerShortInfo => {
-      const customer = new Customer()
-      customer.setShortInfo(customerShortInfo)
-      return customer
-    })
+    const customersInfo = await this.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
+    if (customersInfo.successful && customersInfo.data) {
+      this.customers = this.customers.concat(
+        customersInfo.data.map(customerShortInfo => {
+          const customer = new Customer()
+          customer.setShortInfo(customerShortInfo)
+          return customer
+        })
+      )
+    }
   }
 
   @action
   async publishNewCustomer(customer: Customer): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: customer.getJson(),
-    })
-    if (response.ok) {
-      customer.setId(await response.text())
+    const response = await this.httpClient.post<string, ICustomerInfoErrors>(
+      `https://localhost:5001/customers`, customer.getJson())
+    if (response.successful && response.data) {
+      customer.setId(response.data)
       customer.infoErrors.setHasErrors(false)
-    } else {
-      customer.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+    } else if (!response.successful && response.errorData) {
+      customer.infoErrors.initialize(response.errorData)
       customer.infoErrors.setHasErrors(true)
     }
   }
 
   @action
   async editCustomerInfo(customer: Customer): Promise<void> {
-    const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: customer.getJson(),
-    })
-    if (response.ok) {
+    const response = await this.httpClient.put<any, ICustomerInfoErrors>(
+      `https://localhost:5001/customers/${customer.id}`, customer.getJson())
+    if (response.successful) {
       customer.infoErrors.setHasErrors(false)
-    } else {
-      customer.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
+    } else if (!response.successful && response.errorData) {
+      customer.infoErrors.initialize(response.errorData)
       customer.infoErrors.setHasErrors(true)
     }
   }
@@ -142,19 +137,17 @@ export class App extends Stateful {
   async deleteCustomer(customer?: Customer): Promise<void> {
     if (customer) {
       if (customer.id) {
-        const response = await fetch(`https://localhost:5001/customers/${customer.id}`, {
-          method: 'DELETE',
-        })
-        if (response.ok) {
-          this.selectedCustomer?.infoErrors.setHasErrors(false)
-        } else {
-          this.selectedCustomer?.infoErrors.initialize(await response.json() as ICustomerInfoErrors)
-          this.selectedCustomer?.infoErrors.setHasErrors(true)
+        const response = await this.httpClient.delete<any, ICustomerInfoErrors>(
+          `https://localhost:5001/customers/${customer.id}`)
+        if (response.successful) {
+          customer.infoErrors.setHasErrors(false)
+        } else if (!response.successful && response.errorData) {
+          customer.infoErrors.initialize(response.errorData)
+          customer.infoErrors.setHasErrors(true)
         }
-      } else {
-        const start = this.customers.indexOf(customer)
-        this.customers.splice(start, 1)
       }
+      const start = this.customers.indexOf(customer)
+      this.customers.splice(start, 1)
       if (customer === this.selectedCustomer) {
         this.setSelectedCustomer(undefined)
       }
