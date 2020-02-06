@@ -72,6 +72,8 @@ export const style = restyle(() => {
         font-size: 0.8em;
         padding: 0.25em 0;
         border-bottom: 1px solid grey;
+        color: ${theme.applicationForeground};
+        background-color: ${theme.applicationBackground};
 
         &[is-invalid=true] {
           border-bottom: 1px solid red;
@@ -84,6 +86,8 @@ export const style = restyle(() => {
         height: 1em;
         font-size: 0.8em;
         padding: 0.25em 0;
+        color: ${theme.applicationForeground};
+        background-color: ${theme.applicationBackground};
       }
     `,
   }
