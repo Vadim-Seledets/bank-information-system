@@ -1,4 +1,4 @@
-import { Stateful, action, Action } from "reactronic"
+import { Stateful, action, Action, cached } from "reactronic"
 import { Gender } from "./Gender"
 import { IPassport } from "./IPassport"
 import { IBirthInfo } from "./IBirthInfo"
@@ -39,6 +39,11 @@ export interface ICustomerFullInfo {
 
 export type CustomerKeys = keyof Customer
 
+export interface IHighlightingRange {
+  start: number
+  length: number
+}
+
 export class Customer extends Stateful {
   id?: string = undefined
   firstName: string = ''
@@ -78,6 +83,7 @@ export class Customer extends Stateful {
 
   infoErrors = new CustomerInfoErrors()
   isFullInfoModelLoaded = false
+  hilightingRange: IHighlightingRange = { start: 0, length: 0 }
 
   @action
   setShortInfo(info: ICustomerShortInfo): void {
@@ -280,6 +286,21 @@ export class Customer extends Stateful {
   @action
   setPosition(value: string): void {
     this.position = value
+  }
+
+  @action
+  setHighlightingRange(value: IHighlightingRange): void {
+    this.hilightingRange = value
+  }
+
+  @cached
+  getFullName(): string {
+    const pureFullName = `${this.firstName} ${this.middleName} ${this.lastName}`
+    const pureFullNameLength = pureFullName.length
+    const fullName = pureFullName.substr(0, this.hilightingRange.start) +
+      '<mark>' + pureFullName.substr(this.hilightingRange.start, this.hilightingRange.length) + '</mark>' +
+      pureFullName.substr(this.hilightingRange.start + this.hilightingRange.length, pureFullNameLength - this.hilightingRange.start + this.hilightingRange.length)
+    return fullName
   }
 
   getJson(): string {
