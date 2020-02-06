@@ -110,6 +110,11 @@ export const style = restyle(() => {
       .fullName {
         z-index: 2;
 
+        mark {
+          color: ${theme.markForeground};
+          background-color: transparent;
+        }
+
         &:hover {
           color: ${theme.highlighter};
           cursor: pointer;

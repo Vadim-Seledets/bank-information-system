@@ -1,4 +1,4 @@
-import { Stateful, action, trigger } from 'reactronic'
+import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { Customer, ICustomerShortInfo } from './entities/Customer'
 import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from './Errors'
@@ -10,12 +10,14 @@ export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoP
 export class App extends Stateful {
   httpClient = new HttpClient()
   customers: Array<Customer>
+  filteredCustomers: Array<Customer>
   selectedCustomer?: Customer
   tabs: Array<Tab>
   currentTab?: Tab
   customerInfo: CustomerInfo
   currentPageName: PageName
 
+  filter = ''
   deleteIsRequested = false
   
   isRowWithCustomerHovered = false
@@ -28,6 +30,7 @@ export class App extends Stateful {
   constructor() {
     super()
     this.customers = new Array<Customer>()
+    this.filteredCustomers = this.customers
     this.selectedCustomer = undefined
     this.tabs = new Array<Tab>(
       new Tab('customers', 'Customers', 'las la-address-book'),
@@ -78,6 +81,22 @@ export class App extends Stateful {
       }
       this.setCurrentPageName('EditCustomerPage')
     }
+  }
+
+  @action
+  setFilter(value: string): void {
+    this.filter = value
+  }
+
+  @trigger
+  makeFilteredCustomers(): void {
+    const filter = this.filter
+    this.filteredCustomers = this.customers.filter(c => {
+      const fullName = `${c.firstName} ${c.middleName} ${c.lastName}`
+      const startIndex = fullName.toLowerCase().indexOf(filter.toLowerCase())
+      isolated(() => c.setHighlightingRange({ start: startIndex, length: filter.length }))
+      return startIndex !== -1
+    })
   }
 
   @action

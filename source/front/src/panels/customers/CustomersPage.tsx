@@ -40,7 +40,10 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
           <div className='space' />
           <div className={css.search}>
             <div className='las la-search icon' />
-            <input className='input' type='text' placeholder='Search' />
+            <input className='input' type='text' placeholder='Search'
+              onFocus={() => p.app.setSelectedCustomer(undefined)}  
+              onChange={e => p.app.setFilter(e.currentTarget.value)}
+            />
           </div>
         </div>
         <div className={css.customerList} style={{ ...dim(2, 2, 11, 12) }}>
@@ -49,7 +52,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>
           {/* <div style={{ ...dim(8, 1, 8, 1) }}>Actions</div> */}
           <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
-          {p.app.customers.map((v, i) => (
+          {p.app.filteredCustomers.map((v, i) => (
             <React.Fragment key={i}>
               <div style={{ ...dim(2, i + 2, 2, i + 2) }}
                 className={cx(v.gender === Gender.Female
@@ -67,7 +70,8 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                 }}
                 onPointerEnter={() => p.app.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsFullNameHovered(false, i + 2)}
-              >{`${v.firstName} ${v.middleName} ${v.lastName}`}</div>
+                dangerouslySetInnerHTML={{__html: `${v.getFullName()}`}} 
+              />
               <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='email' href={`mailto:${v.email}`}
                 onPointerEnter={() => p.app.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsEmailHovered(false, i + 2)}
