@@ -7,6 +7,7 @@ import { themes } from '../models/Theme'
 import { cx } from 'emotion'
 import { CustomersPageView } from './customers/CustomersPage'
 import { EditCustomerInfoPageView } from './customers/EditCustomerInfoPage'
+import { CustomerInfoPageView } from './customers/CustomerInfoPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -41,6 +42,13 @@ export function AppWindow(p: { app: App }): JSX.Element {
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
                   <EditCustomerInfoPageView app={p.app} />
+                </div>
+              </React.Fragment>
+            )}
+            {p.app.currentPageName === 'CustomerInfoPage' && (
+              <React.Fragment>
+                <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                  <CustomerInfoPageView app={p.app} />
                 </div>
               </React.Fragment>
             )}
