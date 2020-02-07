@@ -156,7 +156,7 @@ export const style = restyle(() => {
         z-index: 1;
         width: 100%;
         padding: 1em 0;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid ${theme.customerListRowBottomBorder};
         transition: background-color ease 0.2s;
       }
 
@@ -171,7 +171,6 @@ export const style = restyle(() => {
         
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
-          /* z-index: 1000; */
         }
       }
     `,
