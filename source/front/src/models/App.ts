@@ -46,7 +46,7 @@ export class App extends Stateful {
   @trigger
   init(): void {
     this.customerInfo.getAuxiliaryInfo()
-    this.getAllCustomersInShortInfoModel()
+    this.getAllCustomersInShortInfoModelRequest()
   }
 
   @action
@@ -74,13 +74,22 @@ export class App extends Stateful {
   }
 
   @action
-  editCustomer(): void {
+  editCustomerInfo(): void {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id && !this.selectedCustomer.isFullInfoModelLoaded) {
         this.selectedCustomer.getFullInfoModel()
       }
       this.setCurrentPageName('EditCustomerPage')
     }
+  }
+
+  @action
+  showCustomerInfo(customer: Customer): void {
+    if (customer.id && !customer.isFullInfoModelLoaded) {
+      customer.getFullInfoModel()
+    }
+    this.setSelectedCustomer(customer)
+    this.setCurrentPageName('CustomerInfoPage')
   }
 
   @action
@@ -103,9 +112,9 @@ export class App extends Stateful {
   async editOrPublishCustomer(): Promise<void> {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
-        await this.editCustomerInfo(this.selectedCustomer)
+        await this.editCustomerInfoRequest(this.selectedCustomer)
       } else {
-        await this.publishNewCustomer(this.selectedCustomer)
+        await this.publishNewCustomerRequest(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
         this.setCurrentPageName('CustomersListPage')
@@ -114,7 +123,7 @@ export class App extends Stateful {
   }
 
   @action
-  async getAllCustomersInShortInfoModel(): Promise<void> {
+  async getAllCustomersInShortInfoModelRequest(): Promise<void> {
     const customersInfo = await this.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
       this.customers = this.customers.concat(
@@ -128,7 +137,7 @@ export class App extends Stateful {
   }
 
   @action
-  async publishNewCustomer(customer: Customer): Promise<void> {
+  async publishNewCustomerRequest(customer: Customer): Promise<void> {
     const response = await this.httpClient.post<string, ICustomerInfoErrors>(
       `https://localhost:5001/customers`, customer.getJson())
     if (response.successful && response.data) {
@@ -141,7 +150,7 @@ export class App extends Stateful {
   }
 
   @action
-  async editCustomerInfo(customer: Customer): Promise<void> {
+  async editCustomerInfoRequest(customer: Customer): Promise<void> {
     const response = await this.httpClient.put<any, ICustomerInfoErrors>(
       `https://localhost:5001/customers/${customer.id}`, customer.getJson())
     if (response.successful) {
@@ -153,7 +162,7 @@ export class App extends Stateful {
   }
 
   @action
-  async deleteCustomer(customer?: Customer): Promise<void> {
+  async deleteCustomerRequest(customer?: Customer): Promise<void> {
     if (customer) {
       if (customer.id) {
         const response = await this.httpClient.delete<any, ICustomerInfoErrors>(
