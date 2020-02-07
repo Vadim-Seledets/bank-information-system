@@ -18,7 +18,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
           </button>
           <button className={cx(css.button, css.addNewOrEditCustomerButton, 'headLineItem')}
             is-visible={`${p.app.selectedCustomer !== undefined}`}
-            onClick={() => p.app.editCustomer()}
+            onClick={() => p.app.editCustomerInfo()}
           >
             <span className='las la-pen' style={{ marginRight: '0.5em' }} />
             <div>Edit Customer</div>
@@ -29,7 +29,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
             <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.app.deleteIsRequested}`}>
               <div className='yesButton'
                 onClick={() => {
-                  p.app.deleteCustomer(p.app.selectedCustomer)
+                  p.app.deleteCustomerRequest(p.app.selectedCustomer)
                   p.app.setDeleteIsRequested(false)
                 }}>Yes</div>
               <div className='noButton'
@@ -64,10 +64,7 @@ export function CustomersPageView(p: { app: App }): JSX.Element {
                 onPointerLeave={() => p.app.setIsGenderHovered(false, i + 2)}
               />
               <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='fullName'
-                onClick={() => {
-                  p.app.setSelectedCustomer(v)
-                  p.app.setCurrentPageName('CustomerInfoPage')
-                }}
+                onClick={() => p.app.showCustomerInfo(v)}
                 onPointerEnter={() => p.app.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.app.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${v.getFullName()}`}} 
