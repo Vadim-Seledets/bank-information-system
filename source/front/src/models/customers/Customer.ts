@@ -100,6 +100,9 @@ export class Customer extends Stateful {
     const json = await fetch(`https://localhost:5001/customers/${this.id}`)
       .then(response => response.json())
     const customer = json as ICustomerFullInfo
+    this.lastName = customer.lastName
+    this.firstName = customer.firstName
+    this.middleName = customer.middleName
     this.gender = customer.gender
     this.isRetired = customer.isRetired
     this.isLiableForMilitaryService = customer.isLiableForMilitaryService
