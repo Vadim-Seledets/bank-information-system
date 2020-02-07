@@ -79,6 +79,22 @@ export class CustomersPage extends Stateful {
   }
 
   @action
+  cancelEditing(): void {
+    if (this.selectedCustomer) {
+      if (this.selectedCustomer.id) {
+        this.selectedCustomer.getFullInfoModel()
+      } else {
+        const start = this.customers.indexOf(this.selectedCustomer)
+        this.customers.splice(start, 1)
+        if (this.selectedCustomer === this.selectedCustomer) {
+          this.setSelectedCustomer(undefined)
+        }
+      }
+      this.app.setCurrentPageName('CustomersListPage')
+    }
+  }
+
+  @action
   setFilter(value: string): void {
     this.filter = value
   }
