@@ -1,6 +1,6 @@
 import { Stateful, trigger } from 'reactronic'
 import { CustomerKeys } from './customers/Customer'
-import { CustomersPage } from './CustomersPage'
+import { CustomersPage } from './customers/CustomersPage'
 
 export class PropertyValidator extends Stateful {
   constructor(

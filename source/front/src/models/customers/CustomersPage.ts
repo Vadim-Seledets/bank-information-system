@@ -1,9 +1,9 @@
 import { Stateful, action, trigger, isolated } from 'reactronic'
-import { Auxiliary } from './customers/Auxiliary'
-import { App } from './App'
+import { Auxiliary } from './Auxiliary'
+import { App } from '../App'
 import { CustomerInfo } from './CustomerInfo'
-import { ICustomerInfoErrors } from './Errors'
-import { Customer, ICustomerShortInfo } from './customers/Customer'
+import { ICustomerInfoErrors } from '../Errors'
+import { Customer, ICustomerShortInfo } from './Customer'
 
 export class CustomersPage extends Stateful {
   app: App

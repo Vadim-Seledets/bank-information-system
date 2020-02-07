@@ -4,7 +4,7 @@ import { dim } from '../../common/css'
 import { style } from './CustomersPage.css'
 import { cx } from 'emotion'
 import { Gender } from '../../models/customers/Gender'
-import { CustomersPage } from '../../models/CustomersPage'
+import { CustomersPage } from '../../models/customers/CustomersPage'
 
 export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {

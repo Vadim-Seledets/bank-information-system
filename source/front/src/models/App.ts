@@ -1,7 +1,7 @@
 import { Stateful, action } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
-import { CustomersPage } from './CustomersPage'
+import { CustomersPage } from './customers/CustomersPage'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
 

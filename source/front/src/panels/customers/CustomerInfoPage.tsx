@@ -2,7 +2,7 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from './CustomerInfoPage.css'
-import { CustomersPage } from '../../models/CustomersPage'
+import { CustomersPage } from '../../models/customers/CustomersPage'
 
 export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
