@@ -7,7 +7,7 @@ import { Gender } from '../../models/customers/Gender'
 export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Element {
   return reactive(() => {
     const css = style.classes
-    const customer = p.customerInfo.app.selectedCustomer
+    const customer = p.customerInfo.customersPage.selectedCustomer
     return (
       <React.Fragment>
         {customer && (

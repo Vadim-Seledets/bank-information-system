@@ -35,20 +35,20 @@ export function AppWindow(p: { app: App }): JSX.Element {
           <React.Fragment>
             {p.app.currentPageName === 'CustomersListPage' && (
               <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                <CustomersPageView app={p.app} />
+                <CustomersPageView customersPage={p.app.customersPage} />
               </div>
             )}
             {p.app.currentPageName === 'EditCustomerPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <EditCustomerInfoPageView app={p.app} />
+                  <EditCustomerInfoPageView  customersPage={p.app.customersPage} />
                 </div>
               </React.Fragment>
             )}
             {p.app.currentPageName === 'CustomerInfoPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <CustomerInfoPageView app={p.app} />
+                  <CustomerInfoPageView  customersPage={p.app.customersPage} />
                 </div>
               </React.Fragment>
             )}

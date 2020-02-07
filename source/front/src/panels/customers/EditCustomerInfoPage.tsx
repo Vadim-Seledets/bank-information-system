@@ -1,21 +1,21 @@
 import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
-import { App } from '../../models/App'
 import { style } from './EditCustomerInfoPage.css'
 import { CustomerInfoPanel } from './CustomerInfoPanel'
+import { CustomersPage } from '../../models/CustomersPage'
 
-export function EditCustomerInfoPageView(p: { app: App }): JSX.Element {
+export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={css.editOrPublishButton}
-            is-enabled={`${p.app.customerInfo.validation.areAllValid()}`}
-            onClick={() => p.app.editOrPublishCustomer()}
+            is-enabled={`${p.customersPage.customerInfo.validation.areAllValid()}`}
+            onClick={() => p.customersPage.editOrPublishCustomer()}
           >
-            {p.app.selectedCustomer?.id
+            {p.customersPage.selectedCustomer?.id
               ? (
                 <React.Fragment>
                   <span className='las la-pen' style={{ marginRight: '0.5em' }} />
@@ -29,12 +29,12 @@ export function EditCustomerInfoPageView(p: { app: App }): JSX.Element {
             }
           </button>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.app.setCurrentPageName('CustomersListPage')}>
+          <button className={css.backButton} onClick={() => p.customersPage.app.setCurrentPageName('CustomersListPage')}>
             Back
           </button>
         </div>
         <div style={{ ...dim(2, 2, 11, 12) }}>
-          <CustomerInfoPanel customerInfo={p.app.customerInfo} />
+          <CustomerInfoPanel customerInfo={p.customersPage.customerInfo} />
         </div>
       </div>
     )
