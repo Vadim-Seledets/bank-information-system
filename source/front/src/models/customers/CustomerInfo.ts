@@ -6,13 +6,11 @@ import { CustomersPage } from './CustomersPage'
 
 export class CustomerInfo extends Stateful {
   customersPage: CustomersPage
-  auxiliary: Auxiliary
   validation: Validation
 
   constructor(customersPage: CustomersPage) {
     super()
     this.customersPage = customersPage
-    this.auxiliary = new Auxiliary()
     this.validation = new Validation(new Map<CustomerKeys, PropertyValidator>([
       ['lastName', new PropertyValidator(this.customersPage, 'lastName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
       ['firstName', new PropertyValidator(this.customersPage, 'firstName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
@@ -41,11 +39,5 @@ export class CustomerInfo extends Stateful {
       ['amount', new PropertyValidator(this.customersPage, 'amount', /^\d*$/)],
       ['isLiableForMilitaryService', new PropertyValidator(this.customersPage, 'isLiableForMilitaryService')],    
     ]))
-  }
-
-  @action
-  async getAuxiliaryInfo(): Promise<void> {
-    this.auxiliary = await fetch(`https://localhost:5001/customers/auxiliary`)
-      .then(response => response.json())
   }
 }

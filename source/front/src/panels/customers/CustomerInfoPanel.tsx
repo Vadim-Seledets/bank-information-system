@@ -122,7 +122,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${!p.customerInfo.validation.isValid('citizenshipId') || customer.infoErrors.has('Passport.CitizenshipId')}`}
                 onChange={e => customer.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.countriesOfCitizenship.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.countriesOfCitizenship.map((v, i) => (
                   <option key={`${v.id}:${v.country}`} value={v.id}>{v.country}</option>
                 ))}
               </select>
@@ -247,7 +247,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${!p.customerInfo.validation.isValid('placeOfLivingCityId') || customer.infoErrors.has('PlaceOfLiving.CityId')}`}
                 onChange={e => customer.setPlaceOfLivingCityId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.cities.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.cities.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
@@ -286,7 +286,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${!p.customerInfo.validation.isValid('placeOfRegistrationCityId') || customer.infoErrors.has('PlaceOfRegistration.CityId')}`}
                 onChange={e => customer.setPlaceOfRegistrationCityId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.cities.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.cities.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
@@ -306,7 +306,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${customer.infoErrors.has('PlaceOfRegistration.CityId')}`}
                 onChange={e => customer.placeOfRegistration.setCityId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.cities.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.cities.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
@@ -435,7 +435,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                   is-invalid={`${customer.infoErrors.has('IncomePerMonth.CurrencyId')}`}
                   onChange={e => customer.setCurrencyId(parseInt(e.currentTarget.value))}
                 >
-                  {p.customerInfo.auxiliary.currencies.map((v, i) => (
+                  {p.customerInfo.customersPage.auxiliary.currencies.map((v, i) => (
                     <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
                   ))}
                 </select>
@@ -458,7 +458,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${customer.infoErrors.has('MaritalStatus')}`}
                 onChange={e => customer.setMaritalStatusId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.maritalStatuses.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.maritalStatuses.map((v, i) => (
                   <option key={`${v.id}:${v.description}`} value={v.id}>{v.description}</option>
                 ))}
               </select>
@@ -480,7 +480,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 is-invalid={`${customer.infoErrors.has('DisabilityId')}`}
                 onChange={e => customer.setDisabilityId(parseInt(e.currentTarget.value))}
               >
-                {p.customerInfo.auxiliary.disabilities.map((v, i) => (
+                {p.customerInfo.customersPage.auxiliary.disabilities.map((v, i) => (
                   <option key={`${v.id}:${v.description}`} value={v.id}>{v.description}</option>
                 ))}
               </select>

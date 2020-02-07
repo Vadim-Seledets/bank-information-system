@@ -35,7 +35,7 @@ export class CustomersPage extends Stateful {
 
   @trigger
   init(): void {
-    this.customerInfo.getAuxiliaryInfo()
+    this.getAuxiliaryInfo()
     this.getAllCustomersInShortInfoModelRequest()
   }
 
