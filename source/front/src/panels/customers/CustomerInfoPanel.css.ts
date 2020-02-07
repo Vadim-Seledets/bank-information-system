@@ -31,7 +31,7 @@ export const style = restyle(() => {
 
         .name {
           font-size: 0.7em;
-          color: ${theme.sidebarForeground};
+          color: ${theme.customerInfoBubbleForeground};
         }
 
         .error {
