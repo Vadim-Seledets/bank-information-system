@@ -1,18 +1,18 @@
 import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
-import { App } from '../../models/App'
 import { style } from './CustomerInfoPage.css'
+import { CustomersPage } from '../../models/CustomersPage'
 
-export function CustomerInfoPageView(p: { app: App }): JSX.Element {
+export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
-    const customer = p.app.selectedCustomer
+    const customer = p.customersPage.selectedCustomer
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.app.setCurrentPageName('CustomersListPage')}>
+          <button className={css.backButton} onClick={() => p.customersPage.app.setCurrentPageName('CustomersListPage')}>
             Back
           </button>
         </div>
