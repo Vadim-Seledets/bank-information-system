@@ -15,7 +15,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.propertyGroupCaption}>Personal Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Last name</div>
+                <div className='name'>Last Name</div>
                 {customer.infoErrors.has('LastName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -32,7 +32,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>First name</div>
+                <div className='name'>First Name</div>
                 {customer.infoErrors.has('FirstName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -49,7 +49,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Middle name</div>
+                <div className='name'>Middle Name</div>
                 {customer.infoErrors.has('MiddleName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -66,7 +66,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Date of birth</div>
+                <div className='name'>Date Of Birth</div>
                 {customer.infoErrors.has('BirthInfo.DateOfBirth') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -129,7 +129,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Passport series</div>
+                <div className='name'>Passport Series</div>
                 {customer.infoErrors.has('Passport.Series') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -146,7 +146,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Passport number</div>
+                <div className='name'>Passport Number</div>
                 {customer.infoErrors.has('Passport.PassportNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -163,7 +163,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Issuing authority</div>
+                <div className='name'>Issuing Authority</div>
                 {customer.infoErrors.has('Passport.IssuingAuthority') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -180,7 +180,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Issued at</div>
+                <div className='name'>Issued At</div>
                 {customer.infoErrors.has('Passport.IssuedAt') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -197,7 +197,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Id number</div>
+                <div className='name'>Id Number</div>
                 {customer.infoErrors.has('Passport.IdNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -215,7 +215,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.propertyGroupCaption}>Contact Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Place of birth</div>
+                <div className='name'>Place Of Birth</div>
                 {customer.infoErrors.has('BirthInfo.PlaceOfBirth') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -232,7 +232,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Place of living</div>
+                <div className='name'>Place Of Living</div>
                 {customer.infoErrors.has('PlaceOfLiving.CityId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -254,7 +254,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Address of living</div>
+                <div className='name'>Address Of Living</div>
                 {customer.infoErrors.has('PlaceOfLiving.Address') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -271,7 +271,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Place of registration</div>
+                <div className='name'>Place Of Registration</div>
                 {customer.infoErrors.has('PlaceOfRegistration.CityId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -291,29 +291,9 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 ))}
               </select>
             </div>
-            {/* <div className={css.property}>
-              <div className='propertyNameLine'>
-                <div className='name'>City of registration</div>
-                {customer.infoErrors.has('PlaceOfRegistration.CityId') && (
-                  <div className='error las la-exclamation'>
-                    <div className='errorPopUp'>
-                      <div className='errorRow'>{customer.errors.errors.find(v => v.name === 'PlaceOfRegistration.CityId')?.message}</div>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistration.cityId}
-                is-invalid={`${customer.infoErrors.has('PlaceOfRegistration.CityId')}`}
-                onChange={e => customer.placeOfRegistration.setCityId(parseInt(e.currentTarget.value))}
-              >
-                {p.customerInfo.customersPage.auxiliary.cities.map((v, i) => (
-                  <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
-                ))}
-              </select>
-            </div> */}
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Address of registration</div>
+                <div className='name'>Address Of Registration</div>
                 {customer.infoErrors.has('PlaceOfRegistration.Address') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -330,7 +310,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Home phone number</div>
+                <div className='name'>Home Phone Number</div>
                 {customer.infoErrors.has('Contacts.HomePhoneNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -347,7 +327,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Mobile phone number</div>
+                <div className='name'>Mobile Phone Number</div>
                 {customer.infoErrors.has('Contacts.MobilePhoneNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -443,7 +423,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Marital status</div>
+                <div className='name'>Marital Status</div>
                 {customer.infoErrors.has('MaritalStatus') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -487,7 +467,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Is retired</div>
+                <div className='name'>Is Retired</div>
                 {customer.infoErrors.has('IsRetired') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
@@ -504,7 +484,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
-                <div className='name'>Is liable for military service</div>
+                <div className='name'>Is Liable For Military Service</div>
                 {customer.infoErrors.has('IsLiableForMilitaryService') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
