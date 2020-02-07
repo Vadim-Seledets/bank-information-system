@@ -3,7 +3,7 @@ import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from './EditCustomerInfoPage.css'
 import { CustomerInfoPanel } from './CustomerInfoPanel'
-import { CustomersPage } from '../../models/CustomersPage'
+import { CustomersPage } from '../../models/customers/CustomersPage'
 
 export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
