@@ -1,10 +1,10 @@
 import { Stateful, trigger } from 'reactronic'
-import { App } from './App'
 import { CustomerKeys } from './customers/Customer'
+import { CustomersPage } from './CustomersPage'
 
 export class PropertyValidator extends Stateful {
   constructor(
-    public app: App,
+    public customersPage: CustomersPage,
     public propertyName: CustomerKeys,
     public validationRule?: RegExp,
   ) {
@@ -14,8 +14,8 @@ export class PropertyValidator extends Stateful {
   @trigger
   isValid(): boolean {
     let isValid = true
-    if (this.validationRule && this.app.selectedCustomer) {
-      const propertyValue = this.app.selectedCustomer[this.propertyName]
+    if (this.validationRule && this.customersPage.selectedCustomer) {
+      const propertyValue = this.customersPage.selectedCustomer[this.propertyName]
       isValid = RegExp(this.validationRule).test(`${propertyValue}`)
       // console.log(`${propertyValue} - ${this.validationRule}: ${isValid}`)
     }
