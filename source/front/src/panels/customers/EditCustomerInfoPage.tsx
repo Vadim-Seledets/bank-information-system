@@ -29,8 +29,8 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
             }
           </button>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.customersPage.app.setCurrentPageName('CustomersListPage')}>
-            Back
+          <button className={css.backButton} onClick={() => p.customersPage.cancelEditing()}>
+            Cancel
           </button>
         </div>
         <div style={{ ...dim(2, 2, 11, 12) }}>
