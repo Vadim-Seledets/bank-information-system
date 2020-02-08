@@ -250,7 +250,7 @@ namespace BankInformationSystem.Business.Services
             
             foreach (var depositContract in depositContracts)
             {
-                var interestTransaction = new Transaction
+                var interestTransaction = _context.Transactions.Add(new Transaction
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
@@ -261,12 +261,12 @@ namespace BankInformationSystem.Business.Services
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
                     ReceiverAccount = depositContract.DepositAccount
-                };
+                }).Entity;
                 
                 depositContract.LatestInterestTransaction = interestTransaction;
                 transactions.Add(interestTransaction);
 
-                var returnTransaction = new Transaction
+                var returnTransaction = _context.Transactions.Add(new Transaction
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
@@ -276,7 +276,7 @@ namespace BankInformationSystem.Business.Services
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
                     ReceiverAccount = depositContract.DepositAccount
-                };
+                }).Entity;
                 
                 transactions.Add(returnTransaction);
                 depositContract.CompletedAt = _currentDateTimeProvider.Now();
@@ -296,7 +296,7 @@ namespace BankInformationSystem.Business.Services
             {
                 var interestCalculationStartDate = depositContract.LatestInterestTransaction?.CreatedAt 
                     ?? depositContract.ProgramStartDate;
-                var interestTransaction = new Transaction
+                var interestTransaction = _context.Transactions.Add(new Transaction
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
@@ -306,7 +306,7 @@ namespace BankInformationSystem.Business.Services
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
                     ReceiverAccount = depositContract.DepositAccount
-                };
+                }).Entity;
                 
                 depositContract.LatestInterestTransaction = interestTransaction;
                 transactions.Add(interestTransaction);
@@ -317,7 +317,7 @@ namespace BankInformationSystem.Business.Services
                     continue;
                 }
 
-                var returnTransaction = new Transaction
+                var returnTransaction = _context.Transactions.Add(new Transaction
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
@@ -327,7 +327,7 @@ namespace BankInformationSystem.Business.Services
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
                     ReceiverAccount = depositContract.DepositAccount
-                };
+                }).Entity;
                 
                 transactions.Add(returnTransaction);
                 depositContract.CompletedAt = _currentDateTimeProvider.Now();
