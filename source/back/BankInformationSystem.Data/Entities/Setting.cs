@@ -4,6 +4,8 @@ namespace BankInformationSystem.Data.Entities
 {
     public class Setting
     {
+        public const string DateDaysOffsetKey = "DateDaysOffset";
+        
         [Key]
         public string Key { get; set; }
 

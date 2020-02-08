@@ -13,7 +13,7 @@ namespace BankInformationSystem.Data.Entities
 
         public int CurrencyId { get; set; }
 
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         public decimal Amount { get; set; }
 
@@ -24,12 +24,12 @@ namespace BankInformationSystem.Data.Entities
         [ForeignKey(nameof(SenderAccount))]
         public string SenderAccountNumber { get; set; }
 
-        public Account SenderAccount { get; set; }
+        public virtual Account SenderAccount { get; set; }
         
         [ForeignKey(nameof(ReceiverAccount))]
         public string ReceiverAccountNumber { get; set; }
 
-        public Account ReceiverAccount { get; set; }
+        public virtual Account ReceiverAccount { get; set; }
         
         public void Commit()
         {

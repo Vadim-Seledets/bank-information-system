@@ -18,10 +18,10 @@ namespace BankInformationSystem.Data.Entities
         
         public int CustomerId { get; set; }
         
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public int CitizenshipId { get; set; }
 
-        public Citizenship Citizenship { get; set; }
+        public virtual Citizenship Citizenship { get; set; }
     }
 }

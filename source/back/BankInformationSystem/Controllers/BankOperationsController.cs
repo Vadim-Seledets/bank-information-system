@@ -76,11 +76,22 @@ namespace BankInformationSystem.Controllers
         [Route("commit")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<Guid>> CloseBankDayAsync([FromBody]int times)
+        public async Task<ActionResult<Guid>> CloseBankDayAsync(CloseBankDayModel model)
         {
-            await _operationsService.CloseBankDayAsync(times);
+            await _operationsService.CloseBankDayAsync(model.Times);
             
             return NoContent();
+        }
+        
+        [HttpGet]
+        [Route("auxiliary")]
+        [ProducesResponseType(typeof(BankOperationAuxiliaryInfo), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<BankOperationAuxiliaryInfo>> GetCustomerAuxiliaryInfo()
+        {
+            var result = await _operationsService.GetBankOperationsAuxiliaryInfoAsync();
+
+            return Ok(result);
         }
     }
 }

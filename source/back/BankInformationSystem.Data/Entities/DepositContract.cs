@@ -28,29 +28,29 @@ namespace BankInformationSystem.Data.Entities
         
         public int CurrencyId { get; set; }
         
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         public int DepositTypeId { get; set; }
         
-        public DepositType DepositType { get; set; }
+        public virtual DepositType DepositType { get; set; }
 
         [ForeignKey(nameof(LatestInterestTransaction))]
         public int? LatestInterestTransactionId { get; set; }
 
-        public Transaction LatestInterestTransaction { get; set; }
+        public virtual Transaction LatestInterestTransaction { get; set; }
 
         [ForeignKey(nameof(RegularAccount))]
         public string RegularAccountNumber { get; set; }
 
-        public Account RegularAccount { get; set; }
+        public virtual Account RegularAccount { get; set; }
 
         [ForeignKey(nameof(DepositAccount))]
         public string DepositAccountNumber { get; set; }
 
-        public Account DepositAccount { get; set; }
+        public virtual Account DepositAccount { get; set; }
 
         public int CustomerId { get; set; }
         
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

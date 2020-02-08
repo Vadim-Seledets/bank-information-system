@@ -1,4 +1,5 @@
-﻿using BankInformationSystem.Common.Models;
+﻿using System.Linq;
+using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,21 +47,29 @@ namespace BankInformationSystem.Data
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Setting>().HasData(new Setting { Key = Setting.DateDaysOffsetKey, Value = "0" });
             
             modelBuilder.Entity<DepositType>().HasData(
                 new DepositType { Id = (int)MainDepositType.Revocable, Name = "Revocable" },
                 new DepositType { Id = (int)MainDepositType.Irrevocable, Name = "Irrevocable" });
 
-            modelBuilder.Entity<Currency>().HasData(
-                new Currency { Id = 1, Code = "BYN" },
-                new Currency { Id = 2, Code = "RUB" },
-                new Currency { Id = 3, Code = "UAH" },
-                new Currency { Id = 4, Code = "EUR" },
-                new Currency { Id = 5, Code = "USD" });
-            
+            var currencies = new[]
+            {
+                new Currency { Id = (int)MainCurrency.BYN, Code = "BYN" },
+                new Currency { Id = (int)MainCurrency.RUB, Code = "RUB" },
+                new Currency { Id = (int)MainCurrency.UAH, Code = "UAH" },
+                new Currency { Id = (int)MainCurrency.EUR, Code = "EUR" },
+                new Currency { Id = (int)MainCurrency.USD, Code = "USD" }
+            };
+            modelBuilder.Entity<Currency>().HasData(currencies);
+
             modelBuilder.Entity<Citizenship>().HasData(
                 new Citizenship { Id = 1, Country = "Belarus" },
                 new Citizenship { Id = 2, Country = "Russia" },

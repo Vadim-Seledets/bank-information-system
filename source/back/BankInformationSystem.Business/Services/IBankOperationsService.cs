@@ -10,6 +10,8 @@ namespace BankInformationSystem.Business.Services
         Task<IList<DepositContractShortInfoModel>> GetDepositContractsAsync();
 
         Task<DepositContractDetailsModel> GetDepositContractDetailsAsync(Guid contractNumber);
+        
+        Task<BankOperationAuxiliaryInfo> GetBankOperationsAuxiliaryInfoAsync();
 
         Task OpenDepositAsync(DepositCreateModel model);
 

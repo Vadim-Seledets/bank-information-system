@@ -20,8 +20,8 @@ namespace BankInformationSystem.Business.Services
         private readonly BankInformationSystemDbContext _context;
         private readonly IMapper _mapper;
         private readonly IAccountService _accountService;
+        private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
         private readonly IVirtualDateTimeManager _virtualDateTimeManager;
-        private readonly DateTime _now;
 
         public BankOperationsService(
             BankInformationSystemDbContext context,
@@ -33,10 +33,35 @@ namespace BankInformationSystem.Business.Services
             _context = context;
             _mapper = mapper;
             _accountService = accountService;
+            _currentDateTimeProvider = currentDateTimeProvider;
             _virtualDateTimeManager = virtualDateTimeManager;
-            _now = currentDateTimeProvider.Now(); // Assuming that BankOperationsService is per request dependency
         }
         
+        public async Task<BankOperationAuxiliaryInfo> GetBankOperationsAuxiliaryInfoAsync()
+        {
+            return new BankOperationAuxiliaryInfo
+            {
+                Cities = await _mapper
+                    .ProjectTo<CityModel>(_context.Cities.AsNoTracking())
+                    .ToListAsync(),
+                CountriesOfCitizenship = await _mapper
+                    .ProjectTo<CitizenshipModel>(_context.CountriesOfCitizenship.AsNoTracking())
+                    .ToListAsync(),
+                Disabilities = await _mapper
+                    .ProjectTo<DisabilityModel>(_context.Disabilities.AsNoTracking())
+                    .ToListAsync(),
+                Currencies = await _mapper
+                    .ProjectTo<CurrencyModel>(_context.Currencies.AsNoTracking())
+                    .ToListAsync(),
+                MaritalStatuses = await _mapper
+                    .ProjectTo<MaritalStatusModel>(_context.MaritalStatuses.AsNoTracking())
+                    .ToListAsync(),
+                DepositTypes = await _mapper
+                    .ProjectTo<DepositTypeModel>(_context.DepositTypes.AsNoTracking())
+                    .ToListAsync()
+            };
+        }
+
         public async Task<IList<DepositContractShortInfoModel>> GetDepositContractsAsync()
         {
             var query = _context.DepositContracts
@@ -57,21 +82,21 @@ namespace BankInformationSystem.Business.Services
                         join transaction in _context.Transactions
                             on contract.ContractNumber equals transaction.ContractNumber into contractTransactions
                         from transaction in contractTransactions.DefaultIfEmpty()
-                        group new { Contract = contract, Transaction = transaction } by contract into contractTransactionsGroup
-                        select new
-                        {
-                            Contract = contractTransactionsGroup.Key,
-                            Transactions = contractTransactionsGroup.Select(x => x.Transaction)
-                        };
+                        select new { Contract = contract, Transaction = transaction };
+            var queryResult = await query.ToListAsync();
 
-            var deposits = await query.SingleOrDefaultAsync();
-            if (deposits?.Contract == null)
+            var deposit = queryResult
+                .GroupBy(
+                    x => x.Contract.ContractNumber,
+                    (key, value) => new { value.FirstOrDefault()?.Contract, Transactions = value.Select(x => x.Transaction).ToList() })
+                .SingleOrDefault();
+            if (deposit?.Contract == null)
             {
                 return null;
             }
 
-            var depositDetails = _mapper.Map<DepositContractDetailsModel>(deposits.Contract);
-            depositDetails.Transactions = _mapper.Map<List<TransactionReportModel>>(deposits.Transactions);
+            var depositDetails = _mapper.Map<DepositContractDetailsModel>(deposit.Contract);
+            depositDetails.Transactions = _mapper.Map<List<TransactionReportModel>>(deposit.Transactions);
 
             return depositDetails;
         }
@@ -102,7 +127,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _now,
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = BankConstants.CashDeskAccountNumber,
                     ReceiverAccountNumber = regularAccount.AccountNumber
                 },
@@ -111,7 +136,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _now,
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = regularAccount.AccountNumber,
                     ReceiverAccountNumber = bankDevelopmentFundAccount.AccountNumber
                 }
@@ -152,7 +177,7 @@ namespace BankInformationSystem.Business.Services
                 ContractNumber = depositContract.ContractNumber,
                 CurrencyId = depositContract.CurrencyId,
                 Amount = depositContract.Amount,
-                CreatedAt = _now,
+                CreatedAt = _currentDateTimeProvider.Now(),
                 SenderAccountNumber = bankDevelopmentFund.AccountNumber,
                 ReceiverAccountNumber = depositContract.DepositAccountNumber
             });
@@ -174,14 +199,15 @@ namespace BankInformationSystem.Business.Services
             {
                 var freshTransactions = await ProcessDepositsAsync();
                 await CommitActiveTransactionsAsync(freshTransactions);
+                await _virtualDateTimeManager.SkipDaysAsync(1);
             }
 
-            await _virtualDateTimeManager.SkipDaysAsync(times);
+            await _virtualDateTimeManager.CommitAsync();
         }
 
         private async Task<IList<Transaction>> ProcessDepositsAsync()
         {
-            var today = _now.Date;
+            var today = _currentDateTimeProvider.Now().Date;
             var isLastDayOfMonth = DateTime.DaysInMonth(today.Year, today.Month) == today.Day;
 
             var bankDevelopmentFunds = await _context.Accounts
@@ -190,12 +216,16 @@ namespace BankInformationSystem.Business.Services
 
             // Process irrevocable deposits at ProgramEndDate,
             // process revocable deposits at ProgramEndDate and the last day of each month
-            var depositContracts = await _context.DepositContracts
+            var depositContractsQuery = _context.DepositContracts
+                .Include(x => x.DepositAccount)
+                .Include(x => x.RegularAccount)
+                .Include(x => x.LatestInterestTransaction)
                 .Where(x => !x.IsCompleted && !x.IsRevoked && x.ProgramStartDate.Date < today && x.ProgramEndDate.Date >= today)
-                .Where(x => x.DepositTypeId == (int)MainDepositType.Irrevocable && x.ProgramEndDate == today
-                    || x.DepositTypeId == (int)MainDepositType.Revocable && (x.ProgramEndDate == today || isLastDayOfMonth))
+                .Where(x => x.DepositTypeId == (int)MainDepositType.Irrevocable && x.ProgramEndDate.Date == today
+                    || x.DepositTypeId == (int)MainDepositType.Revocable && (x.ProgramEndDate.Date == today || isLastDayOfMonth));
+            var depositContracts = (await depositContractsQuery.ToListAsync())
                 .GroupBy(x => x.DepositTypeId)
-                .ToDictionaryAsync(x => x.Key, x => x.ToList());
+                .ToDictionary(x => x.Key, x => x.ToList());
             
             var transactions = new List<Transaction>();
 
@@ -226,9 +256,11 @@ namespace BankInformationSystem.Business.Services
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount * depositContract.Rate 
                         * (decimal)depositContract.ProgramEndDate.DifferenceInMonths(depositContract.ProgramStartDate),
-                    CreatedAt = _now,
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber
+                    SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
+                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
+                    ReceiverAccount = depositContract.DepositAccount
                 };
                 
                 depositContract.LatestInterestTransaction = interestTransaction;
@@ -239,13 +271,15 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _now,
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber
+                    SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
+                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
+                    ReceiverAccount = depositContract.DepositAccount
                 };
                 
                 transactions.Add(returnTransaction);
-                depositContract.CompletedAt = _now;
+                depositContract.CompletedAt = _currentDateTimeProvider.Now();
                 depositContract.IsCompleted = true;
             }
 
@@ -266,16 +300,18 @@ namespace BankInformationSystem.Business.Services
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
-                    Amount = depositContract.Amount * depositContract.Rate * (decimal)_now.DifferenceInMonths(interestCalculationStartDate),
-                    CreatedAt = _now,
+                    Amount = depositContract.Amount * depositContract.Rate * (decimal)_currentDateTimeProvider.Now().DifferenceInMonths(interestCalculationStartDate),
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber
+                    SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
+                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
+                    ReceiverAccount = depositContract.DepositAccount
                 };
                 
                 depositContract.LatestInterestTransaction = interestTransaction;
                 transactions.Add(interestTransaction);
 
-                var today = _now.Date;
+                var today = _currentDateTimeProvider.Now().Date;
                 if (depositContract.ProgramEndDate != today)
                 {
                     continue;
@@ -286,13 +322,15 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _now,
+                    CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber
+                    SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
+                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
+                    ReceiverAccount = depositContract.DepositAccount
                 };
                 
                 transactions.Add(returnTransaction);
-                depositContract.CompletedAt = _now;
+                depositContract.CompletedAt = _currentDateTimeProvider.Now();
                 depositContract.IsCompleted = true;
             }
 
@@ -310,6 +348,8 @@ namespace BankInformationSystem.Business.Services
             transactions.AddRange(freshTransactions);
              
             transactions.ForEach(x => x.Commit());
+
+            await _context.SaveChangesAsync();
         }
     }
 }

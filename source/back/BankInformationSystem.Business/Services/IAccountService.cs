@@ -6,6 +6,8 @@ namespace BankInformationSystem.Business.Services
 {
     public interface IAccountService
     {
+        Task InitializeBankDevelopmentFundsAsync();
+        
         Task<Account> GetAccountTemplateAsync(CreateAccountTemplateModel model);
 
         Task<Account> GetBankDevelopmentFundAccountForCurrencyAsync(int currencyId);

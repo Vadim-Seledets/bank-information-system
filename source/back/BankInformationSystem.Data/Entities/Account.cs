@@ -14,7 +14,7 @@ namespace BankInformationSystem.Data.Entities
 
         public int CurrencyId { get; set; }
 
-        public Currency Currency { get; set; }
+        public virtual Currency Currency { get; set; }
 
         public decimal Debit { get; set; }
 
@@ -22,7 +22,7 @@ namespace BankInformationSystem.Data.Entities
 
         public int? CustomerId { get; set; }
         
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
 
         public decimal NetBalance => Activity == AccountActivity.Active ? Debit - Credit : Credit - Debit;
 

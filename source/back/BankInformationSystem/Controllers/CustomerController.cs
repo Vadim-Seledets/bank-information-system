@@ -47,17 +47,6 @@ namespace BankInformationSystem.Controllers
             return Ok(customer);
         }
 
-        [HttpGet]
-        [Route("auxiliary")]
-        [ProducesResponseType(typeof(CustomerAuxiliaryInfo), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<CustomerAuxiliaryInfo>> GetCustomerAuxiliaryInfo()
-        {
-            var result = await _customerService.GetCustomerAuxiliaryInfoAsync();
-
-            return Ok(result);
-        }
-        
         [HttpPost]
         [Route("")]
         [ProducesResponseType(typeof(int), StatusCodes.Status200OK)]

@@ -14,6 +14,8 @@ namespace BankInformationSystem.Business.Models
         public DateTime ValidUntil { get; set; }
 
         public bool IsCompleted { get; set; }
+        
+        public bool IsRevoked { get; set; }
 
         public DateTime? CompletedAt { get; set; }
 

@@ -19,28 +19,28 @@ namespace BankInformationSystem.Data.Entities
 
         public bool IsLiableForMilitaryService { get; set; }
 
-        public Passport Passport { get; set; }
+        public virtual Passport Passport { get; set; }
         
-        public BirthInfo BirthInfo { get; set; }
+        public virtual BirthInfo BirthInfo { get; set; }
         
-        public PlaceOfLiving PlaceOfLiving { get; set; }
+        public virtual PlaceOfLiving PlaceOfLiving { get; set; }
 
-        public PlaceOfRegistration PlaceOfRegistration { get; set; }
+        public virtual PlaceOfRegistration PlaceOfRegistration { get; set; }
         
-        public IncomePerMonth IncomePerMonth { get; set; }
+        public virtual IncomePerMonth IncomePerMonth { get; set; }
 
-        public WorkInfo WorkInfo { get; set; }
+        public virtual WorkInfo WorkInfo { get; set; }
 
-        public Contacts Contacts { get; set; }
+        public virtual Contacts Contacts { get; set; }
 
         public int DisabilityId { get; set; }
 
-        public Disability Disability { get; set; }
+        public virtual Disability Disability { get; set; }
 
         public int MaritalStatusId { get; set; }
 
-        public MaritalStatus MaritalStatus { get; set; }
+        public virtual MaritalStatus MaritalStatus { get; set; }
         
-        public ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

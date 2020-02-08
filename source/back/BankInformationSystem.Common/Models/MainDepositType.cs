@@ -2,7 +2,7 @@
 {
     public enum MainDepositType
     {
-        Revocable,
-        Irrevocable
+        Revocable = 1,
+        Irrevocable = 2
     }
 }

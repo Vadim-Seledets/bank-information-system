@@ -67,10 +67,12 @@ namespace BankInformationSystem
             
             // Services
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBankOperationsService, BankOperationsService>();
 
-            services.AddScoped<ICurrentDateTimeProvider, VirtualDateTimeProvider>();
-            services.AddScoped<IVirtualDateTimeManager, VirtualDateTimeProvider>();
+            services.AddScoped<VirtualDateTimeProvider>();
+            services.AddScoped<ICurrentDateTimeProvider>(provider => provider.GetService<VirtualDateTimeProvider>());
+            services.AddScoped<IVirtualDateTimeManager>(provider => provider.GetService<VirtualDateTimeProvider>());
 
             // Validators
             services.AddScoped<IValidator<CustomerFullInfoBaseModel>, CustomerFullInfoBaseModelValidator>();
