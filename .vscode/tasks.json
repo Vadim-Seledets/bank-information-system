@@ -21,19 +21,6 @@
       }
     },
     {
-      "label": "Build back-end server",
-      "type": "process",
-      "command": "dotnet",
-      "args": [
-        "build",
-        "--configuration",
-        "Release",
-        "${workspaceFolder}/source/back/BankInformationSystem.sln"
-      ],
-      "problemMatcher": ["$msCompile"],
-      "group": "build",
-    },
-    {
       "label": "Start Server - back",
       "type": "process",
       "command": "dotnet",
@@ -43,6 +30,19 @@
         "Release",
         "--project",
         "${workspaceFolder}/source/back/BankInformationSystem/BankInformationSystem.csproj"
+      ],
+      "problemMatcher": ["$msCompile"],
+      "group": "build",
+    },
+    {
+      "label": "Build server - back",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration",
+        "Release",
+        "${workspaceFolder}/source/back/BankInformationSystem.sln"
       ],
       "problemMatcher": ["$msCompile"],
       "group": "build",
