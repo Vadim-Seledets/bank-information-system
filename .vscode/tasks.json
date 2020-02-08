@@ -32,7 +32,7 @@
         "${workspaceFolder}/source/back/BankInformationSystem/BankInformationSystem.csproj"
       ],
       "problemMatcher": ["$msCompile"],
-      "group": "build",
+      "group": "build"
     },
     {
       "label": "Build server - back",
@@ -45,7 +45,7 @@
         "${workspaceFolder}/source/back/BankInformationSystem.sln"
       ],
       "problemMatcher": ["$msCompile"],
-      "group": "build",
+      "group": "build"
     },
     {
       "label": "Build All - tsc & eslint",
@@ -78,7 +78,7 @@
           "reveal": "always",
           "focus": true,
           "panel": "shared"
-      },
+      }
     },
     {
       "label": "Publish",
@@ -95,7 +95,7 @@
         "focus": true,
         "panel": "shared"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "problemMatcher": ["$tsc", "$eslint-stylish"]
     },
     {
       "label": "Fix Rules - eslint",
