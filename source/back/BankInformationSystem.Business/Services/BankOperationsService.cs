@@ -220,9 +220,9 @@ namespace BankInformationSystem.Business.Services
                 .Include(x => x.DepositAccount)
                 .Include(x => x.RegularAccount)
                 .Include(x => x.LatestInterestTransaction)
-                .Where(x => !x.IsCompleted && !x.IsRevoked && x.ProgramStartDate.Date < today && x.ProgramEndDate.Date >= today)
-                .Where(x => x.DepositTypeId == (int)MainDepositType.Irrevocable && x.ProgramEndDate.Date == today
-                    || x.DepositTypeId == (int)MainDepositType.Revocable && (x.ProgramEndDate.Date == today || isLastDayOfMonth));
+                .Where(x => !x.IsCompleted && !x.IsRevoked && x.ProgramStartDate < today && x.ProgramEndDate >= today)
+                .Where(x => x.DepositTypeId == (int)MainDepositType.Irrevocable && x.ProgramEndDate == today
+                    || x.DepositTypeId == (int)MainDepositType.Revocable && (x.ProgramEndDate == today || isLastDayOfMonth));
             var depositContracts = (await depositContractsQuery.ToListAsync())
                 .GroupBy(x => x.DepositTypeId)
                 .ToDictionary(x => x.Key, x => x.ToList());

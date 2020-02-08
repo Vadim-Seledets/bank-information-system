@@ -102,6 +102,8 @@ namespace BankInformationSystem.Business.Mappings
                 .ForMember(x => x.ValidUntil, m => m.MapFrom(x => x.ContractValidUntil))
                 .ForMember(x => x.Rate, m => m.MapFrom(x => x.DepositRate))
                 .ForMember(x => x.Amount, m => m.MapFrom(x => x.DepositAmount))
+                .ForMember(x => x.ProgramStartDate, m => m.MapFrom(x => x.ProgramStartDate.Date))
+                .ForMember(x => x.ProgramEndDate, m => m.MapFrom(x => x.ProgramEndDate.Date))
                 .ForMember(x => x.IsRevoked, m => m.Ignore())
                 .ForMember(x => x.IsCompleted, m => m.Ignore())
                 .ForMember(x => x.CompletedAt, m => m.Ignore())
