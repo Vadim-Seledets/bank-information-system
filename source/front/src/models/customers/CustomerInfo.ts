@@ -1,5 +1,5 @@
 import { Stateful, action, trigger } from 'reactronic'
-import { Auxiliary } from './Auxiliary'
+import { Auxiliary } from '../Auxiliary'
 import { Validation, PropertyValidator } from '../Validation'
 import { CustomerKeys } from './Customer'
 import { CustomersPage } from './CustomersPage'

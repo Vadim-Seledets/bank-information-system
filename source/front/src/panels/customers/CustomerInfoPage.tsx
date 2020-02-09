@@ -8,6 +8,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
   return reactive(() => {
     const css = style.classes
     const customer = p.customersPage.selectedCustomer
+    const auxiliary = p.customersPage.app.auxiliary
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
@@ -48,7 +49,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
                 <div className='hLine' />
                 <div className={css.property}>
                   <div className='name'>Citizenship</div>
-                  <div className={'value'}>{p.customersPage.auxiliary.countriesOfCitizenship.find(v => v.id === customer.citizenshipId)?.country}</div>
+                  <div className={'value'}>{auxiliary.countriesOfCitizenship.find(v => v.id === customer.citizenshipId)?.country}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Passport Series</div>
@@ -84,15 +85,15 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
                 </div>
                 <div className={css.property}>
                   <div className='name'>Salary</div>
-                  <div className={'value'}>{`${customer.amount} ${p.customersPage.auxiliary.currencies.find(v => v.id === customer.currencyId)?.code}`}</div>
+                  <div className={'value'}>{`${customer.amount} ${auxiliary.currencies.find(v => v.id === customer.currencyId)?.code}`}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Marital Status</div>
-                  <div className={'value'}>{p.customersPage.auxiliary.maritalStatuses.find(v => v.id === customer.maritalStatusId)?.description}</div>
+                  <div className={'value'}>{auxiliary.maritalStatuses.find(v => v.id === customer.maritalStatusId)?.description}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Disability</div>
-                  <div className={'value'}>{p.customersPage.auxiliary.disabilities.find(v => v.id === customer.disabilityId)?.description}</div>
+                  <div className={'value'}>{auxiliary.disabilities.find(v => v.id === customer.disabilityId)?.description}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Is Retired</div>
@@ -112,7 +113,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
                 </div>
                 <div className={css.property}>
                   <div className='name'>Place Of Living</div>
-                  <div className={'value'}>{p.customersPage.auxiliary.cities.find(v => v.id === customer.placeOfLivingCityId)?.name}</div>
+                  <div className={'value'}>{auxiliary.cities.find(v => v.id === customer.placeOfLivingCityId)?.name}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Address Of Living</div>
@@ -120,7 +121,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
                 </div>
                 <div className={css.property}>
                   <div className='name'>Place Of Registration</div>
-                  <div className={'value'}>{p.customersPage.auxiliary.cities.find(v => v.id === customer.placeOfRegistrationCityId)?.name}</div>
+                  <div className={'value'}>{auxiliary.cities.find(v => v.id === customer.placeOfRegistrationCityId)?.name}</div>
                 </div>
                 <div className={css.property}>
                   <div className='name'>Address Of Registration</div>

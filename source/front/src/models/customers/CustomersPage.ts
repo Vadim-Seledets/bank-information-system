@@ -1,5 +1,5 @@
 import { Stateful, action, trigger, isolated } from 'reactronic'
-import { Auxiliary } from './Auxiliary'
+import { Auxiliary } from '../Auxiliary'
 import { App } from '../App'
 import { CustomerInfo } from './CustomerInfo'
 import { ICustomerInfoErrors } from '../Errors'
@@ -7,7 +7,6 @@ import { Customer, ICustomerShortInfo } from './Customer'
 
 export class CustomersPage extends Stateful {
   app: App
-  auxiliary: Auxiliary
   customers: Array<Customer>
   filteredCustomers: Array<Customer>
   selectedCustomer?: Customer
@@ -26,7 +25,6 @@ export class CustomersPage extends Stateful {
   constructor(app: App) {
     super()
     this.app = app
-    this.auxiliary = new Auxiliary()
     this.customers = new Array<Customer>()
     this.filteredCustomers = this.customers
     this.selectedCustomer = undefined
@@ -35,7 +33,6 @@ export class CustomersPage extends Stateful {
 
   @trigger
   init(): void {
-    this.getAuxiliaryInfo()
     this.getAllCustomersInShortInfoModelRequest()
   }
 
@@ -43,12 +40,6 @@ export class CustomersPage extends Stateful {
   setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
     this.hoveredRowNumber = 0
-  }
-
-  @action
-  async getAuxiliaryInfo(): Promise<void> {
-    this.auxiliary = await fetch(`https://localhost:5001/customers/auxiliary`)
-      .then(response => response.json())
   }
 
   @action
