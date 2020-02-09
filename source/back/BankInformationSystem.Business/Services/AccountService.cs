@@ -22,7 +22,7 @@ namespace BankInformationSystem.Business.Services
         private readonly IDictionary<AccountType, int> _balanceAccountNumbers = new Dictionary<AccountType, int>
         {
             { AccountType.Regular, 3014 },
-            { AccountType.Credit, 2400 },
+            { AccountType.LoanPayment, 2400 },
             { AccountType.Deposit, 1672 },
             { AccountType.BankDevelopmentFund, 7327 }
         };

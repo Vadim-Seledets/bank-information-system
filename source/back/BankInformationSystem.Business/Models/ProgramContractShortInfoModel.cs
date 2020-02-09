@@ -2,7 +2,7 @@
 
 namespace BankInformationSystem.Business.Models
 {
-    public class DepositContractShortInfoModel
+    public class ProgramContractShortInfoModel
     {
         public Guid ContractNumber { get; set; }
 

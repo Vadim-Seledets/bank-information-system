@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    [Migration("20200208114658_InitializeDateDaysOffsetSetting")]
-    partial class InitializeDateDaysOffsetSetting
+    [Migration("20200209203900_AddEntitiesForDepositsAndLoanModules")]
+    partial class AddEntitiesForDepositsAndLoanModules
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -457,6 +457,96 @@ namespace BankInformationSystem.Data.Migrations
                     b.ToTable("IncomesPerMonth");
                 });
 
+            modelBuilder.Entity("BankInformationSystem.Data.Entities.LoanContract", b =>
+                {
+                    b.Property<Guid>("ContractNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("CurrencyId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("LatestPaymentTransactionId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LoadTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("LoanPaymentAccountNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("LoanTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ProgramEndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ProgramStartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RegularAccountNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ValidUntil")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ContractNumber");
+
+                    b.HasIndex("CurrencyId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("LatestPaymentTransactionId");
+
+                    b.HasIndex("LoanPaymentAccountNumber");
+
+                    b.HasIndex("LoanTypeId");
+
+                    b.HasIndex("RegularAccountNumber");
+
+                    b.ToTable("LoanContracts");
+                });
+
+            modelBuilder.Entity("BankInformationSystem.Data.Entities.LoanType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LoanType");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Annuity"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Differential"
+                        });
+                });
+
             modelBuilder.Entity("BankInformationSystem.Data.Entities.MaritalStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -753,6 +843,37 @@ namespace BankInformationSystem.Data.Migrations
                         .HasForeignKey("BankInformationSystem.Data.Entities.IncomePerMonth", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("BankInformationSystem.Data.Entities.LoanContract", b =>
+                {
+                    b.HasOne("BankInformationSystem.Data.Entities.Currency", "Currency")
+                        .WithMany()
+                        .HasForeignKey("CurrencyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BankInformationSystem.Data.Entities.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BankInformationSystem.Data.Entities.Transaction", "LatestPaymentTransaction")
+                        .WithMany()
+                        .HasForeignKey("LatestPaymentTransactionId");
+
+                    b.HasOne("BankInformationSystem.Data.Entities.Account", "LoanPaymentAccount")
+                        .WithMany()
+                        .HasForeignKey("LoanPaymentAccountNumber");
+
+                    b.HasOne("BankInformationSystem.Data.Entities.LoanType", "LoanType")
+                        .WithMany()
+                        .HasForeignKey("LoanTypeId");
+
+                    b.HasOne("BankInformationSystem.Data.Entities.Account", "RegularAccount")
+                        .WithMany()
+                        .HasForeignKey("RegularAccountNumber");
                 });
 
             modelBuilder.Entity("BankInformationSystem.Data.Entities.Passport", b =>

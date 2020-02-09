@@ -87,7 +87,7 @@ namespace BankInformationSystem.Business.Mappings
 
             CreateMap<WorkInfo, WorkInfoModel>();
 
-            CreateMap<DepositContract, DepositContractShortInfoModel>();
+            CreateMap<DepositContract, ProgramContractShortInfoModel>();
 
             CreateMap<DepositContract, DepositContractDetailsModel>()
                 .ForMember(x => x.Transactions, m => m.Ignore());
@@ -100,8 +100,6 @@ namespace BankInformationSystem.Business.Mappings
 
             CreateMap<DepositCreateModel, DepositContract>()
                 .ForMember(x => x.ValidUntil, m => m.MapFrom(x => x.ContractValidUntil))
-                .ForMember(x => x.Rate, m => m.MapFrom(x => x.DepositRate))
-                .ForMember(x => x.Amount, m => m.MapFrom(x => x.DepositAmount))
                 .ForMember(x => x.ProgramStartDate, m => m.MapFrom(x => x.ProgramStartDate.Date))
                 .ForMember(x => x.ProgramEndDate, m => m.MapFrom(x => x.ProgramEndDate.Date))
                 .ForMember(x => x.IsRevoked, m => m.Ignore())

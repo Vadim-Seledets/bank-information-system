@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankInformationSystem.Data.Migrations
 {
-    public partial class InitializeDateDaysOffsetSetting : Migration
+    public partial class AddEntitiesForDepositsAndLoanModules : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,19 @@ namespace BankInformationSystem.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DepositTypes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LoanType",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanType", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -159,6 +172,67 @@ namespace BankInformationSystem.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "LoanContracts",
+                columns: table => new
+                {
+                    ContractNumber = table.Column<Guid>(nullable: false),
+                    ProgramStartDate = table.Column<DateTime>(nullable: false),
+                    ProgramEndDate = table.Column<DateTime>(nullable: false),
+                    ValidUntil = table.Column<DateTime>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    CompletedAt = table.Column<DateTime>(nullable: true),
+                    Rate = table.Column<decimal>(nullable: false),
+                    Amount = table.Column<decimal>(nullable: false),
+                    CurrencyId = table.Column<int>(nullable: false),
+                    LoadTypeId = table.Column<int>(nullable: false),
+                    LoanTypeId = table.Column<int>(nullable: true),
+                    LatestPaymentTransactionId = table.Column<int>(nullable: true),
+                    RegularAccountNumber = table.Column<string>(nullable: true),
+                    LoanPaymentAccountNumber = table.Column<string>(nullable: true),
+                    CustomerId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoanContracts", x => x.ContractNumber);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_Currencies_CurrencyId",
+                        column: x => x.CurrencyId,
+                        principalTable: "Currencies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_Transactions_LatestPaymentTransactionId",
+                        column: x => x.LatestPaymentTransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_Accounts_LoanPaymentAccountNumber",
+                        column: x => x.LoanPaymentAccountNumber,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountNumber",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_LoanType_LoanTypeId",
+                        column: x => x.LoanTypeId,
+                        principalTable: "LoanType",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LoanContracts_Accounts_RegularAccountNumber",
+                        column: x => x.RegularAccountNumber,
+                        principalTable: "Accounts",
+                        principalColumn: "AccountNumber",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "DepositTypes",
                 columns: new[] { "Id", "Name" },
@@ -168,6 +242,16 @@ namespace BankInformationSystem.Data.Migrations
                 table: "DepositTypes",
                 columns: new[] { "Id", "Name" },
                 values: new object[] { 2, "Irrevocable" });
+
+            migrationBuilder.InsertData(
+                table: "LoanType",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Annuity" });
+
+            migrationBuilder.InsertData(
+                table: "LoanType",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "Differential" });
 
             migrationBuilder.InsertData(
                 table: "Settings",
@@ -215,6 +299,36 @@ namespace BankInformationSystem.Data.Migrations
                 column: "RegularAccountNumber");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_CurrencyId",
+                table: "LoanContracts",
+                column: "CurrencyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_CustomerId",
+                table: "LoanContracts",
+                column: "CustomerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_LatestPaymentTransactionId",
+                table: "LoanContracts",
+                column: "LatestPaymentTransactionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_LoanPaymentAccountNumber",
+                table: "LoanContracts",
+                column: "LoanPaymentAccountNumber");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_LoanTypeId",
+                table: "LoanContracts",
+                column: "LoanTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LoanContracts_RegularAccountNumber",
+                table: "LoanContracts",
+                column: "RegularAccountNumber");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_CurrencyId",
                 table: "Transactions",
                 column: "CurrencyId");
@@ -236,6 +350,9 @@ namespace BankInformationSystem.Data.Migrations
                 name: "DepositContracts");
 
             migrationBuilder.DropTable(
+                name: "LoanContracts");
+
+            migrationBuilder.DropTable(
                 name: "Settings");
 
             migrationBuilder.DropTable(
@@ -243,6 +360,9 @@ namespace BankInformationSystem.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Transactions");
+
+            migrationBuilder.DropTable(
+                name: "LoanType");
 
             migrationBuilder.DropTable(
                 name: "Accounts");

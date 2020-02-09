@@ -39,6 +39,8 @@ namespace BankInformationSystem.Data
 
         public DbSet<DepositContract> DepositContracts { get; set; }
 
+        public DbSet<LoanContract> LoanContracts { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
@@ -55,6 +57,10 @@ namespace BankInformationSystem.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Setting>().HasData(new Setting { Key = BankConstants.Settings.DateDaysOffsetKey, Value = "0" });
+            
+            modelBuilder.Entity<LoanType>().HasData(
+                new LoanType { Id = (int)MainLoanType.Annuity, Name = "Annuity" },
+                new LoanType { Id = (int)MainLoanType.Differential, Name = "Differential" });
             
             modelBuilder.Entity<DepositType>().HasData(
                 new DepositType { Id = (int)MainDepositType.Revocable, Name = "Revocable" },

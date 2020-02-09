@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BankInformationSystem.Controllers
 {
     [ApiController]
-    [Route("operations/deposits")]
+    [Route("deposits")]
     public class DepositController : ControllerBase
     {
         private readonly IDepositService _depositService;
@@ -22,9 +22,9 @@ namespace BankInformationSystem.Controllers
         
         [HttpGet]
         [Route("")]
-        [ProducesResponseType(typeof(IEnumerable<DepositContractShortInfoModel>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ProgramContractShortInfoModel>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<IEnumerable<DepositContractShortInfoModel>>> GetDepositsAsync()
+        public async Task<ActionResult<IEnumerable<ProgramContractShortInfoModel>>> GetDepositsAsync()
         {
             var customers = await _depositService.GetDepositContractsAsync();
 

@@ -7,7 +7,7 @@ namespace BankInformationSystem.Business.Services
 {
     public interface IDepositService
     {
-        Task<IList<DepositContractShortInfoModel>> GetDepositContractsAsync();
+        Task<IList<ProgramContractShortInfoModel>> GetDepositContractsAsync();
 
         Task<DepositContractDetailsModel> GetDepositContractDetailsAsync(Guid contractNumber);
 

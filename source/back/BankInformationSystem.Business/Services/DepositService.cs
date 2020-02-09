@@ -36,14 +36,14 @@ namespace BankInformationSystem.Business.Services
             _depositCreateModelValidator = depositCreateModelValidator;
         }
         
-        public async Task<IList<DepositContractShortInfoModel>> GetDepositContractsAsync()
+        public async Task<IList<ProgramContractShortInfoModel>> GetDepositContractsAsync()
         {
             var query = _context.DepositContracts
                 .OrderByDescending(x => x.Customer.LastName)
                 .ThenByDescending(x => x.Customer.FirstName)
                 .ThenByDescending(x => x.Customer.MiddleName);
             var depositContracts = await _mapper
-                .ProjectTo<DepositContractShortInfoModel>(query)
+                .ProjectTo<ProgramContractShortInfoModel>(query)
                 .ToListAsync();
 
             return depositContracts;
