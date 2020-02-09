@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BankInformationSystem.Business.Models;
 using BankInformationSystem.Business.Utilities;
-using BankInformationSystem.Common;
 using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data;
 using BankInformationSystem.Data.Entities;
