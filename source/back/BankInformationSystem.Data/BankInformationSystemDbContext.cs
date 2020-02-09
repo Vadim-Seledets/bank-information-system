@@ -1,4 +1,5 @@
-﻿using BankInformationSystem.Common.Models;
+﻿using BankInformationSystem.Common;
+using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,7 +54,7 @@ namespace BankInformationSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Setting>().HasData(new Setting { Key = Setting.DateDaysOffsetKey, Value = "0" });
+            modelBuilder.Entity<Setting>().HasData(new Setting { Key = BankConstants.Settings.DateDaysOffsetKey, Value = "0" });
             
             modelBuilder.Entity<DepositType>().HasData(
                 new DepositType { Id = (int)MainDepositType.Revocable, Name = "Revocable" },
