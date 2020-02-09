@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using BankInformationSystem.Common.Models;
+﻿using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 

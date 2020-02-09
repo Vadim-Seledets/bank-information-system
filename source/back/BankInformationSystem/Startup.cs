@@ -45,8 +45,10 @@ namespace BankInformationSystem
                 });
 
             var connectionString = $"Data Source={Path.Combine(AppContext.BaseDirectory, Configuration["DatabaseFilename"])}";
-            services.AddDbContext<BankInformationSystemDbContext>(options => options.UseSqlite(connectionString), ServiceLifetime.Transient);
-            
+            services.AddDbContext<BankInformationSystemDbContext>(
+                options => options.UseSqlite(connectionString),
+                ServiceLifetime.Transient);
+
             services.AddAutoMapper(Assembly.GetAssembly(typeof(MappingProfile)));
             
             services.AddSwaggerGen(c =>

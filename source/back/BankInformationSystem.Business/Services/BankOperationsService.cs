@@ -195,13 +195,14 @@ namespace BankInformationSystem.Business.Services
                 return;
             }
             
-            foreach (var i in Enumerable.Range(1, times))
+            foreach (var _ in Enumerable.Range(1, times))
             {
                 var freshTransactions = await ProcessDepositsAsync();
                 await CommitActiveTransactionsAsync(freshTransactions);
                 await _virtualDateTimeManager.SkipDaysAsync(1);
             }
-
+            
+            await _context.SaveChangesAsync();
             await _virtualDateTimeManager.CommitAsync();
         }
 
@@ -348,8 +349,6 @@ namespace BankInformationSystem.Business.Services
             transactions.AddRange(freshTransactions);
              
             transactions.ForEach(x => x.Commit());
-
-            await _context.SaveChangesAsync();
         }
     }
 }
