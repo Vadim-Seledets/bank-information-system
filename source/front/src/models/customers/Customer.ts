@@ -1,4 +1,4 @@
-import { Stateful, action, Action, cached } from "reactronic"
+import { Stateful, action, cached } from "reactronic"
 import { Gender } from "./Gender"
 import { IPassport } from "./IPassport"
 import { IBirthInfo } from "./IBirthInfo"
