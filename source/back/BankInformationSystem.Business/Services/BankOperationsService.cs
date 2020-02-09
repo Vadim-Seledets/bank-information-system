@@ -145,8 +145,8 @@ namespace BankInformationSystem.Business.Services
                     CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
-                    ReceiverAccount = depositContract.DepositAccount
+                    ReceiverAccountNumber = depositContract.RegularAccountNumber,
+                    ReceiverAccount = depositContract.RegularAccount
                 }).Entity;
                 
                 transactions.Add(returnTransaction);
@@ -196,8 +196,8 @@ namespace BankInformationSystem.Business.Services
                     CreatedAt = _currentDateTimeProvider.Now(),
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
-                    ReceiverAccountNumber = depositContract.DepositAccountNumber,
-                    ReceiverAccount = depositContract.DepositAccount
+                    ReceiverAccountNumber = depositContract.RegularAccountNumber,
+                    ReceiverAccount = depositContract.RegularAccount
                 }).Entity;
                 
                 transactions.Add(returnTransaction);
