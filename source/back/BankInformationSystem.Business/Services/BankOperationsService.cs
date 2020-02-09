@@ -22,19 +22,22 @@ namespace BankInformationSystem.Business.Services
         private readonly IAccountService _accountService;
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
         private readonly IVirtualDateTimeManager _virtualDateTimeManager;
+        private readonly IValidator<DepositCreateModel> _depositCreateModelValidator;
 
         public BankOperationsService(
             BankInformationSystemDbContext context,
             IMapper mapper,
             IAccountService accountService,
             ICurrentDateTimeProvider currentDateTimeProvider,
-            IVirtualDateTimeManager virtualDateTimeManager)
+            IVirtualDateTimeManager virtualDateTimeManager,
+            IValidator<DepositCreateModel> depositCreateModelValidator)
         {
             _context = context;
             _mapper = mapper;
             _accountService = accountService;
             _currentDateTimeProvider = currentDateTimeProvider;
             _virtualDateTimeManager = virtualDateTimeManager;
+            _depositCreateModelValidator = depositCreateModelValidator;
         }
         
         public async Task<BankOperationAuxiliaryInfo> GetBankOperationsAuxiliaryInfoAsync()
@@ -103,6 +106,8 @@ namespace BankInformationSystem.Business.Services
 
         public async Task OpenDepositAsync(DepositCreateModel model)
         {
+            await _depositCreateModelValidator.ValidateAndThrowAsync(model);
+            
             var regularAccountCreateModel = _mapper.Map<CreateAccountTemplateModel>(model);
             regularAccountCreateModel.AccountActivity = AccountActivity.Passive;
             regularAccountCreateModel.AccountType = AccountType.Regular;

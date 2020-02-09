@@ -78,6 +78,7 @@ namespace BankInformationSystem
 
             // Validators
             services.AddScoped<IValidator<CustomerFullInfoBaseModel>, CustomerFullInfoBaseModelValidator>();
+            services.AddScoped<IValidator<DepositCreateModel>, DepositCreateModelValidator>();
         }
         
         public void Configure(
