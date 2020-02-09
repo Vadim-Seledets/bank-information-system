@@ -1,4 +1,6 @@
-﻿using BankInformationSystem.Data.Entities;
+﻿using BankInformationSystem.Common;
+using BankInformationSystem.Common.Models;
+using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankInformationSystem.Data
@@ -31,21 +33,43 @@ namespace BankInformationSystem.Data
 
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
 
+        public DbSet<Account> Accounts { get; set; }
+
+        public DbSet<DepositType> DepositTypes { get; set; }
+
+        public DbSet<DepositContract> DepositContracts { get; set; }
+
+        public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Transaction> Transactions { get; set; }
+
         public BankInformationSystemDbContext(DbContextOptions options) : base(options)
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Setting>().HasData(new Setting { Key = BankConstants.Settings.DateDaysOffsetKey, Value = "0" });
             
-            modelBuilder.Entity<Currency>().HasData(
-                new Currency { Id = 1, Code = "BYN" },
-                new Currency { Id = 2, Code = "RUB" },
-                new Currency { Id = 3, Code = "UAH" },
-                new Currency { Id = 4, Code = "EUR" },
-                new Currency { Id = 5, Code = "USD" });
-            
+            modelBuilder.Entity<DepositType>().HasData(
+                new DepositType { Id = (int)MainDepositType.Revocable, Name = "Revocable" },
+                new DepositType { Id = (int)MainDepositType.Irrevocable, Name = "Irrevocable" });
+
+            var currencies = new[]
+            {
+                new Currency { Id = (int)MainCurrency.BYN, Code = "BYN" },
+                new Currency { Id = (int)MainCurrency.RUB, Code = "RUB" },
+                new Currency { Id = (int)MainCurrency.UAH, Code = "UAH" },
+                new Currency { Id = (int)MainCurrency.EUR, Code = "EUR" },
+                new Currency { Id = (int)MainCurrency.USD, Code = "USD" }
+            };
+            modelBuilder.Entity<Currency>().HasData(currencies);
+
             modelBuilder.Entity<Citizenship>().HasData(
                 new Citizenship { Id = 1, Country = "Belarus" },
                 new Citizenship { Id = 2, Country = "Russia" },

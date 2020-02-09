@@ -2,7 +2,7 @@
 
 namespace BankInformationSystem.Business.Models
 {
-    public class CustomerAuxiliaryInfo
+    public class BankOperationAuxiliaryInfo
     {
         public IList<CityModel> Cities { get; set; }
 
@@ -13,5 +13,7 @@ namespace BankInformationSystem.Business.Models
         public IList<CurrencyModel> Currencies { get; set; }
 
         public IList<MaritalStatusModel> MaritalStatuses { get; set; }
+
+        public IList<DepositTypeModel> DepositTypes { get; set; }
     }
 }

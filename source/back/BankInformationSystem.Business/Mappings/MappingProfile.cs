@@ -9,18 +9,20 @@ namespace BankInformationSystem.Business.Mappings
         public MappingProfile()
         {
             CreateMap<CustomerCreateModel, Customer>()
-                .ForMember(d => d.Id, m => m.Ignore())
-                .ForMember(d => d.Disability, m => m.Ignore())
-                .ForMember(d => d.MaritalStatus, m => m.Ignore());
+                .ForMember(x => x.Id, m => m.Ignore())
+                .ForMember(x => x.Disability, m => m.Ignore())
+                .ForMember(x => x.MaritalStatus, m => m.Ignore())
+                .ForMember(x => x.Accounts, m => m.Ignore());
             
             CreateMap<CustomerUpdateModel, Customer>()
-                .ForMember(d => d.Disability, m => m.Ignore())
-                .ForMember(d => d.MaritalStatus, m => m.Ignore());
+                .ForMember(x => x.Disability, m => m.Ignore())
+                .ForMember(x => x.MaritalStatus, m => m.Ignore())
+                .ForMember(x => x.Accounts, m => m.Ignore());
             
             CreateMap<Customer, CustomerFullInfoModel>();
             
             CreateMap<Customer, CustomerShortInfoModel>()
-                .ForMember(d => d.Email, m => m.MapFrom(d => d.Contacts.Email));
+                .ForMember(x => x.Email, m => m.MapFrom(x => x.Contacts.Email));
 
             CreateMap<AddressModel, PlaceOfLiving>()
                 .ForMember(x => x.Id, m => m.Ignore())
@@ -84,6 +86,38 @@ namespace BankInformationSystem.Business.Mappings
                 .ForMember(x => x.CustomerId, m => m.Ignore());
 
             CreateMap<WorkInfo, WorkInfoModel>();
+
+            CreateMap<DepositContract, DepositContractShortInfoModel>();
+
+            CreateMap<DepositContract, DepositContractDetailsModel>()
+                .ForMember(x => x.Transactions, m => m.Ignore());
+
+            CreateMap<Transaction, TransactionReportModel>();
+
+            CreateMap<DepositCreateModel, CreateAccountTemplateModel>()
+                .ForMember(x => x.AccountType, m => m.Ignore())
+                .ForMember(x => x.AccountActivity, m => m.Ignore());
+
+            CreateMap<DepositCreateModel, DepositContract>()
+                .ForMember(x => x.ValidUntil, m => m.MapFrom(x => x.ContractValidUntil))
+                .ForMember(x => x.Rate, m => m.MapFrom(x => x.DepositRate))
+                .ForMember(x => x.Amount, m => m.MapFrom(x => x.DepositAmount))
+                .ForMember(x => x.ProgramStartDate, m => m.MapFrom(x => x.ProgramStartDate.Date))
+                .ForMember(x => x.ProgramEndDate, m => m.MapFrom(x => x.ProgramEndDate.Date))
+                .ForMember(x => x.IsRevoked, m => m.Ignore())
+                .ForMember(x => x.IsCompleted, m => m.Ignore())
+                .ForMember(x => x.CompletedAt, m => m.Ignore())
+                .ForMember(x => x.Currency, m => m.Ignore())
+                .ForMember(x => x.DepositType, m => m.Ignore())
+                .ForMember(x => x.LatestInterestTransactionId, m => m.Ignore())
+                .ForMember(x => x.LatestInterestTransaction, m => m.Ignore())
+                .ForMember(x => x.RegularAccount, m => m.Ignore())
+                .ForMember(x => x.RegularAccountNumber, m => m.Ignore())
+                .ForMember(x => x.DepositAccount, m => m.Ignore())
+                .ForMember(x => x.DepositAccountNumber, m => m.Ignore())
+                .ForMember(x => x.Customer, m => m.Ignore());
+            
+            CreateMap<DepositType, DepositTypeModel>();
         }
     }
 }

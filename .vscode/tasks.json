@@ -21,19 +21,6 @@
       }
     },
     {
-      "label": "Build back-end server",
-      "type": "process",
-      "command": "dotnet",
-      "args": [
-        "build",
-        "--configuration",
-        "Release",
-        "${workspaceFolder}/source/back/BankInformationSystem.sln"
-      ],
-      "problemMatcher": ["$msCompile"],
-      "group": "build",
-    },
-    {
       "label": "Start Server - back",
       "type": "process",
       "command": "dotnet",
@@ -45,7 +32,20 @@
         "${workspaceFolder}/source/back/BankInformationSystem/BankInformationSystem.csproj"
       ],
       "problemMatcher": ["$msCompile"],
-      "group": "build",
+      "group": "build"
+    },
+    {
+      "label": "Build server - back",
+      "type": "process",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "--configuration",
+        "Release",
+        "${workspaceFolder}/source/back/BankInformationSystem.sln"
+      ],
+      "problemMatcher": ["$msCompile"],
+      "group": "build"
     },
     {
       "label": "Build All - tsc & eslint",
@@ -78,7 +78,7 @@
           "reveal": "always",
           "focus": true,
           "panel": "shared"
-      },
+      }
     },
     {
       "label": "Publish",
@@ -95,7 +95,7 @@
         "focus": true,
         "panel": "shared"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "problemMatcher": ["$tsc", "$eslint-stylish"]
     },
     {
       "label": "Fix Rules - eslint",
@@ -112,6 +112,6 @@
         "focus": true,
         "panel": "shared"
       }
-    },
+    }
   ]
 }
