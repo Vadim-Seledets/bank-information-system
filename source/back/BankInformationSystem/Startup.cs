@@ -69,6 +69,7 @@ namespace BankInformationSystem
             
             // Services
             services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IDepositService, DepositService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBankOperationsService, BankOperationsService>();
 
