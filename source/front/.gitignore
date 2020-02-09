@@ -4,4 +4,4 @@ node_modules
 dist
 build
 public
-./package-lock.json
+package-lock.json
