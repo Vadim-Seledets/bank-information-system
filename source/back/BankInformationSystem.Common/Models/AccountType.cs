@@ -5,6 +5,6 @@
         BankDevelopmentFund,
         Regular,
         Deposit,
-        Credit
+        LoanPayment
     }
 }

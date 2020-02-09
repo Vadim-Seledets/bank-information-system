@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BankInformationSystem.Data.Entities
 {
     // TODO: Use "Table per Type" approach instead of "Table per Hierarchy"
-    public class DepositContract
+    public class LoanContract
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -19,8 +19,6 @@ namespace BankInformationSystem.Data.Entities
 
         public bool IsCompleted { get; set; }
 
-        public bool IsRevoked { get; set; }
-
         public DateTime? CompletedAt { get; set; }
 
         public decimal Rate { get; set; }
@@ -31,23 +29,23 @@ namespace BankInformationSystem.Data.Entities
         
         public virtual Currency Currency { get; set; }
 
-        public int DepositTypeId { get; set; }
+        public int LoadTypeId { get; set; }
         
-        public virtual DepositType DepositType { get; set; }
+        public virtual LoanType LoanType { get; set; }
         
-        public int? LatestInterestTransactionId { get; set; }
+        public int? LatestPaymentTransactionId { get; set; }
 
-        public virtual Transaction LatestInterestTransaction { get; set; }
+        public virtual Transaction LatestPaymentTransaction { get; set; }
 
         [ForeignKey(nameof(RegularAccount))]
         public string RegularAccountNumber { get; set; }
 
         public virtual Account RegularAccount { get; set; }
 
-        [ForeignKey(nameof(DepositAccount))]
-        public string DepositAccountNumber { get; set; }
+        [ForeignKey(nameof(LoanPaymentAccount))]
+        public string LoanPaymentAccountNumber { get; set; }
 
-        public virtual Account DepositAccount { get; set; }
+        public virtual Account LoanPaymentAccount { get; set; }
 
         public int CustomerId { get; set; }
         
