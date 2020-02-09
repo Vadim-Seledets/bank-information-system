@@ -89,12 +89,21 @@ namespace BankInformationSystem.Business.Mappings
 
             CreateMap<DepositContract, ProgramContractShortInfoModel>();
 
+            CreateMap<LoanContract, ProgramContractShortInfoModel>();
+
             CreateMap<DepositContract, DepositContractDetailsModel>()
+                .ForMember(x => x.Transactions, m => m.Ignore());
+            
+            CreateMap<LoanContract, LoanContractDetailsModel>()
                 .ForMember(x => x.Transactions, m => m.Ignore());
 
             CreateMap<Transaction, TransactionReportModel>();
 
             CreateMap<DepositCreateModel, CreateAccountTemplateModel>()
+                .ForMember(x => x.AccountType, m => m.Ignore())
+                .ForMember(x => x.AccountActivity, m => m.Ignore());
+            
+            CreateMap<LoanCreateModel, CreateAccountTemplateModel>()
                 .ForMember(x => x.AccountType, m => m.Ignore())
                 .ForMember(x => x.AccountActivity, m => m.Ignore());
 
@@ -113,6 +122,22 @@ namespace BankInformationSystem.Business.Mappings
                 .ForMember(x => x.RegularAccountNumber, m => m.Ignore())
                 .ForMember(x => x.DepositAccount, m => m.Ignore())
                 .ForMember(x => x.DepositAccountNumber, m => m.Ignore())
+                .ForMember(x => x.Customer, m => m.Ignore());
+            
+            CreateMap<LoanCreateModel, LoanContract>()
+                .ForMember(x => x.ValidUntil, m => m.MapFrom(x => x.ContractValidUntil))
+                .ForMember(x => x.ProgramStartDate, m => m.MapFrom(x => x.ProgramStartDate.Date))
+                .ForMember(x => x.ProgramEndDate, m => m.MapFrom(x => x.ProgramEndDate.Date))
+                .ForMember(x => x.IsCompleted, m => m.Ignore())
+                .ForMember(x => x.CompletedAt, m => m.Ignore())
+                .ForMember(x => x.Currency, m => m.Ignore())
+                .ForMember(x => x.LoanType, m => m.Ignore())
+                .ForMember(x => x.LatestPaymentTransactionId, m => m.Ignore())
+                .ForMember(x => x.LatestPaymentTransaction, m => m.Ignore())
+                .ForMember(x => x.RegularAccount, m => m.Ignore())
+                .ForMember(x => x.RegularAccountNumber, m => m.Ignore())
+                .ForMember(x => x.LoanPaymentAccount, m => m.Ignore())
+                .ForMember(x => x.LoanPaymentAccountNumber, m => m.Ignore())
                 .ForMember(x => x.Customer, m => m.Ignore());
             
             CreateMap<DepositType, DepositTypeModel>();

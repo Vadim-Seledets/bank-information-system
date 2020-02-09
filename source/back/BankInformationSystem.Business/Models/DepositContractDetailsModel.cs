@@ -6,6 +6,6 @@
         
         public int DepositTypeId { get; set; }
         
-        public string LoanPaymentAccountNumber { get; set; }
+        public string DepositAccountNumber { get; set; }
     }
 }

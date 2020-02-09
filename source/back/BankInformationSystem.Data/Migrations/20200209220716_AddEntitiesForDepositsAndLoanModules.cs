@@ -185,8 +185,7 @@ namespace BankInformationSystem.Data.Migrations
                     Rate = table.Column<decimal>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
                     CurrencyId = table.Column<int>(nullable: false),
-                    LoadTypeId = table.Column<int>(nullable: false),
-                    LoanTypeId = table.Column<int>(nullable: true),
+                    LoanTypeId = table.Column<int>(nullable: false),
                     LatestPaymentTransactionId = table.Column<int>(nullable: true),
                     RegularAccountNumber = table.Column<string>(nullable: true),
                     LoanPaymentAccountNumber = table.Column<string>(nullable: true),
@@ -224,7 +223,7 @@ namespace BankInformationSystem.Data.Migrations
                         column: x => x.LoanTypeId,
                         principalTable: "LoanType",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LoanContracts_Accounts_RegularAccountNumber",
                         column: x => x.RegularAccountNumber,

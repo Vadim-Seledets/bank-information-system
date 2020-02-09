@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    [Migration("20200209203900_AddEntitiesForDepositsAndLoanModules")]
+    [Migration("20200209220716_AddEntitiesForDepositsAndLoanModules")]
     partial class AddEntitiesForDepositsAndLoanModules
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -480,13 +480,10 @@ namespace BankInformationSystem.Data.Migrations
                     b.Property<int?>("LatestPaymentTransactionId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("LoadTypeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("LoanPaymentAccountNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("LoanTypeId")
+                    b.Property<int>("LoanTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ProgramEndDate")
@@ -869,7 +866,9 @@ namespace BankInformationSystem.Data.Migrations
 
                     b.HasOne("BankInformationSystem.Data.Entities.LoanType", "LoanType")
                         .WithMany()
-                        .HasForeignKey("LoanTypeId");
+                        .HasForeignKey("LoanTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BankInformationSystem.Data.Entities.Account", "RegularAccount")
                         .WithMany()

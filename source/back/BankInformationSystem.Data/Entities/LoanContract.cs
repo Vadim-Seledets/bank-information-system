@@ -29,7 +29,7 @@ namespace BankInformationSystem.Data.Entities
         
         public virtual Currency Currency { get; set; }
 
-        public int LoadTypeId { get; set; }
+        public int LoanTypeId { get; set; }
         
         public virtual LoanType LoanType { get; set; }
         

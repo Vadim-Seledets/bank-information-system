@@ -478,13 +478,10 @@ namespace BankInformationSystem.Data.Migrations
                     b.Property<int?>("LatestPaymentTransactionId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("LoadTypeId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("LoanPaymentAccountNumber")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("LoanTypeId")
+                    b.Property<int>("LoanTypeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ProgramEndDate")
@@ -867,7 +864,9 @@ namespace BankInformationSystem.Data.Migrations
 
                     b.HasOne("BankInformationSystem.Data.Entities.LoanType", "LoanType")
                         .WithMany()
-                        .HasForeignKey("LoanTypeId");
+                        .HasForeignKey("LoanTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("BankInformationSystem.Data.Entities.Account", "RegularAccount")
                         .WithMany()
