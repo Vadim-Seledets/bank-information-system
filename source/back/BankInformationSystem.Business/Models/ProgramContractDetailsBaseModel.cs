@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using BankInformationSystem.Business.Utilities;
+using Newtonsoft.Json;
 
 namespace BankInformationSystem.Business.Models
 {
@@ -7,10 +9,13 @@ namespace BankInformationSystem.Business.Models
     {
         public Guid ContractNumber { get; set; }
 
+        [JsonConverter(typeof(DateTimeToDateConverter))]
         public DateTime ProgramStartDate { get; set; }
 
+        [JsonConverter(typeof(DateTimeToDateConverter))]
         public DateTime ProgramEndDate { get; set; }
 
+        [JsonConverter(typeof(DateTimeToDateConverter))]
         public DateTime ValidUntil { get; set; }
 
         public bool IsCompleted { get; set; }
