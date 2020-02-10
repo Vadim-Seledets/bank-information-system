@@ -12,7 +12,7 @@ export class DepositsPage extends Stateful {
 
   filter = ''
   revokeIsRequested = false
-  
+
   isRowWithCustomerHovered = false
   isGenderHovered = false
   isFullNameHovered = false
@@ -35,12 +35,11 @@ export class DepositsPage extends Stateful {
     this.hoveredRowNumber = 0
   }
 
-  @cached
-  private async getDepositsInShortInfoModelRequest(): Promise<Array<Deposit>> {
-    let deposits = new Array<Deposit>()
+  @action
+  async obtainDepositsInShortInfoModel(): Promise<void> {
     const response = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
     if (response.successful && response.data) {
-      deposits = response.data.map(depositShortInfoModel => {
+      const deposits = response.data.map(depositShortInfoModel => {
         const deposit = new Deposit(
           depositShortInfoModel.contractNumber,
           depositShortInfoModel.customer,
@@ -49,13 +48,8 @@ export class DepositsPage extends Stateful {
         )
         return deposit
       })
+      deposits.forEach(nd => !this.deposits.some(d => d.contractNumber === nd.contractNumber) && this.deposits.push(nd))
     }
-    return deposits
-  }
-
-  @action
-  async obtainDepositsInShortInfoModel(): Promise<void> {
-    this.deposits = await this.getDepositsInShortInfoModelRequest()
   }
 
   @action
@@ -129,19 +123,19 @@ export class DepositsPage extends Stateful {
     this.hoveredRowNumber = row
     this.isRowWithCustomerHovered = value
   }
-  
+
   @action
   setIsGenderHovered(value: boolean, row: number): void {
     this.hoveredRowNumber = row
     this.isGenderHovered = value
   }
-  
+
   @action
   setIsFullNameHovered(value: boolean, row: number): void {
     this.hoveredRowNumber = row
     this.isFullNameHovered = value
   }
-  
+
   @action
   setIsEmailHovered(value: boolean, row: number): void {
     this.hoveredRowNumber = row

@@ -38,12 +38,8 @@ export class CustomersPage extends Stateful {
 
   @action
   addNewCustomer(): void {
-    const newCustomer = new Customer()
-    const customers = new Array<Customer>(...this.customers)
-    customers.push(newCustomer)
-    this.selectedCustomer = newCustomer
+    this.selectedCustomer = new Customer()
     this.app.currentTab?.setCurrentPageName('EditCustomerPage')
-    this.customers = customers
   }
 
   @action
@@ -111,23 +107,17 @@ export class CustomersPage extends Stateful {
     }
   }
 
-  @cached
-  private async getCustomersInShortInfoModelRequest(): Promise<Array<Customer>> {
-    let customers = new Array<Customer>()
+  @action
+  async obtainAllCustomersInShortInfoModel(): Promise<void> {
     const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
-      customers = customersInfo.data.map(customerShortInfo => {
+      const customers = customersInfo.data.map(customerShortInfo => {
         const customer = new Customer()
         customer.setShortInfo(customerShortInfo)
         return customer
       })
+      customers.forEach(nc => !this.customers.some(c => c.id === nc.id) && this.customers.push(nc))
     }
-    return customers
-  }
-
-  @action
-  async obtainAllCustomersInShortInfoModel(): Promise<void> {
-    this.customers = await this.getCustomersInShortInfoModelRequest()
   }
 
   @action
