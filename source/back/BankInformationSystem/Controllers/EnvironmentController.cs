@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using BankInformationSystem.Business.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,14 @@ namespace BankInformationSystem.Controllers
     public class EnvironmentController : ControllerBase
     {
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
+        private readonly IVirtualDateTimeManager _virtualDateTimeManager;
 
-        public EnvironmentController(ICurrentDateTimeProvider currentDateTimeProvider)
+        public EnvironmentController(
+            ICurrentDateTimeProvider currentDateTimeProvider,
+            IVirtualDateTimeManager virtualDateTimeManager)
         {
             _currentDateTimeProvider = currentDateTimeProvider;
+            _virtualDateTimeManager = virtualDateTimeManager;
         }
         
         [HttpGet]
@@ -23,6 +28,17 @@ namespace BankInformationSystem.Controllers
         public ActionResult<DateTime> Now()
         {
             var now = _currentDateTimeProvider.Now();
+
+            return Ok(now);
+        }
+        
+        [HttpGet]
+        [Route("utc-offset")]
+        [ProducesResponseType(typeof(DateTime), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<DateTime>> UtcOffsetAsync()
+        {
+            var now = await _virtualDateTimeManager.GetUtcOffsetAsync();
 
             return Ok(now);
         }
