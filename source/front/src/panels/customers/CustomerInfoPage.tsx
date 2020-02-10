@@ -13,7 +13,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.customersPage.app.setCurrentPageName('CustomersListPage')}>
+          <button className={css.backButton} onClick={() => p.customersPage.app.currentTab?.setCurrentPageName('CustomersListPage')}>
             Back
           </button>
         </div>
