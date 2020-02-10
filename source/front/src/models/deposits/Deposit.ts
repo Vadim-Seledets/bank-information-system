@@ -2,6 +2,13 @@ import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from './Transaction'
 import { Stateful, cached, action } from 'reactronic'
 
+export interface DepositShortInfoModel {
+  contractNumber: string
+  customer: ICustomerShortInfo
+  programStartDate: string
+  programEndDate: string
+}
+
 export interface DepositCreateModel {
   depositTypeId: number 
   contractNumber: string
@@ -12,13 +19,6 @@ export interface DepositCreateModel {
   amount: number
   rate: number
   currencyId: number
-}
-
-export interface DepositShortInfoModel {
-  contractNumber: string
-  customer: ICustomerShortInfo
-  programStartDate: string
-  programEndDate: string
 }
 
 export interface DepositFullInfoModel {
@@ -72,5 +72,70 @@ export class Deposit extends Stateful implements DepositShortInfoModel {
   
   getProgramEndDate(): string {
     return this.programEndDate.substr(0, 10)
+  }
+}
+
+export class CreatingDeposit extends Stateful implements DepositCreateModel {
+  depositTypeId: number 
+  readonly contractNumber: string
+  programStartDate:	string
+  programEndDate:	string
+  contractValidUntil: string
+  customerId: number
+  amount: number
+  rate: number
+  currencyId: number
+
+  constructor(contractNumber: string) {
+    super()
+    this.depositTypeId = 1
+    this.contractNumber = contractNumber
+    this.programStartDate = ''
+    this.programEndDate = ''
+    this.contractValidUntil = ''
+    this.customerId = 1
+    this.amount = 0
+    this.rate = 0
+    this.currencyId = 1
+  }
+
+  @action
+  setDepositTypeId(value: number): void {
+    this.depositTypeId = value
+  }
+
+  @action
+  setProgramStartDate(value: string): void {
+    this.programStartDate = value
+  }
+
+  @action
+  setProgramEndDate(value: string): void {
+    this.programEndDate = value
+  }
+
+  @action
+  setContractValidUntil(value: string): void {
+    this.contractValidUntil = value
+  }
+
+  @action
+  setCustomerId(value: number): void {
+    this.customerId = value
+  }
+
+  @action
+  setAmount(value: number): void {
+    this.amount = value
+  }
+
+  @action
+  setRate(value: number): void {
+    this.rate = value
+  }
+
+  @action
+  setCurrencyId(value: number): void {
+    this.currencyId = value
   }
 }

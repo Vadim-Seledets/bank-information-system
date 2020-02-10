@@ -5,7 +5,8 @@ import { Auxiliary } from './Auxiliary'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 
-export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage' | 'DepositsListPage'
+export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
+  | 'DepositsListPage' | 'AddNewDepositPage'
   | 'LoansListPage' | 'AtmPage'
 
 export class App extends Stateful {

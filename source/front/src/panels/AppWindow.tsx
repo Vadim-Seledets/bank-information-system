@@ -9,6 +9,7 @@ import { CustomersPageView } from './customers/CustomersPage'
 import { EditCustomerInfoPageView } from './customers/EditCustomerInfoPage'
 import { CustomerInfoPageView } from './customers/CustomerInfoPage'
 import { DepositsPageView } from './deposits/DepositsPage'
+import { DepositCreationPageView } from './deposits/DepositCreationPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -42,14 +43,14 @@ export function AppWindow(p: { app: App }): JSX.Element {
             {p.app.currentTab.currentPage === 'EditCustomerPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <EditCustomerInfoPageView  customersPage={p.app.customersPage} />
+                  <EditCustomerInfoPageView customersPage={p.app.customersPage} />
                 </div>
               </React.Fragment>
             )}
             {p.app.currentTab.currentPage === 'CustomerInfoPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <CustomerInfoPageView  customersPage={p.app.customersPage} />
+                  <CustomerInfoPageView customersPage={p.app.customersPage} />
                 </div>
               </React.Fragment>
             )}
@@ -62,14 +63,14 @@ export function AppWindow(p: { app: App }): JSX.Element {
                 <DepositsPageView depositsPage={p.app.depositsPage} />
               </div>
             )}
-            {/* {p.app.currentPageName === 'EditCustomerPage' && (
+            {p.app.currentTab.currentPage === 'AddNewDepositPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <EditCustomerInfoPageView  customersPage={p.app.customersPage} />
+                  <DepositCreationPageView depositsPage={p.app.depositsPage} />
                 </div>
               </React.Fragment>
             )}
-            {p.app.currentPageName === 'CustomerInfoPage' && (
+            {/* {p.app.currentPageName === 'CustomerInfoPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
                   <CustomerInfoPageView  customersPage={p.app.customersPage} />

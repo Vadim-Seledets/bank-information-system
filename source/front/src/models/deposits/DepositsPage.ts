@@ -1,13 +1,15 @@
 import { Stateful, action, trigger, isolated } from 'reactronic'
 import { App } from '../App'
 import { DepositShortInfoModel, Deposit } from './Deposit'
+import { DepositCreationPage } from './DepositCreationPage'
 
 export class DepositsPage extends Stateful {
   app: App
   deposits: Array<Deposit>
   filteredDeposits: Array<Deposit>
   selectedDeposit?: Deposit
-    
+  depositCreationPage: DepositCreationPage
+
   filter = ''
   revokeIsRequested = false
   
@@ -24,6 +26,7 @@ export class DepositsPage extends Stateful {
     this.deposits = new Array<Deposit>()
     this.filteredDeposits = this.deposits
     this.selectedDeposit = undefined
+    this.depositCreationPage = new DepositCreationPage(this)
   }
 
   @action
@@ -49,13 +52,11 @@ export class DepositsPage extends Stateful {
     }
   }
 
-  // @action
-  // addNewDeposit(): void {
-  //   const newDeposit = new Customer()
-  //   this.deposits.push(newDeposit)
-  //   this.selectedDeposit = newDeposit
-  //   this.app.setCurrentPageName('EditDepositPage')
-  // }
+  @action
+  addNewDeposit(): void {
+    this.depositCreationPage.createNewDeposit()
+    this.app.currentTab?.setCurrentPageName('AddNewDepositPage')
+  }
 
   // @action
   // editCustomerInfo(): void {
