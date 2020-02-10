@@ -23,7 +23,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
             Bank Information System
           </div>
           <div className='space' />
-          <div>{p.app.getCurrentDate()}</div>
+          <div style={{ fontSize: '0.8em' }}>{p.app.getCurrentDate()}</div>
           <button className={css.closeBankDayButton} onClick={() => p.app.closeBankDayRequst()}>
             <div className='container'>
               <span>Close</span>
