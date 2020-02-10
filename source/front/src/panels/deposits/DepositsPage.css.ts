@@ -93,7 +93,7 @@ export const style = restyle(() => {
       display: grid;
       align-items: center;
       justify-items: center;
-      grid-template-columns: 1em 3em 1fr 4fr 1fr 3fr 1fr 4em 1em;
+      grid-template-columns: 1em 5fr 0.5fr 4fr 0.5fr 2fr 0.5fr 2fr 1em;
       color: ${theme.applicationForeground};
       font-size: 0.8em;
       user-select: none;
@@ -105,6 +105,10 @@ export const style = restyle(() => {
         &:hover {
           z-index: 4;
         }
+      }
+
+      .contractNumber {
+        z-index: 2;
       }
 
       .customerFullName {

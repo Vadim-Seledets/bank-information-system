@@ -43,15 +43,15 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             <div className='las la-search icon' />
             <input className='input' type='text' placeholder='Search'
               onFocus={() => p.depositsPage.setSelectedDeposit(undefined)}  
-              // onChange={e => p.depositsPage.setFilter(e.currentTarget.value)}
+              onChange={e => p.depositsPage.setFilter(e.currentTarget.value)}
             />
           </div>
         </div>
         <div className={css.depositList} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Contract Number</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Customer's Full Name</div>
-          <div style={{ ...dim(6, 1, 6, 1) }}>Program Start Date</div>
-          <div style={{ ...dim(8, 1, 8, 1) }}>Program End Date</div>
+          <div style={{ ...dim(6, 1, 6, 1) }}>Start Date</div>
+          <div style={{ ...dim(8, 1, 8, 1) }}>End Date</div>
           <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
           {p.depositsPage.filteredDeposits.map((d, i) => (
             <React.Fragment key={i}>
@@ -60,7 +60,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
                 onPointerEnter={() => p.depositsPage.setIsGenderHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsGenderHovered(false, i + 2)}
               >{d.contractNumber}</div>
-              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='fullName'
+              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='customerFullName'
                 // onClick={() => p.depositsPage.showCustomerInfo(d)}
                 onPointerEnter={() => p.depositsPage.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsFullNameHovered(false, i + 2)}
@@ -69,11 +69,11 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
               <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='programDate'
                 onPointerEnter={() => p.depositsPage.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsEmailHovered(false, i + 2)}
-              >{d.programStartDate}</div>
+              >{d.getProgramStartDate()}</div>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
                 onPointerEnter={() => p.depositsPage.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsActionsHovered(false, i + 2)}
-              >{d.programEndDate}
+              >{d.getProgramEndDate()}
                 {/* {d.infoErrors.hasAnyErrors && (
                   <div className='errors las la-exclamation'>
                     <div className='errorsPopUp'>
