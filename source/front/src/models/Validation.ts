@@ -1,4 +1,4 @@
-import { Stateful, trigger, cached, action } from 'reactronic'
+import { Stateful, cached, action } from 'reactronic'
 
 export class PropertyValidator<TValidatingObject> {
   constructor(
@@ -32,7 +32,6 @@ export class Validation<TValidatingObject> extends Stateful {
   }
 
   isValid(propertyName: keyof TValidatingObject): boolean | undefined {
-    console.log(propertyName)
     return this.validators.get(propertyName)?.isValid(this.validatingObject)
   }
 
