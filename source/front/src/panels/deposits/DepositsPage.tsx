@@ -46,11 +46,11 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
               <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='programDate'
                 onPointerEnter={() => p.depositsPage.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsEmailHovered(false, i + 2)}
-              >{d.getProgramStartDate()}</div>
+              >{d.programStartDate}</div>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
                 onPointerEnter={() => p.depositsPage.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsActionsHovered(false, i + 2)}
-              >{d.getProgramEndDate()}</div>
+              >{d.programEndDate}</div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.depositsPage.isRowHovered(i + 2)}`}
                 is-selected={`${p.depositsPage.selectedDeposit === d}`}
