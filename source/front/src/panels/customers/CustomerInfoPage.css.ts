@@ -52,7 +52,7 @@ export const style = restyle(() => {
       font-size: 0.9em;
       font-weight: bold;
       padding: 0.5em 0;
-      color: ${theme.customerInfoBubbleCaptionForeground}; 
+      color: ${theme.customerInfoBubbleValueForeground}; 
     `,
 
     property: css`
@@ -66,7 +66,7 @@ export const style = restyle(() => {
 
       .value {
         margin-left: 1em;
-        color: ${theme.customerInfoBubbleCaptionForeground};
+        color: ${theme.customerInfoBubbleValueForeground};
       }
     `,
   }
