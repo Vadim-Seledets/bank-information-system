@@ -11,8 +11,8 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={css.editOrPublishButton}
-            // is-enabled={`${p.customersPage.customerInfo.validation.areAllValid()}`}
-            // onClick={() => p.customersPage.editOrPublishCustomer()}
+            is-enabled={`${p.depositsPage.depositCreationPage.validation.areAllValid()}`}
+            onClick={() => p.depositsPage.depositCreationPage.publishNewDepositRequest()}
           >
             <React.Fragment>
               <span className='las la-upload' style={{ marginRight: '0.5em' }} />

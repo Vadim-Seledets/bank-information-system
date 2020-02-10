@@ -1,39 +1,47 @@
 import { Stateful, action } from "reactronic"
-import { CreatingDeposit } from "./Deposit"
+import { CreatingDeposit, DepositCreateModel } from "./Deposit"
 import { DepositsPage } from "./DepositsPage"
 import { IInfoErrors } from "../Errors"
+import { Validation, PropertyValidator } from "../Validation"
 
 export class DepositCreationPage extends Stateful {
   depositsPage: DepositsPage
-  creatingDeposit: CreatingDeposit | undefined
+  creatingDeposit: CreatingDeposit
+  validation: Validation<DepositCreateModel>
 
   constructor(depositsPage: DepositsPage) {
     super()
     this.depositsPage = depositsPage
+    this.creatingDeposit = new CreatingDeposit()
+    this.validation = new Validation(
+      this.creatingDeposit as DepositCreateModel,
+      new Map([
+        ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId' , /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
+      ])
+    )
   }
 
   @action
   createNewDeposit(): void {
-    this.creatingDeposit = new CreatingDeposit(this.generateGuid())
+    this.creatingDeposit.setContractNumber(this.generateGuid())
   }
 
   @action
   cancelCreation(): void {
-    this.creatingDeposit = undefined
+    this.creatingDeposit.clearProperties()
     this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
   }
 
   @action
   async publishNewDepositRequest(): Promise<void> {
-    // const response = await this.depositsPage.app.httpClient.post<void, IInfoErrors>(
-    //   `https://localhost:5001/customers`, customer.getJson())
-    // if (response.successful && response.data) {
-    //   customer.setId(response.data)
-    //   customer.infoErrors.setHasErrors(false)
-    // } else if (!response.successful && response.errorData) {
-    //   customer.infoErrors.initialize(response.errorData)
-    //   customer.infoErrors.setHasErrors(true)
-    // }
+    if (this.creatingDeposit) {
+      const response = await this.depositsPage.app.httpClient.post<void, IInfoErrors>(
+        `https://localhost:5001/deposits`, this.creatingDeposit.getJson())
+      if (!response.successful && response.errorData) {
+        this.creatingDeposit.infoErrors.initialize(response.errorData)
+        this.creatingDeposit.infoErrors.setHasErrors(true)
+      }
+    }
   }
 
   private generateGuid(): string {
