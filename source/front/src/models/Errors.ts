@@ -1,17 +1,17 @@
 import { Stateful, action } from 'reactronic'
 
-export interface ICustomerInfoErrors {
+export interface IInfoErrors {
   errors?: Array<{name: string, message: string}>
   error?: string
 }
 
-export class CustomerInfoErrors extends Stateful {
+export class InfoErrors extends Stateful {
   errors = Array<{name: string, message: string}>()
   error = ''
   hasAnyErrors = false
 
   @action
-  initialize(customerInfoErrors: ICustomerInfoErrors): void {
+  initialize(customerInfoErrors: IInfoErrors): void {
     this.errors = customerInfoErrors.errors ?? []
     this.error = customerInfoErrors.error ?? ''
   }

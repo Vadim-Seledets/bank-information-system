@@ -7,7 +7,7 @@ import { IPlaceOfRegistration } from "./IPlaceOfRegistration"
 import { IContacts } from "./IContacts"
 import { IIncomePerMonth } from "./IIncomePerMonth"
 import { IWorkInfo } from "./IWorkInfo"
-import { CustomerInfoErrors } from "../Errors"
+import { InfoErrors } from "../Errors"
 
 export interface ICustomerShortInfo {
   id: number
@@ -81,7 +81,7 @@ export class Customer extends Stateful {
   company: string = ''
   position: string = ''
 
-  infoErrors = new CustomerInfoErrors()
+  infoErrors = new InfoErrors()
   isFullInfoModelLoaded = false
   hilightingRange: IHighlightingRange = { start: 0, length: 0 }
 

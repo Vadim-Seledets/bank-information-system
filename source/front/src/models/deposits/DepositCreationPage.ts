@@ -1,6 +1,7 @@
 import { Stateful, action } from "reactronic"
 import { CreatingDeposit } from "./Deposit"
 import { DepositsPage } from "./DepositsPage"
+import { IInfoErrors } from "../Errors"
 
 export class DepositCreationPage extends Stateful {
   depositsPage: DepositsPage
@@ -20,6 +21,19 @@ export class DepositCreationPage extends Stateful {
   cancelCreation(): void {
     this.creatingDeposit = undefined
     this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
+  }
+
+  @action
+  async publishNewDepositRequest(): Promise<void> {
+    // const response = await this.depositsPage.app.httpClient.post<void, IInfoErrors>(
+    //   `https://localhost:5001/customers`, customer.getJson())
+    // if (response.successful && response.data) {
+    //   customer.setId(response.data)
+    //   customer.infoErrors.setHasErrors(false)
+    // } else if (!response.successful && response.errorData) {
+    //   customer.infoErrors.initialize(response.errorData)
+    //   customer.infoErrors.setHasErrors(true)
+    // }
   }
 
   private generateGuid(): string {
