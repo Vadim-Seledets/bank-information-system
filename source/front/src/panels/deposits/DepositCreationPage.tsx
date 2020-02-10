@@ -7,6 +7,7 @@ import { DepositsPage } from '../../models/deposits/DepositsPage'
 export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const creatingDeposit = p.depositsPage.depositCreationPage.creatingDeposit
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
@@ -24,8 +25,23 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
             Cancel
           </button>
         </div>
-        <div style={{ ...dim(2, 2, 11, 12) }}>
-          
+        <div className={css.properties} style={{ ...dim(2, 2, 11, 12) }}>
+          {/* <div className={css.propertyGroupCaption}>Personal Information</div> */}
+          <div className={css.property}>
+            <div className='propertyNameLine'>
+              <div className='name'>Contract Number</div>
+              {creatingDeposit.infoErrors.has('ContractNumber') && (
+                <div className='error las la-exclamation'>
+                  <div className='errorPopUp'>
+                    {creatingDeposit.infoErrors.getPropertyErrors('ContractNumber').map((v, i) => (
+                      <div key={i} className='errorRow'>{v}</div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+            <input className={'propertyInputColumn'} disabled={true} type="text" value={creatingDeposit.contractNumber} />
+          </div>
         </div>
       </div>
     )
