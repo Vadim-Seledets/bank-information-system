@@ -65,4 +65,12 @@ export class Deposit extends Stateful implements DepositShortInfoModel {
       pureFullName.substr(this.hilightingRange.start + this.hilightingRange.length, pureFullNameLength - this.hilightingRange.start + this.hilightingRange.length)
     return fullName
   }
+
+  getProgramStartDate(): string {
+    return this.programStartDate.substr(0, 10)
+  }
+  
+  getProgramEndDate(): string {
+    return this.programEndDate.substr(0, 10)
+  }
 }
