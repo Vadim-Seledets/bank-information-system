@@ -38,6 +38,7 @@ namespace BankInformationSystem.Business.Services
         public async Task<IList<ProgramContractShortInfoModel>> GetLoanContractsAsync()
         {
             var query = _context.LoanContracts
+                .Where(x => !x.Customer.IsDeleted)
                 .OrderByDescending(x => x.Customer.LastName)
                 .ThenByDescending(x => x.Customer.FirstName)
                 .ThenByDescending(x => x.Customer.MiddleName);
@@ -51,6 +52,7 @@ namespace BankInformationSystem.Business.Services
         public async Task<LoanContractDetailsModel> GetLoanContractDetailsAsync(Guid contractNumber)
         {
             var query = from contract in _context.LoanContracts.Include(x => x.Customer)
+                        where !contract.Customer.IsDeleted
                         where contract.ContractNumber == contractNumber
                         join transaction in _context.Transactions
                             on contract.ContractNumber equals transaction.ContractNumber into contractTransactions

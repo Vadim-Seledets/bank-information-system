@@ -91,7 +91,8 @@ namespace BankInformationSystem.Business.Validation
         private async Task<bool> HaveUniqueName(CustomerFullInfoBaseModel model, CancellationToken token)
         {
             return !await _context.Customers
-                .Where(x => x.FirstName == model.FirstName
+                .Where(x => !x.IsDeleted
+                    && x.FirstName == model.FirstName
                     && x.LastName == model.LastName
                     && x.MiddleName == model.MiddleName)
                 .AnyAsync(token);
@@ -100,6 +101,7 @@ namespace BankInformationSystem.Business.Validation
         private async Task<bool> HaveUniqueFullPassportNumber(PassportModel model, CancellationToken token)
         {
             return !await _context.Customers
+                .Where(x => !x.IsDeleted)
                 .Where(x => x.Passport.Series == model.Series
                     && x.Passport.PassportNumber == model.PassportNumber)
                 .AnyAsync(token);
@@ -108,6 +110,7 @@ namespace BankInformationSystem.Business.Validation
         private async Task<bool> HaveUniqueIdNumber(PassportModel model, CancellationToken token)
         {
             return !await _context.Customers
+                .Where(x => !x.IsDeleted)
                 .Where(x => x.Passport.Series == model.Series
                     && x.Passport.IdNumber == model.IdNumber)
                 .AnyAsync(token);

@@ -19,6 +19,8 @@ namespace BankInformationSystem.Data.Entities
 
         public bool IsLiableForMilitaryService { get; set; }
 
+        public bool IsDeleted { get; set; }
+
         public virtual Passport Passport { get; set; }
         
         public virtual BirthInfo BirthInfo { get; set; }

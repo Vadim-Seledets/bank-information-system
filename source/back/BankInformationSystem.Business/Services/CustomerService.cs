@@ -29,6 +29,7 @@ namespace BankInformationSystem.Business.Services
         public async Task<IList<CustomerShortInfoModel>> GetCustomersAsync()
         {
             var query = _context.Customers.AsNoTracking()
+                .Where(x => !x.IsDeleted)
                 .OrderByDescending(x => x.LastName)
                 .ThenByDescending(x => x.FirstName)
                 .ThenByDescending(x => x.MiddleName);
@@ -41,7 +42,8 @@ namespace BankInformationSystem.Business.Services
         
         public async Task<CustomerFullInfoModel> GetCustomerByIdAsync(int id)
         {
-            var query = _context.Customers.AsNoTracking().Where(x => x.Id == id);
+            var query = _context.Customers.AsNoTracking()
+                .Where(x => x.Id == id && !x.IsDeleted);
             var customer = await _mapper
                 .ProjectTo<CustomerFullInfoModel>(query)
                 .FirstOrDefaultAsync();
@@ -70,6 +72,7 @@ namespace BankInformationSystem.Business.Services
                 .Include(x => x.IncomePerMonth)
                 .Include(x => x.WorkInfo)
                 .Include(x => x.Contacts)
+                .Where(x => !x.IsDeleted)
                 .SingleOrDefaultAsync(x => x.Id == model.Id);
             if (customer == null)
             {
@@ -91,7 +94,7 @@ namespace BankInformationSystem.Business.Services
 
         public async Task DeleteCustomerAsync(int id)
         {
-            var customerInfoQuery = from customer in _context.Customers
+            var customerInfoQuery = from customer in _context.Customers.Where(x => !x.IsDeleted)
                                     join depositContract in _context.DepositContracts.Where(x => !(x.IsCompleted || x.IsRevoked))
                                         on customer.Id equals depositContract.CustomerId into customerDeposits
                                     from deposit in customerDeposits.DefaultIfEmpty()
@@ -123,7 +126,7 @@ namespace BankInformationSystem.Business.Services
                 throw new ValidationException($"Customer with id {id} has active loans and can't be deleted.");
             }
 
-            _context.Remove(contractsInfo.Customer);
+            contractsInfo.Customer.IsDeleted = true;
             await _context.SaveChangesAsync();
         }
     }

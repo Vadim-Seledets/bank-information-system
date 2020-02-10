@@ -59,7 +59,7 @@ namespace BankInformationSystem.Business.Validation
 
         protected async Task<bool> BeIdOfExistingCustomer(int customerId, CancellationToken token)
         {
-            return await Context.Customers.AnyAsync(x => x.Id == customerId, token);
+            return await Context.Customers.AnyAsync(x => x.Id == customerId && !x.IsDeleted, token);
         }
     }
 }
