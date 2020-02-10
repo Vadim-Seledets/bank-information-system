@@ -1,4 +1,4 @@
-import { Stateful, cached, action } from 'reactronic'
+import { Stateful, action } from 'reactronic'
 
 export class PropertyValidator<TValidatingObject> {
   constructor(
@@ -7,7 +7,6 @@ export class PropertyValidator<TValidatingObject> {
   ) {
   }
 
-  @cached
   isValid(validatingObject: TValidatingObject): boolean {
     let isValid = true
     if (this.validationRule && validatingObject) {
