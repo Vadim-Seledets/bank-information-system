@@ -31,11 +31,6 @@ export class CustomersPage extends Stateful {
     this.customerInfo = new CustomerInfo(this)
   }
 
-  @trigger
-  init(): void {
-    this.getAllCustomersInShortInfoModelRequest()
-  }
-
   @action
   setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
@@ -47,7 +42,7 @@ export class CustomersPage extends Stateful {
     const newCustomer = new Customer()
     this.customers.push(newCustomer)
     this.selectedCustomer = newCustomer
-    this.app.setCurrentPageName('EditCustomerPage')
+    this.app.currentTab?.setCurrentPageName('EditCustomerPage')
   }
 
   @action
@@ -56,7 +51,7 @@ export class CustomersPage extends Stateful {
       if (this.selectedCustomer.id && !this.selectedCustomer.isFullInfoModelLoaded) {
         this.selectedCustomer.getFullInfoModel()
       }
-      this.app.setCurrentPageName('EditCustomerPage')
+      this.app.currentTab?.setCurrentPageName('EditCustomerPage')
     }
   }
 
@@ -66,7 +61,7 @@ export class CustomersPage extends Stateful {
       customer.getFullInfoModel()
     }
     this.setSelectedCustomer(customer)
-    this.app.setCurrentPageName('CustomerInfoPage')
+    this.app.currentTab?.setCurrentPageName('CustomerInfoPage')
   }
 
   @action
@@ -81,7 +76,7 @@ export class CustomersPage extends Stateful {
           this.setSelectedCustomer(undefined)
         }
       }
-      this.app.setCurrentPageName('CustomersListPage')
+      this.app.currentTab?.setCurrentPageName('CustomersListPage')
     }
   }
 
@@ -110,7 +105,7 @@ export class CustomersPage extends Stateful {
         await this.publishNewCustomerRequest(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
-        this.app.setCurrentPageName('CustomersListPage')
+        this.app.currentTab?.setCurrentPageName('CustomersListPage')
       }
     }
   }
@@ -119,13 +114,11 @@ export class CustomersPage extends Stateful {
   async getAllCustomersInShortInfoModelRequest(): Promise<void> {
     const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
-      this.customers = this.customers.concat(
-        customersInfo.data.map(customerShortInfo => {
-          const customer = new Customer()
-          customer.setShortInfo(customerShortInfo)
-          return customer
-        })
-      )
+      this.customers = customersInfo.data.map(customerShortInfo => {
+        const customer = new Customer()
+        customer.setShortInfo(customerShortInfo)
+        return customer
+      })
     }
   }
 
