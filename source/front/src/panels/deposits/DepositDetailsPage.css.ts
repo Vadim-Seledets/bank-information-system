@@ -104,12 +104,17 @@ export const style = restyle(() => {
         background-color: ${theme.customerInfoBubbleBackground};
         border-radius: 0.2em;
       }
+
+      .highlighted {
+        background-color: #ee3333;
+      }
     `,
 
     transactions: css`
       display: grid;
       align-items: center;
       justify-items: center;
+      padding-bottom: 2em;
       font-size: 0.8em;
       grid-template-columns: 4fr 1fr 3fr 1fr 4fr 2em 4fr;
     `,

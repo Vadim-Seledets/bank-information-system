@@ -22,6 +22,9 @@ export function AppWindow(p: { app: App }): JSX.Element {
           <div style={{ color: '#dddddd' }}>
             Bank Information System
           </div>
+          <div className='space' />
+          <div>{p.app.getCurrentDate()}</div>
+          <button className={css.closeBankDayButton} onClick={() => {}}>Close Bank Day</button>
         </div>
         <div className={css.sidebar} style={{ ...dim(1, 2, 1, 12) }}>
           {p.app.tabs.map((v, i) => (

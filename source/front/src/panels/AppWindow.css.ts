@@ -47,8 +47,17 @@ export const style = restyle(() => {
       display: flex;
       align-items: center;
       background-color: ${theme.menuBackground};
+
+      .space {
+        flex-grow: 1;
+      }
     `,
 
+    closeBankDayButton: css`
+      margin: 0 0.5em;
+      background-color: #0e5ccd;
+    `,
+    
     sidebar: css`
       display: flex;
       flex-direction: column;

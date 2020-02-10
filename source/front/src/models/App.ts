@@ -1,7 +1,7 @@
-import { Stateful, action, trigger } from 'reactronic'
+import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
-import { Auxiliary } from './Auxiliary'
+import { Auxiliary, CloseBankDayData } from './BankOperations'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 
@@ -17,10 +17,16 @@ export class App extends Stateful {
   // currentPageName: PageName /* TO BE REPLACED with '*Page' models */
   customersPage: CustomersPage
   depositsPage: DepositsPage
+  
+  closeBankDayData: CloseBankDayData
+  utcOffset: string
+  currentDate: number
 
   constructor() {
     super()
     this.auxiliary = new Auxiliary()
+    this.closeBankDayData = new CloseBankDayData(1)
+    this.utcOffset = ''
     this.tabs = new Array<Tab>(
       new Tab('customers', 'Customers', 'CustomersListPage', 'las la-address-book'),
       new Tab('deposits', 'Deposits', 'DepositsListPage', 'las la-percent'),
@@ -30,10 +36,12 @@ export class App extends Stateful {
     this.currentTab = this.tabs[0]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
+    this.currentDate = Date.now()
   }
 
   @trigger
   init(): void {
+    setInterval(() => this.setCurrentDate(), 1000)
     this.initializeBankAccounts()
     this.getAuxiliaryInfo()
   }
@@ -41,6 +49,15 @@ export class App extends Stateful {
   @action
   setCurrentTab(tab: Tab): void {
     this.currentTab = tab
+  }
+
+  @action
+  setCurrentDate(): void {
+    this.currentDate = Date.now()
+  }
+
+  getCurrentDate(): number {
+    return this.currentDate
   }
 
   @trigger
@@ -58,6 +75,19 @@ export class App extends Stateful {
   @action
   async initializeBankAccounts(): Promise<void> {
     await this.httpClient.get<void, void>(`https://localhost:5001/accounts/bank-funds/initialize`)
+  }
+  
+  @action
+  async closeBankDayRequst(): Promise<void> {
+    await this.httpClient.post<CloseBankDayData, void>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
+  }
+  
+  @action
+  async obtainUtcOffsetRequest(): Promise<void> {
+    const response = await this.httpClient.get<string, void>(`https://localhost:5001/environment/now`)
+    if (response.successful && response.data) {
+      this.utcOffset = response.data
+    }
   }
 
   @action

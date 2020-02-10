@@ -67,7 +67,7 @@ export function DepositDetailsPageView(p: { depositsPage: DepositsPage }): JSX.E
               </div>
               <div className={css.property}>
                 <div className='name'>Is Revoked</div>
-                <div className={'value'}>{depositDetailes.isRevoked ? 'Yes' : 'No'}</div>
+                <div className={`value ${depositDetailes.isRevoked ? 'highlighted' : ''}`}>{depositDetailes.isRevoked ? 'Yes' : 'No'}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Completed At</div>
