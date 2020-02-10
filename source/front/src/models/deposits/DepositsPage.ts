@@ -92,21 +92,21 @@ export class DepositsPage extends Stateful {
   //   }
   // }
 
-  // @action
-  // setFilter(value: string): void {
-  //   this.filter = value
-  // }
+  @action
+  setFilter(value: string): void {
+    this.filter = value
+  }
 
-  // @trigger
-  // makeFilteredCustomers(): void {
-  //   const filter = this.filter
-  //   this.filteredCustomers = this.deposits.filter(c => {
-  //     const fullName = `${c.firstName} ${c.middleName} ${c.lastName}`
-  //     const startIndex = fullName.toLowerCase().indexOf(filter.toLowerCase())
-  //     isolated(() => c.setHighlightingRange({ start: startIndex, length: filter.length }))
-  //     return startIndex !== -1
-  //   })
-  // }
+  @trigger
+  makeFilteredDeposits(): void {
+    const filter = this.filter
+    this.filteredDeposits = this.deposits.filter(d => {
+      const fullName = `${d.customer.firstName} ${d.customer.middleName} ${d.customer.lastName}`
+      const startIndex = fullName.toLowerCase().indexOf(filter.toLowerCase())
+      isolated(() => d.setHighlightingRange({ start: startIndex, length: filter.length }))
+      return startIndex !== -1
+    })
+  }
 
   // @action
   // async editOrPublishCustomer(): Promise<void> {
