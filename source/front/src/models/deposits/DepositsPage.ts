@@ -1,4 +1,4 @@
-import { Stateful, action, trigger, isolated } from 'reactronic'
+import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { App } from '../App'
 import { DepositShortInfoModel, Deposit } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
@@ -35,21 +35,27 @@ export class DepositsPage extends Stateful {
     this.hoveredRowNumber = 0
   }
 
-  @action
-  async getAllDepositsInShortInfoModelRequest(): Promise<void> {
+  @cached
+  private async getDepositsInShortInfoModelRequest(): Promise<Array<Deposit>> {
+    let deposits = new Array<Deposit>()
     const response = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
     if (response.successful && response.data) {
-      this.deposits = response.data.map(depositShortInfoModel => {
+      deposits = response.data.map(depositShortInfoModel => {
         const deposit = new Deposit(
           depositShortInfoModel.contractNumber,
           depositShortInfoModel.customer,
           depositShortInfoModel.programStartDate,
           depositShortInfoModel.programEndDate,
         )
-        console.log(`getAllDeposits: ${deposit.contractNumber}`)
         return deposit
       })
     }
+    return deposits
+  }
+
+  @action
+  async obtainDepositsInShortInfoModel(): Promise<void> {
+    this.deposits = await this.getDepositsInShortInfoModelRequest()
   }
 
   @action

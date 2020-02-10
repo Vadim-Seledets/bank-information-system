@@ -50,7 +50,7 @@ export class App extends Stateful {
         this.customersPage.obtainAllCustomersInShortInfoModel()
         break
       case 'DepositsListPage':
-        this.depositsPage.getAllDepositsInShortInfoModelRequest()
+        this.depositsPage.obtainDepositsInShortInfoModel()
         break
     }
   }

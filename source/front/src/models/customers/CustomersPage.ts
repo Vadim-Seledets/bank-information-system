@@ -110,7 +110,7 @@ export class CustomersPage extends Stateful {
   }
 
   @cached
-  async getCustomersInShortInfoModelRequest(): Promise<Array<Customer>> {
+  private async getCustomersInShortInfoModelRequest(): Promise<Array<Customer>> {
     let customers = new Array<Customer>()
     const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
