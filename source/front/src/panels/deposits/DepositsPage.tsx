@@ -34,7 +34,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
           <div className='space' />
           <div className={css.search}>
             <div className='las la-search icon' />
-            <input className='input' type='text' placeholder='Search'
+            <input className='input' type='text' placeholder='Search' value={p.depositsPage.filter}
               onFocus={() => p.depositsPage.setSelectedDeposit(undefined)}  
               onChange={e => p.depositsPage.setFilter(e.currentTarget.value)}
             />
