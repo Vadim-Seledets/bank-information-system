@@ -59,38 +59,12 @@ export class DepositsPage extends Stateful {
   }
 
   // @action
-  // editCustomerInfo(): void {
-  //   if (this.selectedCustomer) {
-  //     if (this.selectedCustomer.id && !this.selectedCustomer.isFullInfoModelLoaded) {
-  //       this.selectedCustomer.getFullInfoModel()
-  //     }
-  //     this.app.setCurrentPageName('EditCustomerPage')
-  //   }
-  // }
-
-  // @action
   // showCustomerInfo(customer: Customer): void {
   //   if (customer.id && !customer.isFullInfoModelLoaded) {
   //     customer.getFullInfoModel()
   //   }
   //   this.setSelectedCustomer(customer)
   //   this.app.setCurrentPageName('CustomerInfoPage')
-  // }
-
-  // @action
-  // cancelEditing(): void {
-  //   if (this.selectedCustomer) {
-  //     if (this.selectedCustomer.id) {
-  //       this.selectedCustomer.getFullInfoModel()
-  //     } else {
-  //       const start = this.deposits.indexOf(this.selectedCustomer)
-  //       this.deposits.splice(start, 1)
-  //       if (this.selectedCustomer === this.selectedCustomer) {
-  //         this.setSelectedCustomer(undefined)
-  //       }
-  //     }
-  //     this.app.setCurrentPageName('CustomersListPage')
-  //   }
   // }
 
   @action
@@ -120,45 +94,6 @@ export class DepositsPage extends Stateful {
   //     if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
   //       this.app.setCurrentPageName('CustomersListPage')
   //     }
-  //   }
-  // }
-
-  // @action
-  // async getAllDepositsInShortInfoModelRequest(): Promise<void> {
-  //   const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
-  //   if (customersInfo.successful && customersInfo.data) {
-  //     this.deposits = this.deposits.concat(
-  //       customersInfo.data.map(customerShortInfo => {
-  //         const customer = new Customer()
-  //         customer.setShortInfo(customerShortInfo)
-  //         return customer
-  //       })
-  //     )
-  //   }
-  // }
-
-  // @action
-  // async publishNewCustomerRequest(customer: Customer): Promise<void> {
-  //   const response = await this.app.httpClient.post<string, ICustomerInfoErrors>(
-  //     `https://localhost:5001/customers`, customer.getJson())
-  //   if (response.successful && response.data) {
-  //     customer.setId(response.data)
-  //     customer.infoErrors.setHasErrors(false)
-  //   } else if (!response.successful && response.errorData) {
-  //     customer.infoErrors.initialize(response.errorData)
-  //     customer.infoErrors.setHasErrors(true)
-  //   }
-  // }
-
-  // @action
-  // async editCustomerInfoRequest(customer: Customer): Promise<void> {
-  //   const response = await this.app.httpClient.put<any, ICustomerInfoErrors>(
-  //     `https://localhost:5001/customers/${customer.id}`, customer.getJson())
-  //   if (response.successful) {
-  //     customer.infoErrors.setHasErrors(false)
-  //   } else if (!response.successful && response.errorData) {
-  //     customer.infoErrors.initialize(response.errorData)
-  //     customer.infoErrors.setHasErrors(true)
   //   }
   // }
 
