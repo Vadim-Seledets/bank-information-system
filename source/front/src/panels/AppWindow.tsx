@@ -10,6 +10,7 @@ import { EditCustomerInfoPageView } from './customers/EditCustomerInfoPage'
 import { CustomerInfoPageView } from './customers/CustomerInfoPage'
 import { DepositsPageView } from './deposits/DepositsPage'
 import { DepositCreationPageView } from './deposits/DepositCreationPage'
+import { DepositDetailsPageView } from './deposits/DepositDetailsPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -70,13 +71,13 @@ export function AppWindow(p: { app: App }): JSX.Element {
                 </div>
               </React.Fragment>
             )}
-            {/* {p.app.currentPageName === 'CustomerInfoPage' && (
+            {p.app.currentTab.currentPage === 'DepositDetailsPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <CustomerInfoPageView  customersPage={p.app.customersPage} />
+                  <DepositDetailsPageView  depositsPage={p.app.depositsPage} />
                 </div>
               </React.Fragment>
-            )} */}
+            )}
           </React.Fragment>
         )}
       </div>
