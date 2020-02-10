@@ -94,7 +94,7 @@ export const style = restyle(() => {
 
       .programDate {
         z-index: 2;
-        color: #629D30;
+        /* color: #629D30; */
       }
 
       .errors {
