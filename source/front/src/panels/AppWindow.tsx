@@ -24,7 +24,15 @@ export function AppWindow(p: { app: App }): JSX.Element {
           </div>
           <div className='space' />
           <div>{p.app.getCurrentDate()}</div>
-          <button className={css.closeBankDayButton} onClick={() => {}}>Close Bank Day</button>
+          <button className={css.closeBankDayButton} onClick={() => p.app.closeBankDayRequst()}>
+            <div className='container'>
+              <span>Close</span>
+              <input className='input' type='number' defaultValue={p.app.closeBankDayData.times}
+                onClick={e => e.stopPropagation()}
+                onChange={e => p.app.closeBankDayData.setTimes(e.currentTarget.value !== '' ? parseInt(e.currentTarget.value) : 0)} />
+              <span>Bank {p.app.closeBankDayData.times === 1 ? 'Day' : 'Days'}</span>
+            </div>
+          </button>
         </div>
         <div className={css.sidebar} style={{ ...dim(1, 2, 1, 12) }}>
           {p.app.tabs.map((v, i) => (
@@ -77,7 +85,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
             {p.app.currentTab.currentPage === 'DepositDetailsPage' && (
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
-                  <DepositDetailsPageView  depositsPage={p.app.depositsPage} />
+                  <DepositDetailsPageView depositsPage={p.app.depositsPage} />
                 </div>
               </React.Fragment>
             )}

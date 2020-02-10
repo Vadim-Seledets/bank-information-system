@@ -56,6 +56,20 @@ export const style = restyle(() => {
     closeBankDayButton: css`
       margin: 0 0.5em;
       background-color: #0e5ccd;
+      transition: width 0.3s ease;
+
+      .container {
+        display: flex;
+        align-items: baseline;
+      }
+
+      .input {
+        margin: 0 0.5em;
+        width: 2.5em;
+        text-align: center;
+        background-color: #0e4bbe;
+        border-radius: 0.2em;
+      }
     `,
     
     sidebar: css`

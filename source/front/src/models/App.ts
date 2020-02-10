@@ -17,16 +17,15 @@ export class App extends Stateful {
   // currentPageName: PageName /* TO BE REPLACED with '*Page' models */
   customersPage: CustomersPage
   depositsPage: DepositsPage
-  
+
   closeBankDayData: CloseBankDayData
-  utcOffset: string
-  currentDate: number
+  utcOffset: Date
+  currentDate: Date
 
   constructor() {
     super()
     this.auxiliary = new Auxiliary()
     this.closeBankDayData = new CloseBankDayData(1)
-    this.utcOffset = ''
     this.tabs = new Array<Tab>(
       new Tab('customers', 'Customers', 'CustomersListPage', 'las la-address-book'),
       new Tab('deposits', 'Deposits', 'DepositsListPage', 'las la-percent'),
@@ -36,12 +35,13 @@ export class App extends Stateful {
     this.currentTab = this.tabs[0]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
-    this.currentDate = Date.now()
+    this.currentDate = new Date()
+    this.utcOffset = new Date()
   }
 
   @trigger
   init(): void {
-    setInterval(() => this.setCurrentDate(), 1000)
+    this.obtainCurrentDateRequest()
     this.initializeBankAccounts()
     this.getAuxiliaryInfo()
   }
@@ -53,11 +53,12 @@ export class App extends Stateful {
 
   @action
   setCurrentDate(): void {
-    this.currentDate = Date.now()
+    this.currentDate = new Date()
   }
 
-  getCurrentDate(): number {
-    return this.currentDate
+  getCurrentDate(): string {
+    const month = this.currentDate.getMonth()
+    return `${this.currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}-${this.currentDate.getDate()}`
   }
 
   @trigger
@@ -76,17 +77,18 @@ export class App extends Stateful {
   async initializeBankAccounts(): Promise<void> {
     await this.httpClient.get<void, void>(`https://localhost:5001/accounts/bank-funds/initialize`)
   }
-  
+
   @action
   async closeBankDayRequst(): Promise<void> {
     await this.httpClient.post<CloseBankDayData, void>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
+    this.obtainCurrentDateRequest()
   }
-  
+
   @action
-  async obtainUtcOffsetRequest(): Promise<void> {
+  async obtainCurrentDateRequest(): Promise<void> {
     const response = await this.httpClient.get<string, void>(`https://localhost:5001/environment/now`)
-    if (response.successful && response.data) {
-      this.utcOffset = response.data
+    if (response.successful && response.data !== undefined) {
+      this.currentDate = new Date(Date.parse(response.data))
     }
   }
 
