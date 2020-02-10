@@ -176,3 +176,25 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
     return JSON.stringify(deposit)
   }
 }
+
+export class DepositDetails extends Stateful implements DepositFullInfoModel {
+  constructor(
+    public isRevoked: boolean,
+    public depositTypeId: number,
+    public depositAccountNumber: string,
+    public contractNumber: string,
+    public programStartDate: string,
+    public programEndDate: string,
+    public validUntil: string,
+    public isCompleted: boolean,
+    public completedAt: string,
+    public rate: number,
+    public amount: number,
+    public currencyId: number,
+    public regularAccountNumber: string,
+    public customer: ICustomerShortInfo,
+    public transactions: Array<Transaction>,
+  ) {
+    super()
+  }
+}
