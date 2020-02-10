@@ -49,6 +49,9 @@ export class DepositCreationPage extends Stateful {
         this.creatingDeposit.infoErrors.initialize(response.errorData)
         this.creatingDeposit.infoErrors.setHasErrors(true)
       }
+      if (!this.creatingDeposit.infoErrors.hasAnyErrors) {
+        this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
+      }
     }
   }
 
