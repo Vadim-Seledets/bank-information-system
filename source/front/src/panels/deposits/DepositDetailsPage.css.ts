@@ -105,8 +105,12 @@ export const style = restyle(() => {
         border-radius: 0.2em;
       }
 
-      .highlighted {
+      .highlighted-red {
         background-color: #ee3333;
+      }
+
+      .highlighted-green {
+        background-color: #6dac37;
       }
     `,
 
