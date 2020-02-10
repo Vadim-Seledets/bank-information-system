@@ -1,5 +1,4 @@
-import { Stateful, action, trigger, isolated } from 'reactronic'
-import { Auxiliary } from '../Auxiliary'
+import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { App } from '../App'
 import { CustomerInfo } from './CustomerInfo'
 import { IInfoErrors } from '../Errors'
@@ -110,16 +109,23 @@ export class CustomersPage extends Stateful {
     }
   }
 
-  @action
-  async getAllCustomersInShortInfoModelRequest(): Promise<void> {
+  @cached
+  async getCustomersInShortInfoModelRequest(): Promise<Array<Customer>> {
+    let customers = new Array<Customer>()
     const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
-      this.customers = customersInfo.data.map(customerShortInfo => {
+      customers = customersInfo.data.map(customerShortInfo => {
         const customer = new Customer()
         customer.setShortInfo(customerShortInfo)
         return customer
       })
     }
+    return customers
+  }
+
+  @action
+  async obtainAllCustomersInShortInfoModel(): Promise<void> {
+    this.customers = await this.getCustomersInShortInfoModelRequest()
   }
 
   @action
