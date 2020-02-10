@@ -21,7 +21,7 @@ export class DarkTheme extends Stateful implements ITheme {
   readonly customerListOddRowBackground = "#333332"
   readonly customerListHoveredRowBackground = "#414141"
   readonly customerListHighlightedRowBackground = "#0e5ccd"
-  readonly customerInfoBubbleBackground = "#333331"
+  readonly customerInfoBubbleBackground = "#444441"
   readonly customerInfoBubbleForeground = "#9c9c9b"
-  readonly customerInfoBubbleCaptionForeground = "#ffffff"
+  readonly customerInfoBubbleValueForeground = "#ffffff"
 }

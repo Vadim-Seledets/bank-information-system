@@ -23,5 +23,5 @@ export class LightTheme extends Stateful implements ITheme {
   readonly customerListHighlightedRowBackground = "#c7c8ca"
   readonly customerInfoBubbleBackground = "#e7e8ea"
   readonly customerInfoBubbleForeground = "grey"
-  readonly customerInfoBubbleCaptionForeground = "#101010"
+  readonly customerInfoBubbleValueForeground = "#101010"
 }

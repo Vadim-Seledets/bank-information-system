@@ -22,7 +22,7 @@ export interface ITheme {
   readonly customerListHighlightedRowBackground: string
   readonly customerInfoBubbleBackground: string
   readonly customerInfoBubbleForeground: string
-  readonly customerInfoBubbleCaptionForeground: string
+  readonly customerInfoBubbleValueForeground: string
 }
 
 export class BlankTheme extends Stateful implements ITheme {
@@ -47,7 +47,7 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly customerListHighlightedRowBackground = ""
   readonly customerInfoBubbleBackground = ""
   readonly customerInfoBubbleForeground = ""
-  readonly customerInfoBubbleCaptionForeground = ""
+  readonly customerInfoBubbleValueForeground = ""
 }
 
 export class Themes extends Stateful {
