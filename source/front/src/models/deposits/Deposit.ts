@@ -11,10 +11,10 @@ export interface DepositShortInfoModel {
 }
 
 export interface DepositCreateModel {
-  depositTypeId: number 
+  depositTypeId: number
   contractNumber: string
-  programStartDate:	string
-  programEndDate:	string
+  programStartDate: string
+  programEndDate: string
   contractValidUntil: string
   customerId: number
   amount: number
@@ -42,7 +42,7 @@ export interface DepositFullInfoModel {
 
 export class Deposit extends Stateful implements DepositShortInfoModel {
   hilightingRange: IHighlightingRange = { start: 0, length: 0 }
-  
+
   constructor(
     public contractNumber: string,
     public customer: ICustomerShortInfo,
@@ -70,17 +70,17 @@ export class Deposit extends Stateful implements DepositShortInfoModel {
   getProgramStartDate(): string {
     return this.programStartDate.substr(0, 10)
   }
-  
+
   getProgramEndDate(): string {
     return this.programEndDate.substr(0, 10)
   }
 }
 
 export class CreatingDeposit extends Stateful implements DepositCreateModel {
-  depositTypeId: number 
+  depositTypeId: number
   contractNumber: string
-  programStartDate:	string
-  programEndDate:	string
+  programStartDate: string
+  programEndDate: string
   contractValidUntil: string
   customerId: number
   amount: number
@@ -158,14 +158,15 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
     this.amount = 0
     this.rate = 0
     this.currencyId = 1
+    this.infoErrors.initialize({ error: undefined, errors: undefined })
   }
 
   getJson(): string {
     const deposit = {
       depositTypeId: this.depositTypeId,
       contractNumber: this.contractNumber,
-      programStartDate:	this.programStartDate,
-      programEndDate:	this.programEndDate,
+      programStartDate: this.programStartDate,
+      programEndDate: this.programEndDate,
       contractValidUntil: this.contractValidUntil,
       customerId: this.customerId,
       amount: this.amount,
