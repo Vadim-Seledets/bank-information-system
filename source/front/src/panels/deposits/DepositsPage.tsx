@@ -15,22 +15,6 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Deposit</div>
           </button>
-          {/* <button className={cx(css.button, css.deleteButton)}
-            is-visible={`${p.depositsPage.selectedDeposit !== undefined}`} // && p.depositsPage.selectedDeposit.depositTypeId === 1
-          >
-            <span className='las la-trash icon' style={{ marginRight: '0.5em' }} />
-            <div onClick={() => p.depositsPage.setRevokeIsRequested(!p.depositsPage.revokeIsRequested)}>Revoke Deposit</div>
-            <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.depositsPage.revokeIsRequested}`}>
-              <div className='yesButton'
-                onClick={() => {
-                  // p.depositsPage.deleteCustomerRequest(p.depositsPage.selectedDeposit)
-                  p.depositsPage.setRevokeIsRequested(false)
-                }}>Yes</div>
-              <div className='noButton'
-                onClick={() => p.depositsPage.setRevokeIsRequested(false)}
-              >No</div>
-            </div>
-          </button> */}
           <div className='space' />
           <div className={css.search}>
             <div className='las la-search icon' />
@@ -50,11 +34,11 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             <React.Fragment key={i}>
               <div style={{ ...dim(2, i + 2, 2, i + 2) }}
                 className={'contractNumber'}
+                onClick={() => p.depositsPage.showDepositDetails(d)}
                 onPointerEnter={() => p.depositsPage.setIsGenderHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsGenderHovered(false, i + 2)}
               >{d.contractNumber}</div>
               <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='customerFullName'
-                // onClick={() => p.depositsPage.showCustomerInfo(d)}
                 onPointerEnter={() => p.depositsPage.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${d.getCustomerFullName()}`}} 
@@ -66,20 +50,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
                 onPointerEnter={() => p.depositsPage.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsActionsHovered(false, i + 2)}
-              >{d.getProgramEndDate()}
-                {/* {d.infoErrors.hasAnyErrors && (
-                  <div className='errors las la-exclamation'>
-                    <div className='errorsPopUp'>
-                      {d.infoErrors.error && <div className='errorRow'>{d.infoErrors.error}</div>}
-                      {d.infoErrors.errors && (
-                        d.infoErrors.errors.map((e, i) => (
-                          <div key={i} className='errorRow'>{`${e.name}: ${e.message}`}</div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                )} */}
-              </div>
+              >{d.getProgramEndDate()}</div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.depositsPage.isRowHovered(i + 2)}`}
                 is-selected={`${p.depositsPage.selectedDeposit === d}`}

@@ -56,39 +56,6 @@ export const style = restyle(() => {
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
 
-    deleteButton: css`
-      display: flex;
-      align-items: center;
-      background-color: #ee3333;
-    `,
-
-    deleteButtonYesNoButtonsContainer: css`
-      display: flex;
-      align-items: center;
-      margin-left: 0.5em;
-      border-left: 1px solid #aa2222;
-
-      &[is-visible=false] {
-        display: none;
-      }
-
-      .yesButton {
-        padding: 0 0.5em;
-
-        &:hover {
-          color: ${theme.highlighter};
-        }
-      }
-
-      .noButton {
-        padding-left: 0.5em;
-
-        &:hover {
-          color: ${theme.highlighter};
-        }
-      }
-    `,
-
     depositList: css`
       display: grid;
       align-items: center;
@@ -109,6 +76,11 @@ export const style = restyle(() => {
 
       .contractNumber {
         z-index: 2;
+
+        &:hover {
+          color: ${theme.highlighter};
+          cursor: pointer;
+        }
       }
 
       .customerFullName {
@@ -117,11 +89,6 @@ export const style = restyle(() => {
         mark {
           color: ${theme.markForeground};
           background-color: transparent;
-        }
-
-        &:hover {
-          color: ${theme.highlighter};
-          cursor: pointer;
         }
       }
 
