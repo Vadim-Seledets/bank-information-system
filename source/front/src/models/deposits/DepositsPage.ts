@@ -9,7 +9,7 @@ export class DepositsPage extends Stateful {
   selectedDeposit?: Deposit
     
   filter = ''
-  deleteIsRequested = false
+  revokeIsRequested = false
   
   isRowWithCustomerHovered = false
   isGenderHovered = false
@@ -213,14 +213,14 @@ export class DepositsPage extends Stateful {
   }
 
   @action
-  setDeleteIsRequested(value: boolean): void {
-    this.deleteIsRequested = value
+  setRevokeIsRequested(value: boolean): void {
+    this.revokeIsRequested = value
   }
 
   @trigger
   dropDeleteRequest(): void {
     this.selectedDeposit /* Sensetivity list item */
-    this.setDeleteIsRequested(false)
+    this.setRevokeIsRequested(false)
   }
 
   isRowHovered(row: number): boolean {

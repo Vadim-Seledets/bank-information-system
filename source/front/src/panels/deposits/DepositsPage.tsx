@@ -15,29 +15,24 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             // onClick={() => p.depositsPage.addNewDeposit()}
           >
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
-            <div>Add a New Customer</div>
+            <div>Add a New Deposit</div>
           </button>
-          <button className={cx(css.button, css.addNewDepositButton, 'headLineItem')}
-            is-visible={`${p.depositsPage.selectedDeposit !== undefined}`}
-            // onClick={() => p.depositsPage.editCustomerInfo()}
+          {/* <button className={cx(css.button, css.deleteButton)}
+            is-visible={`${p.depositsPage.selectedDeposit !== undefined}`} // && p.depositsPage.selectedDeposit.depositTypeId === 1
           >
-            <span className='las la-pen' style={{ marginRight: '0.5em' }} />
-            <div>Edit Customer</div>
-          </button>
-          <button className={cx(css.button, css.deleteButton)} is-visible={`${p.depositsPage.selectedDeposit !== undefined}`}>
             <span className='las la-trash icon' style={{ marginRight: '0.5em' }} />
-            <div onClick={() => p.depositsPage.setDeleteIsRequested(!p.depositsPage.deleteIsRequested)}>Delete Customer</div>
-            <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.depositsPage.deleteIsRequested}`}>
+            <div onClick={() => p.depositsPage.setRevokeIsRequested(!p.depositsPage.revokeIsRequested)}>Revoke Deposit</div>
+            <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.depositsPage.revokeIsRequested}`}>
               <div className='yesButton'
                 onClick={() => {
                   // p.depositsPage.deleteCustomerRequest(p.depositsPage.selectedDeposit)
-                  p.depositsPage.setDeleteIsRequested(false)
+                  p.depositsPage.setRevokeIsRequested(false)
                 }}>Yes</div>
               <div className='noButton'
-                onClick={() => p.depositsPage.setDeleteIsRequested(false)}
+                onClick={() => p.depositsPage.setRevokeIsRequested(false)}
               >No</div>
             </div>
-          </button>
+          </button> */}
           <div className='space' />
           <div className={css.search}>
             <div className='las la-search icon' />
