@@ -91,13 +91,39 @@ namespace BankInformationSystem.Business.Services
 
         public async Task DeleteCustomerAsync(int id)
         {
-            var customerToDelete = await _context.Customers.FindAsync(id);
-            if (customerToDelete == null)
+            var customerInfoQuery = from customer in _context.Customers
+                                    join depositContract in _context.DepositContracts.Where(x => !(x.IsCompleted || x.IsRevoked))
+                                        on customer.Id equals depositContract.CustomerId into customerDeposits
+                                    from deposit in customerDeposits.DefaultIfEmpty()
+                                    join loanContract in _context.LoanContracts.Where(x => !x.IsCompleted)
+                                        on customer.Id equals loanContract.CustomerId into customerLoans
+                                    from loanContract in customerLoans.DefaultIfEmpty()
+                                    where customer.Id == id
+                                    select new { Customer = customer, HasLoan = loanContract != null, HasDeposit = deposit != null };
+
+            var customerInfoDictionary = (await customerInfoQuery.ToListAsync())
+                .GroupBy(x => x.Customer.Id)
+                .ToDictionary(x => x.Key, x => new
+                {
+                    x.FirstOrDefault()?.Customer,
+                    HasLoan = x.Any(y => y.HasLoan),
+                    HasDeposit = x.Any(y => y.HasDeposit)
+                });
+
+            if (!customerInfoDictionary.TryGetValue(id, out var contractsInfo))
             {
-                throw new ValidationException($"User with id {id} does not exist.");
+                throw new ValidationException($"Customer with id {id} does not exist.");
+            }
+            if (contractsInfo.HasDeposit)
+            {
+                throw new ValidationException($"Customer with id {id} has active deposits and can't be deleted.");
+            }
+            if (contractsInfo.HasLoan)
+            {
+                throw new ValidationException($"Customer with id {id} has active loans and can't be deleted.");
             }
 
-            _context.Remove(customerToDelete);
+            _context.Remove(contractsInfo.Customer);
             await _context.SaveChangesAsync();
         }
     }
