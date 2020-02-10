@@ -154,8 +154,10 @@ namespace BankInformationSystem.Business.Services
                 CurrencyId = depositContract.CurrencyId,
                 Amount = depositContract.Amount,
                 CreatedAt = _currentDateTimeProvider.Now(),
+                SenderAccount = bankDevelopmentFund,
                 SenderAccountNumber = bankDevelopmentFund.AccountNumber,
-                ReceiverAccountNumber = depositContract.DepositAccountNumber
+                ReceiverAccount = depositContract.RegularAccount,
+                ReceiverAccountNumber = depositContract.RegularAccountNumber
             });
 
             depositContract.IsRevoked = true;
