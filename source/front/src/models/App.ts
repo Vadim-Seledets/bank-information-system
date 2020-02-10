@@ -30,6 +30,7 @@ export class App extends Stateful {
 
   @trigger
   init(): void {
+    this.initializeBankAccounts()
     this.getAuxiliaryInfo()
   }
 
@@ -41,6 +42,11 @@ export class App extends Stateful {
   @action
   setCurrentPageName(pageName: PageName): void {
     this.currentPageName = pageName
+  }
+
+  @action
+  async initializeBankAccounts(): Promise<void> {
+    await this.httpClient.get<void, void>(`https://localhost:5001/accounts/bank-funds/initialize`)
   }
 
   @action
