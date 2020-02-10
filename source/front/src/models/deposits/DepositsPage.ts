@@ -1,13 +1,15 @@
 import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { App } from '../App'
-import { DepositShortInfoModel, Deposit } from './Deposit'
+import { DepositShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
+import { IInfoErrors } from '../Errors'
 
 export class DepositsPage extends Stateful {
   app: App
   deposits: Array<Deposit>
   filteredDeposits: Array<Deposit>
   selectedDeposit?: Deposit
+  depositDetailes?: DepositDetails
   depositCreationPage: DepositCreationPage
 
   filter = ''
@@ -26,6 +28,7 @@ export class DepositsPage extends Stateful {
     this.deposits = new Array<Deposit>()
     this.filteredDeposits = this.deposits
     this.selectedDeposit = undefined
+    this.depositDetailes = undefined
     this.depositCreationPage = new DepositCreationPage(this)
   }
 
@@ -58,14 +61,41 @@ export class DepositsPage extends Stateful {
     this.app.currentTab?.setCurrentPageName('AddNewDepositPage')
   }
 
-  // @action
-  // showCustomerInfo(customer: Customer): void {
-  //   if (customer.id && !customer.isFullInfoModelLoaded) {
-  //     customer.getFullInfoModel()
-  //   }
-  //   this.setSelectedCustomer(customer)
-  //   this.app.setCurrentPageName('CustomerInfoPage')
-  // }
+  @action
+  async showDepositDetails(deposit: Deposit): Promise<void> {
+    const response = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${deposit.contractNumber}`)
+    if (response.successful && response.data) {
+      this.depositDetailes = new DepositDetails(
+        response.data.isRevoked,
+        response.data.depositTypeId,
+        response.data.depositAccountNumber,
+        response.data.contractNumber,
+        response.data.programStartDate,
+        response.data.programEndDate,
+        response.data.validUntil,
+        response.data.isCompleted,
+        response.data.completedAt,
+        response.data.rate,
+        response.data.amount,
+        response.data.currencyId,
+        response.data.regularAccountNumber,
+        response.data.customer,
+        response.data.transactions,
+      )
+    }
+    this.setSelectedDeposit(deposit)
+    this.app.currentTab?.setCurrentPageName('DepositDetailsPage')
+  }
+
+  @action
+  async revokeDeposit(contractNumber: string): Promise<void> {
+    const response = await this.app.httpClient.post<void, IInfoErrors>(`https://localhost:5001/deposits/${contractNumber}/revoke`)
+    if (response.successful) {
+      this.app.currentTab?.setCurrentPageName('DepositsListPage')
+    } else if (response.errorData) {
+      console.log(response.errorData)
+    }
+  }
 
   @action
   setFilter(value: string): void {
@@ -82,41 +112,6 @@ export class DepositsPage extends Stateful {
       return startIndex !== -1
     })
   }
-
-  // @action
-  // async editOrPublishCustomer(): Promise<void> {
-  //   if (this.selectedCustomer) {
-  //     if (this.selectedCustomer.id) {
-  //       await this.editCustomerInfoRequest(this.selectedCustomer)
-  //     } else {
-  //       await this.publishNewCustomerRequest(this.selectedCustomer)
-  //     }
-  //     if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
-  //       this.app.setCurrentPageName('CustomersListPage')
-  //     }
-  //   }
-  // }
-
-  // @action
-  // async deleteCustomerRequest(customer?: Customer): Promise<void> {
-  //   if (customer) {
-  //     if (customer.id) {
-  //       const response = await this.app.httpClient.delete<any, ICustomerInfoErrors>(
-  //         `https://localhost:5001/customers/${customer.id}`)
-  //       if (response.successful) {
-  //         customer.infoErrors.setHasErrors(false)
-  //       } else if (!response.successful && response.errorData) {
-  //         customer.infoErrors.initialize(response.errorData)
-  //         customer.infoErrors.setHasErrors(true)
-  //       }
-  //     }
-  //     const start = this.deposits.indexOf(customer)
-  //     this.deposits.splice(start, 1)
-  //     if (customer === this.selectedCustomer) {
-  //       this.setSelectedCustomer(undefined)
-  //     }
-  //   }
-  // }
 
   @action
   setIsRowWithCustomerHovered(value: boolean, row: number): void {
