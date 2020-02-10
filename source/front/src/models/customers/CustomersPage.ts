@@ -39,9 +39,11 @@ export class CustomersPage extends Stateful {
   @action
   addNewCustomer(): void {
     const newCustomer = new Customer()
-    this.customers.push(newCustomer)
+    const customers = new Array<Customer>(...this.customers)
+    customers.push(newCustomer)
     this.selectedCustomer = newCustomer
     this.app.currentTab?.setCurrentPageName('EditCustomerPage')
+    this.customers = customers
   }
 
   @action
