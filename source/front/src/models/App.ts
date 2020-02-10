@@ -1,31 +1,34 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
-import { CustomersPage } from './customers/CustomersPage'
 import { Auxiliary } from './Auxiliary'
+import { CustomersPage } from './customers/CustomersPage'
+import { DepositsPage } from './deposits/DepositsPage'
 
-export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
+export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage' | 'DepositsListPage'
+  | 'LoansListPage' | 'AtmPage'
 
 export class App extends Stateful {
   httpClient = new HttpClient()
+  auxiliary: Auxiliary
   tabs: Array<Tab>
   currentTab?: Tab
-  currentPageName: PageName /* TO BE REPLACED with '*Page' models */
+  // currentPageName: PageName /* TO BE REPLACED with '*Page' models */
   customersPage: CustomersPage
-  auxiliary: Auxiliary
+  depositsPage: DepositsPage
 
   constructor() {
     super()
+    this.auxiliary = new Auxiliary()
     this.tabs = new Array<Tab>(
-      new Tab('customers', 'Customers', 'las la-address-book'),
-      new Tab('deposits', 'Deposits', 'las la-percent'),
-      new Tab('loans', 'Loans', 'las la-credit-card'),
-      new Tab('atm', 'ATM', 'las la-money-check'),
+      new Tab('customers', 'Customers', 'CustomersListPage', 'las la-address-book'),
+      new Tab('deposits', 'Deposits', 'DepositsListPage', 'las la-percent'),
+      new Tab('loans', 'Loans', 'LoansListPage', 'las la-credit-card'),
+      new Tab('atm', 'ATM', 'AtmPage', 'las la-money-check'),
     )
     this.currentTab = this.tabs[0]
-    this.currentPageName = 'CustomersListPage'
     this.customersPage = new CustomersPage(this)
-    this.auxiliary = new Auxiliary()
+    this.depositsPage = new DepositsPage(this)
   }
 
   @trigger
@@ -39,9 +42,16 @@ export class App extends Stateful {
     this.currentTab = tab
   }
 
-  @action
-  setCurrentPageName(pageName: PageName): void {
-    this.currentPageName = pageName
+  @trigger
+  obtainEssentialPageInfo(): void {
+    switch (this.currentTab?.currentPage) {
+      case 'CustomersListPage':
+        this.customersPage.getAllCustomersInShortInfoModelRequest()
+        break
+      case 'DepositsListPage':
+        this.depositsPage.getAllDepositsInShortInfoModelRequest()
+        break
+    }
   }
 
   @action
