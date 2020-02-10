@@ -6,7 +6,7 @@ import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
-  | 'DepositsListPage' | 'AddNewDepositPage'
+  | 'DepositsListPage' | 'AddNewDepositPage' | 'DepositDetailsPage'
   | 'LoansListPage' | 'AtmPage'
 
 export class App extends Stateful {
