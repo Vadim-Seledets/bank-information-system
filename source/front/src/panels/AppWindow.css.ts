@@ -58,16 +58,25 @@ export const style = restyle(() => {
       background-color: #0e5ccd;
       transition: width 0.3s ease;
 
+      &:hover {
+        .input {
+          background-color: #0e4bbe;
+        }
+      }
+
       .container {
         display: flex;
         align-items: baseline;
+      }
+
+      .short {
+        padding-right: 0.9ch;
       }
 
       .input {
         margin: 0 0.5em;
         width: 2.5em;
         text-align: center;
-        background-color: #0e4bbe;
         border-radius: 0.2em;
       }
     `,

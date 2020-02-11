@@ -25,7 +25,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
           <div className='space' />
           <div style={{ fontSize: '0.8em' }}>{p.app.getCurrentDate()}</div>
           <button className={css.closeBankDayButton} onClick={() => p.app.closeBankDayRequst()}>
-            <div className='container'>
+            <div className={`container ${p.app.closeBankDayData.times === 1 ? 'short' : ''}`}>
               <span>Close</span>
               <input className='input' type='number' defaultValue={p.app.closeBankDayData.times}
                 onClick={e => e.stopPropagation()}
