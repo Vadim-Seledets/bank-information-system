@@ -65,7 +65,9 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                     </div>
                   )}
                 </div>
-                <input className={'propertyInputColumn'} disabled={true} type="text" value={creatingDeposit.contractNumber} />
+                <input className={'propertyInputColumn'} disabled={true} type="text" value={creatingDeposit.contractNumber}
+                  onFocus={() => creatingDeposit.infoErrors.deleteError('ContractNumber')}
+                />
               </div>
               <div className={css.property}>
                 <div className='propertyNameLine'>
@@ -82,6 +84,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.programStartDate}
                   is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || creatingDeposit.infoErrors.has('ProgramStartDate')}`}
+                  onFocus={() => creatingDeposit.infoErrors.deleteError('ProgramStartDate')}
                   onChange={e => creatingDeposit.setProgramStartDate(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
@@ -99,6 +102,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.programEndDate}
                   is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programEndDate') || creatingDeposit.infoErrors.has('ProgramEndDate')}`}
+                  onFocus={() => creatingDeposit.infoErrors.deleteError('ProgramEndDate')}
                   onChange={e => creatingDeposit.setProgramEndDate(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
@@ -116,6 +120,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.contractValidUntil}
                   is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'contractValidUntil') || creatingDeposit.infoErrors.has('ContractValidUntil')}`}
+                  onFocus={() => creatingDeposit.infoErrors.deleteError('ContractValidUntil')}
                   onChange={e => creatingDeposit.setContractValidUntil(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
@@ -154,9 +159,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <div className='propertyInputHorizontalLine'>
-                  <input className={'propertyInputColumn'} type="number" value={creatingDeposit.amount}
+                  <input className={'propertyInputColumn'} type="number" defaultValue={creatingDeposit.amount}
                     is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || creatingDeposit.infoErrors.has('Amount')}`}
-                    onChange={e => creatingDeposit.setAmount(parseInt(e.currentTarget.value))} />
+                    onFocus={() => creatingDeposit.infoErrors.deleteError('Amount')} 
+                    onChange={e => creatingDeposit.setAmount(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)} />
                   <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={creatingDeposit.currencyId}
                     is-invalid={`${creatingDeposit.infoErrors.has('CurrencyId')}`}
                     onChange={e => creatingDeposit.setCurrencyId(parseInt(e.currentTarget.value))}
@@ -179,9 +185,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                       </div>
                     )}
                   </div>
-                  <input className={'propertyInputColumn'} type="number" max={1} min={0} step={0.001} value={creatingDeposit.rate}
+                  <input className={'propertyInputColumn'} type="number" max={1} min={0} step={0.001} defaultValue={creatingDeposit.rate}
                     is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'rate') || creatingDeposit.infoErrors.has('Rate')}`}
-                    onChange={e => creatingDeposit.setRate(parseFloat(e.currentTarget.value))} />
+                    onFocus={() => creatingDeposit.infoErrors.deleteError('Rate')}
+                    onChange={e => creatingDeposit.setRate(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)} />
                 </div>
               </div>
             </React.Fragment>

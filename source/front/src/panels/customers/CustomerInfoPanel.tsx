@@ -29,6 +29,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.lastName}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'lastName') || customer.infoErrors.has('LastName')}`}
+                onFocus={() => customer.infoErrors.deleteError('LastName')}
                 onChange={e => customer.setLastName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -46,6 +47,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.firstName}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'firstName') || customer.infoErrors.has('FirstName')}`}
+                onFocus={() => customer.infoErrors.deleteError('FirstName')}
                 onChange={e => customer.setFirstName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -63,6 +65,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.middleName}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'middleName') || customer.infoErrors.has('MiddleName')}`}
+                onFocus={() => customer.infoErrors.deleteError('MiddleName')}
                 onChange={e => customer.setMiddleName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -80,6 +83,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.dateOfBirth}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'dateOfBirth') || customer.infoErrors.has('BirthInfo.DateOfBirth')}`}
+                onFocus={() => customer.infoErrors.deleteError('BirthInfo.DateOfBirth')}
                 onChange={e => customer.setDateOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -121,6 +125,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.citizenshipId}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'citizenshipId') || customer.infoErrors.has('Passport.CitizenshipId')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.CitizenshipId')}
                 onChange={e => customer.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.countriesOfCitizenship.map((v, i) => (
@@ -143,6 +148,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.series}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'series') || customer.infoErrors.has('Passport.Series')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.Series')}
                 onChange={e => customer.setSeries(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -160,6 +166,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passportNumber}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'passportNumber') || customer.infoErrors.has('Passport.PassportNumber')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.PassportNumber')}
                 onChange={e => customer.setPassportNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -177,6 +184,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.issuingAuthority}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuingAuthority') || customer.infoErrors.has('Passport.IssuingAuthority')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.IssuingAuthority')}
                 onChange={e => customer.setIssuingAuthority(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -194,6 +202,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.issuedAt}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuedAt') || customer.infoErrors.has('Passport.IssuedAt')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.IssuedAt')}
                 onChange={e => customer.setIssuedAt(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -211,6 +220,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.idNumber}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'idNumber') || customer.infoErrors.has('Passport.IdNumber')}`}
+                onFocus={() => customer.infoErrors.deleteError('Passport.IdNumber')}
                 onChange={e => customer.setIdNumber(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Contact Information</div>
@@ -229,6 +239,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfBirth}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfBirth') || customer.infoErrors.has('BirthInfo.PlaceOfBirth')}`}
+                onFocus={() => customer.infoErrors.deleteError('BirthInfo.PlaceOfBirth')}
                 onChange={e => customer.setPlaceOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -268,6 +279,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfLivingAddress}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfLivingAddress') || customer.infoErrors.has('PlaceOfLiving.Address')}`}
+                onFocus={() => customer.infoErrors.deleteError('PlaceOfLiving.Address')}
                 onChange={e => customer.setPlaceOfLivingAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -307,6 +319,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfRegistrationAddress}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationAddress') || customer.infoErrors.has('PlaceOfRegistration.Address')}`}
+                onFocus={() => customer.infoErrors.deleteError('PlaceOfRegistration.Address')}
                 onChange={e => customer.setPlaceOfRegistrationAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -324,6 +337,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.homePhoneNumber}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'homePhoneNumber') || customer.infoErrors.has('Contacts.HomePhoneNumber')}`}
+                onFocus={() => customer.infoErrors.deleteError('Contacts.HomePhoneNumber')}
                 onChange={e => customer.setHomePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -341,6 +355,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.mobilePhoneNumber}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'mobilePhoneNumber') || customer.infoErrors.has('Contacts.MobilePhoneNumber')}`}
+                onFocus={() => customer.infoErrors.deleteError('Contacts.MobilePhoneNumber')}
                 onChange={e => customer.setMobilePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -358,6 +373,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.email}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'email') || customer.infoErrors.has('Contacts.Email')}`}
+                onFocus={() => customer.infoErrors.deleteError('Contacts.Email')}
                 onChange={e => customer.setEmail(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Job Information</div>
@@ -376,6 +392,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.company}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'company') || customer.infoErrors.has('WorkInfo.Company')}`}
+                onFocus={() => customer.infoErrors.deleteError('WorkInfo.Company')}
                 onChange={e => customer.setCompany(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
@@ -393,6 +410,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.position}
                 is-invalid={`${!p.customerInfo.validation.isValid(customer, 'position') || customer.infoErrors.has('WorkInfo.Position')}`}
+                onFocus={() => customer.infoErrors.deleteError('WorkInfo.Position')}
                 onChange={e => customer.setPosition(e.currentTarget.value)} />
             </div>
             <div className={css.property}>

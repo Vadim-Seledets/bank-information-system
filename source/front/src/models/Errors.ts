@@ -1,4 +1,4 @@
-import { Stateful, action } from 'reactronic'
+import { Stateful, action, cached } from 'reactronic'
 
 export interface IInfoErrors {
   errors?: Array<{name: string, message: string}>
@@ -14,6 +14,11 @@ export class InfoErrors extends Stateful {
   initialize(customerInfoErrors: IInfoErrors): void {
     this.errors = customerInfoErrors.errors ?? []
     this.error = customerInfoErrors.error ?? ''
+    /* TO BE REMOVED */
+    const errorsWithoutName = this.errors.filter(v => v.name === '').map(v => v.message).join()
+    if (errorsWithoutName !== '') {
+      alert(errorsWithoutName)
+    }
   }
 
   @action
@@ -42,6 +47,19 @@ export class InfoErrors extends Stateful {
       })
     }
     return errors
+  }
+
+  @action
+  deleteError(propertyName: string): void {
+    if (this.errors) {
+      const newErrors = new Array<{name: string, message: string}>()
+      this.errors.forEach((e, i) => {
+        if (e.name !== propertyName) {
+          newErrors.push(e)
+        }
+      })
+      this.errors = newErrors
+    }
   }
 
   has(propertyName: string): boolean {
