@@ -39,28 +39,25 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
                 onPointerLeave={() => p.depositsPage.setIsGenderHovered(false, i + 2)}
               >{d.contractNumber}</div>
               <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='customerFullName'
+                onClick={() => p.depositsPage.toggleDepositSelection(d)}
                 onPointerEnter={() => p.depositsPage.setIsFullNameHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${d.getCustomerFullName()}`}} 
               />
               <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='programDate'
+                onClick={() => p.depositsPage.toggleDepositSelection(d)}
                 onPointerEnter={() => p.depositsPage.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsEmailHovered(false, i + 2)}
               >{d.programStartDate}</div>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
+                onClick={() => p.depositsPage.toggleDepositSelection(d)}
                 onPointerEnter={() => p.depositsPage.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsActionsHovered(false, i + 2)}
               >{d.programEndDate}</div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.depositsPage.isRowHovered(i + 2)}`}
                 is-selected={`${p.depositsPage.selectedDeposit === d}`}
-                onClick={() => {
-                  if (p.depositsPage.selectedDeposit === d) {
-                    p.depositsPage.setSelectedDeposit(undefined)
-                  } else {
-                    p.depositsPage.setSelectedDeposit(d)
-                  }
-                }}
+                onClick={() => p.depositsPage.toggleDepositSelection(d)}
                 onPointerEnter={() => p.depositsPage.setIsRowWithCustomerHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsRowWithCustomerHovered(false, i + 2)}
               />

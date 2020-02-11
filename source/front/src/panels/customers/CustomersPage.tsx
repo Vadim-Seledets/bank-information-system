@@ -60,6 +60,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
                   : v.gender === Gender.Male
                     ? 'las la-male' : 'las la-genderless', 'icon')
                 }
+                onClick={() => p.customersPage.toggleCustomerSelection(v)}
                 onPointerEnter={() => p.customersPage.setIsGenderHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsGenderHovered(false, i + 2)}
               />
@@ -70,10 +71,12 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
                 dangerouslySetInnerHTML={{__html: `${v.getFullName()}`}} 
               />
               <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='email' href={`mailto:${v.email}`}
+                onClick={() => p.customersPage.toggleCustomerSelection(v)}
                 onPointerEnter={() => p.customersPage.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsEmailHovered(false, i + 2)}
               >{v.email}</a>
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='icon'
+                onClick={() => p.customersPage.toggleCustomerSelection(v)}
                 onPointerEnter={() => p.customersPage.setIsActionsHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsActionsHovered(false, i + 2)}
               >
@@ -93,13 +96,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.customersPage.isRowHovered(i + 2)}`}
                 is-selected={`${p.customersPage.selectedCustomer === v}`}
-                onClick={() => {
-                  if (p.customersPage.selectedCustomer === v) {
-                    p.customersPage.setSelectedCustomer(undefined)
-                  } else {
-                    p.customersPage.setSelectedCustomer(v)
-                  }
-                }}
+                onClick={() => p.customersPage.toggleCustomerSelection(v)}
                 onPointerEnter={() => p.customersPage.setIsRowWithCustomerHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsRowWithCustomerHovered(false, i + 2)}
               />

@@ -37,6 +37,15 @@ export class CustomersPage extends Stateful {
   }
 
   @action
+  toggleCustomerSelection(customer: Customer): void {
+    if (this.selectedCustomer === customer) {
+      this.setSelectedCustomer(undefined)
+    } else {
+      this.setSelectedCustomer(customer)
+    }
+  }
+
+  @action
   addNewCustomer(): void {
     this.selectedCustomer = new Customer()
     this.app.currentTab?.setCurrentPageName('EditCustomerPage')

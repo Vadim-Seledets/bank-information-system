@@ -39,6 +39,15 @@ export class DepositsPage extends Stateful {
   }
 
   @action
+  toggleDepositSelection(deposit: Deposit): void {
+    if (this.selectedDeposit === deposit) {
+      this.setSelectedDeposit(undefined)
+    } else {
+      this.setSelectedDeposit(deposit)
+    }
+  }
+
+  @action
   async obtainDepositsInShortInfoModel(): Promise<void> {
     const response = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
     if (response.successful && response.data) {
