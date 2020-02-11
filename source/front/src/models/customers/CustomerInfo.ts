@@ -12,7 +12,6 @@ export class CustomerInfo extends Stateful {
     super()
     this.customersPage = customersPage
     this.validation = new Validation(
-      this.customersPage.selectedCustomer!,
       new Map([
         ['lastName', new PropertyValidator('lastName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
         ['firstName', new PropertyValidator('firstName', /^([A-Z][a-z]*[\'\- ]?[A-Za-z]+)?$/)],
@@ -44,10 +43,10 @@ export class CustomerInfo extends Stateful {
     )
   }
 
-  @trigger
-  updateSelectedCustomer(): void {
-    if (this.customersPage.selectedCustomer) {
-      this.validation.setValidationObject(this.customersPage.selectedCustomer)
-    }
-  }
+  // @trigger
+  // updateSelectedCustomer(): void {
+  //   if (this.customersPage.selectedCustomer) {
+  //     this.validation.setValidationObject(this.customersPage.selectedCustomer)
+  //   }
+  // }
 }

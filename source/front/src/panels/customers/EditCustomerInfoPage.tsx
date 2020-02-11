@@ -12,7 +12,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={css.editOrPublishButton}
-            is-enabled={`${p.customersPage.customerInfo.validation.areAllValid()}`}
+            is-enabled={`${p.customersPage.customerInfo.validation.areAllValid(p.customersPage.selectedCustomer!)}`}
             onClick={() => p.customersPage.editOrPublishCustomer()}
           >
             {p.customersPage.selectedCustomer?.id

@@ -6,15 +6,14 @@ import { Validation, PropertyValidator } from "../Validation"
 
 export class DepositCreationPage extends Stateful {
   depositsPage: DepositsPage
-  creatingDeposit: CreatingDeposit
+  creatingDeposit: CreatingDeposit | undefined
   validation: Validation<DepositCreateModel>
 
   constructor(depositsPage: DepositsPage) {
     super()
     this.depositsPage = depositsPage
-    this.creatingDeposit = new CreatingDeposit()
+    this.creatingDeposit = undefined
     this.validation = new Validation(
-      this.creatingDeposit as DepositCreateModel,
       new Map([
         ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId')],
         ['contractNumber', new PropertyValidator<DepositCreateModel>('contractNumber')],
@@ -31,12 +30,12 @@ export class DepositCreationPage extends Stateful {
 
   @action
   createNewDeposit(): void {
-    this.creatingDeposit.setContractNumber(this.generateGuid())
+    this.creatingDeposit = new CreatingDeposit(this.generateGuid())
   }
 
   @action
   cancelCreation(): void {
-    this.creatingDeposit.clearProperties()
+    this.creatingDeposit = undefined
     this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
   }
 

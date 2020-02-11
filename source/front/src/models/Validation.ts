@@ -1,4 +1,4 @@
-import { Stateful, action } from 'reactronic'
+import { Stateful } from 'reactronic'
 
 export class PropertyValidator<TValidatingObject> {
   constructor(
@@ -9,7 +9,7 @@ export class PropertyValidator<TValidatingObject> {
 
   isValid(validatingObject: TValidatingObject): boolean {
     let isValid = true
-    if (this.validationRule && validatingObject) {
+    if (this.validationRule) {
       const propertyValue = validatingObject[this.propertyName]
       isValid = RegExp(this.validationRule).test(`${propertyValue}`)
       // console.log(`${propertyValue} - ${this.validationRule}: ${isValid}`)
@@ -19,24 +19,29 @@ export class PropertyValidator<TValidatingObject> {
 }
 
 export class Validation<TValidatingObject> extends Stateful {
-  constructor(
-    public validatingObject: TValidatingObject,
-    readonly validators: Map<keyof TValidatingObject, PropertyValidator<TValidatingObject>>) {
+  // validatingObject: TValidatingObject | undefined
+
+  constructor(readonly validators: Map<keyof TValidatingObject, PropertyValidator<TValidatingObject>>) {
     super()
   }
- 
-  @action
-  setValidationObject(validatingObject: TValidatingObject): void {
-    this.validatingObject = validatingObject
-  }
 
-  isValid(propertyName: keyof TValidatingObject): boolean | undefined {
-    return this.validators.get(propertyName)?.isValid(this.validatingObject)
-  }
+  // @action
+  // setValidationObject(validatingObject: TValidatingObject): void {
+  //   this.validatingObject = validatingObject
+  // }
 
-  areAllValid(): boolean | undefined {
+  isValid(validatingObject: TValidatingObject, propertyName: keyof TValidatingObject): boolean | undefined {
     let isValid = true
-    this.validators.forEach(v => isValid = isValid && v.isValid(this.validatingObject))
+    const validator = this.validators.get(propertyName)
+    if (validator) {
+      isValid = validator.isValid(validatingObject)
+    }
+    return isValid
+  }
+
+  areAllValid(validatingObject: TValidatingObject): boolean | undefined {
+    let isValid = true
+    this.validators.forEach(v => isValid = isValid && v.isValid(validatingObject))
     return isValid
   }
 }

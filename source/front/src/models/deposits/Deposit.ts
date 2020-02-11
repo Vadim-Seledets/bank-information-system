@@ -70,7 +70,7 @@ export class Deposit extends Stateful implements DepositShortInfoModel {
 
 export class CreatingDeposit extends Stateful implements DepositCreateModel {
   depositTypeId: number
-  contractNumber: string
+  readonly contractNumber: string
   programStartDate: string
   programEndDate: string
   contractValidUntil: string
@@ -81,10 +81,10 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
 
   infoErrors = new InfoErrors()
 
-  constructor() {
+  constructor(contractNumber: string) {
     super()
     this.depositTypeId = 1
-    this.contractNumber = ''
+    this.contractNumber = contractNumber
     this.programStartDate = ''
     this.programEndDate = ''
     this.contractValidUntil = ''
@@ -92,11 +92,6 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
     this.amount = 0
     this.rate = 0
     this.currencyId = 1
-  }
-
-  @action
-  setContractNumber(value: string): void {
-    this.contractNumber = value
   }
 
   @action
@@ -137,20 +132,6 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
   @action
   setCurrencyId(value: number): void {
     this.currencyId = value
-  }
-
-  @action
-  clearProperties(): void {
-    this.depositTypeId = 1
-    this.contractNumber = ''
-    this.programStartDate = ''
-    this.programEndDate = ''
-    this.contractValidUntil = ''
-    this.customerId = 1
-    this.amount = 0
-    this.rate = 0
-    this.currencyId = 1
-    this.infoErrors.initialize({ error: undefined, errors: undefined })
   }
 
   getJson(): string {
