@@ -57,7 +57,7 @@ export class App extends Stateful {
   }
 
   getCurrentDate(): string {
-    const month = this.currentDate.getMonth()
+    const month = this.currentDate.getMonth() + 1
     return `${this.currentDate.getFullYear()}-${month < 10 ? `0${month}` : month}-${this.currentDate.getDate()}`
   }
 
