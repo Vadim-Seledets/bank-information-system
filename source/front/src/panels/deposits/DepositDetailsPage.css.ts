@@ -121,6 +121,12 @@ export const style = restyle(() => {
       padding-bottom: 2em;
       font-size: 0.8em;
       grid-template-columns: 4fr 1fr 3fr 1fr 4fr 2em 4fr;
+
+      .accountNumber {
+        padding: 0.25em 0.25em;
+        border-radius: 0.2em;
+        background-color: ${theme.customerInfoBubbleBackground};
+      }
     `,
 
     transactionRow: css`
