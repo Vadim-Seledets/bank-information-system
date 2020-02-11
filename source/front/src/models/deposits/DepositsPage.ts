@@ -62,8 +62,22 @@ export class DepositsPage extends Stateful {
   }
 
   @action
-  async showDepositDetails(deposit: Deposit): Promise<void> {
-    const response = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${deposit.contractNumber}`)
+  showDepositDetails(deposit: Deposit): void {
+    this.obtainDepositDetailsRequest(deposit.contractNumber)
+    this.setSelectedDeposit(deposit)
+    this.app.currentTab?.setCurrentPageName('DepositDetailsPage')
+  }
+
+  @trigger
+  updateDepositDetails(): void {
+    if (this.app.currentDate && this.depositDetailes) {
+      this.obtainDepositDetailsRequest(this.depositDetailes.contractNumber)
+    }
+  }
+
+  @action
+  async obtainDepositDetailsRequest(contractNumber: string): Promise<void> {
+    const response = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${contractNumber}`)
     if (response.successful && response.data) {
       this.depositDetailes = new DepositDetails(
         response.data.isRevoked,
@@ -83,15 +97,13 @@ export class DepositsPage extends Stateful {
         response.data.transactions,
       )
     }
-    this.setSelectedDeposit(deposit)
-    this.app.currentTab?.setCurrentPageName('DepositDetailsPage')
   }
 
   @action
   async revokeDeposit(contractNumber: string): Promise<void> {
     const response = await this.app.httpClient.post<void, IInfoErrors>(`https://localhost:5001/deposits/${contractNumber}/revoke`)
     if (response.successful) {
-      this.app.currentTab?.setCurrentPageName('DepositsListPage')
+      this.obtainDepositDetailsRequest(contractNumber)
     } else if (response.errorData) {
       console.log(response.errorData)
     }

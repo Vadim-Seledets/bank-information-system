@@ -34,8 +34,13 @@ export class DepositCreationPage extends Stateful {
   }
 
   @action
+  setCreatingDeposit(deposit: CreatingDeposit | undefined): void {
+    this.creatingDeposit = deposit
+  }
+
+  @action
   cancelCreation(): void {
-    this.creatingDeposit = undefined
+    this.setCreatingDeposit(undefined)
     this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
   }
 
@@ -44,7 +49,9 @@ export class DepositCreationPage extends Stateful {
     if (this.creatingDeposit) {
       const response = await this.depositsPage.app.httpClient.post<void, IInfoErrors>(
         `https://localhost:5001/deposits`, this.creatingDeposit.getJson())
-      if (!response.successful && response.errorData) {
+      if (response.successful) {
+        this.creatingDeposit.infoErrors.setHasErrors(false)
+      } else if (!response.successful && response.errorData) {
         this.creatingDeposit.infoErrors.initialize(response.errorData)
         this.creatingDeposit.infoErrors.setHasErrors(true)
       }

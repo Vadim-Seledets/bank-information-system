@@ -75,4 +75,4 @@ export class Themes extends Stateful {
   }
 }
 
-export const themes = Action.run("themes", () => new Themes())
+export const themes = new Themes()
