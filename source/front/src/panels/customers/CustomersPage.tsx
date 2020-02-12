@@ -74,24 +74,6 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
                 onPointerEnter={() => p.customersPage.setIsEmailHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsEmailHovered(false, i + 2)}
               >{v.email}</a>
-              <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='icon'
-                onClick={() => p.customersPage.toggleCustomerSelection(v)}
-                onPointerEnter={() => p.customersPage.setIsActionsHovered(true, i + 2)}
-                onPointerLeave={() => p.customersPage.setIsActionsHovered(false, i + 2)}
-              >
-                {v.infoErrors.hasAnyErrors && (
-                  <div className='errors las la-exclamation'>
-                    <div className='errorsPopUp'>
-                      {v.infoErrors.error && <div className='errorRow'>{v.infoErrors.error}</div>}
-                      {v.infoErrors.errors && (
-                        v.infoErrors.errors.map((e, i) => (
-                          <div key={i} className='errorRow'>{`${e.name}: ${e.message}`}</div>
-                        ))
-                      )}
-                    </div>
-                  </div>
-                )}
-              </div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.customersPage.isRowHovered(i + 2)}`}
                 is-selected={`${p.customersPage.selectedCustomer?.id === v.id}`}

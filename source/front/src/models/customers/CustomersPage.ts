@@ -111,7 +111,7 @@ export class CustomersPage extends Stateful {
       } else {
         await this.publishNewCustomerRequest(this.selectedCustomer)
       }
-      if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
+      if (!this.customerInfo.apiErrors.hasAnyErrors) {
         this.app.currentTab?.setCurrentPageName('CustomersListPage')
       }
     }
@@ -137,12 +137,12 @@ export class CustomersPage extends Stateful {
     const customerId = await this.app.httpClient.post<string>(url, customer.getJson())
     if (customerId) {
       customer.setId(customerId)
-      customer.infoErrors.setHasErrors(false)
+      this.customerInfo.apiErrors.setHasErrors(false)
     } else {
       const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
       if (errors) {
-        customer.infoErrors.initialize(errors)
-        customer.infoErrors.setHasErrors(true)
+        this.customerInfo.apiErrors.initialize(errors)
+        this.customerInfo.apiErrors.setHasErrors(true)
       }
     }
   }
@@ -153,10 +153,10 @@ export class CustomersPage extends Stateful {
     await this.app.httpClient.put(url, customer.getJson())
     const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('PUT', url)
     if (errors) {
-      customer.infoErrors.initialize(errors)
-      customer.infoErrors.setHasErrors(true)
+      this.customerInfo.apiErrors.initialize(errors)
+      this.customerInfo.apiErrors.setHasErrors(true)
     } else {
-      customer.infoErrors.setHasErrors(false)
+      this.customerInfo.apiErrors.setHasErrors(false)
     }
   }
 
@@ -168,10 +168,10 @@ export class CustomersPage extends Stateful {
         await this.app.httpClient.delete(url)
         const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('DELETE', url)
         if (errors) {
-          customer.infoErrors.initialize(errors)
-          customer.infoErrors.setHasErrors(true)
+          this.customerInfo.apiErrors.initialize(errors)
+          this.customerInfo.apiErrors.setHasErrors(true)
         } else {
-          customer.infoErrors.setHasErrors(false)
+          this.customerInfo.apiErrors.setHasErrors(false)
         }
       }
       const start = this.customers.indexOf(customer)

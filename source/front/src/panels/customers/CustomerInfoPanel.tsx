@@ -9,6 +9,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
     const css = style.classes
     const customer = p.customerInfo.customersPage.selectedCustomer
     const auxiliary = p.customerInfo.customersPage.app.auxiliary
+    const apiErrors = p.customerInfo.apiErrors
     return (
       <React.Fragment>
         {customer && (
@@ -17,10 +18,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Last Name</div>
-                {customer.infoErrors.has('LastName') && (
+                {apiErrors.has('LastName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('LastName').map((v, i) => (
+                      {apiErrors.getPropertyErrors('LastName').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -28,17 +29,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.lastName}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'lastName') || customer.infoErrors.has('LastName')}`}
-                onFocus={() => customer.infoErrors.deleteError('LastName')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'lastName') || apiErrors.has('LastName')}`}
+                onFocus={() => apiErrors.deleteError('LastName')}
                 onChange={e => customer.setLastName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>First Name</div>
-                {customer.infoErrors.has('FirstName') && (
+                {apiErrors.has('FirstName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('FirstName').map((v, i) => (
+                      {apiErrors.getPropertyErrors('FirstName').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -46,17 +47,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.firstName}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'firstName') || customer.infoErrors.has('FirstName')}`}
-                onFocus={() => customer.infoErrors.deleteError('FirstName')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'firstName') || apiErrors.has('FirstName')}`}
+                onFocus={() => apiErrors.deleteError('FirstName')}
                 onChange={e => customer.setFirstName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Middle Name</div>
-                {customer.infoErrors.has('MiddleName') && (
+                {apiErrors.has('MiddleName') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('MiddleName').map((v, i) => (
+                      {apiErrors.getPropertyErrors('MiddleName').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -64,17 +65,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.middleName}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'middleName') || customer.infoErrors.has('MiddleName')}`}
-                onFocus={() => customer.infoErrors.deleteError('MiddleName')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'middleName') || apiErrors.has('MiddleName')}`}
+                onFocus={() => apiErrors.deleteError('MiddleName')}
                 onChange={e => customer.setMiddleName(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Date Of Birth</div>
-                {customer.infoErrors.has('BirthInfo.DateOfBirth') && (
+                {apiErrors.has('BirthInfo.DateOfBirth') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('BirthInfo.DateOfBirth').map((v, i) => (
+                      {apiErrors.getPropertyErrors('BirthInfo.DateOfBirth').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -82,17 +83,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.dateOfBirth}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'dateOfBirth') || customer.infoErrors.has('BirthInfo.DateOfBirth')}`}
-                onFocus={() => customer.infoErrors.deleteError('BirthInfo.DateOfBirth')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'dateOfBirth') || apiErrors.has('BirthInfo.DateOfBirth')}`}
+                onFocus={() => apiErrors.deleteError('BirthInfo.DateOfBirth')}
                 onChange={e => customer.setDateOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Gender</div>
-                {customer.infoErrors.has('Gender') && (
+                {apiErrors.has('Gender') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Gender').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Gender').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -113,10 +114,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Citizenship</div>
-                {customer.infoErrors.has('Passport.CitizenshipId') && (
+                {apiErrors.has('Passport.CitizenshipId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.CitizenshipId').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.CitizenshipId').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -124,8 +125,8 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.citizenshipId}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'citizenshipId') || customer.infoErrors.has('Passport.CitizenshipId')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.CitizenshipId')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'citizenshipId') || apiErrors.has('Passport.CitizenshipId')}`}
+                onFocus={() => apiErrors.deleteError('Passport.CitizenshipId')}
                 onChange={e => customer.setCitizenshipId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.countriesOfCitizenship.map((v, i) => (
@@ -136,10 +137,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Passport Series</div>
-                {customer.infoErrors.has('Passport.Series') && (
+                {apiErrors.has('Passport.Series') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.Series').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.Series').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -147,17 +148,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.series}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'series') || customer.infoErrors.has('Passport.Series')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.Series')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'series') || apiErrors.has('Passport.Series')}`}
+                onFocus={() => apiErrors.deleteError('Passport.Series')}
                 onChange={e => customer.setSeries(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Passport Number</div>
-                {customer.infoErrors.has('Passport.PassportNumber') && (
+                {apiErrors.has('Passport.PassportNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.PassportNumber').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.PassportNumber').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -165,17 +166,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.passportNumber}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'passportNumber') || customer.infoErrors.has('Passport.PassportNumber')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.PassportNumber')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'passportNumber') || apiErrors.has('Passport.PassportNumber')}`}
+                onFocus={() => apiErrors.deleteError('Passport.PassportNumber')}
                 onChange={e => customer.setPassportNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Issuing Authority</div>
-                {customer.infoErrors.has('Passport.IssuingAuthority') && (
+                {apiErrors.has('Passport.IssuingAuthority') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.IssuingAuthority').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.IssuingAuthority').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -183,17 +184,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.issuingAuthority}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuingAuthority') || customer.infoErrors.has('Passport.IssuingAuthority')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.IssuingAuthority')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuingAuthority') || apiErrors.has('Passport.IssuingAuthority')}`}
+                onFocus={() => apiErrors.deleteError('Passport.IssuingAuthority')}
                 onChange={e => customer.setIssuingAuthority(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Issued At</div>
-                {customer.infoErrors.has('Passport.IssuedAt') && (
+                {apiErrors.has('Passport.IssuedAt') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.IssuedAt').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.IssuedAt').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -201,17 +202,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="date" value={customer.issuedAt}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuedAt') || customer.infoErrors.has('Passport.IssuedAt')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.IssuedAt')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'issuedAt') || apiErrors.has('Passport.IssuedAt')}`}
+                onFocus={() => apiErrors.deleteError('Passport.IssuedAt')}
                 onChange={e => customer.setIssuedAt(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Id Number</div>
-                {customer.infoErrors.has('Passport.IdNumber') && (
+                {apiErrors.has('Passport.IdNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Passport.IdNumber').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Passport.IdNumber').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -219,18 +220,18 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.idNumber}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'idNumber') || customer.infoErrors.has('Passport.IdNumber')}`}
-                onFocus={() => customer.infoErrors.deleteError('Passport.IdNumber')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'idNumber') || apiErrors.has('Passport.IdNumber')}`}
+                onFocus={() => apiErrors.deleteError('Passport.IdNumber')}
                 onChange={e => customer.setIdNumber(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Contact Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place Of Birth</div>
-                {customer.infoErrors.has('BirthInfo.PlaceOfBirth') && (
+                {apiErrors.has('BirthInfo.PlaceOfBirth') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('BirthInfo.PlaceOfBirth').map((v, i) => (
+                      {apiErrors.getPropertyErrors('BirthInfo.PlaceOfBirth').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -238,17 +239,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfBirth}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfBirth') || customer.infoErrors.has('BirthInfo.PlaceOfBirth')}`}
-                onFocus={() => customer.infoErrors.deleteError('BirthInfo.PlaceOfBirth')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfBirth') || apiErrors.has('BirthInfo.PlaceOfBirth')}`}
+                onFocus={() => apiErrors.deleteError('BirthInfo.PlaceOfBirth')}
                 onChange={e => customer.setPlaceOfBirth(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place Of Living</div>
-                {customer.infoErrors.has('PlaceOfLiving.CityId') && (
+                {apiErrors.has('PlaceOfLiving.CityId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('PlaceOfLiving.CityId').map((v, i) => (
+                      {apiErrors.getPropertyErrors('PlaceOfLiving.CityId').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -256,7 +257,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfLivingCityId}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfLivingCityId') || customer.infoErrors.has('PlaceOfLiving.CityId')}`}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfLivingCityId') || apiErrors.has('PlaceOfLiving.CityId')}`}
                 onChange={e => customer.setPlaceOfLivingCityId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.cities.map((v, i) => (
@@ -267,10 +268,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Address Of Living</div>
-                {customer.infoErrors.has('PlaceOfLiving.Address') && (
+                {apiErrors.has('PlaceOfLiving.Address') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('PlaceOfLiving.Address').map((v, i) => (
+                      {apiErrors.getPropertyErrors('PlaceOfLiving.Address').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -278,17 +279,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfLivingAddress}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfLivingAddress') || customer.infoErrors.has('PlaceOfLiving.Address')}`}
-                onFocus={() => customer.infoErrors.deleteError('PlaceOfLiving.Address')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfLivingAddress') || apiErrors.has('PlaceOfLiving.Address')}`}
+                onFocus={() => apiErrors.deleteError('PlaceOfLiving.Address')}
                 onChange={e => customer.setPlaceOfLivingAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Place Of Registration</div>
-                {customer.infoErrors.has('PlaceOfRegistration.CityId') && (
+                {apiErrors.has('PlaceOfRegistration.CityId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('PlaceOfRegistration.CityId').map((v, i) => (
+                      {apiErrors.getPropertyErrors('PlaceOfRegistration.CityId').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -296,7 +297,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.placeOfRegistrationCityId}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationCityId') || customer.infoErrors.has('PlaceOfRegistration.CityId')}`}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationCityId') || apiErrors.has('PlaceOfRegistration.CityId')}`}
                 onChange={e => customer.setPlaceOfRegistrationCityId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.cities.map((v, i) => (
@@ -307,10 +308,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Address Of Registration</div>
-                {customer.infoErrors.has('PlaceOfRegistration.Address') && (
+                {apiErrors.has('PlaceOfRegistration.Address') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('PlaceOfRegistration.Address').map((v, i) => (
+                      {apiErrors.getPropertyErrors('PlaceOfRegistration.Address').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -318,17 +319,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.placeOfRegistrationAddress}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationAddress') || customer.infoErrors.has('PlaceOfRegistration.Address')}`}
-                onFocus={() => customer.infoErrors.deleteError('PlaceOfRegistration.Address')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationAddress') || apiErrors.has('PlaceOfRegistration.Address')}`}
+                onFocus={() => apiErrors.deleteError('PlaceOfRegistration.Address')}
                 onChange={e => customer.setPlaceOfRegistrationAddress(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Home Phone Number</div>
-                {customer.infoErrors.has('Contacts.HomePhoneNumber') && (
+                {apiErrors.has('Contacts.HomePhoneNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Contacts.HomePhoneNumber').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Contacts.HomePhoneNumber').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -336,17 +337,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.homePhoneNumber}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'homePhoneNumber') || customer.infoErrors.has('Contacts.HomePhoneNumber')}`}
-                onFocus={() => customer.infoErrors.deleteError('Contacts.HomePhoneNumber')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'homePhoneNumber') || apiErrors.has('Contacts.HomePhoneNumber')}`}
+                onFocus={() => apiErrors.deleteError('Contacts.HomePhoneNumber')}
                 onChange={e => customer.setHomePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Mobile Phone Number</div>
-                {customer.infoErrors.has('Contacts.MobilePhoneNumber') && (
+                {apiErrors.has('Contacts.MobilePhoneNumber') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Contacts.MobilePhoneNumber').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Contacts.MobilePhoneNumber').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -354,17 +355,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.mobilePhoneNumber}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'mobilePhoneNumber') || customer.infoErrors.has('Contacts.MobilePhoneNumber')}`}
-                onFocus={() => customer.infoErrors.deleteError('Contacts.MobilePhoneNumber')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'mobilePhoneNumber') || apiErrors.has('Contacts.MobilePhoneNumber')}`}
+                onFocus={() => apiErrors.deleteError('Contacts.MobilePhoneNumber')}
                 onChange={e => customer.setMobilePhoneNumber(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Email</div>
-                {customer.infoErrors.has('Contacts.Email') && (
+                {apiErrors.has('Contacts.Email') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('Contacts.Email').map((v, i) => (
+                      {apiErrors.getPropertyErrors('Contacts.Email').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -372,18 +373,18 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.email}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'email') || customer.infoErrors.has('Contacts.Email')}`}
-                onFocus={() => customer.infoErrors.deleteError('Contacts.Email')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'email') || apiErrors.has('Contacts.Email')}`}
+                onFocus={() => apiErrors.deleteError('Contacts.Email')}
                 onChange={e => customer.setEmail(e.currentTarget.value)} />
             </div>
             <div className={css.propertyGroupCaption}>Job Information</div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Company</div>
-                {customer.infoErrors.has('WorkInfo.Company') && (
+                {apiErrors.has('WorkInfo.Company') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('WorkInfo.Company').map((v, i) => (
+                      {apiErrors.getPropertyErrors('WorkInfo.Company').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -391,17 +392,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.company}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'company') || customer.infoErrors.has('WorkInfo.Company')}`}
-                onFocus={() => customer.infoErrors.deleteError('WorkInfo.Company')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'company') || apiErrors.has('WorkInfo.Company')}`}
+                onFocus={() => apiErrors.deleteError('WorkInfo.Company')}
                 onChange={e => customer.setCompany(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Position</div>
-                {customer.infoErrors.has('WorkInfo.Position') && (
+                {apiErrors.has('WorkInfo.Position') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('WorkInfo.Position').map((v, i) => (
+                      {apiErrors.getPropertyErrors('WorkInfo.Position').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -409,17 +410,17 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <input className={'propertyInputColumn'} type="text" value={customer.position}
-                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'position') || customer.infoErrors.has('WorkInfo.Position')}`}
-                onFocus={() => customer.infoErrors.deleteError('WorkInfo.Position')}
+                is-invalid={`${!p.customerInfo.validation.isValid(customer, 'position') || apiErrors.has('WorkInfo.Position')}`}
+                onFocus={() => apiErrors.deleteError('WorkInfo.Position')}
                 onChange={e => customer.setPosition(e.currentTarget.value)} />
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Salary</div>
-                {customer.infoErrors.has('IncomePerMonth.Amount') && (
+                {apiErrors.has('IncomePerMonth.Amount') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('IncomePerMonth.Amount').map((v, i) => (
+                      {apiErrors.getPropertyErrors('IncomePerMonth.Amount').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -428,10 +429,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               <div className='propertyInputHorizontalLine'>
                 <input className={'propertyInputColumn'} type="number" value={customer.amount}
-                  is-invalid={`${!p.customerInfo.validation.isValid(customer, 'amount') || customer.infoErrors.has('IncomePerMonth.Amount')}`}
+                  is-invalid={`${!p.customerInfo.validation.isValid(customer, 'amount') || apiErrors.has('IncomePerMonth.Amount')}`}
                   onChange={e => customer.setAmount(e.currentTarget.value)} />
                 <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.currencyId}
-                  is-invalid={`${customer.infoErrors.has('IncomePerMonth.CurrencyId')}`}
+                  is-invalid={`${apiErrors.has('IncomePerMonth.CurrencyId')}`}
                   onChange={e => customer.setCurrencyId(parseInt(e.currentTarget.value))}
                 >
                   {auxiliary.currencies.map((v, i) => (
@@ -443,10 +444,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Marital Status</div>
-                {customer.infoErrors.has('MaritalStatus') && (
+                {apiErrors.has('MaritalStatus') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('MaritalStatus').map((v, i) => (
+                      {apiErrors.getPropertyErrors('MaritalStatus').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -454,7 +455,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.maritalStatusId}
-                is-invalid={`${customer.infoErrors.has('MaritalStatus')}`}
+                is-invalid={`${apiErrors.has('MaritalStatus')}`}
                 onChange={e => customer.setMaritalStatusId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.maritalStatuses.map((v, i) => (
@@ -465,10 +466,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Disability</div>
-                {customer.infoErrors.has('DisabilityId') && (
+                {apiErrors.has('DisabilityId') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('DisabilityId').map((v, i) => (
+                      {apiErrors.getPropertyErrors('DisabilityId').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
@@ -476,7 +477,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
                 )}
               </div>
               <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.disabilityId ? customer.disabilityId : ''}
-                is-invalid={`${customer.infoErrors.has('DisabilityId')}`}
+                is-invalid={`${apiErrors.has('DisabilityId')}`}
                 onChange={e => customer.setDisabilityId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.disabilities.map((v, i) => (
@@ -487,34 +488,34 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Is Retired</div>
-                {customer.infoErrors.has('IsRetired') && (
+                {apiErrors.has('IsRetired') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('IsRetired').map((v, i) => (
+                      {apiErrors.getPropertyErrors('IsRetired').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
                   </div>
                 )}
                 <input className={'input'} style={{alignSelf: 'center'}} type="checkbox" checked={customer.isRetired}
-                  is-invalid={`${customer.infoErrors.has('IsRetired')}`}
+                  is-invalid={`${apiErrors.has('IsRetired')}`}
                   onChange={e => customer.setIsRetired(e.currentTarget.checked)} />
               </div>
             </div>
             <div className={css.property}>
               <div className='propertyNameLine'>
                 <div className='name'>Is Liable For Military Service</div>
-                {customer.infoErrors.has('IsLiableForMilitaryService') && (
+                {apiErrors.has('IsLiableForMilitaryService') && (
                   <div className='error las la-exclamation'>
                     <div className='errorPopUp'>
-                      {customer.infoErrors.getPropertyErrors('IsLiableForMilitaryService').map((v, i) => (
+                      {apiErrors.getPropertyErrors('IsLiableForMilitaryService').map((v, i) => (
                         <div key={i} className='errorRow'>{v}</div>
                       ))}
                     </div>
                   </div>
                 )}
                 <input className={'input'} style={{alignSelf: 'center'}} type="checkbox" checked={customer.isLiableForMilitaryService}
-                  is-invalid={`${customer.infoErrors.has('IsLiableForMilitaryService')}`}
+                  is-invalid={`${apiErrors.has('IsLiableForMilitaryService')}`}
                   onChange={e => customer.setIsLiableForMilitaryService(e.currentTarget.checked)} />
               </div>
             </div>

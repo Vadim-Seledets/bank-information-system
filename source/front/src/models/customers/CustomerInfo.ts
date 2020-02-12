@@ -2,13 +2,16 @@ import { Stateful } from 'reactronic'
 import { Validation, PropertyValidator } from '../Validation'
 import { Customer } from './Customer'
 import { CustomersPage } from './CustomersPage'
+import { ApiErrors } from '../ApiErrors'
 
 export class CustomerInfo extends Stateful {
+  apiErrors: ApiErrors
   customersPage: CustomersPage
   validation: Validation<Customer>
-
+  
   constructor(customersPage: CustomersPage) {
     super()
+    this.apiErrors = new ApiErrors()
     this.customersPage = customersPage
     this.validation = new Validation(
       new Map([

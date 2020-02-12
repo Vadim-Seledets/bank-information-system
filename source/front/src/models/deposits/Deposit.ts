@@ -1,7 +1,7 @@
 import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from './Transaction'
 import { Stateful, cached, action } from 'reactronic'
-import { InfoErrors } from '../ApiErrors'
+import { ApiErrors } from '../ApiErrors'
 
 export interface DepositShortInfoModel {
   contractNumber: string
@@ -79,7 +79,7 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
   rate: number
   currencyId: number
 
-  infoErrors = new InfoErrors()
+  infoErrors = new ApiErrors()
 
   constructor(contractNumber: string) {
     super()
