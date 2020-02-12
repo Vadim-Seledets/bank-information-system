@@ -5,7 +5,7 @@ export interface IApiErrors {
   error?: string
 }
 
-export class InfoErrors extends Stateful {
+export class ApiErrors extends Stateful {
   errors = Array<{name: string, message: string}>()
   error = ''
   hasAnyErrors = false
