@@ -7,7 +7,7 @@ import { IPlaceOfRegistration } from "./IPlaceOfRegistration"
 import { IContacts } from "./IContacts"
 import { IIncomePerMonth } from "./IIncomePerMonth"
 import { IWorkInfo } from "./IWorkInfo"
-import { InfoErrors } from "../Errors"
+import { InfoErrors } from "../ApiErrors"
 
 export interface ICustomerShortInfo {
   id: number

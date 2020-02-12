@@ -1,7 +1,7 @@
 import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from './Transaction'
 import { Stateful, cached, action } from 'reactronic'
-import { InfoErrors } from '../Errors'
+import { InfoErrors } from '../ApiErrors'
 
 export interface DepositShortInfoModel {
   contractNumber: string

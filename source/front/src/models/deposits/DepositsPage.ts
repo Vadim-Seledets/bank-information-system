@@ -2,7 +2,7 @@ import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { App } from '../App'
 import { DepositShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
-import { IInfoErrors } from '../Errors'
+import { IApiErrors } from '../ApiErrors'
 
 export class DepositsPage extends Stateful {
   app: App
@@ -110,7 +110,7 @@ export class DepositsPage extends Stateful {
 
   @action
   async revokeDeposit(contractNumber: string): Promise<void> {
-    const response = await this.app.httpClient.post<void, IInfoErrors>(`https://localhost:5001/deposits/${contractNumber}/revoke`)
+    const response = await this.app.httpClient.post<void, IApiErrors>(`https://localhost:5001/deposits/${contractNumber}/revoke`)
     if (response.successful) {
       this.obtainDepositDetailsRequest(contractNumber)
     } else if (response.errorData) {

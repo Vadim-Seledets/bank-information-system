@@ -1,7 +1,7 @@
 import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { App } from '../App'
 import { CustomerInfo } from './CustomerInfo'
-import { IInfoErrors } from '../Errors'
+import { IApiErrors } from '../ApiErrors'
 import { Customer, ICustomerShortInfo } from './Customer'
 
 export class CustomersPage extends Stateful {
@@ -131,8 +131,9 @@ export class CustomersPage extends Stateful {
 
   @action
   async publishNewCustomerRequest(customer: Customer): Promise<void> {
-    const response = await this.app.httpClient.post<string, IInfoErrors>(
+    const response = await this.app.httpClient.post<string, IApiErrors>(
       `https://localhost:5001/customers`, customer.getJson())
+    console.log()
     if (response.successful && response.data) {
       customer.setId(response.data)
       customer.infoErrors.setHasErrors(false)
@@ -144,7 +145,7 @@ export class CustomersPage extends Stateful {
 
   @action
   async editCustomerInfoRequest(customer: Customer): Promise<void> {
-    const response = await this.app.httpClient.put<any, IInfoErrors>(
+    const response = await this.app.httpClient.put<any, IApiErrors>(
       `https://localhost:5001/customers/${customer.id}`, customer.getJson())
     if (response.successful) {
       customer.infoErrors.setHasErrors(false)
@@ -158,7 +159,7 @@ export class CustomersPage extends Stateful {
   async deleteCustomerRequest(customer?: Customer): Promise<void> {
     if (customer) {
       if (customer.id) {
-        const response = await this.app.httpClient.delete<any, IInfoErrors>(
+        const response = await this.app.httpClient.delete<any, IApiErrors>(
           `https://localhost:5001/customers/${customer.id}`)
         if (response.successful) {
           customer.infoErrors.setHasErrors(false)

@@ -1,7 +1,7 @@
 import { Stateful, action } from "reactronic"
 import { CreatingDeposit, DepositCreateModel } from "./Deposit"
 import { DepositsPage } from "./DepositsPage"
-import { IInfoErrors } from "../Errors"
+import { IApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
 
 export class DepositCreationPage extends Stateful {
@@ -47,7 +47,7 @@ export class DepositCreationPage extends Stateful {
   @action
   async publishNewDepositRequest(): Promise<void> {
     if (this.creatingDeposit) {
-      const response = await this.depositsPage.app.httpClient.post<void, IInfoErrors>(
+      const response = await this.depositsPage.app.httpClient.post<void, IApiErrors>(
         `https://localhost:5001/deposits`, this.creatingDeposit.getJson())
       if (response.successful) {
         this.creatingDeposit.infoErrors.setHasErrors(false)
