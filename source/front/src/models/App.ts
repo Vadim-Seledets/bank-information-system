@@ -65,7 +65,7 @@ export class App extends Stateful {
   obtainEssentialPageInfo(): void {
     switch (this.currentTab?.currentPage) {
       case 'CustomersListPage':
-        this.customersPage.obtainAllCustomersInShortInfoModel()
+        this.customersPage.getAllCustomersInShortInfoModelRequest()
         break
       case 'DepositsListPage':
         this.depositsPage.obtainDepositsInShortInfoModel()
