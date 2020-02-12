@@ -59,11 +59,11 @@ export class Customer extends Stateful {
   series: string = ''
   passportNumber: string = ''
   issuingAuthority: string = ''
-  issuedAt: string = ''
+  issuedAt: string = '1990-01-01'
   idNumber: string = ''
   // Birth Info
   placeOfBirth: string = ''
-  dateOfBirth: string = ''
+  dateOfBirth: string = '1990-01-01'
   // Place Of Living
   placeOfLivingCityId: number = 1
   placeOfLivingAddress: string = ''
