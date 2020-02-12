@@ -10,7 +10,10 @@
       "options": {
         "cwd": "${workspaceFolder}/source/front"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "problemMatcher": [
+        "$tsc",
+        "$eslint-stylish"
+      ],
       "isBackground": true,
       "group": "build",
       "presentation": {
@@ -31,7 +34,9 @@
         "--project",
         "${workspaceFolder}/source/back/BankInformationSystem/BankInformationSystem.csproj"
       ],
-      "problemMatcher": ["$msCompile"],
+      "problemMatcher": [
+        "$msCompile"
+      ],
       "group": "build"
     },
     {
@@ -44,8 +49,22 @@
         "Release",
         "${workspaceFolder}/source/back/BankInformationSystem.sln"
       ],
-      "problemMatcher": ["$msCompile"],
+      "problemMatcher": [
+        "$msCompile"
+      ],
       "group": "build"
+    },
+    {
+      "label": "Build and Start Server - back",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "Build Server - back",
+        "Start Server - back"
+      ],
+      "group": "build",
+      "problemMatcher": [
+        "$msCompile"
+      ]
     },
     {
       "label": "Build All - tsc & eslint",
@@ -54,7 +73,10 @@
       "options": {
         "cwd": "${workspaceFolder}/source/front"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "problemMatcher": [
+        "$tsc",
+        "$eslint-stylish"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
@@ -74,10 +96,10 @@
       "group": "build",
       "problemMatcher": [],
       "presentation": {
-          "echo": true,
-          "reveal": "always",
-          "focus": true,
-          "panel": "shared"
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
       }
     },
     {
@@ -95,7 +117,10 @@
         "focus": true,
         "panel": "shared"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"]
+      "problemMatcher": [
+        "$tsc",
+        "$eslint-stylish"
+      ]
     },
     {
       "label": "Fix Rules - eslint",
@@ -104,7 +129,10 @@
       "options": {
         "cwd": "${workspaceFolder}/source/front"
       },
-      "problemMatcher": ["$tsc", "$eslint-stylish"],
+      "problemMatcher": [
+        "$tsc",
+        "$eslint-stylish"
+      ],
       "group": "build",
       "presentation": {
         "echo": true,
