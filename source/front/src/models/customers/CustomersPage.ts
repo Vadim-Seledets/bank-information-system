@@ -104,12 +104,12 @@ export class CustomersPage extends Stateful {
   }
 
   @action
-  editOrPublishCustomer(): void {
+  async editOrPublishCustomer(): Promise<void> {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
-        this.editCustomerInfoRequest(this.selectedCustomer)
+        await this.editCustomerInfoRequest(this.selectedCustomer)
       } else {
-        this.publishNewCustomerRequest(this.selectedCustomer)
+        await this.publishNewCustomerRequest(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
         this.app.currentTab?.setCurrentPageName('CustomersListPage')
@@ -117,11 +117,13 @@ export class CustomersPage extends Stateful {
     }
   }
 
+  // Http requests
+
   @action
   async getAllCustomersInShortInfoModelRequest(): Promise<void> {
-    const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
-    if (customersInfo.successful && customersInfo.data) {
-      this.customers = customersInfo.data.map(customerShortInfo => {
+    const customers = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
+    if (customers) {
+      this.customers = customers.map(customerShortInfo => {
         const customer = new Customer()
         customer.setShortInfo(customerShortInfo)
         return customer
@@ -131,26 +133,30 @@ export class CustomersPage extends Stateful {
 
   @action
   async publishNewCustomerRequest(customer: Customer): Promise<void> {
-    const response = await this.app.httpClient.post<string, IApiErrors>(
-      `https://localhost:5001/customers`, customer.getJson())
-    if (response.successful && response.data) {
-      customer.setId(response.data)
+    const url = `https://localhost:5001/customers`
+    const customerId = await this.app.httpClient.post<string>(url, customer.getJson())
+    if (customerId) {
+      customer.setId(customerId)
       customer.infoErrors.setHasErrors(false)
-    } else if (!response.successful && response.errorData) {
-      customer.infoErrors.initialize(response.errorData)
-      customer.infoErrors.setHasErrors(true)
+    } else {
+      const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+      if (errors) {
+        customer.infoErrors.initialize(errors)
+        customer.infoErrors.setHasErrors(true)
+      }
     }
   }
 
   @action
   async editCustomerInfoRequest(customer: Customer): Promise<void> {
-    const response = await this.app.httpClient.put<any, IApiErrors>(
-      `https://localhost:5001/customers/${customer.id}`, customer.getJson())
-    if (response.successful) {
-      customer.infoErrors.setHasErrors(false)
-    } else if (!response.successful && response.errorData) {
-      customer.infoErrors.initialize(response.errorData)
+    const url = `https://localhost:5001/customers/${customer.id}`
+    await this.app.httpClient.put(url, customer.getJson())
+    const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('PUT', url)
+    if (errors) {
+      customer.infoErrors.initialize(errors)
       customer.infoErrors.setHasErrors(true)
+    } else {
+      customer.infoErrors.setHasErrors(false)
     }
   }
 
@@ -158,13 +164,14 @@ export class CustomersPage extends Stateful {
   async deleteCustomerRequest(customer?: Customer): Promise<void> {
     if (customer) {
       if (customer.id) {
-        const response = await this.app.httpClient.delete<any, IApiErrors>(
-          `https://localhost:5001/customers/${customer.id}`)
-        if (response.successful) {
-          customer.infoErrors.setHasErrors(false)
-        } else if (!response.successful && response.errorData) {
-          customer.infoErrors.initialize(response.errorData)
+        const url = `https://localhost:5001/customers/${customer.id}`
+        await this.app.httpClient.delete(url)
+        const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('DELETE', url)
+        if (errors) {
+          customer.infoErrors.initialize(errors)
           customer.infoErrors.setHasErrors(true)
+        } else {
+          customer.infoErrors.setHasErrors(false)
         }
       }
       const start = this.customers.indexOf(customer)

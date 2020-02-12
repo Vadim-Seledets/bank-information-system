@@ -41,7 +41,7 @@ export class App extends Stateful {
 
   @trigger
   init(): void {
-    this.obtainCurrentDateRequest()
+    this.getCurrentDateRequest()
     this.initializeBankAccounts()
     this.getAuxiliaryInfo()
   }
@@ -49,11 +49,6 @@ export class App extends Stateful {
   @action
   setCurrentTab(tab: Tab): void {
     this.currentTab = tab
-  }
-
-  @action
-  setCurrentDate(): void {
-    this.currentDate = new Date()
   }
 
   getCurrentDate(): string {
@@ -68,35 +63,37 @@ export class App extends Stateful {
         this.customersPage.getAllCustomersInShortInfoModelRequest()
         break
       case 'DepositsListPage':
-        this.depositsPage.obtainDepositsInShortInfoModel()
+        this.depositsPage.getAllDepositsInShortInfoModelRequest()
         break
     }
   }
 
+  // Http requests
+
   @action
   async initializeBankAccounts(): Promise<void> {
-    await this.httpClient.get<void, void>(`https://localhost:5001/accounts/bank-funds/initialize`)
+    await this.httpClient.get(`https://localhost:5001/accounts/bank-funds/initialize`)
   }
 
   @action
-  async closeBankDayRequst(): Promise<void> {
-    await this.httpClient.post<CloseBankDayData, void>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
-    this.obtainCurrentDateRequest()
+  async closeBankDayAndGetNewDateRequst(): Promise<void> {
+    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
+    this.getCurrentDateRequest()
   }
 
   @action
-  async obtainCurrentDateRequest(): Promise<void> {
-    const response = await this.httpClient.get<string, void>(`https://localhost:5001/environment/now`)
-    if (response.successful && response.data !== undefined) {
-      this.currentDate = new Date(Date.parse(response.data))
+  async getCurrentDateRequest(): Promise<void> {
+    const date = await this.httpClient.get<string>(`https://localhost:5001/environment/now`)
+    if (date !== undefined) {
+      this.currentDate = new Date(Date.parse(date))
     }
   }
 
   @action
   async getAuxiliaryInfo(): Promise<void> {
-    const response = await this.httpClient.get<Auxiliary, void>(`https://localhost:5001/operations/auxiliary`)
-    if (response.successful && response.data) {
-      this.auxiliary = response.data
+    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/operations/auxiliary`)
+    if (auxiliary) {
+      this.auxiliary = auxiliary
     }
   }
 }

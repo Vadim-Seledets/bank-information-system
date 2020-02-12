@@ -47,13 +47,14 @@ export class DepositCreationPage extends Stateful {
   @action
   async publishNewDepositRequest(): Promise<void> {
     if (this.creatingDeposit) {
-      const response = await this.depositsPage.app.httpClient.post<void, IApiErrors>(
-        `https://localhost:5001/deposits`, this.creatingDeposit.getJson())
-      if (response.successful) {
-        this.creatingDeposit.infoErrors.setHasErrors(false)
-      } else if (!response.successful && response.errorData) {
-        this.creatingDeposit.infoErrors.initialize(response.errorData)
+      const url = `https://localhost:5001/deposits`
+      await this.depositsPage.app.httpClient.post(url, this.creatingDeposit.getJson())
+      const errors = this.depositsPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+      if (errors) {
+        this.creatingDeposit.infoErrors.initialize(errors)
         this.creatingDeposit.infoErrors.setHasErrors(true)
+      } else {
+        this.creatingDeposit.infoErrors.setHasErrors(false)
       }
       if (!this.creatingDeposit.infoErrors.hasAnyErrors) {
         this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')

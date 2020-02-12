@@ -15,6 +15,8 @@ export class DepositsPage extends Stateful {
   filter = ''
   revokeIsRequested = false
 
+  // Below properties are used for styling
+
   isRowWithCustomerHovered = false
   isGenderHovered = false
   isFullNameHovered = false
@@ -35,7 +37,6 @@ export class DepositsPage extends Stateful {
   @action
   setSelectedDeposit(deposit?: Deposit): void {
     this.selectedDeposit = deposit
-    this.hoveredRowNumber = 0
   }
 
   @action
@@ -44,77 +45,6 @@ export class DepositsPage extends Stateful {
       this.setSelectedDeposit(undefined)
     } else {
       this.setSelectedDeposit(deposit)
-    }
-  }
-
-  @action
-  async obtainDepositsInShortInfoModel(): Promise<void> {
-    const response = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
-    if (response.successful && response.data) {
-      const deposits = response.data.map(depositShortInfoModel => {
-        const deposit = new Deposit(
-          depositShortInfoModel.contractNumber,
-          depositShortInfoModel.customer,
-          depositShortInfoModel.programStartDate,
-          depositShortInfoModel.programEndDate,
-        )
-        return deposit
-      })
-      deposits.forEach(nd => !this.deposits.some(d => d.contractNumber === nd.contractNumber) && this.deposits.push(nd))
-    }
-  }
-
-  @action
-  addNewDeposit(): void {
-    this.depositCreationPage.createNewDeposit()
-    this.app.currentTab?.setCurrentPageName('AddNewDepositPage')
-  }
-
-  @action
-  showDepositDetails(deposit: Deposit): void {
-    this.obtainDepositDetailsRequest(deposit.contractNumber)
-    this.setSelectedDeposit(deposit)
-    this.app.currentTab?.setCurrentPageName('DepositDetailsPage')
-  }
-
-  @trigger
-  updateDepositDetails(): void {
-    if (this.app.currentDate && this.depositDetailes) {
-      this.obtainDepositDetailsRequest(this.depositDetailes.contractNumber)
-    }
-  }
-
-  @action
-  async obtainDepositDetailsRequest(contractNumber: string): Promise<void> {
-    const response = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${contractNumber}`)
-    if (response.successful && response.data) {
-      this.depositDetailes = new DepositDetails(
-        response.data.isRevoked,
-        response.data.depositTypeId,
-        response.data.depositAccountNumber,
-        response.data.contractNumber,
-        response.data.programStartDate,
-        response.data.programEndDate,
-        response.data.validUntil,
-        response.data.isCompleted,
-        response.data.completedAt,
-        response.data.rate,
-        response.data.amount,
-        response.data.currencyId,
-        response.data.regularAccountNumber,
-        response.data.customer,
-        response.data.transactions,
-      )
-    }
-  }
-
-  @action
-  async revokeDeposit(contractNumber: string): Promise<void> {
-    const response = await this.app.httpClient.post<void, IApiErrors>(`https://localhost:5001/deposits/${contractNumber}/revoke`)
-    if (response.successful) {
-      this.obtainDepositDetailsRequest(contractNumber)
-    } else if (response.errorData) {
-      console.log(response.errorData)
     }
   }
 
@@ -133,6 +63,82 @@ export class DepositsPage extends Stateful {
       return startIndex !== -1
     })
   }
+
+  @action
+  addNewDeposit(): void {
+    this.depositCreationPage.createNewDeposit()
+    this.app.currentTab?.setCurrentPageName('AddNewDepositPage')
+  }
+
+  @action
+  showDepositDetails(deposit: Deposit): void {
+    this.getDepositDetailsRequest(deposit.contractNumber)
+    this.setSelectedDeposit(deposit)
+    this.app.currentTab?.setCurrentPageName('DepositDetailsPage')
+  }
+
+  @trigger
+  updateDepositDetails(): void {
+    if (this.app.currentDate && this.depositDetailes) {
+      this.getDepositDetailsRequest(this.depositDetailes.contractNumber)
+    }
+  }
+
+  // Http requests
+
+  @action
+  async getAllDepositsInShortInfoModelRequest(): Promise<void> {
+    const deposits = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
+    if (deposits) {
+      this.deposits = deposits.map(depositShortInfoModel => {
+        const deposit = new Deposit(
+          depositShortInfoModel.contractNumber,
+          depositShortInfoModel.customer,
+          depositShortInfoModel.programStartDate,
+          depositShortInfoModel.programEndDate,
+        )
+        return deposit
+      })
+    }
+  }
+
+  @action
+  async getDepositDetailsRequest(contractNumber: string): Promise<void> {
+    const depositDetails = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${contractNumber}`)
+    if (depositDetails) {
+      this.depositDetailes = new DepositDetails(
+        depositDetails.isRevoked,
+        depositDetails.depositTypeId,
+        depositDetails.depositAccountNumber,
+        depositDetails.contractNumber,
+        depositDetails.programStartDate,
+        depositDetails.programEndDate,
+        depositDetails.validUntil,
+        depositDetails.isCompleted,
+        depositDetails.completedAt,
+        depositDetails.rate,
+        depositDetails.amount,
+        depositDetails.currencyId,
+        depositDetails.regularAccountNumber,
+        depositDetails.customer,
+        depositDetails.transactions,
+      )
+    }
+  }
+
+  @action
+  async revokeDeposit(contractNumber: string): Promise<void> {
+    const url = `https://localhost:5001/deposits/${contractNumber}/revoke`
+    await this.app.httpClient.post(url)
+    const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+    if (errors) {
+      console.log(errors)
+    } else {
+      this.getDepositDetailsRequest(contractNumber)
+    }
+  }
+
+  // Below methods are used for styling
 
   @action
   setIsRowWithCustomerHovered(value: boolean, row: number): void {
@@ -170,9 +176,10 @@ export class DepositsPage extends Stateful {
   }
 
   @trigger
-  dropDeleteRequest(): void {
+  dropDeleteRequestAndResetHoverRowNumber(): void {
     this.selectedDeposit /* Sensetivity list item */
-    this.setRevokeIsRequested(false)
+    this.revokeIsRequested = false
+    this.hoveredRowNumber = 0
   }
 
   isRowHovered(row: number): boolean {

@@ -1,46 +1,49 @@
 import { HeadersInit } from "node-fetch"
 
-export interface Response<TData, TErrorData> {
-  data: TData | undefined
-  errorData: TErrorData | undefined
-  successful: boolean
-}
-
 export class HttpClient {
-  async get<TData = any, TErrorData = any>(url: string, headers?: HeadersInit): Promise<Response<TData, TErrorData>> {
-    return await this.sendRequest<TData, TErrorData>(url, 'GET', headers, undefined)
-  }
+  private lastErrors = new Map<string, any>()
 
-  async post<TData = any, TErrorData = any>(url: string, data?: string, headers?: HeadersInit): Promise<Response<TData, TErrorData>> {
-    return await this.sendRequest<TData, TErrorData>(url, 'POST', headers, data)
-  }
-
-  async put<TData = any, TErrorData = any>(url: string, data?: string, headers?: HeadersInit): Promise<Response<TData, TErrorData>> {
-    return await this.sendRequest<TData, TErrorData>(url, 'PUT', headers, data)
-  }
-
-  async delete<TData = any, TErrorData = any>(url: string, data?: string, headers?: HeadersInit): Promise<Response<TData, TErrorData>> {
-    return await this.sendRequest<TData, TErrorData>(url, 'DELETE', headers, data)
-  }
-
-  async sendRequest<TData, TErrorData>(url: string, method: string, headers?: HeadersInit, body?: string): Promise<Response<TData, TErrorData>> {
-    const response = await fetch(url, {
-      method,
-      ...headers,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body,
-    })
-    let responseData = {}
-    try {
-      responseData = await response.json()
-    } catch (e) {}
-    const successful = response.ok
-    return {
-      data: successful ? responseData as TData : undefined,
-      errorData: successful ? undefined : responseData as TErrorData,
-      successful,
+  getAndDeleteLastError<TError>(method: string, url: string): TError | undefined {
+    const key = `${method}:${url}`
+    let error = undefined
+    if (this.lastErrors.has(key)) {
+      error = this.lastErrors.get(key)
+      this.lastErrors.delete(key)
     }
+    return error
+  }
+
+  rewriteLastError(method: string, url: string, data: any): void {
+    const key = `${method}:${url}`
+    this.lastErrors.delete(key)
+    this.lastErrors.set(key, data)
+  }
+
+  async get<TData = any>(url: string, headers?: HeadersInit): Promise<TData | undefined> {
+    return await this.sendRequest<TData>(url, 'GET', headers, undefined)
+  }
+
+  async post<TData = any>(url: string, data?: string, headers?: HeadersInit): Promise<TData | undefined> {
+    return await this.sendRequest<TData>(url, 'POST', headers, data)
+  }
+
+  async put<TData = any>(url: string, data?: string, headers?: HeadersInit): Promise<TData | undefined> {
+    return await this.sendRequest<TData>(url, 'PUT', headers, data)
+  }
+
+  async delete<TData = any>(url: string, data?: string, headers?: HeadersInit): Promise<TData | undefined> {
+    return await this.sendRequest<TData>(url, 'DELETE', headers, data)
+  }
+
+  async sendRequest<TData>(url: string, method: string, headers?: HeadersInit, body?: string): Promise<TData | undefined> {
+    const response = await fetch(url, { method, ...headers, headers: { 'Content-Type': 'application/json' }, body })
+    let data = {}
+    try {
+      data = await response.json()
+    } catch (e) { }
+    if (!response.ok && data !== {}) {
+      this.rewriteLastError(method, url, data)
+    }
+    return response.ok ? data as TData : undefined
   }
 }
