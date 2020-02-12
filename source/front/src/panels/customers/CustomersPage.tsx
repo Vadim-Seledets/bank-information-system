@@ -50,7 +50,6 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>
-          {/* <div style={{ ...dim(8, 1, 8, 1) }}>Actions</div> */}
           <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
           {p.customersPage.filteredCustomers.map((v, i) => (
             <React.Fragment key={i}>

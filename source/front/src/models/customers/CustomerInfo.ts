@@ -1,7 +1,6 @@
-import { Stateful, action, trigger } from 'reactronic'
-import { Auxiliary } from '../BankOperations'
+import { Stateful } from 'reactronic'
 import { Validation, PropertyValidator } from '../Validation'
-import { CustomerKeys, Customer } from './Customer'
+import { Customer } from './Customer'
 import { CustomersPage } from './CustomersPage'
 
 export class CustomerInfo extends Stateful {
@@ -42,11 +41,4 @@ export class CustomerInfo extends Stateful {
       ])
     )
   }
-
-  // @trigger
-  // updateSelectedCustomer(): void {
-  //   if (this.customersPage.selectedCustomer) {
-  //     this.validation.setValidationObject(this.customersPage.selectedCustomer)
-  //   }
-  // }
 }
