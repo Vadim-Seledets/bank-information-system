@@ -1,4 +1,4 @@
-import { Stateful, action, trigger, isolated, cached } from 'reactronic'
+import { Stateful, action, trigger, isolated, nonreactive } from 'reactronic'
 import { App } from '../App'
 import { CustomerInfo } from './CustomerInfo'
 import { IApiErrors } from '../ApiErrors'
@@ -14,6 +14,8 @@ export class CustomersPage extends Stateful {
   filter = ''
   deleteIsRequested = false
   
+  // Below properties are used for styling
+
   isRowWithCustomerHovered = false
   isGenderHovered = false
   isFullNameHovered = false
@@ -33,7 +35,6 @@ export class CustomersPage extends Stateful {
   @action
   setSelectedCustomer(customer?: Customer): void {
     this.selectedCustomer = customer
-    this.hoveredRowNumber = 0
   }
 
   @action
@@ -92,10 +93,10 @@ export class CustomersPage extends Stateful {
   }
 
   @trigger
-  makeFilteredCustomers(): void {
+  makeFilteredCustomerList(): void {
     const filter = this.filter
     this.filteredCustomers = this.customers.filter(c => {
-      const fullName = `${c.firstName} ${c.middleName} ${c.lastName}`
+      const fullName = nonreactive(() => `${c.firstName} ${c.middleName} ${c.lastName}`)
       const startIndex = fullName.toLowerCase().indexOf(filter.toLowerCase())
       isolated(() => c.setHighlightingRange({ start: startIndex, length: filter.length }))
       return startIndex !== -1
@@ -103,12 +104,12 @@ export class CustomersPage extends Stateful {
   }
 
   @action
-  async editOrPublishCustomer(): Promise<void> {
+  editOrPublishCustomer(): void {
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
-        await this.editCustomerInfoRequest(this.selectedCustomer)
+        this.editCustomerInfoRequest(this.selectedCustomer)
       } else {
-        await this.publishNewCustomerRequest(this.selectedCustomer)
+        this.publishNewCustomerRequest(this.selectedCustomer)
       }
       if (!this.selectedCustomer.infoErrors.hasAnyErrors) {
         this.app.currentTab?.setCurrentPageName('CustomersListPage')
@@ -117,15 +118,14 @@ export class CustomersPage extends Stateful {
   }
 
   @action
-  async obtainAllCustomersInShortInfoModel(): Promise<void> {
+  async getAllCustomersInShortInfoModelRequest(): Promise<void> {
     const customersInfo = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
     if (customersInfo.successful && customersInfo.data) {
-      const customers = customersInfo.data.map(customerShortInfo => {
+      this.customers = customersInfo.data.map(customerShortInfo => {
         const customer = new Customer()
         customer.setShortInfo(customerShortInfo)
         return customer
       })
-      customers.forEach(nc => !this.customers.some(c => c.id === nc.id) && this.customers.push(nc))
     }
   }
 
@@ -133,7 +133,6 @@ export class CustomersPage extends Stateful {
   async publishNewCustomerRequest(customer: Customer): Promise<void> {
     const response = await this.app.httpClient.post<string, IApiErrors>(
       `https://localhost:5001/customers`, customer.getJson())
-    console.log()
     if (response.successful && response.data) {
       customer.setId(response.data)
       customer.infoErrors.setHasErrors(false)
@@ -176,6 +175,8 @@ export class CustomersPage extends Stateful {
     }
   }
 
+  // Below methods are used for styling
+
   @action
   setIsRowWithCustomerHovered(value: boolean, row: number): void {
     this.hoveredRowNumber = row
@@ -212,9 +213,10 @@ export class CustomersPage extends Stateful {
   }
 
   @trigger
-  dropDeleteRequest(): void {
+  dropDeleteRequestAndResetHoverRowNumber(): void {
     this.selectedCustomer /* Sensetivity list item */
-    this.setDeleteIsRequested(false)
+    this.deleteIsRequested = false
+    this.hoveredRowNumber = 0
   }
 
   isRowHovered(row: number): boolean {

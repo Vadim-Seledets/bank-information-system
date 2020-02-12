@@ -95,7 +95,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
               </div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.customersPage.isRowHovered(i + 2)}`}
-                is-selected={`${p.customersPage.selectedCustomer === v}`}
+                is-selected={`${p.customersPage.selectedCustomer?.id === v.id}`}
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
                 onPointerEnter={() => p.customersPage.setIsRowWithCustomerHovered(true, i + 2)}
                 onPointerLeave={() => p.customersPage.setIsRowWithCustomerHovered(false, i + 2)}
