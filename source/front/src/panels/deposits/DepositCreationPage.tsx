@@ -9,6 +9,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
     const css = style.classes
     const creatingDeposit = p.depositsPage.depositCreationPage.creatingDeposit
     const auxiliary = p.depositsPage.app.auxiliary
+    const apiErrors = p.depositsPage.depositCreationPage.apiErrors
     return (
       <div className={css.main}>
         <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
@@ -33,10 +34,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Deposit Type</div>
-                  {creatingDeposit.infoErrors.has('DepositTypeId') && (
+                  {apiErrors?.has('DepositTypeId') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('DepositTypeId').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('DepositTypeId').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -44,7 +45,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={creatingDeposit.depositTypeId}
-                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'depositTypeId') || creatingDeposit.infoErrors.has('DepositTypeId')}`}
+                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'depositTypeId') || apiErrors?.has('DepositTypeId')}`}
                   onChange={e => creatingDeposit.setDepositTypeId(parseInt(e.currentTarget.value))}
                 >
                   {auxiliary.depositTypes.map((v, i) => (
@@ -55,10 +56,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Contract Number</div>
-                  {creatingDeposit.infoErrors.has('ContractNumber') && (
+                  {apiErrors?.has('ContractNumber') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('ContractNumber').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('ContractNumber').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -66,16 +67,16 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <input className={'propertyInputColumn'} disabled={true} type="text" value={creatingDeposit.contractNumber}
-                  onFocus={() => creatingDeposit.infoErrors.deleteError('ContractNumber')}
+                  onFocus={() => apiErrors?.deleteError('ContractNumber')}
                 />
               </div>
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Program Start Date</div>
-                  {creatingDeposit.infoErrors.has('ProgramStartDate') && (
+                  {apiErrors?.has('ProgramStartDate') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('ProgramStartDate').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('ProgramStartDate').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -83,17 +84,17 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.programStartDate}
-                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || creatingDeposit.infoErrors.has('ProgramStartDate')}`}
-                  onFocus={() => creatingDeposit.infoErrors.deleteError('ProgramStartDate')}
+                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
+                  onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
                   onChange={e => creatingDeposit.setProgramStartDate(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Program End Date</div>
-                  {creatingDeposit.infoErrors.has('ProgramEndDate') && (
+                  {apiErrors?.has('ProgramEndDate') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('ProgramEndDate').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('ProgramEndDate').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -101,17 +102,17 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.programEndDate}
-                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programEndDate') || creatingDeposit.infoErrors.has('ProgramEndDate')}`}
-                  onFocus={() => creatingDeposit.infoErrors.deleteError('ProgramEndDate')}
+                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
+                  onFocus={() => apiErrors?.deleteError('ProgramEndDate')}
                   onChange={e => creatingDeposit.setProgramEndDate(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Contract Valid Until</div>
-                  {creatingDeposit.infoErrors.has('ContractValidUntil') && (
+                  {apiErrors?.has('ContractValidUntil') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('ContractValidUntil').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('ContractValidUntil').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -119,17 +120,17 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <input className={'propertyInputColumn'} type="date" value={creatingDeposit.contractValidUntil}
-                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'contractValidUntil') || creatingDeposit.infoErrors.has('ContractValidUntil')}`}
-                  onFocus={() => creatingDeposit.infoErrors.deleteError('ContractValidUntil')}
+                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'contractValidUntil') || apiErrors?.has('ContractValidUntil')}`}
+                  onFocus={() => apiErrors?.deleteError('ContractValidUntil')}
                   onChange={e => creatingDeposit.setContractValidUntil(e.currentTarget.value)} />
               </div>
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Customer</div>
-                  {creatingDeposit.infoErrors.has('CustomerId') && (
+                  {apiErrors?.has('CustomerId') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('CustomerId').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('CustomerId').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -137,7 +138,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                   )}
                 </div>
                 <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={creatingDeposit.customerId}
-                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'customerId') || creatingDeposit.infoErrors.has('CustomerId')}`}
+                  is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'customerId') || apiErrors?.has('CustomerId')}`}
                   onChange={e => creatingDeposit.setCustomerId(parseInt(e.currentTarget.value))}
                 >
                   {p.depositsPage.app.customersPage.customers.map((v, i) => (
@@ -148,10 +149,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               <div className={css.property}>
                 <div className='propertyNameLine'>
                   <div className='name'>Amount</div>
-                  {creatingDeposit.infoErrors.has('Amount') && (
+                  {apiErrors?.has('Amount') && (
                     <div className='error las la-exclamation'>
                       <div className='errorPopUp'>
-                        {creatingDeposit.infoErrors.getPropertyErrors('Amount').map((v, i) => (
+                        {apiErrors?.getPropertyErrors('Amount').map((v, i) => (
                           <div key={i} className='errorRow'>{v}</div>
                         ))}
                       </div>
@@ -160,11 +161,11 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 </div>
                 <div className='propertyInputHorizontalLine'>
                   <input className={'propertyInputColumn'} type="number" defaultValue={creatingDeposit.amount}
-                    is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || creatingDeposit.infoErrors.has('Amount')}`}
-                    onFocus={() => creatingDeposit.infoErrors.deleteError('Amount')} 
+                    is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || apiErrors?.has('Amount')}`}
+                    onFocus={() => apiErrors?.deleteError('Amount')} 
                     onChange={e => creatingDeposit.setAmount(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)} />
                   <select className='propertyInputColumn' style={{ height: 'auto', marginTop: '0.3em' }} value={creatingDeposit.currencyId}
-                    is-invalid={`${creatingDeposit.infoErrors.has('CurrencyId')}`}
+                    is-invalid={`${apiErrors?.has('CurrencyId')}`}
                     onChange={e => creatingDeposit.setCurrencyId(parseInt(e.currentTarget.value))}
                   >
                     {auxiliary.currencies.map((v, i) => (
@@ -175,10 +176,10 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 <div className={css.property}>
                   <div className='propertyNameLine'>
                     <div className='name'>Rate</div>
-                    {creatingDeposit.infoErrors.has('Rate') && (
+                    {apiErrors?.has('Rate') && (
                       <div className='error las la-exclamation'>
                         <div className='errorPopUp'>
-                          {creatingDeposit.infoErrors.getPropertyErrors('Rate').map((v, i) => (
+                          {apiErrors?.getPropertyErrors('Rate').map((v, i) => (
                             <div key={i} className='errorRow'>{v}</div>
                           ))}
                         </div>
@@ -186,8 +187,8 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                     )}
                   </div>
                   <input className={'propertyInputColumn'} type="number" max={1} min={0} step={0.001} defaultValue={creatingDeposit.rate}
-                    is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'rate') || creatingDeposit.infoErrors.has('Rate')}`}
-                    onFocus={() => creatingDeposit.infoErrors.deleteError('Rate')}
+                    is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'rate') || apiErrors?.has('Rate')}`}
+                    onFocus={() => apiErrors?.deleteError('Rate')}
                     onChange={e => creatingDeposit.setRate(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)} />
                 </div>
               </div>

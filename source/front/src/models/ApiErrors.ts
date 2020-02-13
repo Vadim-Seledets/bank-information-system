@@ -1,4 +1,4 @@
-import { Stateful, action, cached } from 'reactronic'
+import { Stateful, action } from 'reactronic'
 
 export interface IApiErrors {
   errors?: Array<{name: string, message: string}>
@@ -10,10 +10,10 @@ export class ApiErrors extends Stateful {
   error = ''
   hasAnyErrors = false
 
-  @action
-  initialize(customerInfoErrors: IApiErrors): void {
-    this.errors = customerInfoErrors.errors ?? []
-    this.error = customerInfoErrors.error ?? ''
+  constructor(apiErrors: IApiErrors) {
+    super()
+    this.errors = apiErrors.errors ?? []
+    this.error = apiErrors.error ?? ''
     /* TO BE REMOVED */
     const errorsWithoutName = this.errors.filter(v => v.name === '').map(v => v.message).join()
     if (errorsWithoutName !== '') {

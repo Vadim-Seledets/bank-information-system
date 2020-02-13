@@ -1,16 +1,18 @@
 import { Stateful, action } from "reactronic"
 import { CreatingDeposit, DepositCreateModel } from "./Deposit"
 import { DepositsPage } from "./DepositsPage"
-import { IApiErrors } from "../ApiErrors"
+import { IApiErrors, ApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
 
 export class DepositCreationPage extends Stateful {
+  apiErrors: ApiErrors | undefined
   depositsPage: DepositsPage
   creatingDeposit: CreatingDeposit | undefined
   validation: Validation<DepositCreateModel>
 
   constructor(depositsPage: DepositsPage) {
     super()
+    this.apiErrors = undefined
     this.depositsPage = depositsPage
     this.creatingDeposit = undefined
     this.validation = new Validation(
@@ -40,23 +42,25 @@ export class DepositCreationPage extends Stateful {
 
   @action
   cancelCreation(): void {
+    this.setApiErrors(undefined)
     this.setCreatingDeposit(undefined)
     this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
   }
 
   @action
+  setApiErrors(apiErrors: IApiErrors | undefined): void {
+    this.apiErrors = apiErrors ? new ApiErrors(apiErrors) : undefined
+  }
+
+  @action
   async publishNewDepositRequest(): Promise<void> {
+    this.setApiErrors(undefined)
     if (this.creatingDeposit) {
       const url = `https://localhost:5001/deposits`
       await this.depositsPage.app.httpClient.post(url, this.creatingDeposit.getJson())
       const errors = this.depositsPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
-      if (errors) {
-        this.creatingDeposit.infoErrors.initialize(errors)
-        this.creatingDeposit.infoErrors.setHasErrors(true)
-      } else {
-        this.creatingDeposit.infoErrors.setHasErrors(false)
-      }
-      if (!this.creatingDeposit.infoErrors.hasAnyErrors) {
+      this.setApiErrors(errors)
+      if (this.apiErrors === undefined) {
         this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
       }
     }

@@ -79,8 +79,6 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
   rate: number
   currencyId: number
 
-  infoErrors = new ApiErrors()
-
   constructor(contractNumber: string) {
     super()
     this.depositTypeId = 1
