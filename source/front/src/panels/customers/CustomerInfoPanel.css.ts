@@ -45,6 +45,9 @@ export const style = restyle(() => {
         border-radius: 0.2em;
         font-size: 0.9em;
         height: 1.25em;
+        outline: none;
+        color: ${theme.applicationForeground};
+        background-color: ${theme.applicationBackground};
 
         &[is-invalid=true] {
           border-color: #ee3333;
