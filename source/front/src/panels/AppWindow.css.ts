@@ -39,7 +39,7 @@ export const style = restyle(() => {
       }
 
       input {
-        transition: background-color ease 0.5s, border-bottom ease 0.5s, box-shadow ease 0.2s;
+        transition: background-color ease 0.2s, border ease 0.2s, box-shadow ease 0.2s;
       }
     `,
 
