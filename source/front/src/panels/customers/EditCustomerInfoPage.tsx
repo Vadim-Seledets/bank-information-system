@@ -30,6 +30,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
                 </React.Fragment>)
             }
           </button>
+          <div className='error'>{p.customersPage.customerInfo.apiErrors?.error}</div>
           <div className='space' />
           <button className={commonCss.backButton} onClick={() => p.customersPage.cancelEditing()}>
             Cancel
