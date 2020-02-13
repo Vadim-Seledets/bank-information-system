@@ -23,7 +23,7 @@ namespace BankInformationSystem.Business.Validation
             CurrentDateTimeProvider = currentDateTimeProvider;
             
             RuleFor(x => x.ContractNumber)
-                .MustAsync(BeUniqueContractNumber)
+                .MustAsync(BeUniqueContractNumberAsync)
                 .WithMessage("Contract with specified id already exists.");
             
             RuleFor(x => x.ProgramStartDate)
@@ -39,11 +39,11 @@ namespace BankInformationSystem.Business.Validation
                 .WithMessage("'{PropertyName}' must be a program end date or a later date.");
 
             RuleFor(x => x.CustomerId)
-                .MustAsync(BeIdOfExistingCustomer)
+                .MustAsync(BeIdOfExistingCustomerAsync)
                 .WithMessage("Specified customer does not exist.");
         }
         
-        protected async Task<bool> BeUniqueContractNumber(Guid contractNumber, CancellationToken token)
+        protected async Task<bool> BeUniqueContractNumberAsync(Guid contractNumber, CancellationToken token)
         {
             var depositContractsQuery = Context.DepositContracts.Where(x => x.ContractNumber == contractNumber).Select(x => x.ContractNumber);
             var loanContractsQuery = Context.LoanContracts.Where(x => x.ContractNumber == contractNumber).Select(x => x.ContractNumber);
@@ -52,14 +52,14 @@ namespace BankInformationSystem.Business.Validation
             return !await unionQuery.AnyAsync(token);
         }
 
+        protected async Task<bool> BeIdOfExistingCustomerAsync(int customerId, CancellationToken token)
+        {
+            return await Context.Customers.AnyAsync(x => x.Id == customerId && !x.IsDeleted, token);
+        }
+
         protected bool BeTodayDateOrLater(DateTime dateTime)
         {
             return dateTime >= CurrentDateTimeProvider.Now().Date;
-        }
-
-        protected async Task<bool> BeIdOfExistingCustomer(int customerId, CancellationToken token)
-        {
-            return await Context.Customers.AnyAsync(x => x.Id == customerId && !x.IsDeleted, token);
         }
     }
 }

@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankInformationSystem.Business.Validation
 {
-    public class CustomerFullInfoBaseModelValidator : AbstractValidator<CustomerFullInfoBaseModel>
+    public abstract class CustomerFullInfoBaseModelValidator<T> : AbstractValidator<T>
+        where T : CustomerFullInfoBaseModel
     {
         private readonly BankInformationSystemDbContext _context;
 
@@ -28,14 +29,6 @@ namespace BankInformationSystem.Business.Validation
             
             RuleFor(x => x.Passport)
                 .NotNull();
-            RuleFor(x => x.Passport)
-                .MustAsync(HaveUniqueFullPassportNumber)
-                .When(x => x is CustomerCreateModel)
-                .WithMessage("Customer with specified passport already exists.");
-            RuleFor(x => x.Passport)
-                .MustAsync(HaveUniqueIdNumber)
-                .When(x => x is CustomerCreateModel)
-                .WithMessage("Customer with specified id number already exists.");
             RuleFor(x => x.Passport.Series)
                 .NotEmpty();
             RuleFor(x => x.Passport.IdNumber)
@@ -82,37 +75,52 @@ namespace BankInformationSystem.Business.Validation
                 .NotNull()
                 .When(x => x.WorkInfo != null);
             
-            RuleFor(x => x)
-                .MustAsync(HaveUniqueName)
-                .When(x => x is CustomerCreateModel)
-                .WithMessage("Customer with specified name already exists.");
+            // RuleFor(x => x)
+            //     .MustAsync(HaveUniqueNameAsync)
+            //     .When(x => x is CustomerCreateModel)
+            //     .WithMessage("Customer with specified name already exists.");
+            // RuleFor(x => x.Passport)
+            //     .MustAsync(async (customer, passport, token) =>
+            //         await HaveUniqueFullPassportNumberAsync(passport, customer.))
+            //     .WithMessage("Customer with specified passport already exists.");
+            // RuleFor(x => x.Passport)
+            //     .MustAsync(HaveUniqueIdNumberAsync)
+            //     .WithMessage("Customer with specified id number already exists.");
         }
 
-        private async Task<bool> HaveUniqueName(CustomerFullInfoBaseModel model, CancellationToken token)
+        protected async Task<bool> HaveUniqueNameAsync(
+            CustomerFullInfoBaseModel model,
+            int? customerId = null,
+            CancellationToken token = default)
         {
             return !await _context.Customers
-                .Where(x => !x.IsDeleted
+                .Where(x => !x.IsDeleted && x.Id != customerId
                     && x.FirstName == model.FirstName
                     && x.LastName == model.LastName
                     && x.MiddleName == model.MiddleName)
                 .AnyAsync(token);
         }
         
-        private async Task<bool> HaveUniqueFullPassportNumber(PassportModel model, CancellationToken token)
+        protected async Task<bool> HaveUniqueFullPassportNumberAsync(
+            PassportModel model,
+            int? customerId = null,
+            CancellationToken token = default)
         {
             return !await _context.Customers
-                .Where(x => !x.IsDeleted)
+                .Where(x => !x.IsDeleted && x.Id != customerId)
                 .Where(x => x.Passport.Series == model.Series
                     && x.Passport.PassportNumber == model.PassportNumber)
                 .AnyAsync(token);
         }
         
-        private async Task<bool> HaveUniqueIdNumber(PassportModel model, CancellationToken token)
+        protected async Task<bool> HaveUniqueIdNumberAsync(
+            PassportModel model,
+            int? customerId = null,
+            CancellationToken token = default)
         {
             return !await _context.Customers
-                .Where(x => !x.IsDeleted)
-                .Where(x => x.Passport.Series == model.Series
-                    && x.Passport.IdNumber == model.IdNumber)
+                .Where(x => !x.IsDeleted && x.Id != customerId)
+                .Where(x => x.Passport.IdNumber == model.IdNumber)
                 .AnyAsync(token);
         }
     }

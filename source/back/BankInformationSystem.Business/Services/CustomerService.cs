@@ -13,16 +13,19 @@ namespace BankInformationSystem.Business.Services
     public class CustomerService : ICustomerService
     {
         private readonly BankInformationSystemDbContext _context;
-        private readonly IValidator<CustomerFullInfoBaseModel> _customerFullInfoBaseModelValidator;
+        private readonly IValidator<CustomerCreateModel> _customerCreateModelValidator;
+        private readonly IValidator<CustomerUpdateModel> _customerUpdateModelValidator;
         private readonly IMapper _mapper;
 
         public CustomerService(
             BankInformationSystemDbContext context,
-            IValidator<CustomerFullInfoBaseModel> customerFullInfoBaseModelValidator,
+            IValidator<CustomerCreateModel> customerCreateModelValidator,
+            IValidator<CustomerUpdateModel> customerUpdateModelValidator,
             IMapper mapper)
         {
             _context = context;
-            _customerFullInfoBaseModelValidator = customerFullInfoBaseModelValidator;
+            _customerCreateModelValidator = customerCreateModelValidator;
+            _customerUpdateModelValidator = customerUpdateModelValidator;
             _mapper = mapper;
         }
         
@@ -53,7 +56,7 @@ namespace BankInformationSystem.Business.Services
 
         public async Task<int> CreateCustomerAsync(CustomerCreateModel model)
         {
-            await _customerFullInfoBaseModelValidator.ValidateAndThrowAsync(model);
+            await _customerCreateModelValidator.ValidateAndThrowAsync(model);
             
             var newCustomer = _mapper.Map<Customer>(model);
             _context.Add(newCustomer);
@@ -79,9 +82,11 @@ namespace BankInformationSystem.Business.Services
                 throw new ValidationException($"User with id {model.Id} does not exist.");
             }
 
-            await _customerFullInfoBaseModelValidator.ValidateAndThrowAsync(model);
+            await _customerUpdateModelValidator.ValidateAndThrowAsync(model);
             
             _mapper.Map(model, customer);
+            
+            // TODO: Try to do this with AutoMapper
             customer.Contacts.CustomerId = customer.Id;
             customer.Passport.CustomerId = customer.Id;
             customer.BirthInfo.CustomerId = customer.Id;
@@ -121,6 +126,7 @@ namespace BankInformationSystem.Business.Services
             {
                 throw new ValidationException($"Customer with id {id} has active deposits and can't be deleted.");
             }
+            
             if (contractsInfo.HasLoan)
             {
                 throw new ValidationException($"Customer with id {id} has active loans and can't be deleted.");

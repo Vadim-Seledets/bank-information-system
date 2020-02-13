@@ -79,7 +79,8 @@ namespace BankInformationSystem
             services.AddScoped<IVirtualDateTimeManager>(provider => provider.GetService<VirtualDateTimeProvider>());
 
             // Validators
-            services.AddScoped<IValidator<CustomerFullInfoBaseModel>, CustomerFullInfoBaseModelValidator>();
+            services.AddScoped<IValidator<CustomerCreateModel>, CustomerCreateModelValidator>();
+            services.AddScoped<IValidator<CustomerUpdateModel>, CustomerUpdateModelValidator>();
             services.AddScoped<IValidator<DepositCreateModel>, DepositCreateModelValidator>();
             services.AddScoped<IValidator<LoanCreateModel>, LoanCreateModelValidator>();
         }
