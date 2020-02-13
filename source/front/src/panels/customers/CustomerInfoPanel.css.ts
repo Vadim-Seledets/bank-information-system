@@ -14,8 +14,18 @@ export const style = restyle(() => {
     `,
 
     propertyGroupCaption: css`
-      font-weight: bold;
+      display: flex;
+      align-items: center;
       padding: 0.5em 0;
+
+      .caption {
+        font-weight: bold;
+      }
+
+      .error {
+        font-size: 0.9em;
+        color: #ee3333;
+       }
     `,
 
     property: css`
