@@ -14,11 +14,6 @@ export class ApiErrors extends Stateful {
     super()
     this.errors = apiErrors.errors ?? []
     this.error = apiErrors.error ?? ''
-    /* TO BE REMOVED */
-    const errorsWithoutName = this.errors.filter(v => v.name === '').map(v => v.message).join()
-    if (errorsWithoutName !== '') {
-      alert(errorsWithoutName)
-    }
   }
 
   @action
