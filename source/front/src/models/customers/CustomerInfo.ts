@@ -1,17 +1,17 @@
-import { Stateful } from 'reactronic'
+import { Stateful, action } from 'reactronic'
 import { Validation, PropertyValidator } from '../Validation'
 import { Customer } from './Customer'
 import { CustomersPage } from './CustomersPage'
-import { ApiErrors } from '../ApiErrors'
+import { ApiErrors, IApiErrors } from '../ApiErrors'
 
 export class CustomerInfo extends Stateful {
-  apiErrors: ApiErrors
+  apiErrors: ApiErrors | undefined
   customersPage: CustomersPage
   validation: Validation<Customer>
   
   constructor(customersPage: CustomersPage) {
     super()
-    this.apiErrors = new ApiErrors()
+    this.apiErrors = undefined
     this.customersPage = customersPage
     this.validation = new Validation(
       new Map([
@@ -43,5 +43,10 @@ export class CustomerInfo extends Stateful {
         ['isLiableForMilitaryService', new PropertyValidator('isLiableForMilitaryService')],    
       ])
     )
+  }
+
+  @action
+  setApiErrors(apiErrors: IApiErrors | undefined): void {
+    this.apiErrors = apiErrors ? new ApiErrors(apiErrors) : undefined
   }
 }

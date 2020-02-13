@@ -73,15 +73,14 @@ export class CustomersPage extends Stateful {
 
   @action
   cancelEditing(): void {
+    this.customerInfo.setApiErrors(undefined)
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
         this.selectedCustomer.getFullInfoModel()
       } else {
         const start = this.customers.indexOf(this.selectedCustomer)
         this.customers.splice(start, 1)
-        if (this.selectedCustomer === this.selectedCustomer) {
-          this.setSelectedCustomer(undefined)
-        }
+        this.setSelectedCustomer(undefined)
       }
       this.app.currentTab?.setCurrentPageName('CustomersListPage')
     }
@@ -105,13 +104,14 @@ export class CustomersPage extends Stateful {
 
   @action
   async editOrPublishCustomer(): Promise<void> {
+    this.customerInfo.setApiErrors(undefined)
     if (this.selectedCustomer) {
       if (this.selectedCustomer.id) {
         await this.editCustomerInfoRequest(this.selectedCustomer)
       } else {
         await this.publishNewCustomerRequest(this.selectedCustomer)
       }
-      if (!this.customerInfo.apiErrors.hasAnyErrors) {
+      if (this.customerInfo.apiErrors === undefined) {
         this.app.currentTab?.setCurrentPageName('CustomersListPage')
       }
     }
@@ -137,13 +137,9 @@ export class CustomersPage extends Stateful {
     const customerId = await this.app.httpClient.post<string>(url, customer.getJson())
     if (customerId) {
       customer.setId(customerId)
-      this.customerInfo.apiErrors.setHasErrors(false)
     } else {
       const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
-      if (errors) {
-        this.customerInfo.apiErrors.initialize(errors)
-        this.customerInfo.apiErrors.setHasErrors(true)
-      }
+      this.customerInfo.setApiErrors(errors)
     }
   }
 
@@ -152,12 +148,7 @@ export class CustomersPage extends Stateful {
     const url = `https://localhost:5001/customers/${customer.id}`
     await this.app.httpClient.put(url, customer.getJson())
     const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('PUT', url)
-    if (errors) {
-      this.customerInfo.apiErrors.initialize(errors)
-      this.customerInfo.apiErrors.setHasErrors(true)
-    } else {
-      this.customerInfo.apiErrors.setHasErrors(false)
-    }
+    this.customerInfo.setApiErrors(errors)
   }
 
   @action
@@ -167,12 +158,7 @@ export class CustomersPage extends Stateful {
         const url = `https://localhost:5001/customers/${customer.id}`
         await this.app.httpClient.delete(url)
         const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('DELETE', url)
-        if (errors) {
-          this.customerInfo.apiErrors.initialize(errors)
-          this.customerInfo.apiErrors.setHasErrors(true)
-        } else {
-          this.customerInfo.apiErrors.setHasErrors(false)
-        }
+        this.customerInfo.setApiErrors(errors)
       }
       const start = this.customers.indexOf(customer)
       this.customers.splice(start, 1)
