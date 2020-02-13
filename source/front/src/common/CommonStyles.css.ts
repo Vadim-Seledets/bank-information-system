@@ -18,12 +18,12 @@ export const commonStyle = restyle(() => {
       z-index: 2;
       display: flex;
       flex-wrap: wrap;
-      background-color: ${theme.applicationBackground};
+      background-color: ${theme.applicationBackground}bb;
 
       .headLineItem {
         margin-right: 1em;
       }
-      
+
       .space {
         flex-grow: 1;
       }
