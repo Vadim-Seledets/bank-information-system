@@ -14,11 +14,6 @@ export class ApiErrors extends Stateful {
     super()
     this.errors = apiErrors.errors ?? []
     this.error = apiErrors.error ?? ''
-    /* TO BE REMOVED */
-    const errorsWithoutName = this.errors.filter(v => v.name === '').map(v => v.message).join()
-    if (errorsWithoutName !== '') {
-      alert(errorsWithoutName)
-    }
   }
 
   @action
@@ -29,7 +24,12 @@ export class ApiErrors extends Stateful {
   getPropertyErrors(propertyName: string): Array<string> {
     let errors = new Array<string>()
     if (this.errors) {
-      errors = this.errors.filter(v => v.name === propertyName).map(v => v.message)
+      errors = this.errors.filter(v => v.name === propertyName).map(v => {
+        const messageWithoutName = v.message.replace(/^'.*' /, '')
+        const fancyMessage = messageWithoutName.charAt(0).toUpperCase()
+          + messageWithoutName.slice(1, messageWithoutName.length - 1)
+        return fancyMessage
+      })
     }
     return errors
   }

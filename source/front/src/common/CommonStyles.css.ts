@@ -18,6 +18,7 @@ export const commonStyle = restyle(() => {
       z-index: 2;
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
       background-color: ${theme.applicationBackground}bb;
 
       .headLineItem {
@@ -26,6 +27,12 @@ export const commonStyle = restyle(() => {
 
       .space {
         flex-grow: 1;
+      }
+
+      .error {
+        margin-left: 1em;
+        font-size: 0.9em;
+        color: #ee3333;
       }
     `,
 

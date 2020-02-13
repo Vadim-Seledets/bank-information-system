@@ -14,8 +14,19 @@ export const style = restyle(() => {
     `,
 
     propertyGroupCaption: css`
-      font-weight: bold;
+      display: flex;
+      align-items: baseline;
       padding: 0.5em 0;
+
+      .caption {
+        margin-right: 1em;
+        font-weight: bold;
+      }
+
+      .error {
+        font-size: 0.9em;
+        color: #ee3333;
+       }
     `,
 
     property: css`
@@ -34,6 +45,9 @@ export const style = restyle(() => {
         border-radius: 0.2em;
         font-size: 0.9em;
         height: 1.25em;
+        outline: none;
+        color: ${theme.applicationForeground};
+        background-color: ${theme.applicationBackground};
 
         &[is-invalid=true] {
           border-color: #ee3333;

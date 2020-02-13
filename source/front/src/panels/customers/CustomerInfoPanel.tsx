@@ -15,7 +15,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
       <React.Fragment>
         {customer && (
           <div className={css.main}>
-            <div className={css.propertyGroupCaption}>Personal Information</div>
+            <div className={css.propertyGroupCaption}>
+              <div className='caption'>Personal Information</div>
+              {apiErrors?.has('') && <div className='error'>{apiErrors?.getPropertyErrors('')[0]}</div>}
+            </div>
             <div className={css.property}>
               <div className='caption'>Last Name</div>
               <input className={'input'} type="text" value={customer.lastName}
@@ -64,7 +67,10 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
               </div>
               {apiErrors?.has('Gender') && <div className='error'>{apiErrors?.getPropertyErrors('Gender')[0]}</div>}
             </div>
-            <div className={css.propertyGroupCaption}>Passport Information</div>
+            <div className={css.propertyGroupCaption}>
+              <div className='caption'>Passport Information</div>
+              {apiErrors?.has('Passport') && <div className='error'>{apiErrors?.getPropertyErrors('Passport')[0]}</div>}
+            </div>
             <div className={css.property}>
               <div className='caption'>Citizenship</div>
               <select className='input' style={{ height: 'auto', marginTop: '0.3em' }} value={customer.citizenshipId}
