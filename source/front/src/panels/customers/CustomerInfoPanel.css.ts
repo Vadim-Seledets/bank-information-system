@@ -15,10 +15,11 @@ export const style = restyle(() => {
 
     propertyGroupCaption: css`
       display: flex;
-      align-items: center;
+      align-items: baseline;
       padding: 0.5em 0;
 
       .caption {
+        margin-right: 1em;
         font-weight: bold;
       }
 
