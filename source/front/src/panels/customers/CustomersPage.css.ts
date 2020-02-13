@@ -5,25 +5,6 @@ import { themes } from '../../models/Theme'
 export const style = restyle(() => {
   const theme = themes.active
   return {
-    main: css`
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 2em repeat(11, 1fr);
-    `,
-
-    headLine: css`
-      display: flex;
-      flex-wrap: wrap;
-
-      .headLineItem {
-        margin-right: 1em;
-      }
-
-      .space {
-        flex-grow: 1;
-      }
-    `,
-    
     search: css`
       align-self: center;
       justify-self: right;

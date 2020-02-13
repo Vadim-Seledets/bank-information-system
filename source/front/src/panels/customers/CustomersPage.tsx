@@ -2,6 +2,7 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from './CustomersPage.css'
+import { commonStyle } from '../../common/CommonStyles.css'
 import { cx } from 'emotion'
 import { Gender } from '../../models/customers/Gender'
 import { CustomersPage } from '../../models/customers/CustomersPage'
@@ -9,9 +10,10 @@ import { CustomersPage } from '../../models/customers/CustomersPage'
 export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     return (
-      <div className={css.main}>
-        <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
+      <div className={commonCss.main}>
+        <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.customersPage.addNewCustomer()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Customer</div>

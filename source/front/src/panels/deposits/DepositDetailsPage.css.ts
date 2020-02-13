@@ -5,21 +5,6 @@ import { themes } from '../../models/Theme'
 export const style = restyle(() => {
   const theme = themes.active
   return {
-    main: css`
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: 2em repeat(10, 1fr);
-    `,
-
-    headLine: css`
-      display: flex;
-      flex-wrap: wrap;
-
-      .space {
-        flex-grow: 1;
-      }
-    `,
-
     button: css`
       justify-self: left;
       color: ${theme.sidebarSelectedTabForeground};
@@ -66,11 +51,6 @@ export const style = restyle(() => {
           color: ${theme.highlighter};
         }
       }
-    `,
-
-    backButton: css`
-      color: ${theme.sidebarSelectedTabForeground};
-      background-color: ${theme.sidebarSelectedTabBackground};
     `,
 
     customerInfo: css`

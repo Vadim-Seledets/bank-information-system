@@ -2,15 +2,17 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from '../deposits/DepositsPage.css'
+import { commonStyle } from '../../common/CommonStyles.css'
 import { cx } from 'emotion'
 import { DepositsPage } from '../../models/deposits/DepositsPage'
 
 export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     return (
-      <div className={css.main}>
-        <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
+      <div className={commonCss.main}>
+        <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={cx(css.addNewDepositButton, 'headLineItem')} onClick={() => p.depositsPage.addNewDeposit()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Deposit</div>

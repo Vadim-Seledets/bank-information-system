@@ -2,15 +2,17 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from './EditCustomerInfoPage.css'
+import { commonStyle } from '../../common/CommonStyles.css'
 import { CustomerInfoPanel } from './CustomerInfoPanel'
 import { CustomersPage } from '../../models/customers/CustomersPage'
 
 export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     return (
-      <div className={css.main}>
-        <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
+      <div className={commonCss.main}>
+        <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <button className={css.editOrPublishButton}
             is-enabled={`${p.customersPage.customerInfo.validation.areAllValid(p.customersPage.selectedCustomer!)}`}
             onClick={() => p.customersPage.editOrPublishCustomer()}
@@ -29,7 +31,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
             }
           </button>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.customersPage.cancelEditing()}>
+          <button className={commonCss.backButton} onClick={() => p.customersPage.cancelEditing()}>
             Cancel
           </button>
         </div>

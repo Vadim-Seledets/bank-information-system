@@ -2,18 +2,20 @@ import * as React from 'react'
 import { reactive } from 'reactronic-toolkit-react'
 import { dim } from '../../common/css'
 import { style } from './CustomerInfoPage.css'
+import { commonStyle } from '../../common/CommonStyles.css'
 import { CustomersPage } from '../../models/customers/CustomersPage'
 
 export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     const customer = p.customersPage.selectedCustomer
     const auxiliary = p.customersPage.app.auxiliary
     return (
-      <div className={css.main}>
-        <div className={css.headLine} style={{ ...dim(2, 1, 11, 1) }}>
+      <div className={commonCss.main}>
+        <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={css.backButton} onClick={() => p.customersPage.app.currentTab?.setCurrentPageName('CustomersListPage')}>
+          <button className={commonCss.backButton} onClick={() => p.customersPage.app.currentTab?.setCurrentPageName('CustomersListPage')}>
             Back
           </button>
         </div>
