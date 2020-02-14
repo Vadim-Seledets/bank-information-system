@@ -159,11 +159,11 @@ export class CustomersPage extends Stateful {
         await this.app.httpClient.delete(url)
         const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('DELETE', url)
         this.customerInfo.setApiErrors(errors)
-      }
-      const start = this.customers.indexOf(customer)
-      this.customers.splice(start, 1)
-      if (customer === this.selectedCustomer) {
-        this.setSelectedCustomer(undefined)
+        if (!errors) {
+          const start = this.customers.indexOf(customer)
+          this.customers.splice(start, 1)
+          this.setSelectedCustomer(undefined)
+        }
       }
     }
   }
