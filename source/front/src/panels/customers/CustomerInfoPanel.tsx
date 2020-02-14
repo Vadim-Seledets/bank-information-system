@@ -53,7 +53,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             {apiErrors?.has('BirthInfo.DateOfBirth') && <div style={{ ...dim(5, 5, 5, 5) }} className={css.error}>{apiErrors?.getPropertyErrors('BirthInfo.DateOfBirth')[0]}</div>}
             
             <div style={{ ...dim(1, 6, 1, 6)}} className={css.caption}>Gender</div>
-            <div style={{ ...dim(3, 6, 3, 6), display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', fontSize: '0.8em' }}>
+            <div style={{ ...dim(3, 6, 3, 6), display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', fontSize: '0.8em', margin: '0.5em 0' }}>
               {Object.keys(Gender).map((v, i) => (
                 <React.Fragment key={`${i}:${v}`}>
                   <input type="radio" name="gender" checked={v === customer.gender ? true : false}
