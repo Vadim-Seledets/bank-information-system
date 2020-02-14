@@ -56,8 +56,11 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div style={{ ...dim(3, 6, 3, 6), display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', fontSize: '0.8em', margin: '0.5em 0' }}>
               {Object.keys(Gender).map((v, i) => (
                 <React.Fragment key={`${i}:${v}`}>
-                  <input type="radio" name="gender" checked={v === customer.gender ? true : false}
-                    onChange={() => customer.setGender(v as Gender)} />&nbsp;{v}
+                  <div style={{ display: 'flex', alignItems: 'baseline' }}>
+                    <input type="radio" name="gender" checked={v === customer.gender ? true : false}
+                      onChange={() => customer.setGender(v as Gender)} />&nbsp;
+                    <div style={{ marginLeft: '0.5em' }}>{v}</div>
+                  </div>
                 </React.Fragment>
               ))}
             </div>
