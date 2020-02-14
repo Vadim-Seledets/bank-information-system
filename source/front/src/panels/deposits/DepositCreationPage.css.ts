@@ -16,80 +16,62 @@ export const style = restyle(() => {
     `,
 
     properties: css`
-      position: relative;
-      background-color: ${theme.applicationBackground};
+      display: grid;
+      grid-template-columns: 10em 1em 3fr 1em 5fr;
+      align-items: center;
       color: ${theme.applicationForeground};
+      background-color: ${theme.applicationBackground};
+    `,
+    
+    header: css`
       display: flex;
-      flex-direction: column;
+      align-items: baseline;
+      margin: 0.5em 0;
+      font-size: 1em;
+
+      .caption {
+        margin-right: 1em;
+        font-weight: bold;
+      }
+    `,
+    
+    caption: css`
+      justify-self: right;
+      font-size: 0.8em;
+      color: ${theme.customerInfoBubbleForeground};
     `,
 
-    property: css`
+    input: css`
+      margin: 0.25em 0;
+      border: 1px solid ${theme.applicationForeground};
+      border-radius: 0.2em;
+      font-size: 0.8em;
+      height: 1.4em;
+      outline: none;
+      color: ${theme.applicationForeground};
+      background-color: ${theme.applicationBackground};
+
+      &[is-invalid=true] {
+        border-color: #ee3333;
+      }
+    `,
+
+    error: css`
+      font-size: 0.8em;
+      color: #ee3333;
+    `,
+
+    money: css`
       display: flex;
-      flex-direction: column;
-      padding: 0.25em 0;
-      
-      .propertyNameLine {
-        display: flex;
-        align-items: baseline;
-        line-height: 1.1em;
+      align-items: center;
 
-        .name {
-          font-size: 0.7em;
-          color: ${theme.customerInfoBubbleForeground};
-        }
-
-        .error {
-          font-size: 0.9em;
-          color: red;
-
-          &:hover {
-            .errorPopUp {
-              display: flex;
-            }
-          }
-
-          .errorPopUp {
-            z-index: 3;
-            display: none;
-            position: absolute;
-            margin-left: -2em;
-            flex-direction: column;
-            font-size: 0.8em;
-            background-color: ${theme.applicationBackground};
-            box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
-            border-radius: 0.3em;
-            
-            .errorRow { 
-              padding: 0.25em;
-            }
-          }
-        }
-
-        .input {
-          margin-left: 1em;
-          height: 1em;
-        }
+      .amount {
+        flex-grow: 1;
       }
 
-      .propertyInputColumn {
-        height: 1em;
-        font-size: 0.8em;
-        padding: 0.25em 0;
-        border-bottom: 1px solid grey;
-        color: ${theme.applicationForeground};
-        background-color: ${theme.applicationBackground};
-
-        &[is-invalid=true] {
-          border-bottom: 1px solid red;
-        }
-      }
-
-      .propertyInputHorizontalLine {
-        display: flex;
-        align-items: baseline;
-        height: 1em;
-        font-size: 0.8em;
-        padding: 0.25em 0;
+      .currency {
+        border: none;
+        outline: none;
         color: ${theme.applicationForeground};
         background-color: ${theme.applicationBackground};
       }
