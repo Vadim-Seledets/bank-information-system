@@ -7,7 +7,7 @@ export const style = restyle(() => {
   return {
     main: css`
       display: grid;
-      grid-template-columns: 10em 1em 3fr 1em 5fr;
+      grid-template-columns: 10.5em 1em 3.7fr 1em 5fr;
       align-items: center;
       color: ${theme.applicationForeground};
       background-color: ${theme.applicationBackground};
