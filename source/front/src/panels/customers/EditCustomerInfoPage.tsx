@@ -30,7 +30,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
                 </React.Fragment>)
             }
           </button>
-          <button className={css.deleteButton}>
+          <button className={css.deleteButton} is-visible={`${p.customersPage.selectedCustomer?.id !== undefined}`}>
             <span className='las la-trash icon' style={{ marginRight: '0.5em' }} />
             <div onClick={() => p.customersPage.setDeleteIsRequested(!p.customersPage.deleteIsRequested)}>Delete Customer</div>
             <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.customersPage.deleteIsRequested}`}>

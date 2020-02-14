@@ -20,6 +20,10 @@ export const style = restyle(() => {
       align-items: center;
       margin-left: 1em;
       background-color: #ee3333;
+
+      &[is-visible=false] {
+        display: none;
+      }
     `,
 
     deleteButtonYesNoButtonsContainer: css`
