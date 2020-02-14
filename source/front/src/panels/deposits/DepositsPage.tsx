@@ -58,7 +58,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
               >{d.programEndDate}</div>
               <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-hovered={`${p.depositsPage.isRowHovered(i + 2)}`}
-                is-selected={`${p.depositsPage.selectedDeposit === d}`}
+                is-selected={`${p.depositsPage.selectedDeposit?.contractNumber === d.contractNumber}`}
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
                 onPointerEnter={() => p.depositsPage.setIsRowWithCustomerHovered(true, i + 2)}
                 onPointerLeave={() => p.depositsPage.setIsRowWithCustomerHovered(false, i + 2)}
