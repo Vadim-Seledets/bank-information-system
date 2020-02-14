@@ -21,6 +21,11 @@ export class ApiErrors extends Stateful {
     this.hasAnyErrors = value
   }
 
+  getMainError(): string {
+    const mainError = this.error.length > 0 ? this.error.slice(0, this.error.length - 1) : ''
+    return mainError
+  }
+
   getPropertyErrors(propertyName: string): Array<string> {
     let errors = new Array<string>()
     if (this.errors) {
