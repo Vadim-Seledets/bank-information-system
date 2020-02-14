@@ -31,7 +31,7 @@ export const commonStyle = restyle(() => {
 
       .error {
         margin-left: 1em;
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: #ee3333;
       }
     `,
