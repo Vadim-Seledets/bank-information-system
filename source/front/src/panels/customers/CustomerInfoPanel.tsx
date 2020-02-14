@@ -16,9 +16,11 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
       <React.Fragment>
         {customer && (
           <div className={css.main}>
-            <div style={{ ...dim(1, 1, 1, 1)}} className={css.header}>Personal Information</div>
-            {apiErrors?.has('') && <div style={{ ...dim(3, 1, 5, 1)}} className={css.error}>{apiErrors?.getPropertyErrors('')[0]}</div>}
-            
+            <div style={{ ...dim(1, 1, 5, 1)}} className={css.header}>
+              <div className='caption'>Personal Information</div>
+              {apiErrors?.has('') && <div style={{ ...dim(3, 1, 5, 1)}} className={css.error}>{apiErrors?.getPropertyErrors('')[0]}</div>}
+            </div>
+
             <div style={{ ...dim(1, 2, 1, 2)}} className={css.caption}>Last Name</div>
             <input style={{ ...dim(3, 2, 3, 2)}} className={css.input} type="text" value={customer.lastName}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'lastName') || apiErrors?.has('LastName')}`}
@@ -61,9 +63,11 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             </div>
             {apiErrors?.has('Gender') && <div style={{ ...dim(5, 6, 5, 6) }} className={css.error}>{apiErrors?.getPropertyErrors('Gender')[0]}</div>}
             
-            <div style={{ ...dim(1, 7, 1, 7)}} className={css.header}>Passport Information</div>
-            {apiErrors?.has('Passport') && <div style={{ ...dim(3, 7, 5, 7) }} className={css.error}>{apiErrors?.getPropertyErrors('Passport')[0]}</div>}
-            
+            <div style={{ ...dim(1, 7, 5, 7)}} className={css.header}>
+              <div className='caption'>Passport Information</div>
+              {apiErrors?.has('Passport') && <div style={{ ...dim(3, 7, 5, 7) }} className={css.error}>{apiErrors?.getPropertyErrors('Passport')[0]}</div>}
+            </div>
+
             <div style={{ ...dim(1, 8, 1, 8)}} className={css.caption}>Citizenship</div>
             <select style={{ ...dim(3, 8, 3, 8)}} className={css.input} value={customer.citizenshipId}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'citizenshipId') || apiErrors?.has('Passport.CitizenshipId')}`}
@@ -116,7 +120,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             />
             {apiErrors?.has('Passport.IdNumber') && <div style={{ ...dim(5, 13, 5, 13) }} className={css.error}>{apiErrors?.getPropertyErrors('Passport.IdNumber')[0]}</div>}
             
-            <div style={{ ...dim(1, 14, 1, 14)}} className={css.header}>Contact Information</div>
+            <div style={{ ...dim(1, 14, 5, 14)}} className={css.header}>Contact Information</div>
 
             <div style={{ ...dim(1, 15, 1, 15)}} className={css.caption}>Place Of Birth</div>
             <input style={{ ...dim(3, 15, 3, 15) }} className={css.input} type="text" value={customer.placeOfBirth}
@@ -188,7 +192,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             />
             {apiErrors?.has('Contacts.Email') && <div style={{ ...dim(5, 22, 5, 22) }} className={css.error}>{apiErrors?.getPropertyErrors('Contacts.Email')[0]}</div>}
             
-            <div style={{ ...dim(1, 23, 3, 23)}} className={css.header}>Job Information</div>
+            <div style={{ ...dim(1, 23, 5, 23)}} className={css.header}>Job Information</div>
             
             <div style={{ ...dim(1, 24, 1, 24)}} className={css.caption}>Company</div>
             <input style={{ ...dim(3, 24, 3, 24) }} className={css.input} type="text" value={customer.company}

@@ -7,16 +7,22 @@ export const style = restyle(() => {
   return {
     main: css`
       display: grid;
-      grid-template-columns: 3fr 1em 3fr 1em 5fr;
+      grid-template-columns: 10em 1em 3fr 1em 5fr;
       align-items: center;
       color: ${theme.applicationForeground};
       background-color: ${theme.applicationBackground};
     `,
     
     header: css`
+      display: flex;
+      align-items: baseline;
       margin: 0.5em 0;
-      font-weight: bold;
       font-size: 1em;
+
+      .caption {
+        margin-right: 1em;
+        font-weight: bold;
+      }
     `,
     
     caption: css`
