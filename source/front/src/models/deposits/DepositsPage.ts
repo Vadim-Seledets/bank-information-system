@@ -1,4 +1,4 @@
-import { Stateful, action, trigger, isolated, cached } from 'reactronic'
+import { Stateful, action, trigger, isolated } from 'reactronic'
 import { App } from '../App'
 import { DepositShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
