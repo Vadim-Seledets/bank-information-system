@@ -33,13 +33,13 @@ export class CustomerInfo extends Stateful {
         ['homePhoneNumber', new PropertyValidator('homePhoneNumber', /^(\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*)?$/)],
         ['mobilePhoneNumber', new PropertyValidator('mobilePhoneNumber', /^(\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*)?$/)],
         ['email', new PropertyValidator('email', /^((([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,}))?$/)],
-        ['company', new PropertyValidator('company', /^[A-Za-z ]*$/)],
-        ['position', new PropertyValidator('position', /^[A-Za-z ]*$/)],
+        ['company', new PropertyValidator('company')],
+        ['position', new PropertyValidator('position')],
         ['maritalStatusId', new PropertyValidator('maritalStatusId')],
         ['citizenshipId', new PropertyValidator('citizenshipId')],
         ['disabilityId', new PropertyValidator('disabilityId')],
         ['isRetired', new PropertyValidator('isRetired')],
-        ['amount', new PropertyValidator('amount', /^\d*$/)],
+        ['amount', new PropertyValidator('amount', /^\d{1,10}$/)],
         ['isLiableForMilitaryService', new PropertyValidator('isLiableForMilitaryService')],    
       ])
     )
