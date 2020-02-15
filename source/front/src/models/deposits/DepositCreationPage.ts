@@ -23,7 +23,7 @@ export class DepositCreationPage extends Stateful {
         ['programEndDate', new PropertyValidator<DepositCreateModel>('programEndDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['contractValidUntil', new PropertyValidator<DepositCreateModel>('contractValidUntil', /^\d{4}-\d{2}-\d{2}$/)],
         ['customerId', new PropertyValidator<DepositCreateModel>('customerId')],
-        ['amount', new PropertyValidator<DepositCreateModel>('amount', /^\d+$/)],
+        ['amount', new PropertyValidator<DepositCreateModel>('amount', /^\d{1,10}$/)],
         ['rate', new PropertyValidator<DepositCreateModel>('rate', /^(0[.,][0-9]+)|1$/)],
         ['currencyId', new PropertyValidator<DepositCreateModel>('currencyId')],
       ])
