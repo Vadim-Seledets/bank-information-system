@@ -21,8 +21,8 @@ export function AppWindow(p: { app: App }): JSX.Element {
     return (
       <div className={css.main}>
         <div className={css.menu} style={{ ...dim(1, 1, 12, 1) }}>
-          <img style={{ margin: '0 0.5em', width: '1.2em' }} src="assets/images/bank.png" onClick={() => themes.next()} />
-          <div style={{ color: '#dddddd' }}>
+          <img style={{ margin: '0 0.5em', width: '1.9em' }} src="assets/images/faith.png" onClick={() => themes.next()} />
+          <div style={{ color: '#EEEEE1' }}>
             Bank Information System
           </div>
           <div className='space' />
