@@ -77,7 +77,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
     this.contractValidUntil = '1990-01-01'
     this.customerId = 1
     this.amount = 0
-    this.rate = 0.01
+    this.rate = 0
     this.currencyId = 1
   }
 
