@@ -68,12 +68,12 @@ export function DepositDetailsPageView(p: { depositsPage: DepositsPage }): JSX.E
                 <div className={`value ${depositDetailes.isCompleted ? 'highlighted-green' : ''}`}>{depositDetailes.isCompleted ? 'Yes' : 'No'}</div>
               </div>
               <div className={css.property}>
-                <div className='name'>Is Revoked</div>
-                <div className={`value ${depositDetailes.isRevoked ? 'highlighted-red' : ''}`}>{depositDetailes.isRevoked ? 'Yes' : 'No'}</div>
+                <div className='name'>Completed At</div>
+                <div className={`value ${depositDetailes.isCompleted ? 'highlighted-green' : ''}`}>{depositDetailes.completedAt}</div>
               </div>
               <div className={css.property}>
-                <div className='name'>Completed At</div>
-                <div className={'value'}>{depositDetailes.completedAt}</div>
+                <div className='name'>Is Revoked</div>
+                <div className={`value ${depositDetailes.isRevoked ? 'highlighted-red' : ''}`}>{depositDetailes.isRevoked ? 'Yes' : 'No'}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Rate</div>
