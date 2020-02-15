@@ -1,6 +1,6 @@
 import { Stateful, action, trigger, isolated } from 'reactronic'
 import { App } from '../App'
-import { DepositShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
+import { ProgramContractShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
 import { IApiErrors } from '../ApiErrors'
 
@@ -88,7 +88,7 @@ export class DepositsPage extends Stateful {
 
   @action
   async getAllDepositsInShortInfoModelRequest(): Promise<void> {
-    const deposits = await this.app.httpClient.get<Array<DepositShortInfoModel>>(`https://localhost:5001/deposits`)
+    const deposits = await this.app.httpClient.get<Array<ProgramContractShortInfoModel>>(`https://localhost:5001/deposits`)
     if (deposits) {
       this.deposits = deposits.map(depositShortInfoModel => {
         const deposit = new Deposit(

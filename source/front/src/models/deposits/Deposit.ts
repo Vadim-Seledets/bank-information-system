@@ -2,7 +2,7 @@ import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from './Transaction'
 import { Stateful, cached, action } from 'reactronic'
 
-export interface DepositShortInfoModel {
+export interface ProgramContractShortInfoModel {
   contractNumber: string
   customer: ICustomerShortInfo
   programStartDate: string
@@ -39,7 +39,7 @@ export interface DepositFullInfoModel {
   transactions: Array<Transaction>
 }
 
-export class Deposit extends Stateful implements DepositShortInfoModel {
+export class Deposit extends Stateful implements ProgramContractShortInfoModel {
   hilightingRange: IHighlightingRange = { start: 0, length: 0 }
 
   constructor(
@@ -82,12 +82,12 @@ export class CreatingDeposit extends Stateful implements DepositCreateModel {
     super()
     this.depositTypeId = 1
     this.contractNumber = contractNumber
-    this.programStartDate = ''
-    this.programEndDate = ''
-    this.contractValidUntil = ''
+    this.programStartDate = '1990-01-01'
+    this.programEndDate = '1990-01-01'
+    this.contractValidUntil = '1990-01-01'
     this.customerId = 1
     this.amount = 0
-    this.rate = 0
+    this.rate = 0.01
     this.currencyId = 1
   }
 
