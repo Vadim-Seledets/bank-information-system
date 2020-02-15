@@ -11,6 +11,9 @@ import { CustomerInfoPageView } from './customers/CustomerInfoPage'
 import { DepositsPageView } from './deposits/DepositsPage'
 import { DepositCreationPageView } from './deposits/DepositCreationPage'
 import { DepositDetailsPageView } from './deposits/DepositDetailsPage'
+import { LoansPageView } from './loans/LoansPage'
+import { LoanCreationPageView } from './loans/LoanCreationPage'
+import { LoanDetailsPageView } from './loans/LoanDetailsPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -86,6 +89,29 @@ export function AppWindow(p: { app: App }): JSX.Element {
               <React.Fragment>
                 <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
                   <DepositDetailsPageView depositsPage={p.app.depositsPage} />
+                </div>
+              </React.Fragment>
+            )}
+          </React.Fragment>
+        )}
+        {p.app.currentTab?.name === 'loans' && (
+          <React.Fragment>
+            {p.app.currentTab.currentPage === 'LoansListPage' && (
+              <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                <LoansPageView loansPage={p.app.loansPage} />
+              </div>
+            )}
+            {p.app.currentTab.currentPage === 'AddNewLoanPage' && (
+              <React.Fragment>
+                <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                  <LoanCreationPageView loansPage={p.app.loansPage} />
+                </div>
+              </React.Fragment>
+            )}
+            {p.app.currentTab.currentPage === 'LoanDetailsPage' && (
+              <React.Fragment>
+                <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll' }}>
+                  <LoanDetailsPageView loansPage={p.app.loansPage} />
                 </div>
               </React.Fragment>
             )}

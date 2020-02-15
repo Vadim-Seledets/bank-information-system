@@ -4,10 +4,11 @@ import { HttpClient } from './HttpClient'
 import { Auxiliary, CloseBankDayData } from './BankOperations'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
+import { LoansPage } from './loans/LoansPage'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
   | 'DepositsListPage' | 'AddNewDepositPage' | 'DepositDetailsPage'
-  | 'LoansListPage' | 'AtmPage'
+  | 'LoansListPage' | 'AddNewLoanPage' | 'LoanDetailsPage' | 'AtmPage'
 
 export class App extends Stateful {
   httpClient = new HttpClient()
@@ -17,6 +18,7 @@ export class App extends Stateful {
   // currentPageName: PageName /* TO BE REPLACED with '*Page' models */
   customersPage: CustomersPage
   depositsPage: DepositsPage
+  loansPage: LoansPage
 
   closeBankDayData: CloseBankDayData
   utcOffset: Date
@@ -35,6 +37,7 @@ export class App extends Stateful {
     this.currentTab = this.tabs[0]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
+    this.loansPage = new LoansPage(this)
     this.currentDate = new Date()
     this.utcOffset = new Date()
   }
