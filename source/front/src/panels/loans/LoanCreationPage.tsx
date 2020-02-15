@@ -97,7 +97,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('Amount') && <div style={{ ...dim(5, 8, 5, 8) }} className={css.error}>{apiErrors?.getPropertyErrors('Amount')[0]}</div>}
 
               <div style={{ ...dim(1, 9, 1, 9) }} className={css.caption}>Rate</div>
-              <input style={{ ...dim(3, 9, 3, 9) }} className={css.input} type="number" max={1} min={0} step={0.001} defaultValue={creatingLoan.rate}
+              <input style={{ ...dim(3, 9, 3, 9) }} className={css.input} type="number" max={100} min={0} step={1} defaultValue={creatingLoan.rate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'rate') || apiErrors?.has('Rate')}`}
                 onFocus={() => apiErrors?.deleteError('Rate')}
                 onChange={e => creatingLoan.setRate(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)}
