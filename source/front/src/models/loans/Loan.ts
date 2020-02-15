@@ -4,6 +4,7 @@ import { Stateful, cached, action } from 'reactronic'
 import { ProgramContractShortInfoModel } from '../deposits/Deposit'
 
 export interface LoanCreateModel {
+  loanTypeId: number
   contractNumber: string
   programStartDate: string
   programEndDate: string
@@ -60,6 +61,7 @@ export class Loan extends Stateful implements ProgramContractShortInfoModel {
 }
 
 export class CreatingLoan extends Stateful implements LoanCreateModel {
+  loanTypeId: number
   readonly contractNumber: string
   programStartDate: string
   programEndDate: string
@@ -71,6 +73,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
 
   constructor(contractNumber: string) {
     super()
+    this.loanTypeId = 1
     this.contractNumber = contractNumber
     this.programStartDate = '1990-01-01'
     this.programEndDate = '1990-01-01'
@@ -79,6 +82,11 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
     this.amount = 0
     this.rate = 0
     this.currencyId = 1
+  }
+
+  @action
+  setLoanTypeId(value: number): void {
+    this.loanTypeId = value
   }
 
   @action

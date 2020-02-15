@@ -38,6 +38,17 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
                 {apiErrors?.has('') && <div style={{ ...dim(3, 1, 5, 1) }} className={css.error}>{apiErrors?.getPropertyErrors('')[0]}</div>}
               </div>
 
+              <div style={{ ...dim(1, 2, 1, 2) }} className={css.caption}>Loan Type</div>
+              <select style={{ ...dim(3, 2, 3, 2) }} className={css.input} value={creatingLoan.loanTypeId}
+                is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'loanTypeId') || apiErrors?.has('LoanTypeId')}`}
+                onChange={e => creatingLoan.setLoanTypeId(parseInt(e.currentTarget.value))}
+              >
+                {auxiliary.depositTypes.map((v, i) => (
+                  <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
+                ))}
+              </select>
+              {apiErrors?.has('LoanTypeId') && <div style={{ ...dim(5, 2, 5, 2) }} className={css.error}>{apiErrors?.getPropertyErrors('LoanTypeId')[0]}</div>}
+
               <div style={{ ...dim(1, 3, 1, 3) }} className={css.caption}>Contract Number</div>
               <input style={{ ...dim(3, 3, 3, 3) }} className={css.input} disabled={true} type="text" value={creatingLoan.contractNumber}
                 onFocus={() => apiErrors?.deleteError('ContractNumber')}
