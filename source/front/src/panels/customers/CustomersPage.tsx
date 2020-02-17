@@ -38,36 +38,27 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>
-          <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
+          <div style={{ ...dim(1, 1, 9, 1) }} className={`rowBase`} />
           {p.customersPage.filteredCustomers.map((v, i) => (
             <React.Fragment key={i}>
               <div style={{ ...dim(2, i + 2, 2, i + 2) }}
                 className={cx(v.gender === Gender.Female
                   ? 'las la-female'
                   : v.gender === Gender.Male
-                    ? 'las la-male' : 'las la-genderless', 'icon')
+                    ? 'las la-male' : 'las la-genderless', 'icon', 'rowContent')
                 }
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
-                onPointerEnter={() => p.customersPage.setIsGenderHovered(true, i + 2)}
-                onPointerLeave={() => p.customersPage.setIsGenderHovered(false, i + 2)}
               />
-              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='fullName'
+              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='fullName rowContent'
                 onClick={() => p.customersPage.showCustomerInfo(v)}
-                onPointerEnter={() => p.customersPage.setIsFullNameHovered(true, i + 2)}
-                onPointerLeave={() => p.customersPage.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${v.getFullName()}`}} 
               />
-              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='email' href={`mailto:${v.email}`}
+              <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='email rowContent' href={`mailto:${v.email}`}
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
-                onPointerEnter={() => p.customersPage.setIsEmailHovered(true, i + 2)}
-                onPointerLeave={() => p.customersPage.setIsEmailHovered(false, i + 2)}
               >{v.email}</a>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
-                is-hovered={`${p.customersPage.isRowHovered(i + 2)}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-selected={`${p.customersPage.selectedCustomer?.id === v.id}`}
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
-                onPointerEnter={() => p.customersPage.setIsRowWithCustomerHovered(true, i + 2)}
-                onPointerLeave={() => p.customersPage.setIsRowWithCustomerHovered(false, i + 2)}
               />
             </React.Fragment>
           ))}

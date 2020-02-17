@@ -48,16 +48,9 @@ export const style = restyle(() => {
 
       .icon {
         font-size: 1.2em;
-        z-index: 2;
-
-        &:hover {
-          z-index: 4;
-        }
       }
 
       .fullName {
-        z-index: 2;
-
         mark {
           color: ${theme.markForeground};
           background-color: transparent;
@@ -70,53 +63,47 @@ export const style = restyle(() => {
       }
 
       .email {
-        z-index: 2;
         color: #629D30;
       }
-
-      .errors {
-        color: red;
-
-        &:hover {
-          .errorsPopUp {
-            display: flex;
-          }
-        }
-
-        .errorsPopUp {
-          display: none;
-          position: absolute;
-          margin-bottom: -1em;
-          margin-left: -15em;
-          flex-direction: column;
-          font-size: 0.7em;
-          background-color: ${theme.applicationBackground};
-          box-shadow: 0 0 0.4em ${theme.applicationForeground}; 
-          border-radius: 0.3em;
-
-          .errorRow {
-            padding: 0.25em;
-          }
-        }
+      
+      .rowContent {
+        z-index: 2;
       }
 
-      .row {
+      .rowBase {
         z-index: 1;
         width: 100%;
         padding: 1em 0;
         border-bottom: 1px solid ${theme.customerListRowBottomBorder};
+      }
+      
+      .row {
         transition: background-color ease 0.2s;
+
+        &:hover {
+          background-color: ${theme.customerListHoveredRowBackground};
+        }
+
+        &[is-selected=true] {
+          background-color: ${theme.customerListHighlightedRowBackground};
+        }
       }
 
       .oddRow {
         background-color: ${theme.customerListOddRowBackground};
       }
 
-      .rowHighlighter {
-        &[is-hovered=true] {
-          background-color: ${theme.customerListHoveredRowBackground};
+      .rowContent:hover ~ .row {
+        background-color: ${theme.customerListHoveredRowBackground};
+
+        &[is-selected=true] {
+          background-color: ${theme.customerListHighlightedRowBackground};
         }
-        
+      }
+
+      .rowContent:hover ~ .row + .rowContent ~ .row {
+        background-color: transparent;
+
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
         }
