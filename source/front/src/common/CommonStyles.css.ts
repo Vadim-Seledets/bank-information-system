@@ -40,5 +40,57 @@ export const commonStyle = restyle(() => {
       color: ${theme.sidebarSelectedTabForeground};
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
+
+    list: css`
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      color: ${theme.applicationForeground};
+      font-size: 0.8em;
+      user-select: none;
+
+      .rowContent {
+        z-index: 2;
+      }
+
+      .rowBase {
+        z-index: 1;
+        width: 100%;
+        padding: 1em 0;
+        border-bottom: 1px solid ${theme.customerListRowBottomBorder};
+      }
+      
+      .row {
+        transition: background-color ease 0.2s;
+
+        &:hover {
+          background-color: ${theme.customerListHoveredRowBackground};
+        }
+
+        &[is-selected=true] {
+          background-color: ${theme.customerListHighlightedRowBackground};
+        }
+      }
+
+      .oddRow {
+        background-color: ${theme.customerListOddRowBackground};
+      }
+
+      .rowContent:hover ~ .row {
+        background-color: ${theme.customerListHoveredRowBackground};
+
+        &[is-selected=true] {
+          background-color: ${theme.customerListHighlightedRowBackground};
+        }
+      }
+
+      .rowContent:hover ~ .row + .rowContent ~ .row {
+        background-color: transparent;
+
+        &[is-selected=true] {
+          background-color: ${theme.customerListHighlightedRowBackground};
+        }
+      }
+    `,
   }
 })
