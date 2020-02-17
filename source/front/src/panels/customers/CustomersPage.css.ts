@@ -38,14 +38,8 @@ export const style = restyle(() => {
     `,
 
     customerList: css`
-      display: grid;
-      align-items: center;
-      justify-items: center;
       grid-template-columns: 1em 3em 1fr 4fr 1fr 3fr 1fr 4em 1em;
-      color: ${theme.applicationForeground};
-      font-size: 0.8em;
-      user-select: none;
-
+      
       .icon {
         font-size: 1.2em;
       }
@@ -64,49 +58,6 @@ export const style = restyle(() => {
 
       .email {
         color: #629D30;
-      }
-      
-      .rowContent {
-        z-index: 2;
-      }
-
-      .rowBase {
-        z-index: 1;
-        width: 100%;
-        padding: 1em 0;
-        border-bottom: 1px solid ${theme.customerListRowBottomBorder};
-      }
-      
-      .row {
-        transition: background-color ease 0.2s;
-
-        &:hover {
-          background-color: ${theme.customerListHoveredRowBackground};
-        }
-
-        &[is-selected=true] {
-          background-color: ${theme.customerListHighlightedRowBackground};
-        }
-      }
-
-      .oddRow {
-        background-color: ${theme.customerListOddRowBackground};
-      }
-
-      .rowContent:hover ~ .row {
-        background-color: ${theme.customerListHoveredRowBackground};
-
-        &[is-selected=true] {
-          background-color: ${theme.customerListHighlightedRowBackground};
-        }
-      }
-
-      .rowContent:hover ~ .row + .rowContent ~ .row {
-        background-color: transparent;
-
-        &[is-selected=true] {
-          background-color: ${theme.customerListHighlightedRowBackground};
-        }
       }
     `,
   }

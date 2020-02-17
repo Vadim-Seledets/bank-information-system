@@ -34,7 +34,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
             />
           </div>
         </div>
-        <div className={css.customerList} style={{ ...dim(2, 2, 11, 12) }}>
+        <div className={cx(commonCss.list, css.customerList)} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Gender</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Full name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Email</div>
