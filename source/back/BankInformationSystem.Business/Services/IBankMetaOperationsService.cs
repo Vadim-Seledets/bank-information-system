@@ -3,7 +3,7 @@ using BankInformationSystem.Business.Models;
 
 namespace BankInformationSystem.Business.Services
 {
-    public interface IBankOperationsService
+    public interface IBankMetaOperationsService
     {
         Task<BankOperationAuxiliaryInfo> GetBankOperationsAuxiliaryInfoAsync();
 

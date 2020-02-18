@@ -15,5 +15,9 @@ namespace BankInformationSystem.Business.Models
         public IList<MaritalStatusModel> MaritalStatuses { get; set; }
 
         public IList<DepositTypeModel> DepositTypes { get; set; }
+
+        public IList<LoanTypeModel> LoanTypes { get; set; }
+
+        public IList<MobileCarrierModel> MobileCarriers { get; set; }
     }
 }

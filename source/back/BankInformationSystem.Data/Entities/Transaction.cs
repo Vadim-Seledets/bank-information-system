@@ -42,11 +42,11 @@ namespace BankInformationSystem.Data.Entities
             {
                 if (SenderAccount.Activity == AccountActivity.Passive)
                 {
-                    SenderAccount.Debit -= Amount;
+                    SenderAccount.Debit += Amount;
                 }
                 else
                 {
-                    SenderAccount.Credit -= Amount;
+                    SenderAccount.Credit += Amount;
                 }   
             }
 

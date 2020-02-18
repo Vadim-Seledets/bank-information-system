@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace BankInformationSystem.Controllers
 {
     [ApiController]
-    [Route("operations")]
-    public class BankOperationsController : ControllerBase
+    [Route("meta-operations")]
+    public class BankMetaOperationsController : ControllerBase
     {
-        private readonly IBankOperationsService _operationsService;
+        private readonly IBankMetaOperationsService _metaOperationsService;
 
-        public BankOperationsController(IBankOperationsService operationsService)
+        public BankMetaOperationsController(IBankMetaOperationsService metaOperationsService)
         {
-            _operationsService = operationsService;
+            _metaOperationsService = metaOperationsService;
         }
 
         [HttpPost]
@@ -25,7 +25,7 @@ namespace BankInformationSystem.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CloseBankDayAsync(CloseBankDayModel model)
         {
-            await _operationsService.CloseBankDayAsync(model.Times);
+            await _metaOperationsService.CloseBankDayAsync(model.Times);
             
             return NoContent();
         }
@@ -36,7 +36,7 @@ namespace BankInformationSystem.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<BankOperationAuxiliaryInfo>> GetCustomerAuxiliaryInfo()
         {
-            var result = await _operationsService.GetBankOperationsAuxiliaryInfoAsync();
+            var result = await _metaOperationsService.GetBankOperationsAuxiliaryInfoAsync();
 
             return Ok(result);
         }

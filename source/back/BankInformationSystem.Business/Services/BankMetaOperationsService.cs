@@ -13,14 +13,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankInformationSystem.Business.Services
 {
-    public class BankOperationsService : IBankOperationsService
+    public class BankMetaOperationsService : IBankMetaOperationsService
     {
         private readonly BankInformationSystemDbContext _context;
         private readonly IMapper _mapper;
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
         private readonly IVirtualDateTimeManager _virtualDateTimeManager;
 
-        public BankOperationsService(
+        public BankMetaOperationsService(
             BankInformationSystemDbContext context,
             IMapper mapper,
             ICurrentDateTimeProvider currentDateTimeProvider,
@@ -53,6 +53,12 @@ namespace BankInformationSystem.Business.Services
                     .ToListAsync(),
                 DepositTypes = await _mapper
                     .ProjectTo<DepositTypeModel>(_context.DepositTypes.AsNoTracking())
+                    .ToListAsync(),
+                LoanTypes = await _mapper
+                    .ProjectTo<LoanTypeModel>(_context.LoanTypes.AsNoTracking())
+                    .ToListAsync(),
+                MobileCarriers = await _mapper
+                    .ProjectTo<MobileCarrierModel>(_context.MobileCarriers.AsNoTracking())
                     .ToListAsync()
             };
         }

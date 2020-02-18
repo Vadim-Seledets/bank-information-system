@@ -33,9 +33,13 @@ namespace BankInformationSystem.Data
 
         public DbSet<MaritalStatus> MaritalStatuses { get; set; }
 
+        public DbSet<MobileCarrier> MobileCarriers { get; set; }
+
         public DbSet<Account> Accounts { get; set; }
 
         public DbSet<DepositType> DepositTypes { get; set; }
+
+        public DbSet<LoanType> LoanTypes { get; set; }
 
         public DbSet<DepositContract> DepositContracts { get; set; }
 
@@ -110,6 +114,11 @@ namespace BankInformationSystem.Data
                 new MaritalStatus { Id = 2, Description = "Widowed" },
                 new MaritalStatus { Id = 3, Description = "Divorced" },
                 new MaritalStatus { Id = 4, Description = "Single" });
+
+            modelBuilder.Entity<MobileCarrier>().HasData(
+                new MobileCarrier { Id = 1, Name = "MTS" }, 
+                new MobileCarrier { Id = 2, Name = "life:)" },
+                new MobileCarrier { Id = 3, Name = "A1" });
         }
     }
 }

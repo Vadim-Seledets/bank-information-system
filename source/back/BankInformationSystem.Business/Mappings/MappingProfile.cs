@@ -12,12 +12,14 @@ namespace BankInformationSystem.Business.Mappings
                 .ForMember(x => x.Id, m => m.Ignore())
                 .ForMember(x => x.Disability, m => m.Ignore())
                 .ForMember(x => x.MaritalStatus, m => m.Ignore())
-                .ForMember(x => x.Accounts, m => m.Ignore());
+                .ForMember(x => x.Accounts, m => m.Ignore())
+                .ForMember(x => x.IsDeleted, m => m.Ignore());
             
             CreateMap<CustomerUpdateModel, Customer>()
                 .ForMember(x => x.Disability, m => m.Ignore())
                 .ForMember(x => x.MaritalStatus, m => m.Ignore())
-                .ForMember(x => x.Accounts, m => m.Ignore());
+                .ForMember(x => x.Accounts, m => m.Ignore())
+                .ForMember(x => x.IsDeleted, m => m.Ignore());
             
             CreateMap<Customer, CustomerFullInfoModel>();
             
@@ -141,6 +143,26 @@ namespace BankInformationSystem.Business.Mappings
                 .ForMember(x => x.Customer, m => m.Ignore());
             
             CreateMap<DepositType, DepositTypeModel>();
+            
+            CreateMap<LoanType, LoanTypeModel>();
+
+            CreateMap<AccountModel, AccountBalanceModel>()
+                .ForMember(x => x.Amount, m => m.MapFrom(x => x.NetBalance))
+                .ForMember(x => x.CurrencyId, m => m.MapFrom(x => x.CurrencyId));
+
+            CreateMap<Account, AccountModel>();
+            
+            CreateMap<Transaction, CashWithdrawalChequeModel>()
+                .ForMember(x => x.AccountNumber, m => m.MapFrom(x => x.SenderAccount))
+                .ForMember(x => x.WithdrawnAt, m => m.MapFrom(x => x.CreatedAt));
+
+            CreateMap<Transaction, MobileCarrierPaymentChequeModel>()
+                .ForMember(x => x.AccountNumber, m => m.MapFrom(x => x.SenderAccountNumber))
+                .ForMember(x => x.PayedAt, m => m.MapFrom(x => x.CreatedAt))
+                .ForMember(x => x.CarrierId, m => m.Ignore())
+                .ForMember(x => x.PhoneNumber, m => m.Ignore());
+
+            CreateMap<MobileCarrier, MobileCarrierModel>();
         }
     }
 }

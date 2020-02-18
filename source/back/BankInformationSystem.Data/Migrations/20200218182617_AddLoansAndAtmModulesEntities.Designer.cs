@@ -3,14 +3,16 @@ using System;
 using BankInformationSystem.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    partial class BankInformationSystemDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200218182617_AddLoansAndAtmModulesEntities")]
+    partial class AddLoansAndAtmModulesEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

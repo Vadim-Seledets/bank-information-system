@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using BankInformationSystem.Business.Models;
+using BankInformationSystem.Business.Utilities;
+using BankInformationSystem.Common;
 using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data;
 using BankInformationSystem.Data.Entities;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankInformationSystem.Business.Services
@@ -28,12 +32,22 @@ namespace BankInformationSystem.Business.Services
         };
 
         private readonly BankInformationSystemDbContext _context;
+        private readonly IBankInformationSystemDbContextFactory _contextFactory;
+        private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
+        private readonly IMapper _mapper;
 
-        public AccountService(BankInformationSystemDbContext context)
+        public AccountService(
+            BankInformationSystemDbContext context,
+            IBankInformationSystemDbContextFactory contextFactory,
+            ICurrentDateTimeProvider currentDateTimeProvider,
+            IMapper mapper)
         {
             _context = context;
+            _contextFactory = contextFactory;
+            _currentDateTimeProvider = currentDateTimeProvider;
+            _mapper = mapper;
         }
-        
+
         public async Task InitializeBankDevelopmentFundsAsync()
         {
             var currenciesWithoutBankAccount =
@@ -70,6 +84,28 @@ namespace BankInformationSystem.Business.Services
             }
         }
 
+        public async Task<AccountModel> GetAccountWithActualizedBalanceAsync(string accountNumber)
+        {
+            // To avoid unwanted side effects
+            var context = _contextFactory.New();
+            
+            var account = await context.Accounts.FindAsync(accountNumber);
+            if (account == null)
+            {
+                throw new ValidationException($"Account with id {accountNumber} doesn't exist");
+            }
+            
+            var notCommittedTransactions = await context.Transactions
+                .Include(x => x.ReceiverAccount)
+                .Include(x => x.SenderAccount)
+                .Where(x => !x.IsCommitted
+                    && (x.SenderAccountNumber == accountNumber || x.ReceiverAccountNumber == accountNumber))
+                .ToListAsync();
+            notCommittedTransactions.ForEach(x => x.Commit());
+            
+            return _mapper.Map<AccountModel>(account);
+        }
+
         public async Task<Account> GetBankDevelopmentFundAccountForCurrencyAsync(int currencyId)
         {
             var account = await _context.Accounts
@@ -77,6 +113,20 @@ namespace BankInformationSystem.Business.Services
                 .FirstAsync();
 
             return account;
+        }
+
+        public async Task<AccountBalanceModel> GetAccountBalanceAsync(string accountNumber)
+        {
+            var account = await GetAccountWithActualizedBalanceAsync(accountNumber);
+
+            return _mapper.Map<AccountBalanceModel>(account);
+        }
+
+        public async Task<CashWithdrawalChequeModel> WithdrawCashAsync(string accountNumber, decimal amount)
+        {
+            var withdrawTransaction = await TransferMoneyAsync(accountNumber, BankConstants.CashDeskAccountNumber, amount);
+
+            return _mapper.Map<CashWithdrawalChequeModel>(withdrawTransaction);
         }
 
         public async Task<Account> GetAccountTemplateAsync(CreateAccountTemplateModel model)
@@ -92,6 +142,46 @@ namespace BankInformationSystem.Business.Services
                 CurrencyId = model.CurrencyId
             };
         }
+        
+        public async Task<Transaction> TransferMoneyAsync(
+            string senderAccountNumber,
+            string receiverAccountNumber,
+            decimal amount,
+            bool allowNegativeBalance = false)
+        {
+            if (amount <= 0)
+            {
+                throw new ValidationException("Only positive currency amount could be transferred.");
+            }
+            
+            var actualizedAccountModel = await GetAccountWithActualizedBalanceAsync(senderAccountNumber);
+            if (!allowNegativeBalance && actualizedAccountModel.NetBalance < amount)
+            {
+                throw new ValidationException("Cash amount to transfer exceeds account's balance.");
+            }
+
+            if (receiverAccountNumber != null)
+            {
+                var receiverExists = await _context.Accounts.FindAsync(receiverAccountNumber);
+                if (receiverExists == null)
+                {
+                    throw new ValidationException("Receiver account doesn't exist.");
+                }
+            }
+
+            var withdrawalTransaction = _context.Add(new Transaction
+            {
+                CurrencyId = actualizedAccountModel.CurrencyId,
+                Amount = amount,
+                CreatedAt = _currentDateTimeProvider.Now(),
+                SenderAccountNumber = senderAccountNumber,
+                ReceiverAccountNumber = receiverAccountNumber
+            }).Entity;
+
+            await _context.SaveChangesAsync();
+
+            return withdrawalTransaction;
+        }
 
         private async Task<string> NewAccountNumberAsync(AccountType accountType, int? customerId)
         {
@@ -100,7 +190,7 @@ namespace BankInformationSystem.Business.Services
             
             if (customerId == null)
             {
-                customerId = 0; // Bank account
+                customerId = BankConstants.CustomerIdForBank;
             }
             
             var checksum = (balanceAccountNumber + customerId + customerAccountNumber) % 10;

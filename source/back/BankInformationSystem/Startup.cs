@@ -72,8 +72,11 @@ namespace BankInformationSystem
             services.AddScoped<IDepositService, DepositService>();
             services.AddScoped<ILoanService, LoanService>();
             services.AddScoped<IAccountService, AccountService>();
-            services.AddScoped<IBankOperationsService, BankOperationsService>();
+            services.AddScoped<IBankMetaOperationsService, BankMetaOperationsService>();
+            services.AddScoped<IPaymentService, PaymentService>();
 
+            services.AddScoped<IBankInformationSystemDbContextFactory>(container =>
+                new BankInformationSystemDbContextFactory(container.GetService<BankInformationSystemDbContext>));
             services.AddScoped<VirtualDateTimeProvider>();
             services.AddScoped<ICurrentDateTimeProvider>(provider => provider.GetService<VirtualDateTimeProvider>());
             services.AddScoped<IVirtualDateTimeManager>(provider => provider.GetService<VirtualDateTimeProvider>());
