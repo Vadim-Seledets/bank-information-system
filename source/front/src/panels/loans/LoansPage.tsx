@@ -26,42 +26,30 @@ export function LoansPageView(p: { loansPage: LoansPage }): JSX.Element {
             />
           </div>
         </div>
-        <div className={css.depositList} style={{ ...dim(2, 2, 11, 12) }}>
+        <div className={cx(commonCss.list, css.loanList)} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Contract Number</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Customer's Full Name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Start Date</div>
           <div style={{ ...dim(8, 1, 8, 1) }}>End Date</div>
-          <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
+          <div style={{ ...dim(1, 1, 9, 1) }} className={`rowBase`} />
           {p.loansPage.filteredLoans.map((l, i) => (
             <React.Fragment key={i}>
-              <div style={{ ...dim(2, i + 2, 2, i + 2) }}
-                className={'contractNumber'}
+              <div style={{ ...dim(2, i + 2, 2, i + 2) }} className={'rowContent contractNumber'}
                 onClick={() => p.loansPage.showLoanDetails(l)}
-                onPointerEnter={() => p.loansPage.setIsGenderHovered(true, i + 2)}
-                onPointerLeave={() => p.loansPage.setIsGenderHovered(false, i + 2)}
               >{l.contractNumber}</div>
-              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='customerFullName'
+              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='rowContent customerFullName'
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
-                onPointerEnter={() => p.loansPage.setIsFullNameHovered(true, i + 2)}
-                onPointerLeave={() => p.loansPage.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${l.getCustomerFullName()}`}} 
               />
-              <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='programDate'
+              <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='rowContent programDate'
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
-                onPointerEnter={() => p.loansPage.setIsEmailHovered(true, i + 2)}
-                onPointerLeave={() => p.loansPage.setIsEmailHovered(false, i + 2)}
               >{l.programStartDate}</div>
-              <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
+              <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='rowContent programDate'
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
-                onPointerEnter={() => p.loansPage.setIsActionsHovered(true, i + 2)}
-                onPointerLeave={() => p.loansPage.setIsActionsHovered(false, i + 2)}
               >{l.programEndDate}</div>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
-                is-hovered={`${p.loansPage.isRowHovered(i + 2)}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-selected={`${p.loansPage.selectedLoan?.contractNumber === l.contractNumber}`}
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
-                onPointerEnter={() => p.loansPage.setIsRowWithCustomerHovered(true, i + 2)}
-                onPointerLeave={() => p.loansPage.setIsRowWithCustomerHovered(false, i + 2)}
               />
             </React.Fragment>
           ))}

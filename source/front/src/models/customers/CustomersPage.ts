@@ -13,15 +13,6 @@ export class CustomersPage extends Stateful {
   
   filter = ''
   deleteIsRequested = false
-  
-  // Below properties are used for styling
-
-  isRowWithCustomerHovered = false
-  isGenderHovered = false
-  isFullNameHovered = false
-  isEmailHovered = false
-  isActionsHovered = false
-  hoveredRowNumber = 0
 
   constructor(app: App) {
     super()
@@ -168,56 +159,14 @@ export class CustomersPage extends Stateful {
     }
   }
 
-  // Below methods are used for styling
-
-  @action
-  setIsRowWithCustomerHovered(value: boolean, row: number): void {
-    this.hoveredRowNumber = row
-    this.isRowWithCustomerHovered = value
-  }
-  
-  @action
-  setIsGenderHovered(value: boolean, row: number): void {
-    this.hoveredRowNumber = row
-    this.isGenderHovered = value
-  }
-  
-  @action
-  setIsFullNameHovered(value: boolean, row: number): void {
-    this.hoveredRowNumber = row
-    this.isFullNameHovered = value
-  }
-  
-  @action
-  setIsEmailHovered(value: boolean, row: number): void {
-    this.hoveredRowNumber = row
-    this.isFullNameHovered = value
-  }
-
-  @action
-  setIsActionsHovered(value: boolean, row: number): void {
-    this.hoveredRowNumber = row
-    this.isActionsHovered = value
-  }
-
   @action
   setDeleteIsRequested(value: boolean): void {
     this.deleteIsRequested = value
   }
 
   @trigger
-  dropDeleteRequestAndResetHoverRowNumber(): void {
+  dropDeleteRequest(): void {
     this.selectedCustomer /* Sensetivity list item */
     this.deleteIsRequested = false
-    this.hoveredRowNumber = 0
-  }
-
-  isRowHovered(row: number): boolean {
-    return (this.isRowWithCustomerHovered
-      || this.isGenderHovered
-      || this.isFullNameHovered
-      || this.isEmailHovered
-      || this.isActionsHovered
-    ) && this.hoveredRowNumber === row
   }
 }

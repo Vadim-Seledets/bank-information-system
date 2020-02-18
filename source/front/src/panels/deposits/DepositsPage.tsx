@@ -26,42 +26,30 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             />
           </div>
         </div>
-        <div className={css.depositList} style={{ ...dim(2, 2, 11, 12) }}>
+        <div className={cx(commonCss.list, css.depositList)} style={{ ...dim(2, 2, 11, 12) }}>
           <div style={{ ...dim(2, 1, 2, 1) }}>Contract Number</div>
           <div style={{ ...dim(4, 1, 4, 1) }}>Customer's Full Name</div>
           <div style={{ ...dim(6, 1, 6, 1) }}>Start Date</div>
           <div style={{ ...dim(8, 1, 8, 1) }}>End Date</div>
-          <div style={{ ...dim(1, 1, 9, 1) }} className={`row`} />
+          <div style={{ ...dim(1, 1, 9, 1) }} className={`rowBase`} />
           {p.depositsPage.filteredDeposits.map((d, i) => (
             <React.Fragment key={i}>
-              <div style={{ ...dim(2, i + 2, 2, i + 2) }}
-                className={'contractNumber'}
+              <div style={{ ...dim(2, i + 2, 2, i + 2) }} className={'rowContent contractNumber'}
                 onClick={() => p.depositsPage.showDepositDetails(d)}
-                onPointerEnter={() => p.depositsPage.setIsGenderHovered(true, i + 2)}
-                onPointerLeave={() => p.depositsPage.setIsGenderHovered(false, i + 2)}
               >{d.contractNumber}</div>
-              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='customerFullName'
+              <div style={{ ...dim(4, i + 2, 4, i + 2) }} className='rowContent customerFullName'
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
-                onPointerEnter={() => p.depositsPage.setIsFullNameHovered(true, i + 2)}
-                onPointerLeave={() => p.depositsPage.setIsFullNameHovered(false, i + 2)}
                 dangerouslySetInnerHTML={{__html: `${d.getCustomerFullName()}`}} 
               />
-              <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='programDate'
+              <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='rowContent programDate'
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
-                onPointerEnter={() => p.depositsPage.setIsEmailHovered(true, i + 2)}
-                onPointerLeave={() => p.depositsPage.setIsEmailHovered(false, i + 2)}
               >{d.programStartDate}</div>
-              <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='programDate'
+              <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='rowContent programDate'
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
-                onPointerEnter={() => p.depositsPage.setIsActionsHovered(true, i + 2)}
-                onPointerLeave={() => p.depositsPage.setIsActionsHovered(false, i + 2)}
               >{d.programEndDate}</div>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`row rowHighlighter ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
-                is-hovered={`${p.depositsPage.isRowHovered(i + 2)}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
                 is-selected={`${p.depositsPage.selectedDeposit?.contractNumber === d.contractNumber}`}
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
-                onPointerEnter={() => p.depositsPage.setIsRowWithCustomerHovered(true, i + 2)}
-                onPointerLeave={() => p.depositsPage.setIsRowWithCustomerHovered(false, i + 2)}
               />
             </React.Fragment>
           ))}
