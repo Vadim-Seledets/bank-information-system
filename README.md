@@ -1,12 +1,14 @@
 # Bank Information System
 
 ## Build & Run
+
+### Back-end
 ```sh
-# Build & run back
 $ dotnet build --configuration Release source/back/BankInformationSystem.sln
 $ dotnet run -- configuration Release --project source/back/BankInormationSystem/BankInformationSystem.csproj
-
-# Build & run front
+```
+### Front-end
+```sh
 $ cd source/front
 $ npm install
 $ npm run webpack-start
