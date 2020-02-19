@@ -121,7 +121,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
         {p.app.currentTab?.name === 'atm' && (
           <React.Fragment>
             {p.app.currentTab.currentPage === 'AtmPage' && (
-              <div style={{ ...dim(3, 3, 11, 11), overflow: 'scroll', display: 'flex' }}>
+              <div style={{ ...dim(2, 2, 12, 12), overflow: 'scroll', display: 'flex' }}>
                 <AtmPageView atmPage={p.app.atmPage} />
               </div>
             )}
