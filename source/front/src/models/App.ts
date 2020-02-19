@@ -5,6 +5,7 @@ import { Auxiliary, CloseBankDayData } from './BankMetaOperations'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 import { LoansPage } from './loans/LoansPage'
+import { AtmPage } from './atm/AtmPage'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
   | 'DepositsListPage' | 'AddNewDepositPage' | 'DepositDetailsPage'
@@ -19,6 +20,7 @@ export class App extends Stateful {
   customersPage: CustomersPage
   depositsPage: DepositsPage
   loansPage: LoansPage
+  atmPage: AtmPage
 
   closeBankDayData: CloseBankDayData
   utcOffset: Date
@@ -34,10 +36,11 @@ export class App extends Stateful {
       new Tab('loans', 'Loans', 'LoansListPage', 'las la-credit-card'),
       new Tab('atm', 'ATM', 'AtmPage', 'las la-money-check'),
     )
-    this.currentTab = this.tabs[0]
+    this.currentTab = this.tabs[3]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
     this.loansPage = new LoansPage(this)
+    this.atmPage = new AtmPage(this)
     this.currentDate = new Date()
     this.utcOffset = new Date()
   }
