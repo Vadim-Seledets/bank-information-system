@@ -1,7 +1,8 @@
 import { Stateful, action } from 'reactronic'
 import { App } from '../App'
 
-export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage'
+export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
+  | 'WithdrawPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage' | 'ReceiptPage'
 
 export class AtmPage extends Stateful {
   app: App
