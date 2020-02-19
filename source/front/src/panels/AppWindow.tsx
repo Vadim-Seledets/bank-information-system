@@ -14,6 +14,7 @@ import { DepositDetailsPageView } from './deposits/DepositDetailsPage'
 import { LoansPageView } from './loans/LoansPage'
 import { LoanCreationPageView } from './loans/LoanCreationPage'
 import { LoanDetailsPageView } from './loans/LoanDetailsPage'
+import { AtmPageView } from './atm/AtmPage'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
@@ -114,6 +115,15 @@ export function AppWindow(p: { app: App }): JSX.Element {
                   <LoanDetailsPageView loansPage={p.app.loansPage} />
                 </div>
               </React.Fragment>
+            )}
+          </React.Fragment>
+        )}
+        {p.app.currentTab?.name === 'atm' && (
+          <React.Fragment>
+            {p.app.currentTab.currentPage === 'AtmPage' && (
+              <div style={{ ...dim(3, 3, 11, 11), overflow: 'scroll', display: 'flex' }}>
+                <AtmPageView atmPage={p.app.atmPage} />
+              </div>
             )}
           </React.Fragment>
         )}
