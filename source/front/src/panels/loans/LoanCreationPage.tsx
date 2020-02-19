@@ -43,7 +43,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'loanTypeId') || apiErrors?.has('LoanTypeId')}`}
                 onChange={e => creatingLoan.setLoanTypeId(parseInt(e.currentTarget.value))}
               >
-                {auxiliary.depositTypes.map((v, i) => (
+                {auxiliary.loanTypes.map((v, i) => (
                   <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
                 ))}
               </select>
