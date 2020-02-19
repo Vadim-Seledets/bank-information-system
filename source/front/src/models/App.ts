@@ -1,7 +1,7 @@
 import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
-import { Auxiliary, CloseBankDayData } from './BankOperations'
+import { Auxiliary, CloseBankDayData } from './BankMetaOperations'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 import { LoansPage } from './loans/LoansPage'
@@ -80,7 +80,7 @@ export class App extends Stateful {
 
   @action
   async closeBankDayAndGetNewDateRequst(): Promise<void> {
-    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
+    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/meta-operations/commit`, JSON.stringify(this.closeBankDayData))
     this.getCurrentDateRequest()
   }
 
@@ -94,7 +94,7 @@ export class App extends Stateful {
 
   @action
   async getAuxiliaryInfo(): Promise<void> {
-    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/operations/auxiliary`)
+    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/meta-operations/auxiliary`)
     if (auxiliary) {
       this.auxiliary = auxiliary
     }
