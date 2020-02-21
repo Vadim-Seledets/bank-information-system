@@ -47,7 +47,6 @@ export const style = restyle(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.6s ease;
 
       .digit {
         padding: 0.25em;
@@ -60,9 +59,41 @@ export const style = restyle(() => {
         border: 1px solid ${theme.applicationForeground};
       }
       
+      &[is-correct=true] {
+        .digit {
+          animation: correct-pin 0.6s ease;
+
+          @keyframes correct-pin {
+            from {
+              border-color: ${theme.applicationForeground};
+            }
+            to {
+              border-color: lime;
+            }
+          }
+        }
+      }
+
       &[is-invalid=true] {
         .digit {
           border-color: #ee3333;
+        }
+
+        animation: incorrect-pin 0.3s ease;
+
+        @keyframes incorrect-pin {
+          from {
+            margin: 0;
+          }
+          30% {
+            margin-left: -2em;
+          }
+          70% {
+            margin-right: -2em;
+          }
+          to {
+            margin: 0;
+          }
         }
       }
     `,

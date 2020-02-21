@@ -52,13 +52,22 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your PIN</div>
-            <input ref={setPinInputElement} style={{ ...dim(12, 1, 12, 1), opacity: '0', pointerEvents: 'none' }} className={css.input} type="text" maxLength={4}
+            <input ref={setPinInputElement} style={{ ...dim(12, 1, 12, 1), opacity: '0', pointerEvents: 'none' }}
+              className={css.input} type="text" maxLength={4} value={atmRoutineInfo.pin}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
               onKeyDown={e => e.key !== 'Backspace' && Number.isNaN(parseInt(e.key)) && e.preventDefault()}
             />
             <div style={{ ...dim(12, 10, 12, 10) }} className={css.pin} onClick={() => p.atmPage.pinInputElement?.focus()}
-              is-invalid={`${atmRoutineInfo.pin.length === 4 && atmRoutineInfo.pin !== atmRoutineInfo.correctPin}`}
+              is-invalid={`${atmRoutineInfo.pin.length === 4 && !atmRoutineInfo.isPinCorrect()}`}
+              is-correct={`${atmRoutineInfo.isPinCorrect()}`}
+              onAnimationEnd={() => {
+                if (atmRoutineInfo.isPinCorrect()) {
+                  p.atmPage.setCurrentPage('MainMenuPage')
+                } else {
+                  atmRoutineInfo.setPin('')
+                }
+              }}
             >
               <div className='digit' style={{ marginLeft: '0' }}>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[0] : '*'}</div>
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[1] : '*'}</div>
