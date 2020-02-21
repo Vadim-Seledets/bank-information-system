@@ -6,9 +6,14 @@ import { dim } from '../../common/css'
 import { cx } from 'emotion'
 
 export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
+  const setReceiptElement = React.useCallback(element => {
+    p.atmPage.setReceiptElement(element)
+  }, [])
   return reactive(() => {
     const css = style.classes
+    const apiErrors = p.atmPage.apiErrors
     const auxiliary = p.atmPage.app.auxiliary
+    const atmRoutineInfo = p.atmPage.atmRoutineInfo
     return (
       <div className={css.main}>
         {p.atmPage.currentPageName === 'WelcomePage' && (
@@ -30,11 +35,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your account number</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <input className={css.input} type="text"
-              // is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
-              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
-              // onChange={e => creatingDeposit.setProgramStartDate(e.currentTarget.value)}
+                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
+                // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
+                onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
               />
-              <button className={css.greenButton} style={{ marginLeft: '1em' }}
+              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
+                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber')}`}
                 onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
               >
                 <span className='las la-check' style={{ marginRight: '0.5em' }} />
@@ -48,11 +54,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your PIN</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <input className={css.input} type="text"
-              // is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
-              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
-              // onChange={e => creatingDeposit.setProgramStartDate(e.currentTarget.value)}
+                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
+                // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
+                onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
               />
-              <button className={css.greenButton} style={{ marginLeft: '1em' }}
+              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
+                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'pin')}`}
                 onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
               >
                 <span className='las la-check' style={{ marginRight: '0.5em' }} />
@@ -95,20 +102,17 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter the amount</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <div className={cx(css.input, css.money)}
-                // is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || apiErrors?.has('Amount')}`}
+                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
               >
-                <input className='amount' type="text"
-                  // onChange={e => creatingDeposit.setAmount(parseFloat(e.currentTarget.value))}
+                <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
+                  onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
                 />
-                <select className='currency'
-                  // onChange={e => creatingDeposit.setCurrencyId(parseInt(e.currentTarget.value))}
-                >
-                  {auxiliary.currencies.map((v, i) => (
-                    <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
-                  ))}
-                </select>
+                <span className='currency'>
+                  {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
+                </span>
               </div>
-              <button className={css.greenButton} style={{ marginLeft: '1em' }}
+              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
+                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
                 onClick={() => p.atmPage.setCurrentPage('ShouldShowReceiptPage')}
               >
                 <span className='las la-check' style={{ marginRight: '0.5em' }} />
@@ -127,7 +131,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Account Balance</div>
             <div style={{ ...dim(10, 12, 15, 12) }}>
-              {'1240 $'}
+              {`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}
             </div>
             <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
@@ -140,37 +144,38 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'MobilePaymentPage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(1, 8, 24, 8), fontSize: '1em' }}>Mobile Payment</div>
-            <div style={{ ...dim(6, 10, 9, 10)}} className={css.caption}>Carrier</div>
-            <select style={{ ...dim(11, 10, 14, 10)}} className={css.input}
-              // is-invalid={`${!p.customerInfo.validation.isValid(customer, 'placeOfRegistrationCityId') || apiErrors?.has('PlaceOfRegistration.CityId')}`}
-              // onChange={e => customer.setPlaceOfRegistrationCityId(parseInt(e.currentTarget.value))}
+            <div style={{ ...dim(6, 10, 9, 10) }} className={css.caption}>Carrier</div>
+            <select style={{ ...dim(11, 10, 14, 10) }} className={css.input}
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'carrierId') || apiErrors?.has('')}`}
+              onChange={e => atmRoutineInfo.setCarrierId(parseInt(e.currentTarget.value))}
             >
               {auxiliary.mobileCarriers.map((v, i) => (
                 <option key={`${v.id}:${v.name}`} value={v.id}>{v.name}</option>
               ))}
             </select>
-            <div style={{ ...dim(6, 12, 9, 12)}} className={css.caption}>Mobile Phone Number</div>
+            <div style={{ ...dim(6, 12, 9, 12) }} className={css.caption}>Mobile Phone Number</div>
             <input style={{ ...dim(11, 12, 14, 12) }} className={css.input} type="text"
-              // is-invalid={`${!p.customerInfo.validation.isValid(customer, 'mobilePhoneNumber') || apiErrors?.has('Contacts.MobilePhoneNumber')}`}
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('Contacts.MobilePhoneNumber')}
-              // onChange={e => customer.setMobilePhoneNumber(e.currentTarget.value)}
+              onChange={e => atmRoutineInfo.setPhoneNumber(e.currentTarget.value)}
             />
-            <div style={{ ...dim(6, 14, 9, 14)}} className={css.caption}>Amount</div>
+            <div style={{ ...dim(6, 14, 9, 14) }} className={css.caption}>Amount</div>
             <div style={{ ...dim(11, 14, 14, 14) }} className={cx(css.input, css.money)}
-              // is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || apiErrors?.has('Amount')}`}
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >
-              <input className='amount' type="text"
-                // onChange={e => creatingDeposit.setAmount(parseFloat(e.currentTarget.value))}
+              <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
+                onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
               />
               <select className='currency'
-                // onChange={e => creatingDeposit.setCurrencyId(parseInt(e.currentTarget.value))}
+                onChange={e => atmRoutineInfo.setCurrencyId(parseInt(e.currentTarget.value))}
               >
                 {auxiliary.currencies.map((v, i) => (
                   <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
                 ))}
               </select>
             </div>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+              is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount') && p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber')}`}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <span className='las la-undo' style={{ marginRight: '0.5em' }} />
@@ -193,6 +198,34 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 <div>No</div>
               </button>
             </div>
+          </React.Fragment>
+        )}
+        {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'withdraw' && (
+          <React.Fragment>
+            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 15, 11) }}>
+              <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
+              <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
+              <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
+              <div style={{ ...dim(3, 2, 3, 2) }} className='value'>{atmRoutineInfo.accountNumber}</div>
+              <div style={{ ...dim(1, 3, 1, 3) }} className='caption'>Amount</div>
+              <div style={{ ...dim(2, 3, 2, 3) }} className='delimiter'>:</div>
+              <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
+              <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Withdrawn At</div>
+              <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
+              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{atmRoutineInfo.withdrawnAt}</div>
+            </div>
+            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
+              onClick={() => p.atmPage.printReceipt()}
+            >
+              <span className='las la-print' style={{ marginRight: '0.5em' }} />
+              <div>Print</div>
+            </button>
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+              onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
+            >
+              <span className='las la-undo' style={{ marginRight: '0.5em' }} />
+              <div>Done</div>
+            </button>
           </React.Fragment>
         )}
       </div>

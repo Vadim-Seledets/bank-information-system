@@ -20,6 +20,13 @@ export const style = restyle(() => {
       color: ${theme.applicationForeground};
     `,
 
+    disable: css`
+      &[is-enabled=false] {
+        pointer-events: none;
+        background-color: grey;
+      }
+    `,
+
     greenButton: css`
       display: flex;
       justify-content: center;
@@ -40,7 +47,7 @@ export const style = restyle(() => {
       border-radius: 0.2em;
       font-size: 0.8em;
       height: 1.4em;
-      min-width: 15em;
+      min-width: 14em;
       outline: none;
       color: ${theme.applicationForeground};
       background-color: ${theme.applicationBackground};
@@ -67,6 +74,38 @@ export const style = restyle(() => {
         outline: none;
         color: ${theme.applicationForeground};
         background-color: ${theme.applicationBackground};
+      }
+    `,
+
+    receipt: css`
+      justify-self: center;
+      align-self: start;
+      display: grid;
+      grid-template-columns: 3fr 1em 1fr;
+      align-items: center;
+      padding: 0.25em;
+      font-size: 0.8em;
+      font-family: monospace;
+      color: ${theme.customerInfoBubbleValueForeground};
+      background-color: ${theme.customerInfoBubbleBackground};
+
+      .title {
+        justify-self: center;
+        font-size: 1.2em;
+        padding: 0.25em 0;
+      }
+
+      .caption {
+        justify-self: left;
+        padding: 0.25em 0;
+      }
+
+      .delimiter {
+        justify-self: center;
+      }
+
+      .value {
+        justify-self: right;
       }
     `,
   }
