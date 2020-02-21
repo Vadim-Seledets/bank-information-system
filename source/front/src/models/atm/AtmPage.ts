@@ -1,11 +1,12 @@
-import { Stateful, action } from 'reactronic'
+import { Stateful, action, trigger } from 'reactronic'
 import { App } from '../App'
-import { ApiErrors } from '../ApiErrors'
-import { AtmRoutineInfo } from './PaymentAndAccountModels'
+import { ApiErrors, IApiErrors } from '../ApiErrors'
+import { AtmRoutineInfo, AccountBalanceModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
-  | 'WithdrawPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage' | 'ReceiptPage'
+  | 'WithdrawPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
+  | 'ReceiptPage' | 'ShouldDoAnotherOperation'
 
 export class AtmPage extends Stateful {
   app: App
@@ -18,10 +19,9 @@ export class AtmPage extends Stateful {
   constructor(app: App) {
     super()
     this.app = app
-    this.currentPageName = 'ReceiptPage'
+    this.currentPageName = 'WelcomePage'
     this.apiErrors = undefined
     this.atmRoutineInfo = new AtmRoutineInfo()
-    this.atmRoutineInfo.setOperation('withdraw')
     this.validation = new Validation<AtmRoutineInfo>(
       new Map([
         ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber', /^\d{13}$/)],
@@ -43,6 +43,63 @@ export class AtmPage extends Stateful {
   @action
   setReceiptElement(element: HTMLElement | null): void {
     this.receiptEmement = element
+  }
+
+  @action
+  setApiErrors(apiErrors: IApiErrors | undefined): void {
+    this.apiErrors = apiErrors ? new ApiErrors(apiErrors) : undefined
+  }
+
+  @action
+  async checkPin(): Promise<void> {
+    this.setApiErrors(undefined)
+    const url = `https://localhost:5001/deposits`
+    // await this.app.httpClient.post(url, this.creatingDeposit.getJson())
+    // const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+    // this.setApiErrors(errors)
+    if (this.apiErrors === undefined) {
+      this.setCurrentPage('MainMenuPage')
+    }
+  }
+
+  @trigger
+  async updateAtmRoutineInfo(): Promise<void> {
+    switch (this.currentPageName) {
+      case 'WelcomePage':
+        this.atmRoutineInfo.reset()
+        this.atmRoutineInfo.setAccountNumber('')
+        this.atmRoutineInfo.setPin('')
+        break
+      case 'PinCodePage':
+        this.atmRoutineInfo.reset()
+        this.atmRoutineInfo.setPin('')
+        break
+      case 'MainMenuPage':
+        this.atmRoutineInfo.reset()
+        break
+      case 'WithdrawPage':
+        await this.getAccountBalance()
+        this.atmRoutineInfo.setAmount(0)
+        this.atmRoutineInfo.setOperation('withdraw')
+        break
+      case 'AccountBalancePage':
+        await this.getAccountBalance()
+        this.atmRoutineInfo.setOperation('balance')
+        break
+      case 'MobilePaymentPage':
+        this.atmRoutineInfo.setOperation('phonePayment')
+        break
+    }
+  }
+
+  @action
+  async getAccountBalance(): Promise<void> {
+    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
+    const accountBalance = await this.app.httpClient.get<AccountBalanceModel>(url)
+    if (accountBalance) {
+      this.atmRoutineInfo.setAmount(accountBalance.amount)
+      this.atmRoutineInfo.setCurrencyId(accountBalance.currencyId)
+    }
   }
 
   printReceipt(): void {

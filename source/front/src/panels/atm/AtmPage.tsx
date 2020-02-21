@@ -60,7 +60,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               />
               <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
                 is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'pin')}`}
-                onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
+                onClick={() => p.atmPage.checkPin()}
               >
                 <span className='las la-check' style={{ marginRight: '0.5em' }} />
                 <div>Enter</div>
@@ -174,8 +174,14 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 ))}
               </select>
             </div>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount') && p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber')}`}
+              onClick={() => {/* TODO: payment routine */}}
+            >
+              <span className='las la-money-bill-wave' style={{ marginRight: '0.5em' }} />
+              <div>Pay</div>
+            </button>
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <span className='las la-undo' style={{ marginRight: '0.5em' }} />
@@ -194,6 +200,23 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               </button>
               <button className={css.greenButton} style={{ marginLeft: '3em' }}
                 onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
+              >
+                <div>No</div>
+              </button>
+            </div>
+          </React.Fragment>
+        )}
+        {p.atmPage.currentPageName === 'ShouldDoAnotherOperation' && (
+          <React.Fragment>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Do you want to do another operation?</div>
+            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
+              <button className={css.greenButton}
+                onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
+              >
+                <div>Yes</div>
+              </button>
+              <button className={css.greenButton} style={{ marginLeft: '3em' }}
+                onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
               >
                 <div>No</div>
               </button>
@@ -221,9 +244,8 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div>Print</div>
             </button>
             <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
-              onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
+              onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
             >
-              <span className='las la-undo' style={{ marginRight: '0.5em' }} />
               <div>Done</div>
             </button>
           </React.Fragment>
