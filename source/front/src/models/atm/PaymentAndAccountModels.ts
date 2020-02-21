@@ -115,4 +115,16 @@ export class AtmRoutineInfo extends Stateful
   setOperation(operation: AtmOperation): void {
     this.operation = operation
   }
+
+  @action
+  reset(): void {
+    this.accountCurrencyId = 1
+    this.phoneNumber = ''
+    this.amount = 0
+    this.currencyId = 1
+    this.carrierId = 1
+    this.withdrawnAt = ''
+    this.payedAt = ''
+    this.operation = 'none'
+  }
 }
