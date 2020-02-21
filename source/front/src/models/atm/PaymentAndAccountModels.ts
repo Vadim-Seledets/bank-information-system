@@ -41,9 +41,9 @@ export class AtmRoutineInfo extends Stateful {
   currencyId: number
   carrierId: number
 
-  constructor() {
+  constructor(accountNumber: string) {
     super()
-    this.accountNumber = ''
+    this.accountNumber = accountNumber
     this.pin = ''
     this.phoneNumber = ''
     this.amount = 0
