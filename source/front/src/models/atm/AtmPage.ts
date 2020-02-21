@@ -1,7 +1,7 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { App } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
-import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel } from './PaymentAndAccountModels'
+import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, CashWithdrawalChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
@@ -115,6 +115,19 @@ export class AtmPage extends Stateful {
     const receipt = await this.app.httpClient.post<MobileCarrierPaymentChequeModel>(url, JSON.stringify(mobileCarrierPaymentInfo))
     if (receipt) {
       this.atmRoutineInfo.setPayedAt(receipt.payedAt)
+      this.setCurrentPage('ShouldShowReceiptPage')
+    }
+  }
+  
+  @action
+  async withdrawCashRequest(): Promise<void> {
+    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/withdraw`
+    const cashWithdrawalModel = {
+      amount: this.atmRoutineInfo.amount,
+    }
+    const receipt = await this.app.httpClient.post<CashWithdrawalChequeModel>(url, JSON.stringify(cashWithdrawalModel))
+    if (receipt) {
+      this.atmRoutineInfo.setWithdrawnAt(receipt.withdrawnAt)
       this.setCurrentPage('ShouldShowReceiptPage')
     }
   }

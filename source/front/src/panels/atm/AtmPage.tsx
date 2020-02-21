@@ -113,7 +113,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               </div>
               <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
                 is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
-                onClick={() => p.atmPage.setCurrentPage('ShouldShowReceiptPage')}
+                onClick={() => p.atmPage.withdrawCashRequest()}
               >
                 <span className='las la-check' style={{ marginRight: '0.5em' }} />
                 <div>Enter</div>
