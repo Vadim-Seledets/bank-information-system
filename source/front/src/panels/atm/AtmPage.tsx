@@ -216,7 +216,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 <div>Yes</div>
               </button>
               <button className={css.greenButton} style={{ marginLeft: '3em' }}
-                onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
+                onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
               >
                 <div>No</div>
               </button>
