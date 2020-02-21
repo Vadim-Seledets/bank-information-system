@@ -7,7 +7,7 @@ export const style = restyle(() => {
   return { 
     main: css`
       display: grid;
-      grid-template-columns: repeat(11, 1fr) 10em repeat(11, 1fr);
+      grid-template-columns: repeat(11, 1fr) 11em repeat(11, 1fr);
       grid-template-rows: repeat(24, 1fr);
       align-items: center;
       justify-items: center;
@@ -68,6 +68,8 @@ export const style = restyle(() => {
       }
 
       .currency {
+        margin-right: 0.3em;
+        font-size: 0.9em;
         border: none;
         outline: none;
         color: ${theme.applicationForeground};

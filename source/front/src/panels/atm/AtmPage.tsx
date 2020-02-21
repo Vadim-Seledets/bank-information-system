@@ -64,20 +64,20 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 7, 24, 7) }}>Choose the operation</div>
-            <button style={{ ...dim(11, 10, 14, 10), justifySelf: 'stretch' }} className={css.greenButton}
+            <div className={css.centeredText} style={{ ...dim(10, 6, 14, 6) }}>Choose the operation</div>
+            <button style={{ ...dim(12, 8, 12, 8), justifySelf: 'stretch' }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('WithdrawPage')}
             >
               <span className='las la-coins' style={{ marginRight: '0.5em' }} />
               <div>Withdraw</div>
             </button>
-            <button style={{ ...dim(11, 12, 14, 12), justifySelf: 'stretch' }} className={css.greenButton}
+            <button style={{ ...dim(12, 10, 12, 10), justifySelf: 'stretch' }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('AccountBalancePage')}
             >
               <span className='las la-wallet' style={{ marginRight: '0.5em' }} />
               <div>Account Balance</div>
             </button>
-            <button style={{ ...dim(11, 14, 14, 14), justifySelf: 'stretch' }} className={css.greenButton}
+            <button style={{ ...dim(12, 12, 12, 12), justifySelf: 'stretch' }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MobilePaymentPage')}
             >
               <span className='las la-money-bill' style={{ marginRight: '0.5em' }} />
@@ -93,26 +93,24 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'WithdrawPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter the amount</div>
-            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
-              <div className={cx(css.input, css.money)}
-                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
-              >
-                <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
-                  onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
-                />
-                <span className='currency'>
-                  {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
-                </span>
-              </div>
-              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
-                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
-                onClick={() => p.atmPage.withdrawCashRequest()}
-              >
-                <span className='las la-check' style={{ marginRight: '0.5em' }} />
-                <div>Enter</div>
-              </button>
+            <div className={css.centeredText} style={{ ...dim(10, 6, 14, 6) }}>Cash Withdrawal</div>
+            <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Please enter the amount</div>
+            <div style={{ ...dim(12, 10, 12, 10) }} className={cx(css.input, css.money)}
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
+            >
+              <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
+                onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
+              />
+              <span className='currency'>
+                {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
+              </span>
             </div>
+            <button style={{ ...dim(12, 20, 12, 20) }}  className={cx(css.greenButton, css.disable)}
+              is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
+              onClick={() => p.atmPage.withdrawCashRequest()}
+            >
+              <div>Enter</div>
+            </button>
             <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
