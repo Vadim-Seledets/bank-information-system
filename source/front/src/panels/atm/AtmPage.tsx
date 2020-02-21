@@ -32,7 +32,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'AccountNumberPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter your account number</div>
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(1, 11, 24, 11) }}>Please enter your account number</div>
             <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text"
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
@@ -48,7 +48,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter your PIN</div>
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(1, 11, 24, 11) }}>Please enter your PIN</div>
             <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text" size={12}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
@@ -94,7 +94,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'WithdrawPage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 6, 14, 6) }}>Cash Withdrawal</div>
-            <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Please enter the amount</div>
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter the amount</div>
             <div style={{ ...dim(12, 10, 12, 10) }} className={cx(css.input, css.money)}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >

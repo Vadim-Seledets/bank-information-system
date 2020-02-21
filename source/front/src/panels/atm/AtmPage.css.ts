@@ -20,6 +20,11 @@ export const style = restyle(() => {
       color: ${theme.applicationForeground};
     `,
 
+    tip: css`
+      font-size: 0.8em;
+      color: ${theme.customerInfoBubbleForeground};
+    `,
+    
     disable: css`
       &[is-enabled=false] {
         pointer-events: none;
