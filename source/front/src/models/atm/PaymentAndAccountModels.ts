@@ -134,4 +134,8 @@ export class AtmRoutineInfo extends Stateful
     this.payedAt = ''
     this.operation = 'none'
   }
+
+  isPinCorrect(): boolean {
+    return this.pin === this.correctPin
+  }
 }
