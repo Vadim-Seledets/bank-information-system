@@ -25,6 +25,24 @@ export const style = restyle(() => {
       color: ${theme.customerInfoBubbleForeground};
     `,
     
+    propertyValueTuple: css`
+      display: flex;
+      align-items: baseline;
+      font-size: 0.8em;
+
+      .caption {
+        color: ${theme.customerInfoBubbleForeground};
+      }
+
+      .value {
+        padding: 0.25em;
+        margin-left: 1em;
+        border-radius: 0.2em;
+        color: ${theme.customerInfoBubbleValueForeground};
+        background-color: ${theme.customerInfoBubbleBackground};
+      }
+    `,
+    
     disable: css`
       &[is-enabled=false] {
         pointer-events: none;

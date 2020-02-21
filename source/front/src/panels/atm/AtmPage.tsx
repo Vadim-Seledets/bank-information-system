@@ -121,9 +121,10 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'AccountBalancePage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Account Balance</div>
-            <div style={{ ...dim(10, 12, 15, 12) }}>
-              {`${atmRoutineInfo.amount.toFixed(2)} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}
+            <div className={css.centeredText} style={{ ...dim(10, 6, 14, 6) }}>Account Balance</div>
+            <div className={cx(css.centeredText, css.propertyValueTuple)} style={{ ...dim(10, 10, 14, 10) }}>
+              <div className='caption'>Current Balance:</div>
+              <div className='value'>{`${atmRoutineInfo.amount.toFixed(2)} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
             </div>
             <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
