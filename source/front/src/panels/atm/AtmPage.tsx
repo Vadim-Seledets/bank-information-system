@@ -123,7 +123,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div style={{ ...dim(12, 8, 12, 8) }} className={cx(css.input, css.money)}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >
-              <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
+              <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}
                 onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
               />
               <span className='currency'>
@@ -206,16 +206,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldShowReceiptPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Do you need a receipt?</div>
-            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
-              <button className={css.greenButton}
-                onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}
-              >
+            <div className={css.centeredText} style={{ ...dim(10, 7, 14, 7) }}>Do you need a receipt?</div>
+            <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
+              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}>
                 <div>Yes</div>
               </button>
-              <button className={css.greenButton} style={{ marginLeft: '3em' }}
-                onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
-              >
+              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}>
                 <div>No</div>
               </button>
             </div>
@@ -223,16 +219,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldDoAnotherOperation' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Do you want to do another operation?</div>
-            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
-              <button className={css.greenButton}
-                onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
-              >
+            <div className={css.centeredText} style={{ ...dim(10, 7, 14, 7) }}>Do you want to do another operation?</div>
+            <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
+              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('PinCodePage')}>
                 <div>Yes</div>
               </button>
-              <button className={css.greenButton} style={{ marginLeft: '3em' }}
-                onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
-              >
+              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('WelcomePage')}>
                 <div>No</div>
               </button>
             </div>
@@ -240,7 +232,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'withdraw' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(9, 7, 16, 11) }}>
+            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 14, 11) }}>
               <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
               <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
               <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
@@ -267,7 +259,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'phonePayment' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(9, 7, 16, 11) }}>
+            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 14, 11) }}>
               <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
               <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
               <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
