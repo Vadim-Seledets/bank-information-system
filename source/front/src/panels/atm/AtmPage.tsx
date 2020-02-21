@@ -114,7 +114,6 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
-              <span className='las la-undo' style={{ marginRight: '0.5em' }} />
               <div>Back</div>
             </button>
           </React.Fragment>
@@ -129,7 +128,6 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
-              <span className='las la-undo' style={{ marginRight: '0.5em' }} />
               <div>Back</div>
             </button>
           </React.Fragment>
@@ -177,7 +175,6 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
-              <span className='las la-undo' style={{ marginRight: '0.5em' }} />
               <div>Back</div>
             </button>
           </React.Fragment>
