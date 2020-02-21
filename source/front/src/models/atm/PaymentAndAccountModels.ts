@@ -33,27 +33,47 @@ export interface MobileCarrierPaymentChequeModel {
   payedAt: string
 }
 
-export class AtmRoutineInfo extends Stateful {
+type AtmOperation = 'withdraw' | 'phonePayment' | 'balance' | 'none'
+
+export class AtmRoutineInfo extends Stateful
+  implements AccountBalanceModel,
+    CashWithdrawalModel,
+    CashWithdrawalChequeModel,
+    MobileCarrierPaymentRequestModel,
+    MobileCarrierPaymentChequeModel {
   accountNumber: string
+  accountCurrencyId: number
   pin: string
   phoneNumber: string
   amount: number
   currencyId: number
   carrierId: number
+  withdrawnAt: string
+  payedAt: string
+  operation: AtmOperation
 
-  constructor(accountNumber: string) {
+  constructor() {
     super()
-    this.accountNumber = accountNumber
+    this.accountNumber = ''
+    this.accountCurrencyId = 1
     this.pin = ''
     this.phoneNumber = ''
     this.amount = 0
     this.currencyId = 1
     this.carrierId = 1
+    this.withdrawnAt = ''
+    this.payedAt = ''
+    this.operation = 'none'
   }
 
   @action
   setAccountNumber(value: string): void {
     this.accountNumber = value
+  }
+
+  @action
+  setAccountCurrencyId(value: number): void {
+    this.accountCurrencyId = value
   }
 
   @action
@@ -79,5 +99,20 @@ export class AtmRoutineInfo extends Stateful {
   @action
   setCarrierId(value: number): void {
     this.carrierId = value
+  }
+
+  @action
+  setWithdrawnAt(value: string): void {
+    this.withdrawnAt = value
+  }
+
+  @action
+  setPayedAt(value: string): void {
+    this.payedAt = value
+  }
+
+  @action
+  setOperation(operation: AtmOperation): void {
+    this.operation = operation
   }
 }
