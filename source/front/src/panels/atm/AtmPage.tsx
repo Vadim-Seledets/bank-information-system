@@ -206,7 +206,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldShowReceiptPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(10, 7, 14, 7) }}>Do you need a receipt?</div>
+            <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Do you need a receipt?</div>
             <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
               <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}>
                 <div>Yes</div>
@@ -219,7 +219,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldDoAnotherOperation' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(10, 7, 14, 7) }}>Do you want to do another operation?</div>
+            <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Do you want to do another operation?</div>
             <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
               <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('PinCodePage')}>
                 <div>Yes</div>
