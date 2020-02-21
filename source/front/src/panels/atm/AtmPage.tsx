@@ -6,6 +6,9 @@ import { dim } from '../../common/css'
 import { cx } from 'emotion'
 
 export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
+  const setPinInputElement = React.useCallback(element => {
+    p.atmPage.setPinInputElement(element)
+  }, [])
   const setReceiptElement = React.useCallback(element => {
     p.atmPage.setReceiptElement(element)
   }, [])
@@ -19,7 +22,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'WelcomePage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 2, 14, 4), fontSize: '2em' }}>WELCOME to</div>
-            <img style={{ ...dim(10, 6, 14, 11), width: '13em'}} src="assets/images/faith.png" />
+            <img style={{ ...dim(10, 6, 14, 11), width: '13em' }} src="assets/images/faith.png" />
             <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '2em' }}>BIS ATM SERVICES</div>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 19, 14, 19) }}>Please insert card</div>
             <button style={{ ...dim(12, 20, 12, 20) }} className={css.greenButton}
@@ -49,7 +52,20 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your PIN</div>
-            <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text" size={12}
+            <input ref={setPinInputElement} style={{ ...dim(12, 1, 12, 1), opacity: '0', pointerEvents: 'none' }} className={css.input} type="text" maxLength={4}
+              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
+              onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
+              onKeyDown={e => e.key !== 'Backspace' && Number.isNaN(parseInt(e.key)) && e.preventDefault()}
+            />
+            <div style={{ ...dim(12, 10, 12, 10) }} className={css.pin} onClick={() => p.atmPage.pinInputElement?.focus()}
+              is-invalid={`${atmRoutineInfo.pin.length === 4 && atmRoutineInfo.pin !== atmRoutineInfo.correctPin}`}
+            >
+              <div className='digit' style={{ marginLeft: '0' }}>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[0] : '*'}</div>
+              <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[1] : '*'}</div>
+              <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[2] : '*'}</div>
+              <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[3] : '*'}</div>
+            </div>
+            {/* <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text" size={12}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
@@ -59,7 +75,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               onClick={() => p.atmPage.checkPin()}
             >
               <div>Enter</div>
-            </button>
+            </button> */}
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
@@ -105,7 +121,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
               </span>
             </div>
-            <button style={{ ...dim(12, 20, 12, 20) }}  className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
               onClick={() => p.atmPage.withdrawCashRequest()}
             >

@@ -14,6 +14,7 @@ export class AtmPage extends Stateful {
   currentPageName: AtmPageName
   atmRoutineInfo: AtmRoutineInfo
   validation: Validation<AtmRoutineInfo>
+  pinInputElement: HTMLElement | null
   receiptEmement: HTMLElement | null
 
   isPinVisible: boolean
@@ -24,6 +25,7 @@ export class AtmPage extends Stateful {
     this.currentPageName = 'WelcomePage'
     this.apiErrors = undefined
     this.atmRoutineInfo = new AtmRoutineInfo()
+    this.atmRoutineInfo.setCorrectPin('1234')
     this.validation = new Validation<AtmRoutineInfo>(
       new Map([
         ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber', /^\d{13}$/)],
@@ -34,6 +36,7 @@ export class AtmPage extends Stateful {
         ['carrierId', new PropertyValidator<AtmRoutineInfo>('carrierId')],
       ])
     )
+    this.pinInputElement = null
     this.receiptEmement = null
     this.isPinVisible = true
   }
@@ -46,6 +49,11 @@ export class AtmPage extends Stateful {
   @action
   setReceiptElement(element: HTMLElement | null): void {
     this.receiptEmement = element
+  }
+ 
+  @action
+  setPinInputElement(element: HTMLElement | null): void {
+    this.pinInputElement = element
   }
 
   @action
@@ -64,6 +72,7 @@ export class AtmPage extends Stateful {
       case 'PinCodePage':
         this.atmRoutineInfo.reset()
         this.atmRoutineInfo.setPin('')
+        this.pinInputElement?.focus()
         break
       case 'MainMenuPage':
         this.atmRoutineInfo.reset()

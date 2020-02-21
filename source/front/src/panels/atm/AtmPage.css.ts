@@ -43,6 +43,30 @@ export const style = restyle(() => {
       }
     `,
     
+    pin: css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.6s ease;
+
+      .digit {
+        padding: 0.25em;
+        min-width: calc(1ch + 0.25em);
+        text-align: center;
+        margin-left: 1em;
+        border-radius: 0.2em;
+        color: ${theme.customerInfoBubbleValueForeground};
+        background-color: ${theme.customerInfoBubbleBackground};
+        border: 1px solid ${theme.applicationForeground};
+      }
+      
+      &[is-invalid=true] {
+        .digit {
+          border-color: #ee3333;
+        }
+      }
+    `,
+    
     disable: css`
       &[is-enabled=false] {
         pointer-events: none;
