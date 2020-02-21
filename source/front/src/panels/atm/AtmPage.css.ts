@@ -7,7 +7,7 @@ export const style = restyle(() => {
   return { 
     main: css`
       display: grid;
-      grid-template-columns: repeat(24, 1fr);
+      grid-template-columns: repeat(11, 1fr) 10em repeat(11, 1fr);
       grid-template-rows: repeat(24, 1fr);
       align-items: center;
       justify-items: center;
@@ -40,14 +40,12 @@ export const style = restyle(() => {
     `,
 
     input: css`
-      /* margin: 0.25em 0; */
-      /* justify-self: stretch; */
+      justify-self: stretch;
       padding: 0;
       border: 1px solid ${theme.applicationForeground};
       border-radius: 0.2em;
       font-size: 0.8em;
       height: 1.4em;
-      min-width: 14em;
       outline: none;
       color: ${theme.applicationForeground};
       background-color: ${theme.applicationBackground};

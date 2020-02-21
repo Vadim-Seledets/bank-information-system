@@ -18,11 +18,11 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
       <div className={css.main}>
         {p.atmPage.currentPageName === 'WelcomePage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 3, 24, 3), fontSize: '2em' }}>WELCOME to</div>
-            <img style={{ ...dim(1, 6, 24, 11), width: '13em', justifySelf: 'center' }} src="assets/images/faith.png" />
-            <div className={css.centeredText} style={{ ...dim(1, 14, 24, 14), fontSize: '2em' }}>BIS ATM SERVICES</div>
-            <div className={css.centeredText} style={{ ...dim(1, 18, 24, 18), fontSize: '1em' }}>Please insert card</div>
-            <button style={{ ...dim(11, 20, 14, 20) }} className={css.greenButton}
+            <div className={css.centeredText} style={{ ...dim(10, 2, 14, 4), fontSize: '2em' }}>WELCOME to</div>
+            <img style={{ ...dim(10, 6, 14, 11), width: '13em'}} src="assets/images/faith.png" />
+            <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '2em' }}>BIS ATM SERVICES</div>
+            <div className={css.centeredText} style={{ ...dim(10, 18, 14, 18), fontSize: '1em' }}>Please insert card</div>
+            <button style={{ ...dim(12, 20, 12, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('AccountNumberPage')}
             >
               <span className='las la-credit-card' style={{ marginRight: '0.5em' }} />
@@ -33,39 +33,33 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'AccountNumberPage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your account number</div>
-            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
-              <input className={css.input} type="text"
-                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
-                // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
-                onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
-              />
-              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
-                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber')}`}
-                onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
-              >
-                <span className='las la-check' style={{ marginRight: '0.5em' }} />
-                <div>Enter</div>
-              </button>
-            </div>
+            <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text"
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
+              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
+              onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
+            />
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
+              is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber')}`}
+              onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
+            >
+              <div>Enter</div>
+            </button>
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your PIN</div>
-            <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
-              <input className={css.input} type="text"
-                is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
-                // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
-                onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
-              />
-              <button className={cx(css.greenButton, css.disable)} style={{ marginLeft: '1em' }}
-                is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'pin')}`}
-                onClick={() => p.atmPage.checkPin()}
-              >
-                <span className='las la-check' style={{ marginRight: '0.5em' }} />
-                <div>Enter</div>
-              </button>
-            </div>
+            <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text" size={12}
+              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
+              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
+              onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
+            />
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
+              is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'pin')}`}
+              onClick={() => p.atmPage.checkPin()}
+            >
+              <div>Enter</div>
+            </button>
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
