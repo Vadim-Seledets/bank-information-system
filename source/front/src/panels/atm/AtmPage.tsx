@@ -21,7 +21,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={css.centeredText} style={{ ...dim(10, 2, 14, 4), fontSize: '2em' }}>WELCOME to</div>
             <img style={{ ...dim(10, 6, 14, 11), width: '13em'}} src="assets/images/faith.png" />
             <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '2em' }}>BIS ATM SERVICES</div>
-            <div className={css.centeredText} style={{ ...dim(10, 18, 14, 18) }}>Please insert card</div>
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 19, 14, 19) }}>Please insert card</div>
             <button style={{ ...dim(12, 20, 12, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('AccountNumberPage')}
             >
