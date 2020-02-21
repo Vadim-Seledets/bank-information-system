@@ -1,7 +1,7 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { App } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
-import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentRequestModel, MobileCarrierPaymentChequeModel } from './PaymentAndAccountModels'
+import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
