@@ -32,8 +32,8 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'AccountNumberPage' && (
           <React.Fragment>
-            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(1, 11, 24, 11) }}>Please enter your account number</div>
-            <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text"
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your account number</div>
+            <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text"
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
@@ -48,8 +48,8 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
-            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(1, 11, 24, 11) }}>Please enter your PIN</div>
-            <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text" size={12}
+            <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your PIN</div>
+            <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text" size={12}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
