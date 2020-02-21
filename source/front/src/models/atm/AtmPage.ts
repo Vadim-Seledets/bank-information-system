@@ -16,6 +16,8 @@ export class AtmPage extends Stateful {
   validation: Validation<AtmRoutineInfo>
   receiptEmement: HTMLElement | null
 
+  isPinVisible: boolean
+
   constructor(app: App) {
     super()
     this.app = app
@@ -33,6 +35,7 @@ export class AtmPage extends Stateful {
       ])
     )
     this.receiptEmement = null
+    this.isPinVisible = true
   }
 
   @action
@@ -130,6 +133,11 @@ export class AtmPage extends Stateful {
       this.atmRoutineInfo.setWithdrawnAt(receipt.withdrawnAt)
       this.setCurrentPage('ShouldShowReceiptPage')
     }
+  }
+
+  @action
+  togglePinVisibility(): void {
+    this.isPinVisible = !this.isPinVisible
   }
 
   printReceipt(): void {
