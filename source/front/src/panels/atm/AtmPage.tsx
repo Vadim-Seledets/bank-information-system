@@ -163,7 +163,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div style={{ ...dim(11, 14, 14, 14) }} className={cx(css.input, css.money)}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >
-              <input className='amount' type="text" defaultValue={atmRoutineInfo.amount}
+              <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}
                 onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
               />
               <select className='currency'
