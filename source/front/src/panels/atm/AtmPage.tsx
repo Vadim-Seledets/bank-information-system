@@ -263,12 +263,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Carrier</div>
               <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
               <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{auxiliary.mobileCarriers.find(v => v.id === atmRoutineInfo.carrierId)?.name}</div>
-              <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Phone number</div>
-              <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{atmRoutineInfo.phoneNumber}</div>
-              <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Payed At</div>
-              <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{atmRoutineInfo.payedAt}</div>
+              <div style={{ ...dim(1, 5, 1, 4) }} className='caption'>Phone number</div>
+              <div style={{ ...dim(2, 5, 2, 4) }} className='delimiter'>:</div>
+              <div style={{ ...dim(3, 5, 3, 4) }} className='value'>{atmRoutineInfo.phoneNumber}</div>
+              <div style={{ ...dim(1, 6, 1, 4) }} className='caption'>Payed At</div>
+              <div style={{ ...dim(2, 6, 2, 4) }} className='delimiter'>:</div>
+              <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{atmRoutineInfo.payedAt}</div>
             </div>
             <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
