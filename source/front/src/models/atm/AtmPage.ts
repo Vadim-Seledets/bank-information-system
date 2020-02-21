@@ -11,25 +11,28 @@ export class AtmPage extends Stateful {
   app: App
   apiErrors: ApiErrors | undefined
   currentPageName: AtmPageName
-  atmRoutineInfo: AtmRoutineInfo | undefined
+  atmRoutineInfo: AtmRoutineInfo
   validation: Validation<AtmRoutineInfo>
+  receiptEmement: HTMLElement | null
 
   constructor(app: App) {
     super()
     this.app = app
-    this.currentPageName = 'WelcomePage'
+    this.currentPageName = 'ReceiptPage'
     this.apiErrors = undefined
-    this.atmRoutineInfo = undefined
+    this.atmRoutineInfo = new AtmRoutineInfo()
+    this.atmRoutineInfo.setOperation('withdraw')
     this.validation = new Validation<AtmRoutineInfo>(
       new Map([
-        ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber')],
-        ['pin', new PropertyValidator<AtmRoutineInfo>('pin')],
-        ['phoneNumber', new PropertyValidator<AtmRoutineInfo>('phoneNumber')],
+        ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber', /^\d{13}$/)],
+        ['pin', new PropertyValidator<AtmRoutineInfo>('pin', /^\d{4}$/)],
+        ['phoneNumber', new PropertyValidator<AtmRoutineInfo>('phoneNumber', /^\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)],
         ['amount', new PropertyValidator<AtmRoutineInfo>('amount', /^\d{1,10}$/)],
         ['currencyId', new PropertyValidator<AtmRoutineInfo>('currencyId')],
         ['carrierId', new PropertyValidator<AtmRoutineInfo>('carrierId')],
       ])
     )
+    this.receiptEmement = null
   }
 
   @action
@@ -38,7 +41,17 @@ export class AtmPage extends Stateful {
   }
 
   @action
-  createAtmRoutineInfo(accountNumber: string): void {
-    this.atmRoutineInfo = new AtmRoutineInfo(accountNumber)
+  setReceiptElement(element: HTMLElement | null): void {
+    this.receiptEmement = element
+  }
+
+  printReceipt(): void {
+    if (this.receiptEmement) {
+      const printContents = this.receiptEmement.innerHTML
+      const originalContents = document.body.innerHTML
+      document.body.innerHTML = printContents
+      window.print()
+      document.body.innerHTML = originalContents
+    }
   }
 }
