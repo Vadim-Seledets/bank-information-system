@@ -21,7 +21,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={css.centeredText} style={{ ...dim(10, 2, 14, 4), fontSize: '2em' }}>WELCOME to</div>
             <img style={{ ...dim(10, 6, 14, 11), width: '13em'}} src="assets/images/faith.png" />
             <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '2em' }}>BIS ATM SERVICES</div>
-            <div className={css.centeredText} style={{ ...dim(10, 18, 14, 18), fontSize: '1em' }}>Please insert card</div>
+            <div className={css.centeredText} style={{ ...dim(10, 18, 14, 18) }}>Please insert card</div>
             <button style={{ ...dim(12, 20, 12, 20) }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('AccountNumberPage')}
             >
@@ -32,7 +32,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'AccountNumberPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your account number</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter your account number</div>
             <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text"
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
@@ -48,7 +48,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'PinCodePage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter your PIN</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter your PIN</div>
             <input style={{ ...dim(12, 12, 12, 12) }} className={css.input} type="text" size={12}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
@@ -64,7 +64,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 7, 24, 7), fontSize: '1em' }}>Choose the operation</div>
+            <div className={css.centeredText} style={{ ...dim(1, 7, 24, 7) }}>Choose the operation</div>
             <button style={{ ...dim(11, 10, 14, 10), justifySelf: 'stretch' }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('WithdrawPage')}
             >
@@ -93,7 +93,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'WithdrawPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Please enter the amount</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Please enter the amount</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <div className={cx(css.input, css.money)}
                 is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
@@ -123,7 +123,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'AccountBalancePage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Account Balance</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Account Balance</div>
             <div style={{ ...dim(10, 12, 15, 12) }}>
               {`${atmRoutineInfo.amount.toFixed(2)} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}
             </div>
@@ -137,7 +137,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'MobilePaymentPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 8, 24, 8), fontSize: '1em' }}>Mobile Payment</div>
+            <div className={css.centeredText} style={{ ...dim(1, 8, 24, 8) }}>Mobile Payment</div>
             <div style={{ ...dim(6, 10, 9, 10) }} className={css.caption}>Carrier</div>
             <select style={{ ...dim(11, 10, 14, 10) }} className={css.input}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'carrierId') || apiErrors?.has('')}`}
@@ -185,7 +185,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldShowReceiptPage' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Do you need a receipt?</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Do you need a receipt?</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <button className={css.greenButton}
                 onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}
@@ -202,7 +202,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ShouldDoAnotherOperation' && (
           <React.Fragment>
-            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10), fontSize: '1em' }}>Do you want to do another operation?</div>
+            <div className={css.centeredText} style={{ ...dim(1, 10, 24, 10) }}>Do you want to do another operation?</div>
             <div style={{ ...dim(10, 12, 15, 12), display: 'flex', justifySelf: 'stretch', justifyContent: 'center' }}>
               <button className={css.greenButton}
                 onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
