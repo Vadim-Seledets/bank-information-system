@@ -44,6 +44,7 @@ export class AtmRoutineInfo extends Stateful
   accountNumber: string
   accountCurrencyId: number
   pin: string
+  correctPin: string
   phoneNumber: string
   amount: number
   currencyId: number
@@ -57,6 +58,7 @@ export class AtmRoutineInfo extends Stateful
     this.accountNumber = ''
     this.accountCurrencyId = 1
     this.pin = ''
+    this.correctPin = ''
     this.phoneNumber = ''
     this.amount = 0
     this.currencyId = 1
@@ -79,6 +81,11 @@ export class AtmRoutineInfo extends Stateful
   @action
   setPin(value: string): void {
     this.pin = value
+  }
+
+  @action
+  setCorrectPin(value: string): void {
+    this.correctPin = value
   }
 
   @action
