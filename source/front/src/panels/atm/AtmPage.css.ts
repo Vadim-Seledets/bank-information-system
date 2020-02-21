@@ -81,7 +81,7 @@ export const style = restyle(() => {
       justify-self: center;
       align-self: start;
       display: grid;
-      grid-template-columns: 3fr 1em 1fr;
+      grid-template-columns: 2fr 1em 1fr;
       align-items: center;
       padding: 0.25em;
       font-size: 0.8em;

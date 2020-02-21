@@ -225,7 +225,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'withdraw' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 15, 11) }}>
+            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(9, 7, 16, 11) }}>
               <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
               <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
               <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
@@ -252,7 +252,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'phonePayment' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 15, 11) }}>
+            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(9, 7, 16, 11) }}>
               <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
               <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
               <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
