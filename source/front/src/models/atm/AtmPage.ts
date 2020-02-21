@@ -1,7 +1,7 @@
 import { Stateful, action, trigger } from 'reactronic'
 import { App } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
-import { AtmRoutineInfo, AccountBalanceModel } from './PaymentAndAccountModels'
+import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentRequestModel, MobileCarrierPaymentChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
@@ -50,18 +50,6 @@ export class AtmPage extends Stateful {
     this.apiErrors = apiErrors ? new ApiErrors(apiErrors) : undefined
   }
 
-  @action
-  async checkPin(): Promise<void> {
-    this.setApiErrors(undefined)
-    const url = `https://localhost:5001/deposits`
-    // await this.app.httpClient.post(url, this.creatingDeposit.getJson())
-    // const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
-    // this.setApiErrors(errors)
-    if (this.apiErrors === undefined) {
-      this.setCurrentPage('MainMenuPage')
-    }
-  }
-
   @trigger
   async updateAtmRoutineInfo(): Promise<void> {
     switch (this.currentPageName) {
@@ -93,12 +81,41 @@ export class AtmPage extends Stateful {
   }
 
   @action
+  async checkPin(): Promise<void> {
+    this.setApiErrors(undefined)
+    const url = `https://localhost:5001/deposits`
+    // await this.app.httpClient.post(url, this.creatingDeposit.getJson())
+    // const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+    // this.setApiErrors(errors)
+    if (this.apiErrors === undefined) {
+      this.setCurrentPage('MainMenuPage')
+    }
+  }
+
+  @action
   async getAccountBalance(): Promise<void> {
     const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
     const accountBalance = await this.app.httpClient.get<AccountBalanceModel>(url)
     if (accountBalance) {
       this.atmRoutineInfo.setAmount(accountBalance.amount)
       this.atmRoutineInfo.setCurrencyId(accountBalance.currencyId)
+    }
+  }
+
+  @action
+  async payForMobilePhoneRequest(): Promise<void> {
+    const url = `https://localhost:5001/payments/mobile-carrier`
+    const mobileCarrierPaymentInfo = {
+      accountNumber: this.atmRoutineInfo.accountNumber,
+      phoneNumber: this.atmRoutineInfo.phoneNumber,
+      amount: this.atmRoutineInfo.amount,
+      currencyId: this.atmRoutineInfo.currencyId,
+      carrierId: this.atmRoutineInfo.carrierId,
+    }
+    const receipt = await this.app.httpClient.post<MobileCarrierPaymentChequeModel>(url, JSON.stringify(mobileCarrierPaymentInfo))
+    if (receipt) {
+      this.atmRoutineInfo.setPayedAt(receipt.payedAt)
+      this.setCurrentPage('ShouldShowReceiptPage')
     }
   }
 
