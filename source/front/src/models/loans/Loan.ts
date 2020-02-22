@@ -3,6 +3,11 @@ import { Transaction } from '../deposits/Transaction'
 import { Stateful, cached, action } from 'reactronic'
 import { ProgramContractShortInfoModel } from '../deposits/Deposit'
 
+export interface CreateLoanResponseModel {
+  regularAccountPin: string
+  loanPaymentAccountPin: string
+}
+
 export interface LoanCreateModel {
   loanTypeId: number
   contractNumber: string

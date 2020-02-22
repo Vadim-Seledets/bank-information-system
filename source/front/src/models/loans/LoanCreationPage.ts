@@ -1,5 +1,5 @@
 import { Stateful, action } from "reactronic"
-import { CreatingLoan, LoanCreateModel } from "./Loan"
+import { CreatingLoan, LoanCreateModel, CreateLoanResponseModel } from "./Loan"
 import { LoansPage } from "./LoansPage"
 import { IApiErrors, ApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
@@ -56,10 +56,11 @@ export class LoanCreationPage extends Stateful {
     this.setApiErrors(undefined)
     if (this.creatingLoan) {
       const url = `https://localhost:5001/loans`
-      await this.loansPage.app.httpClient.post(url, this.creatingLoan.getJson())
+      const pin = await this.loansPage.app.httpClient.post<CreateLoanResponseModel>(url, this.creatingLoan.getJson())
       const errors = this.loansPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
       this.setApiErrors(errors)
       if (this.apiErrors === undefined) {
+        alert(`Loan Account Pin: ${pin?.loanPaymentAccountPin}\nRegular Account Pin: ${pin?.regularAccountPin}`)
         this.loansPage.app.currentTab?.setCurrentPageName('LoansListPage')
       }
     }
