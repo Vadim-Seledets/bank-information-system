@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BankInformationSystem.Common.Extensions;
 
 namespace BankInformationSystem.Data.Entities
 {
-    // TODO: Use "Table per Type" approach instead of "Table per Hierarchy"
+    // TODO: Use "Table per Type" approach instead of "Table per Concrete Class"
     public class LoanContract
     {
         [Key]

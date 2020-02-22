@@ -10,6 +10,7 @@ using BankInformationSystem.Common.Models;
 using BankInformationSystem.Data;
 using BankInformationSystem.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace BankInformationSystem.Business.Services
 {
@@ -19,17 +20,20 @@ namespace BankInformationSystem.Business.Services
         private readonly IMapper _mapper;
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
         private readonly IVirtualDateTimeManager _virtualDateTimeManager;
+        private readonly IConfiguration _configuration;
 
         public BankMetaOperationsService(
             BankInformationSystemDbContext context,
             IMapper mapper,
             ICurrentDateTimeProvider currentDateTimeProvider,
-            IVirtualDateTimeManager virtualDateTimeManager)
+            IVirtualDateTimeManager virtualDateTimeManager,
+            IConfiguration configuration)
         {
             _context = context;
             _mapper = mapper;
             _currentDateTimeProvider = currentDateTimeProvider;
             _virtualDateTimeManager = virtualDateTimeManager;
+            _configuration = configuration;
         }
         
         public async Task<BankOperationAuxiliaryInfo> GetBankOperationsAuxiliaryInfoAsync()
@@ -73,7 +77,7 @@ namespace BankInformationSystem.Business.Services
             
             foreach (var _ in Enumerable.Range(1, times))
             {
-                var freshTransactions = await ProcessDepositsAsync();
+                var freshTransactions = await ProcessDepositsAndLoansAsync();
                 await CommitActiveTransactionsAsync(freshTransactions);
                 await _virtualDateTimeManager.SkipDaysAsync(1);
             }
@@ -82,8 +86,9 @@ namespace BankInformationSystem.Business.Services
             await _virtualDateTimeManager.CommitAsync();
         }
 
-        private async Task<IList<Transaction>> ProcessDepositsAsync()
+        private async Task<IList<Transaction>> ProcessDepositsAndLoansAsync()
         {
+            var now = _currentDateTimeProvider.Now();
             var today = _currentDateTimeProvider.Now().Date;
             var isLastDayOfMonth = DateTime.DaysInMonth(today.Year, today.Month) == today.Day;
 
@@ -103,17 +108,104 @@ namespace BankInformationSystem.Business.Services
             var depositContracts = (await depositContractsQuery.ToListAsync())
                 .GroupBy(x => x.DepositTypeId)
                 .ToDictionary(x => x.Key, x => x.ToList());
+
+            var loanContractPaymentsToProcessLatestTransactionDate = today.AddDays(-_configuration.GetValue<int>("LoanTermDays"));
+            var loanContractsQuery = _context.LoanContracts
+                .Include(x => x.LoanPaymentAccount)
+                .Include(x => x.RegularAccount)
+                .Include(x => x.LatestPaymentTransaction)
+                .Where(x => !x.IsCompleted && x.ProgramStartDate < today && x.ProgramEndDate >= today)
+                .Where(x => x.LatestPaymentTransaction.CreatedAt.Date == loanContractPaymentsToProcessLatestTransactionDate
+                    || x.ProgramStartDate == loanContractPaymentsToProcessLatestTransactionDate);
+            var loanContracts = (await loanContractsQuery.ToListAsync())
+                .GroupBy(x => x.LoanTypeId)
+                .ToDictionary(x => x.Key, x => x.ToList());
             
             var transactions = new List<Transaction>();
 
             if (depositContracts.TryGetValue((int)MainDepositType.Irrevocable, out var irrevocableDeposits))
             {
-                transactions.AddRange(ProcessIrrevocableDeposits(irrevocableDeposits, bankDevelopmentFunds));
+                transactions.AddRange(ProcessIrrevocableDeposits(irrevocableDeposits, bankDevelopmentFunds, now));
             }
 
             if (depositContracts.TryGetValue((int) MainDepositType.Revocable, out var revocableDeposits))
             {
-                transactions.AddRange(ProcessRevocableDeposits(revocableDeposits, bankDevelopmentFunds));
+                transactions.AddRange(ProcessRevocableDeposits(revocableDeposits, bankDevelopmentFunds, now));
+            }
+            
+            if (loanContracts.TryGetValue((int) MainLoanType.Annuity, out var annuityLoans))
+            {
+                transactions.AddRange(ProcessAnnuityLoans(annuityLoans, bankDevelopmentFunds, now));
+            }
+            
+            if (loanContracts.TryGetValue((int) MainLoanType.Differential, out var differentialLoans))
+            {
+                transactions.AddRange(ProcessDifferentialLoans(differentialLoans, bankDevelopmentFunds, now));
+            }
+
+            return transactions;
+        }
+
+        private IList<Transaction> ProcessAnnuityLoans(
+            IEnumerable<LoanContract> loanContracts,
+            IDictionary<int, Account> bankDevelopmentFunds,
+            DateTime now)
+        {
+            var transactions = new List<Transaction>();
+
+            foreach (var loanContract in loanContracts)
+            {
+                var loanPaymentTransaction = _context.Transactions.Add(new Transaction
+                {
+                    ContractNumber = loanContract.ContractNumber,
+                    CurrencyId = loanContract.CurrencyId,
+                    Amount = loanContract.Amount /
+                        (decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
+                        _configuration.GetValue<int>("LoanTermDays") + loanContract.Amount * loanContract.Rate,
+                    CreatedAt = now,
+                    SenderAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
+                    SenderAccount = bankDevelopmentFunds[loanContract.CurrencyId],
+                    ReceiverAccountNumber = loanContract.LoanPaymentAccountNumber,
+                    ReceiverAccount = loanContract.LoanPaymentAccount
+                }).Entity;
+
+                loanContract.LatestPaymentTransaction = loanPaymentTransaction;
+                transactions.Add(loanPaymentTransaction);
+            }
+
+            return transactions;
+        }
+        
+        private IList<Transaction> ProcessDifferentialLoans(
+            IEnumerable<LoanContract> loanContracts,
+            IDictionary<int, Account> bankDevelopmentFunds,
+            DateTime now)
+        {
+            var transactions = new List<Transaction>();
+
+            foreach (var loanContract in loanContracts)
+            {
+                var mainPart = loanContract.Amount /
+                    (decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
+                    _configuration.GetValue<int>("LoanTermDays");
+                var loanRepaymentsPart = (decimal)loanContract.ProgramEndDate.Subtract(
+                    loanContract.LatestPaymentTransaction?.CreatedAt ?? loanContract.ProgramStartDate).TotalDays /
+                    _configuration.GetValue<int>("LoanTermDays") * loanContract.Rate * loanContract.Amount;
+
+                var loanPaymentTransaction = _context.Transactions.Add(new Transaction
+                {
+                    ContractNumber = loanContract.ContractNumber,
+                    CurrencyId = loanContract.CurrencyId,
+                    Amount = mainPart + loanRepaymentsPart,
+                    CreatedAt = now,
+                    SenderAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
+                    SenderAccount = bankDevelopmentFunds[loanContract.CurrencyId],
+                    ReceiverAccountNumber = loanContract.LoanPaymentAccountNumber,
+                    ReceiverAccount = loanContract.LoanPaymentAccount
+                }).Entity;
+
+                loanContract.LatestPaymentTransaction = loanPaymentTransaction;
+                transactions.Add(loanPaymentTransaction);
             }
 
             return transactions;
@@ -121,7 +213,8 @@ namespace BankInformationSystem.Business.Services
 
         private IList<Transaction> ProcessIrrevocableDeposits(
             IEnumerable<DepositContract> depositContracts,
-            IDictionary<int, Account> bankDevelopmentFunds)
+            IDictionary<int, Account> bankDevelopmentFunds,
+            DateTime now)
         {
             var transactions = new List<Transaction>();
             
@@ -133,7 +226,7 @@ namespace BankInformationSystem.Business.Services
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount * depositContract.Rate 
                         * (decimal)depositContract.ProgramEndDate.DifferenceInMonths(depositContract.ProgramStartDate),
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    CreatedAt = now,
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
@@ -148,7 +241,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    CreatedAt = now,
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.RegularAccountNumber,
@@ -156,7 +249,7 @@ namespace BankInformationSystem.Business.Services
                 }).Entity;
                 
                 transactions.Add(returnTransaction);
-                depositContract.CompletedAt = _currentDateTimeProvider.Now();
+                depositContract.CompletedAt = now;
                 depositContract.IsCompleted = true;
             }
 
@@ -165,7 +258,8 @@ namespace BankInformationSystem.Business.Services
         
         private IList<Transaction> ProcessRevocableDeposits(
             IEnumerable<DepositContract> depositContracts,
-            IDictionary<int, Account> bankDevelopmentFunds)
+            IDictionary<int, Account> bankDevelopmentFunds,
+            DateTime now)
         {
             var transactions = new List<Transaction>();
             
@@ -177,8 +271,8 @@ namespace BankInformationSystem.Business.Services
                 {
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
-                    Amount = depositContract.Amount * depositContract.Rate * (decimal)_currentDateTimeProvider.Now().DifferenceInMonths(interestCalculationStartDate),
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    Amount = depositContract.Amount * depositContract.Rate * (decimal)now.DifferenceInMonths(interestCalculationStartDate),
+                    CreatedAt = now,
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.DepositAccountNumber,
@@ -188,7 +282,7 @@ namespace BankInformationSystem.Business.Services
                 depositContract.LatestInterestTransaction = interestTransaction;
                 transactions.Add(interestTransaction);
 
-                var today = _currentDateTimeProvider.Now().Date;
+                var today = now.Date;
                 if (depositContract.ProgramEndDate != today)
                 {
                     continue;
@@ -199,7 +293,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    CreatedAt = now,
                     SenderAccountNumber = bankDevelopmentFunds[depositContract.CurrencyId].AccountNumber,
                     SenderAccount = bankDevelopmentFunds[depositContract.CurrencyId],
                     ReceiverAccountNumber = depositContract.RegularAccountNumber,
@@ -207,7 +301,7 @@ namespace BankInformationSystem.Business.Services
                 }).Entity;
                 
                 transactions.Add(returnTransaction);
-                depositContract.CompletedAt = _currentDateTimeProvider.Now();
+                depositContract.CompletedAt = now;
                 depositContract.IsCompleted = true;
             }
 
