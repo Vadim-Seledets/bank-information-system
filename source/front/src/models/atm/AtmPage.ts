@@ -119,7 +119,8 @@ export class AtmPage extends Stateful {
   @action
   async getAccountBalance(): Promise<void> {
     const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
-    const accountBalance = await this.app.httpClient.get<AccountBalanceModel>(url)
+    const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
+    const accountBalance = await this.app.httpClient.get<AccountBalanceModel>(url, {'Authorization': pinInBase64})
     if (accountBalance) {
       this.atmRoutineInfo.setAmount(accountBalance.amount)
       this.atmRoutineInfo.setCurrencyId(accountBalance.currencyId)
@@ -129,6 +130,7 @@ export class AtmPage extends Stateful {
   @action
   async payForMobilePhoneRequest(): Promise<void> {
     const url = `https://localhost:5001/payments/mobile-carrier`
+    const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     const mobileCarrierPaymentInfo = {
       accountNumber: this.atmRoutineInfo.accountNumber,
       phoneNumber: this.atmRoutineInfo.phoneNumber,
@@ -136,7 +138,7 @@ export class AtmPage extends Stateful {
       currencyId: this.atmRoutineInfo.currencyId,
       carrierId: this.atmRoutineInfo.carrierId,
     }
-    const receipt = await this.app.httpClient.post<MobileCarrierPaymentChequeModel>(url, JSON.stringify(mobileCarrierPaymentInfo))
+    const receipt = await this.app.httpClient.post<MobileCarrierPaymentChequeModel>(url, JSON.stringify(mobileCarrierPaymentInfo), {'Authorization': pinInBase64})
     if (receipt) {
       this.atmRoutineInfo.setPayedAt(receipt.payedAt)
       this.setCurrentPage('ShouldShowReceiptPage')
@@ -146,10 +148,11 @@ export class AtmPage extends Stateful {
   @action
   async withdrawCashRequest(): Promise<void> {
     const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/withdraw`
+    const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     const cashWithdrawalModel = {
       amount: this.atmRoutineInfo.amount,
     }
-    const receipt = await this.app.httpClient.post<CashWithdrawalChequeModel>(url, JSON.stringify(cashWithdrawalModel))
+    const receipt = await this.app.httpClient.post<CashWithdrawalChequeModel>(url, JSON.stringify(cashWithdrawalModel), {'Authorization': pinInBase64})
     if (receipt) {
       this.atmRoutineInfo.setWithdrawnAt(receipt.withdrawnAt)
       this.setCurrentPage('ShouldShowReceiptPage')
