@@ -13,6 +13,7 @@ export const commonStyle = restyle(() => {
     `,
 
     headLine: css`
+      padding-top: 0.5em;
       position: sticky;
       top: 0;
       z-index: 2;
