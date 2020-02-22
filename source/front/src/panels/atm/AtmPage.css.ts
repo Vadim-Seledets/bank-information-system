@@ -13,6 +13,7 @@ export const style = restyle(() => {
       justify-items: center;
       /* border: 1px solid ${theme.highlighter}; */
       flex-grow: 1;
+      color: ${theme.applicationForeground};
     `,
 
     centeredText: css`
@@ -108,12 +109,14 @@ export const style = restyle(() => {
     greenButton: css`
       display: flex;
       justify-content: center;
+      color: ${theme.sidebarSelectedTabForeground};
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
     
     redButton: css`
       display: flex;
       justify-content: center;
+      color: ${theme.sidebarSelectedTabForeground};
       background-color: #ee3333;
     `,
 
