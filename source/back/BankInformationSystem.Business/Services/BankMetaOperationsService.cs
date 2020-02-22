@@ -109,7 +109,7 @@ namespace BankInformationSystem.Business.Services
                 .GroupBy(x => x.DepositTypeId)
                 .ToDictionary(x => x.Key, x => x.ToList());
 
-            var loanContractPaymentsToProcessLatestTransactionDate = today.AddDays(-_configuration.GetValue<int>("LoanTermDays"));
+            var loanContractPaymentsToProcessLatestTransactionDate = today.AddDays(-_configuration.GetValue<int>("LoanTermDays")).Date;
             var loanContractsQuery = _context.LoanContracts
                 .Include(x => x.LoanPaymentAccount)
                 .Include(x => x.RegularAccount)
