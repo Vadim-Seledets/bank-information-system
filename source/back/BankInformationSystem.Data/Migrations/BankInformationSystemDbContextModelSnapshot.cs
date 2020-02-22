@@ -36,6 +36,9 @@ namespace BankInformationSystem.Data.Migrations
                     b.Property<decimal>("Debit")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PinHash")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 

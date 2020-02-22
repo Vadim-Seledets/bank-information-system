@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using AutoMapper;
@@ -37,7 +38,7 @@ namespace BankInformationSystem
             services
                 .AddControllers(options =>
                 {
-                    options.Filters.Add(typeof(ExceptionFilter));
+                    options.Filters.Add(typeof(ApiExceptionFilterAttribute));
                 })
                 .AddNewtonsoftJson(options =>
                 {
@@ -54,6 +55,28 @@ namespace BankInformationSystem
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bank Information System API", Version = "v1" });
+                
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header, 
+                    Description = "Please insert PIN hash",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey 
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme 
+                        { 
+                            Reference = new OpenApiReference 
+                            { 
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer" 
+                            } 
+                        },
+                        Array.Empty<string>()
+                    } 
+                });
             });
             
             services.AddCors(options =>
@@ -74,18 +97,22 @@ namespace BankInformationSystem
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IBankMetaOperationsService, BankMetaOperationsService>();
             services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IAuthorizationService, AuthorizationService>();
 
+            // Utilities
             services.AddScoped<IBankInformationSystemDbContextFactory>(container =>
                 new BankInformationSystemDbContextFactory(container.GetService<BankInformationSystemDbContext>));
             services.AddScoped<VirtualDateTimeProvider>();
             services.AddScoped<ICurrentDateTimeProvider>(provider => provider.GetService<VirtualDateTimeProvider>());
             services.AddScoped<IVirtualDateTimeManager>(provider => provider.GetService<VirtualDateTimeProvider>());
+            services.AddSingleton<IPinGenerator, PinGenerator>();
 
             // Validators
             services.AddScoped<IValidator<CustomerCreateModel>, CustomerCreateModelValidator>();
             services.AddScoped<IValidator<CustomerUpdateModel>, CustomerUpdateModelValidator>();
             services.AddScoped<IValidator<DepositCreateModel>, DepositCreateModelValidator>();
             services.AddScoped<IValidator<LoanCreateModel>, LoanCreateModelValidator>();
+            services.AddScoped<IValidator<MobileCarrierPaymentRequestModel>, MobileCarrierPaymentRequestValidator>();
         }
         
         public void Configure(

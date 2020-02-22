@@ -11,7 +11,7 @@ namespace BankInformationSystem.Business.Services
 
         Task<DepositContractDetailsModel> GetDepositContractDetailsAsync(Guid contractNumber);
 
-        Task OpenDepositAsync(DepositCreateModel model);
+        Task<OpenDepositResponseModel> OpenDepositAsync(DepositCreateModel model);
 
         Task RevokeDepositAsync(Guid contractNumber);
     }

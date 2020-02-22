@@ -14,7 +14,7 @@ namespace BankInformationSystem.Business.Services
         
         Task<AccountModel> GetAccountWithActualizedBalanceAsync(string accountNumber);
         
-        Task<Account> GetAccountTemplateAsync(CreateAccountTemplateModel model);
+        Task<(Account Account, string Pin)> GetAccountTemplateAsync(CreateAccountTemplateModel model);
 
         Task<Account> GetBankDevelopmentFundAccountForCurrencyAsync(int currencyId);
 

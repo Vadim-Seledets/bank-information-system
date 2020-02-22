@@ -11,10 +11,14 @@ namespace BankInformationSystem.Controllers
     public class PaymentController : ControllerBase
     {
          private readonly IPaymentService _paymentService;
+         private readonly IAuthorizationService _authorizationService;
         
-        public PaymentController(IPaymentService paymentService)
+        public PaymentController(
+            IPaymentService paymentService,
+            IAuthorizationService authorizationService)
         {
             _paymentService = paymentService;
+            _authorizationService = authorizationService;
         }
 
         [HttpPost]
@@ -23,6 +27,9 @@ namespace BankInformationSystem.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> MakeMobileCarrierPaymentAsync(MobileCarrierPaymentRequestModel model)
         {
+            var pinHash = HttpContext.Request.Headers["Authorization"];
+            await _authorizationService.AuthorizeForAtmActionsAsync(model.AccountNumber, pinHash);
+            
             var cheque = await _paymentService.MakeMobileCarrierPaymentAsync(model);
 
             return Ok(cheque);

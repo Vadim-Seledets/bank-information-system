@@ -12,10 +12,14 @@ namespace BankInformationSystem.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(
+            IAccountService accountService,
+            IAuthorizationService authorizationService)
         {
             _accountService = accountService;
+            _authorizationService = authorizationService;
         }
 
         [HttpGet]
@@ -35,6 +39,9 @@ namespace BankInformationSystem.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetAccountBalanceAsync(string accountNumber)
         {
+            var pinHash = HttpContext.Request.Headers["Authorization"];
+            await _authorizationService.AuthorizeForAtmActionsAsync(accountNumber, pinHash);
+            
             var balanceModel = await _accountService.GetAccountBalanceAsync(accountNumber);
 
             return Ok(balanceModel);
@@ -46,6 +53,9 @@ namespace BankInformationSystem.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> WithdrawCashAsync(string accountNumber, CashWithdrawalModel model)
         {
+            var pinHash = HttpContext.Request.Headers["Authorization"];
+            await _authorizationService.AuthorizeForAtmActionsAsync(accountNumber, pinHash);
+            
             var cheque = await _accountService.WithdrawCashAsync(accountNumber, model.Amount);
 
             return Ok(cheque);

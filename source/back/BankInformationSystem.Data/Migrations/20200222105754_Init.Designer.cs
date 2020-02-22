@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankInformationSystem.Data.Migrations
 {
     [DbContext(typeof(BankInformationSystemDbContext))]
-    [Migration("20200209220716_AddEntitiesForDepositsAndLoanModules")]
-    partial class AddEntitiesForDepositsAndLoanModules
+    [Migration("20200222105754_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,9 @@ namespace BankInformationSystem.Data.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<decimal>("Debit")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PinHash")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Type")
@@ -265,6 +268,9 @@ namespace BankInformationSystem.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Gender")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsLiableForMilitaryService")
@@ -529,7 +535,7 @@ namespace BankInformationSystem.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LoanType");
+                    b.ToTable("LoanTypes");
 
                     b.HasData(
                         new
@@ -577,6 +583,37 @@ namespace BankInformationSystem.Data.Migrations
                         {
                             Id = 4,
                             Description = "Single"
+                        });
+                });
+
+            modelBuilder.Entity("BankInformationSystem.Data.Entities.MobileCarrier", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MobileCarriers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "MTS"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "life:)"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "A1"
                         });
                 });
 

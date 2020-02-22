@@ -11,6 +11,6 @@ namespace BankInformationSystem.Business.Services
 
         Task<LoanContractDetailsModel> GetLoanContractDetailsAsync(Guid contractNumber);
 
-        Task CreateLoanAsync(LoanCreateModel model);
+        Task<CreateLoanResponseModel> CreateLoanAsync(LoanCreateModel model);
     }
 }

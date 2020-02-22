@@ -50,14 +50,14 @@ namespace BankInformationSystem.Controllers
 
         [HttpPost]
         [Route("")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CreateLoanResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> CreateLoanAsync(LoanCreateModel model)
         {
-            await _loanService.CreateLoanAsync(model);
-            
-            return NoContent();
+            var createLoanResponseModel = await _loanService.CreateLoanAsync(model);
+
+            return Ok(createLoanResponseModel);
         }
     }
 }

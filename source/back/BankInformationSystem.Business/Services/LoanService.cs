@@ -76,19 +76,19 @@ namespace BankInformationSystem.Business.Services
             return loanDetails;
         }
 
-        public async Task CreateLoanAsync(LoanCreateModel model)
+        public async Task<CreateLoanResponseModel> CreateLoanAsync(LoanCreateModel model)
         {
             await _loanCreateModelValidator.ValidateAndThrowAsync(model);
             
             var regularAccountCreateModel = _mapper.Map<CreateAccountTemplateModel>(model);
             regularAccountCreateModel.AccountActivity = AccountActivity.Active;
             regularAccountCreateModel.AccountType = AccountType.Regular;
-            var regularAccount = await _accountService.GetAccountTemplateAsync(regularAccountCreateModel);
+            var (regularAccount, regularAccountPin) = await _accountService.GetAccountTemplateAsync(regularAccountCreateModel);
 
             var loanPaymentAccountCreateModel = _mapper.Map<CreateAccountTemplateModel>(model);
             loanPaymentAccountCreateModel.AccountActivity = AccountActivity.Active;
             loanPaymentAccountCreateModel.AccountType = AccountType.LoanPayment;
-            var loanPaymentAccount = await _accountService.GetAccountTemplateAsync(loanPaymentAccountCreateModel);
+            var (loanPaymentAccount, loanPaymentAccountPin) = await _accountService.GetAccountTemplateAsync(loanPaymentAccountCreateModel);
             
             var loanContract = _context.Add(_mapper.Map<LoanContract>(model)).Entity;
             loanContract.LoanPaymentAccount = loanPaymentAccount;
@@ -110,6 +110,12 @@ namespace BankInformationSystem.Business.Services
             _context.Transactions.Add(loanTransaction);
 
             await _context.SaveChangesAsync();
+
+            return new CreateLoanResponseModel
+            {
+                RegularAccountPin = regularAccountPin,
+                LoanPaymentAccountPin =  loanPaymentAccountPin
+            };
         }
     }
 }

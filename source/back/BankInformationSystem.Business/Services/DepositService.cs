@@ -77,19 +77,19 @@ namespace BankInformationSystem.Business.Services
             return depositDetails;
         }
 
-        public async Task OpenDepositAsync(DepositCreateModel model)
+        public async Task<OpenDepositResponseModel> OpenDepositAsync(DepositCreateModel model)
         {
             await _depositCreateModelValidator.ValidateAndThrowAsync(model);
             
             var regularAccountCreateModel = _mapper.Map<CreateAccountTemplateModel>(model);
             regularAccountCreateModel.AccountActivity = AccountActivity.Passive;
             regularAccountCreateModel.AccountType = AccountType.Regular;
-            var regularAccount = await _accountService.GetAccountTemplateAsync(regularAccountCreateModel);
+            var (regularAccount, regularAccountPin) = await _accountService.GetAccountTemplateAsync(regularAccountCreateModel);
 
             var depositAccountCreateModel = _mapper.Map<CreateAccountTemplateModel>(model);
             depositAccountCreateModel.AccountActivity = AccountActivity.Passive;
             depositAccountCreateModel.AccountType = AccountType.Deposit;
-            var depositAccount = await _accountService.GetAccountTemplateAsync(depositAccountCreateModel);
+            var (depositAccount, depositAccountPin) = await _accountService.GetAccountTemplateAsync(depositAccountCreateModel);
             
             var depositContract = _context.Add(_mapper.Map<DepositContract>(model)).Entity;
             depositContract.DepositAccount = depositAccount;
@@ -123,6 +123,12 @@ namespace BankInformationSystem.Business.Services
             _context.Transactions.AddRange(initialTransactions);
 
             await _context.SaveChangesAsync();
+
+            return new OpenDepositResponseModel
+            {
+                RegularAccountPin = regularAccountPin,
+                DepositAccountPin = depositAccountPin
+            };
         }
 
         public async Task RevokeDepositAsync(Guid contractNumber)

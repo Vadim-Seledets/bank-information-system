@@ -50,14 +50,14 @@ namespace BankInformationSystem.Controllers
 
         [HttpPost]
         [Route("")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(OpenDepositResponseModel), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiErrorModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<Guid>> OpenDepositAsync(DepositCreateModel model)
         {
-            await _depositService.OpenDepositAsync(model);
+            var openDepositResponseModel = await _depositService.OpenDepositAsync(model);
             
-            return NoContent();
+            return Ok(openDepositResponseModel);
         }
         
         [HttpPost]

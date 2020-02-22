@@ -16,6 +16,8 @@ namespace BankInformationSystem.Data.Entities
 
         public virtual Currency Currency { get; set; }
 
+        public string PinHash { get; set; }
+
         public decimal Debit { get; set; }
 
         public decimal Credit { get; set; }

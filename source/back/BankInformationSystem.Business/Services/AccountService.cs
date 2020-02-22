@@ -34,17 +34,20 @@ namespace BankInformationSystem.Business.Services
         private readonly BankInformationSystemDbContext _context;
         private readonly IBankInformationSystemDbContextFactory _contextFactory;
         private readonly ICurrentDateTimeProvider _currentDateTimeProvider;
+        private readonly IPinGenerator _pinGenerator;
         private readonly IMapper _mapper;
 
         public AccountService(
             BankInformationSystemDbContext context,
             IBankInformationSystemDbContextFactory contextFactory,
             ICurrentDateTimeProvider currentDateTimeProvider,
+            IPinGenerator pinGenerator,
             IMapper mapper)
         {
             _context = context;
             _contextFactory = contextFactory;
             _currentDateTimeProvider = currentDateTimeProvider;
+            _pinGenerator = pinGenerator;
             _mapper = mapper;
         }
 
@@ -67,7 +70,7 @@ namespace BankInformationSystem.Business.Services
                         AccountActivity = AccountActivity.Passive,
                         AccountType = AccountType.BankDevelopmentFund
                     };
-                    var account = await GetAccountTemplateAsync(createAccountTemplateModel);
+                    var (account, _) = await GetAccountTemplateAsync(createAccountTemplateModel);
                     account.Credit = _bankDevelopmentFundsInitialAmounts.TryGetValue(currency.Id, out var initialAmount)
                         ? initialAmount
                         : InitialBankDevelopmentFundAmount;
@@ -129,18 +132,22 @@ namespace BankInformationSystem.Business.Services
             return _mapper.Map<CashWithdrawalChequeModel>(withdrawTransaction);
         }
 
-        public async Task<Account> GetAccountTemplateAsync(CreateAccountTemplateModel model)
+        public async Task<(Account Account, string Pin)> GetAccountTemplateAsync(CreateAccountTemplateModel model)
         {
             var newAccountNumber = await NewAccountNumberAsync(model.AccountType, model.CustomerId);
+            var (pin, pinHash) = _pinGenerator.CreatePin();
 
-            return new Account
+            var account = new Account
             {
                 AccountNumber = newAccountNumber,
                 Activity = model.AccountActivity,
+                PinHash = pinHash,
                 Type = model.AccountType,
                 CustomerId = model.CustomerId,
                 CurrencyId = model.CurrencyId
             };
+
+            return (account, pin);
         }
         
         public async Task<Transaction> TransferMoneyAsync(
