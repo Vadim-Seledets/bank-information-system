@@ -4,13 +4,15 @@ import { ApiErrors, IApiErrors } from '../ApiErrors'
 import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, CashWithdrawalChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 import { digestMessageInBase64 } from './AtmUtils'
-import { cache } from 'emotion'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
   | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
-  | 'ReceiptPage' | 'ShouldDoAnotherOperation'
+  | 'ReceiptPage' | 'ShouldDoAnotherOperation' | 'IncorrectPinPage'
+
 
 export class AtmPage extends Stateful {
+  readonly maxNumberOfTriesToEnterPin = 3
+
   app: App
   apiErrors: ApiErrors | undefined
   currentPageName: AtmPageName
@@ -21,6 +23,7 @@ export class AtmPage extends Stateful {
 
   isPinVisible: boolean
   isPinCorrect: boolean | undefined
+  numberOfTriesToEnterPin: number
   currentTime: Date
 
   constructor(app: App) {
@@ -43,6 +46,7 @@ export class AtmPage extends Stateful {
     this.receiptEmement = null
     this.isPinVisible = true
     this.isPinCorrect = undefined
+    this.numberOfTriesToEnterPin = 0
     this.currentTime = new Date()
     setInterval(this.setCurrentTime, 1000)
   }
@@ -76,8 +80,9 @@ export class AtmPage extends Stateful {
         this.atmRoutineInfo.setPin('')
         break
       case 'PinCodePage':
-        this.atmRoutineInfo.reset()
+        this.numberOfTriesToEnterPin = 0
         this.isPinCorrect = undefined
+        this.atmRoutineInfo.reset()
         this.atmRoutineInfo.setPin('')
         this.pinInputElement?.focus()
         break
@@ -103,8 +108,18 @@ export class AtmPage extends Stateful {
   async updatePinCorrectnessStatus(): Promise<void> {
     if (this.atmRoutineInfo.pin.length === 4) {
       this.isPinCorrect = await this.checkPinCorrectness()
+      if (!this.isPinCorrect) {
+        this.numberOfTriesToEnterPin++
+      }
     } else {
       this.isPinCorrect = undefined
+    }
+  }
+
+  @trigger
+  checkNumberOfTriesToEnterPin(): void {
+    if (this.numberOfTriesToEnterPin >= this.maxNumberOfTriesToEnterPin) {
+      this.setCurrentPage('IncorrectPinPage')
     }
   }
 
