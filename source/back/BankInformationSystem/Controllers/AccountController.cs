@@ -36,6 +36,7 @@ namespace BankInformationSystem.Controllers
         [HttpGet]
         [Route("{accountNumber}/balance")]
         [ProducesResponseType(typeof(AccountBalanceModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> GetAccountBalanceAsync(string accountNumber)
         {
@@ -50,6 +51,8 @@ namespace BankInformationSystem.Controllers
         [HttpPost]
         [Route("{accountNumber}/withdraw")]
         [ProducesResponseType(typeof(CashWithdrawalChequeModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> WithdrawCashAsync(string accountNumber, CashWithdrawalModel model)
         {

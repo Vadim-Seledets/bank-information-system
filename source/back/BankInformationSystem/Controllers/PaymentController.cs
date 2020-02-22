@@ -24,6 +24,8 @@ namespace BankInformationSystem.Controllers
         [HttpPost]
         [Route("mobile-carrier")]
         [ProducesResponseType(typeof(MobileCarrierPaymentChequeModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult> MakeMobileCarrierPaymentAsync(MobileCarrierPaymentRequestModel model)
         {
