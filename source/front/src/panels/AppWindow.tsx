@@ -15,10 +15,12 @@ import { LoansPageView } from './loans/LoansPage'
 import { LoanCreationPageView } from './loans/LoanCreationPage'
 import { LoanDetailsPageView } from './loans/LoanDetailsPage'
 import { AtmPageView } from './atm/AtmPage'
+import { commonStyle } from '../common/CommonStyles.css'
 
 export function AppWindow(p: { app: App }): JSX.Element {
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     return (
       <div className={css.main}>
         <div className={css.menu} style={{ ...dim(1, 1, 12, 1) }}>
@@ -28,7 +30,7 @@ export function AppWindow(p: { app: App }): JSX.Element {
           </div>
           <div className='space' />
           <div style={{ fontSize: '0.8em' }}>{p.app.getCurrentDate()}</div>
-          <button className={css.closeBankDayButton} onClick={() => p.app.closeBankDayAndGetNewDateRequst()}>
+          <button className={cx(commonCss.button, css.closeBankDayButton)} onClick={() => p.app.closeBankDayAndGetNewDateRequst()}>
             <div className={`container ${p.app.closeBankDayData.times === 1 ? 'short' : ''}`}>
               <span>Close</span>
               <input className='input' type='number' defaultValue={p.app.closeBankDayData.times}

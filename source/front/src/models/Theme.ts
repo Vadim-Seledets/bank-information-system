@@ -4,7 +4,7 @@ export interface ITheme {
   readonly name: string
   readonly applicationBackground: string
   readonly applicationForeground: string
-  readonly buttonHover: string
+  readonly buttonBackground: string
   readonly buttonBorder: string
   readonly buttonBoxShadow: string
   readonly menuBackground: string
@@ -32,7 +32,7 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly name = "blank"
   readonly applicationBackground = ""
   readonly applicationForeground = ""
-  readonly buttonHover = ""
+  readonly buttonBackground = ""
   readonly buttonBorder = ""
   readonly buttonBoxShadow = ""
   readonly menuBackground = ""

@@ -4,6 +4,7 @@ import { dim } from '../../common/css'
 import { style } from './CustomerInfoPage.css'
 import { commonStyle } from '../../common/CommonStyles.css'
 import { CustomersPage } from '../../models/customers/CustomersPage'
+import { cx } from 'emotion'
 
 export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
@@ -15,7 +16,7 @@ export function CustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.E
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.customersPage.app.currentTab?.setCurrentPageName('CustomersListPage')}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.customersPage.app.currentTab?.setCurrentPageName('CustomersListPage')}>
             Back
           </button>
         </div>

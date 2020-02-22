@@ -14,11 +14,11 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={cx(css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.customersPage.addNewCustomer()}>
+          <button className={cx(commonCss.button, css.addNewOrEditCustomerButton, 'headLineItem')} onClick={() => p.customersPage.addNewCustomer()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Customer</div>
           </button>
-          <button className={cx(css.button, css.addNewOrEditCustomerButton, 'headLineItem')}
+          <button className={cx(commonCss.button, css.button, css.addNewOrEditCustomerButton, 'headLineItem')}
             is-visible={`${p.customersPage.selectedCustomer !== undefined}`}
             onClick={() => p.customersPage.editCustomerInfo()}
           >

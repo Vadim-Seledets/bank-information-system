@@ -13,7 +13,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={cx(css.addNewDepositButton, 'headLineItem')} onClick={() => p.depositsPage.addNewDeposit()}>
+          <button className={cx(commonCss.button, css.addNewDepositButton, 'headLineItem')} onClick={() => p.depositsPage.addNewDeposit()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Deposit</div>
           </button>

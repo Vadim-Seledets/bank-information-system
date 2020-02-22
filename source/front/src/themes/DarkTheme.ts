@@ -5,7 +5,7 @@ export class DarkTheme extends Stateful implements ITheme {
   readonly name = "Dark Apple Theme"
   readonly applicationBackground = "#282827"
   readonly applicationForeground = "#ffffff"
-  readonly buttonHover = "#bbbbbb"
+  readonly buttonBackground = "#transparent"
   readonly buttonBorder = "none"
   readonly buttonBoxShadow = "0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5)"
   readonly menuBackground = "#333332"

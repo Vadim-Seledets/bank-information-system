@@ -5,6 +5,7 @@ import { style } from './EditCustomerInfoPage.css'
 import { commonStyle } from '../../common/CommonStyles.css'
 import { CustomerInfoPanel } from './CustomerInfoPanel'
 import { CustomersPage } from '../../models/customers/CustomersPage'
+import { cx } from 'emotion'
 
 export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): JSX.Element {
   return reactive(() => {
@@ -13,7 +14,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={css.editOrPublishButton}
+          <button className={cx(commonCss.button, css.editOrPublishButton)}
             is-enabled={`${p.customersPage.customerInfo.validation.areAllValid(p.customersPage.selectedCustomer!)}`}
             onClick={() => p.customersPage.editOrPublishCustomer()}
           >
@@ -30,7 +31,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
                 </React.Fragment>)
             }
           </button>
-          <button className={css.deleteButton} is-visible={`${p.customersPage.selectedCustomer?.id !== undefined}`}>
+          <button className={cx(commonCss.button, css.deleteButton)} is-visible={`${p.customersPage.selectedCustomer?.id !== undefined}`}>
             <span className='las la-trash icon' style={{ marginRight: '0.5em' }} />
             <div onClick={() => p.customersPage.setDeleteIsRequested(!p.customersPage.deleteIsRequested)}>Delete Customer</div>
             <div className={css.deleteButtonYesNoButtonsContainer} is-visible={`${p.customersPage.deleteIsRequested}`}>
@@ -46,7 +47,7 @@ export function EditCustomerInfoPageView(p: { customersPage: CustomersPage }): J
           </button>
           <div className='error'>{p.customersPage.customerInfo.apiErrors?.getMainError()}</div>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.customersPage.cancelEditing()}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.customersPage.cancelEditing()}>
             Cancel
           </button>
         </div>

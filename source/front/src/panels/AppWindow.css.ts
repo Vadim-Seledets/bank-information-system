@@ -22,25 +22,6 @@ export const style = restyle(() => {
       grid-template-columns: 2fr repeat(11, 1fr);
       grid-template-rows: 2em 1.5em repeat(10, 1fr);
 
-      button {
-        align-self: center;
-        font-size: 0.8em;
-        padding: 0.25em 0.75em;
-        border-radius: 0.2em;
-        white-space: nowrap;
-        user-select: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        border: ${theme.buttonBorder};
-
-        &:hover {
-          box-shadow: ${theme.buttonBoxShadow};
-        }
-
-        transition: opacity 0.2s ease, box-shadow ease 0.2s;
-      }
-
       input {
         transition: background-color ease 0.2s, border ease 0.2s, box-shadow ease 0.2s;
       }

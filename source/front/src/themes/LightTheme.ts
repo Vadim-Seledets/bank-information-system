@@ -5,7 +5,7 @@ export class LightTheme extends Stateful implements ITheme {
   readonly name = "light"
   readonly applicationBackground = "#ffffff"
   readonly applicationForeground = "#101010"
-  readonly buttonHover = "#666666"
+  readonly buttonBackground = "transparent"
   readonly buttonBorder = "none"
   readonly buttonBoxShadow = "0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5)"
   readonly menuBackground = "#16354e"

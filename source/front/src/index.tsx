@@ -6,12 +6,14 @@ import { themes } from './models/Theme'
 import { DarkTheme } from './themes/DarkTheme'
 import { LightTheme } from './themes/LightTheme'
 import { App } from './models/App'
+import { BlueTheme } from './themes/BlueTheme'
 
 R.setTrace(TraceLevel.Off)
 R.repetitiveReadWarningThreshold = 0
 R.performanceWarningThreshold = 0
 
 Action.run("themes.register", () => themes.register(
+  new BlueTheme(),
   new DarkTheme(),
   new LightTheme(),
 ))

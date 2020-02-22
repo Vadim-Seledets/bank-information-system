@@ -16,7 +16,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.loansPage.app.currentTab?.setCurrentPageName('DepositsListPage')}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.loansPage.app.currentTab?.setCurrentPageName('DepositsListPage')}>
             Back
           </button>
         </div>
