@@ -94,7 +94,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               <div style={{ ...dim(3, 8, 3, 8) }} className={cx(css.input, css.money)}
                 is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'amount') || apiErrors?.has('Amount')}`}
               >
-                <input className='amount' type="text" defaultValue={creatingDeposit.amount}
+                <input className='amount' type="text" defaultValue={`${creatingDeposit.amount}`}
                   onChange={e => creatingDeposit.setAmount(parseFloat(e.currentTarget.value))}
                 />
                 <select className='currency' defaultValue={creatingDeposit.currencyId}

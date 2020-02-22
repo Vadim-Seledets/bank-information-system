@@ -1,10 +1,11 @@
 import { Stateful, action, trigger, isolated, cached } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
-import { Auxiliary, CloseBankDayData } from './BankOperations'
+import { Auxiliary, CloseBankDayData } from './BankMetaOperations'
 import { CustomersPage } from './customers/CustomersPage'
 import { DepositsPage } from './deposits/DepositsPage'
 import { LoansPage } from './loans/LoansPage'
+import { AtmPage } from './atm/AtmPage'
 
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
   | 'DepositsListPage' | 'AddNewDepositPage' | 'DepositDetailsPage'
@@ -19,6 +20,7 @@ export class App extends Stateful {
   customersPage: CustomersPage
   depositsPage: DepositsPage
   loansPage: LoansPage
+  atmPage: AtmPage
 
   closeBankDayData: CloseBankDayData
   utcOffset: Date
@@ -34,10 +36,11 @@ export class App extends Stateful {
       new Tab('loans', 'Loans', 'LoansListPage', 'las la-credit-card'),
       new Tab('atm', 'ATM', 'AtmPage', 'las la-money-check'),
     )
-    this.currentTab = this.tabs[0]
+    this.currentTab = this.tabs[3]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
     this.loansPage = new LoansPage(this)
+    this.atmPage = new AtmPage(this)
     this.currentDate = new Date()
     this.utcOffset = new Date()
   }
@@ -80,7 +83,7 @@ export class App extends Stateful {
 
   @action
   async closeBankDayAndGetNewDateRequst(): Promise<void> {
-    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/operations/commit`, JSON.stringify(this.closeBankDayData))
+    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/meta-operations/commit`, JSON.stringify(this.closeBankDayData))
     this.getCurrentDateRequest()
   }
 
@@ -94,7 +97,7 @@ export class App extends Stateful {
 
   @action
   async getAuxiliaryInfo(): Promise<void> {
-    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/operations/auxiliary`)
+    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/meta-operations/auxiliary`)
     if (auxiliary) {
       this.auxiliary = auxiliary
     }

@@ -1,8 +1,8 @@
 {
   "name": "bank-information-system",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Bank Information System",
-  "author": "Vadim Seledets <Vadik446s@gmail.com>, Arseni Rynkevich, Eugene Dunin",
+  "author": "Vadim Seledets <Vadik446s@gmail.com>, Arseni Rynkevich",
   "main": "index.tsx",
   "repository": {
     "type": "git",
