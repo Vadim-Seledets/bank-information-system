@@ -3,6 +3,7 @@ import { App } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
 import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, CashWithdrawalChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
+import { digestMessageInBase64 } from './AtmUtils'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
   | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
@@ -18,6 +19,7 @@ export class AtmPage extends Stateful {
   receiptEmement: HTMLElement | null
 
   isPinVisible: boolean
+  isPinCorrect: boolean
   currentTime: Date
 
   constructor(app: App) {
@@ -26,7 +28,6 @@ export class AtmPage extends Stateful {
     this.currentPageName = 'WelcomePage'
     this.apiErrors = undefined
     this.atmRoutineInfo = new AtmRoutineInfo()
-    this.atmRoutineInfo.setCorrectPin('1234')
     this.validation = new Validation<AtmRoutineInfo>(
       new Map([
         ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber', /^\d{13}$/)],
@@ -39,7 +40,8 @@ export class AtmPage extends Stateful {
     )
     this.pinInputElement = null
     this.receiptEmement = null
-    this.isPinVisible = false
+    this.isPinVisible = true
+    this.isPinCorrect = false
     this.currentTime = new Date()
     setInterval(this.setCurrentTime, 1000)
   }
@@ -95,16 +97,23 @@ export class AtmPage extends Stateful {
     }
   }
 
+  @trigger
+  async updatePinCorrectnessStatus(): Promise<void> {
+    if (this.atmRoutineInfo.pin.length === 4) {
+      this.isPinCorrect = await this.checkPinCorrectness()
+    }
+  }
+
   @action
-  async checkPin(): Promise<void> {
-    this.setApiErrors(undefined)
-    const url = `https://localhost:5001/deposits`
-    // await this.app.httpClient.post(url, this.creatingDeposit.getJson())
-    // const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
-    // this.setApiErrors(errors)
-    if (this.apiErrors === undefined) {
+  async checkPinCorrectness(): Promise<boolean> {
+    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
+    const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
+    await this.app.httpClient.get(url, {'Authorization': pinInBase64})
+    const errors = this.app.httpClient.getAndDeleteLastError('GET', url)
+    if (errors === undefined) {
       this.setCurrentPage('MainMenuPage')
     }
+    return errors === undefined ? true : false
   }
 
   @action

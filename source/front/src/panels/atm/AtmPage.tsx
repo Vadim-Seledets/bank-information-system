@@ -65,15 +65,14 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your PIN</div>
             <input ref={setPinInputElement} style={{ ...dim(12, 1, 12, 1), opacity: '0', pointerEvents: 'none' }}
               className={css.input} type="text" maxLength={4} value={atmRoutineInfo.pin}
-              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
               onKeyDown={e => e.key !== 'Backspace' && Number.isNaN(parseInt(e.key)) && e.preventDefault()}
             />
             <div style={{ ...dim(12, 10, 12, 10) }} className={css.pin} onClick={() => p.atmPage.pinInputElement?.focus()}
-              is-invalid={`${atmRoutineInfo.pin.length === 4 && !atmRoutineInfo.isPinCorrect()}`}
-              is-correct={`${atmRoutineInfo.isPinCorrect()}`}
+              is-invalid={`${atmRoutineInfo.pin.length === 4 && !p.atmPage.isPinCorrect}`}
+              is-correct={`${atmRoutineInfo.pin.length === 4 && p.atmPage.isPinCorrect}`}
               onAnimationEnd={() => {
-                if (atmRoutineInfo.isPinCorrect()) {
+                if (p.atmPage.isPinCorrect) {
                   p.atmPage.setCurrentPage('MainMenuPage')
                 } else {
                   atmRoutineInfo.setPin('')
@@ -85,17 +84,6 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[2] : '*'}</div>
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[3] : '*'}</div>
             </div>
-            {/* <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text" size={12}
-              is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'pin') || apiErrors?.has('')}`}
-              // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
-              onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
-            />
-            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
-              is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'pin')}`}
-              onClick={() => p.atmPage.checkPin()}
-            >
-              <div>Enter</div>
-            </button> */}
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
