@@ -21,7 +21,6 @@ export const style = restyle(() => {
     button: css`
       justify-self: left;
       color: ${theme.sidebarSelectedTabForeground};
-      transition: opacity 0.2s ease;
 
       &[is-visible=false] {
         opacity: 0;

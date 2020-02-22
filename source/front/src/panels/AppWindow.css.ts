@@ -36,6 +36,8 @@ export const style = restyle(() => {
         &:hover {
           box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
         }
+
+        transition: opacity 0.2s ease, box-shadow ease 0.2s;
       }
 
       input {
