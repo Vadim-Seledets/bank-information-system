@@ -18,6 +18,7 @@ export class AtmPage extends Stateful {
   receiptEmement: HTMLElement | null
 
   isPinVisible: boolean
+  currentTime: Date
 
   constructor(app: App) {
     super()
@@ -38,7 +39,9 @@ export class AtmPage extends Stateful {
     )
     this.pinInputElement = null
     this.receiptEmement = null
-    this.isPinVisible = true
+    this.isPinVisible = false
+    this.currentTime = new Date()
+    setInterval(this.setCurrentTime, 1000)
   }
 
   @action
@@ -147,6 +150,11 @@ export class AtmPage extends Stateful {
   @action
   togglePinVisibility(): void {
     this.isPinVisible = !this.isPinVisible
+  }
+
+  @action
+  setCurrentTime(...args: []): void {
+    this.currentTime = new Date()
   }
 
   printReceipt(): void {

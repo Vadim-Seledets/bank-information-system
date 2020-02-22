@@ -110,6 +110,12 @@ export const style = restyle(() => {
       justify-content: center;
       background-color: ${theme.sidebarSelectedTabBackground};
     `,
+    
+    redButton: css`
+      display: flex;
+      justify-content: center;
+      background-color: #ee3333;
+    `,
 
     caption: css`
       justify-self: right;

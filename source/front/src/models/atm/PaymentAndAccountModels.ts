@@ -149,3 +149,10 @@ export function getFormatedDate(dateString: string): string {
   const minuts = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
   return `${year}-${month}-${day} ${hours}:${minuts}`
 }
+
+export function getFormatedTime(date: Date): string {
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+  const minuts = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+  const seconds = date.getSeconds() < 10 ? `0${date.getSeconds()}` : date.getSeconds()
+  return `${hours}:${minuts}:${seconds}`
+}

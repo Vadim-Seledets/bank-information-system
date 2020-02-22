@@ -4,7 +4,7 @@ import { style } from './AtmPage.css'
 import { AtmPage } from '../../models/atm/AtmPage'
 import { dim } from '../../common/css'
 import { cx } from 'emotion'
-import { getFormatedDate } from '../../models/atm/PaymentAndAccountModels'
+import { getFormatedDate, getFormatedTime } from '../../models/atm/PaymentAndAccountModels'
 
 export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
   const setPinInputElement = React.useCallback(element => {
@@ -20,6 +20,16 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
     const atmRoutineInfo = p.atmPage.atmRoutineInfo
     return (
       <div className={css.main}>
+        {p.atmPage.currentPageName !== 'WelcomePage' && (
+          <React.Fragment>
+            <div style={{ ...dim(5, 2, 7, 3), display: 'flex', alignItems: 'center' }}>
+              <img style={{ width: '4em' }} src="assets/images/faith.png" />
+              <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '1.3em' }}>BIS ATM SERVICES</div>
+            </div>
+            <div style={{ ...dim(21, 3, 21, 3) }}>{getFormatedTime(p.atmPage.currentTime)}</div>
+            <div style={{ ...dim(3, 4, 21, 4), borderBottom: '1px solid grey', width: '100%' }} />
+          </React.Fragment>
+        )}
         {p.atmPage.currentPageName === 'WelcomePage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 2, 14, 4), fontSize: '2em' }}>WELCOME to</div>
@@ -109,11 +119,11 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <span className='las la-money-bill' style={{ marginRight: '0.5em' }} />
               <div>Mobile Payment</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
               <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
-              <div>Exit</div>
+              <div>Return Card</div>
             </button>
           </React.Fragment>
         )}
