@@ -16,7 +16,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
           <div className='space' />
-          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.loansPage.app.currentTab?.setCurrentPageName('DepositsListPage')}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.loansPage.app.currentTab?.setCurrentPageName('LoansListPage')}>
             Back
           </button>
         </div>
@@ -26,7 +26,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
               <div className={css.propertyGroupCaption}>Loan's Information</div>
               <div className={css.property}>
                 <div className='name'>Loan Type</div>
-                <div className={'value'}>{auxiliary.depositTypes.find(v => v.id === loanDetailes.loanTypeId)?.name}</div>
+                <div className={'value'}>{auxiliary.loanTypes.find(v => v.id === loanDetailes.loanTypeId)?.name}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Loan Payment Account Number</div>

@@ -71,6 +71,9 @@ export class App extends Stateful {
       case 'DepositsListPage':
         this.depositsPage.getAllDepositsInShortInfoModelRequest()
         break
+      case 'LoansListPage':
+        this.loansPage.getAllLoansInShortInfoModelRequest()
+        break
     }
   }
 
