@@ -22,11 +22,11 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
       <div className={css.main}>
         {p.atmPage.currentPageName !== 'WelcomePage' && (
           <React.Fragment>
-            <div style={{ ...dim(5, 2, 7, 3), display: 'flex', alignItems: 'center' }}>
+            <div style={{ ...dim(5, 2, 7, 3), display: 'flex', alignItems: 'flex-end', alignSelf: 'end' }}>
               <img style={{ width: '4em' }} src="assets/images/faith.png" />
-              <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '1.3em' }}>BIS ATM SERVICES</div>
+              <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '1.4em', marginLeft: '1em' }}>BIS ATM SERVICES</div>
             </div>
-            <div style={{ ...dim(21, 3, 21, 3) }}>{getFormatedTime(p.atmPage.currentTime)}</div>
+            <div style={{ ...dim(21, 3, 21, 3), alignSelf: 'end' }}>{getFormatedTime(p.atmPage.currentTime)}</div>
             <div style={{ ...dim(3, 4, 21, 4), borderBottom: '1px solid grey', width: '100%' }} />
           </React.Fragment>
         )}
