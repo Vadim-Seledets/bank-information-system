@@ -1,5 +1,5 @@
 import { Stateful, action } from "reactronic"
-import { CreatingDeposit, DepositCreateModel } from "./Deposit"
+import { CreatingDeposit, DepositCreateModel, OpenDepositResponseModel } from "./Deposit"
 import { DepositsPage } from "./DepositsPage"
 import { IApiErrors, ApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
@@ -57,10 +57,11 @@ export class DepositCreationPage extends Stateful {
     this.setApiErrors(undefined)
     if (this.creatingDeposit) {
       const url = `https://localhost:5001/deposits`
-      await this.depositsPage.app.httpClient.post(url, this.creatingDeposit.getJson())
+      const pin = await this.depositsPage.app.httpClient.post<OpenDepositResponseModel>(url, this.creatingDeposit.getJson())
       const errors = this.depositsPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
       this.setApiErrors(errors)
       if (this.apiErrors === undefined) {
+        alert(`Deposit Account Pin: ${pin?.depositAccountPin}\nRegular Account Pin: ${pin?.regularAccountPin}`)
         this.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')
       }
     }

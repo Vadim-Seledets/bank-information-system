@@ -2,6 +2,11 @@ import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from './Transaction'
 import { Stateful, cached, action } from 'reactronic'
 
+export interface OpenDepositResponseModel {
+  regularAccountPin: string
+  depositAccountPin: string
+}
+
 export interface ProgramContractShortInfoModel {
   contractNumber: string
   customer: ICustomerShortInfo
