@@ -193,13 +193,9 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}
                 onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
               />
-              <select className='currency'
-                onChange={e => atmRoutineInfo.setCurrencyId(parseInt(e.currentTarget.value))}
-              >
-                {auxiliary.currencies.map((v, i) => (
-                  <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
-                ))}
-              </select>
+              <span className='currency'>
+                {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
+              </span>
             </div>
             <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount') && p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber')}`}
