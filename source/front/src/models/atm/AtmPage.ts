@@ -76,6 +76,7 @@ export class AtmPage extends Stateful {
         break
       case 'PinCodePage':
         this.atmRoutineInfo.reset()
+        this.isPinCorrect = false
         this.atmRoutineInfo.setPin('')
         this.pinInputElement?.focus()
         break
@@ -110,9 +111,6 @@ export class AtmPage extends Stateful {
     const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     await this.app.httpClient.get(url, {'Authorization': pinInBase64})
     const errors = this.app.httpClient.getAndDeleteLastError('GET', url)
-    if (errors === undefined) {
-      this.setCurrentPage('MainMenuPage')
-    }
     return errors === undefined ? true : false
   }
 
