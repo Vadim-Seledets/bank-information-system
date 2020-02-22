@@ -36,7 +36,11 @@ export class HttpClient {
   }
 
   async sendRequest<TData>(url: string, method: string, headers?: HeadersInit, body?: string): Promise<TData | undefined> {
-    const response = await fetch(url, { method, ...headers, headers: { 'Content-Type': 'application/json' }, body })
+    const headersObject: HeadersInit = {
+      ...headers,
+      'Content-Type': 'application/json',
+    }
+    const response = await fetch(url, { method, headers: {...headersObject}, body })
     let data = {}
     try {
       data = await response.json()
