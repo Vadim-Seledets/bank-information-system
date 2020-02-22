@@ -9,7 +9,6 @@ export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 
   | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
   | 'ReceiptPage' | 'ShouldDoAnotherOperation' | 'IncorrectPinPage'
 
-
 export class AtmPage extends Stateful {
   readonly maxNumberOfTriesToEnterPin = 3
 
