@@ -195,30 +195,12 @@ export class AtmPage extends Stateful {
       const mywindow = window.open('', 'new div', 'height=400,width=600')
       if (mywindow) {
         mywindow.document.write('<html><head><title></title>')
-        mywindow.document.write('</head><body>')
-        mywindow.document.write(this.receiptEmement.innerText)
+        mywindow.document.write(`</head><body`)
+        mywindow.document.write(this.receiptEmement.innerHTML)
         mywindow.document.write('</body></html>')
         mywindow.print()
         mywindow.close()
       }
-
-      // const printContents = this.receiptEmement.innerHTML
-      // const originalContents = document.body.innerHTML
-      // let originalStyle: any
-      // for (const prop in document.body.style) {
-      //   if (document.body.style[prop] && !(document.body.style[prop] as any instanceof Function)) {
-      //     originalStyle[prop] = document.body.style[prop]
-      //   }
-      // }
-      // document.body.innerHTML = printContents
-      // document.body.style.display = this.receiptEmement.style.display
-      // window.print()
-      // document.body.innerHTML = originalContents
-      // for (const prop in originalStyle as CSSStyleDeclaration) {
-      //   if (originalStyle[prop]) {
-      //     document.body.style[prop] = originalStyle[prop]
-      //   }
-      // }
     }
   }
 }

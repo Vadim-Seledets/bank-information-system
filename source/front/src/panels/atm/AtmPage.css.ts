@@ -165,8 +165,6 @@ export const style = restyle(() => {
     `,
 
     receipt: css`
-      justify-self: center;
-      align-self: start;
       display: grid;
       grid-template-columns: 1fr 1em 1fr;
       align-items: center;

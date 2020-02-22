@@ -255,17 +255,27 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'withdraw' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 14, 11) }}>
-              <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
-              <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
-              <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 2, 3, 2) }} className='value'>{atmRoutineInfo.accountNumber}</div>
-              <div style={{ ...dim(1, 3, 1, 3) }} className='caption'>Amount</div>
-              <div style={{ ...dim(2, 3, 2, 3) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
-              <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Withdrawn At</div>
-              <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.withdrawnAt)}</div>
+            <div ref={setReceiptElement} style={{ ...dim(10, 7, 14, 11), justifySelf: 'center', alignSelf: 'start' }}>
+              <div className={css.receipt} style={{ 
+                display: 'grid',
+                gridTemplateColumns: '1fr 1em 1fr',
+                alignItems: 'center',
+                padding: '0.5em',
+                fontSize: '0.8em',
+                fontFamily: 'monospace',
+                borderRadius: '0.2em',
+              }}>
+                <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
+                <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
+                <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 2, 3, 2) }} className='value'>{atmRoutineInfo.accountNumber}</div>
+                <div style={{ ...dim(1, 3, 1, 3) }} className='caption'>Amount</div>
+                <div style={{ ...dim(2, 3, 2, 3) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
+                <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Withdrawn At</div>
+                <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.withdrawnAt)}</div>
+              </div>
             </div>
             <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
@@ -282,23 +292,33 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'phonePayment' && (
           <React.Fragment>
-            <div ref={setReceiptElement} className={css.receipt} style={{ ...dim(10, 7, 14, 11) }}>
-              <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
-              <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
-              <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 2, 3, 2) }} className='value'>{atmRoutineInfo.accountNumber}</div>
-              <div style={{ ...dim(1, 3, 1, 3) }} className='caption'>Amount</div>
-              <div style={{ ...dim(2, 3, 2, 3) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
-              <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Carrier</div>
-              <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{auxiliary.mobileCarriers.find(v => v.id === atmRoutineInfo.carrierId)?.name}</div>
-              <div style={{ ...dim(1, 5, 1, 4) }} className='caption'>Phone number</div>
-              <div style={{ ...dim(2, 5, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 5, 3, 4) }} className='value'>{atmRoutineInfo.phoneNumber}</div>
-              <div style={{ ...dim(1, 6, 1, 4) }} className='caption'>Payed At</div>
-              <div style={{ ...dim(2, 6, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.payedAt)}</div>
+            <div ref={setReceiptElement} style={{ ...dim(10, 7, 14, 11), justifySelf: 'center', alignSelf: 'start' }}>
+              <div className={css.receipt} style={{ 
+                display: 'grid',
+                gridTemplateColumns: '1fr 1em 1fr',
+                alignItems: 'center',
+                padding: '0.5em',
+                fontSize: '0.8em',
+                fontFamily: 'monospace',
+                borderRadius: '0.2em',
+              }}> 
+                <div style={{ ...dim(1, 1, 3, 1) }} className='title'>RECEIPT</div>
+                <div style={{ ...dim(1, 2, 1, 2) }} className='caption'>Account Number</div>
+                <div style={{ ...dim(2, 2, 2, 2) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 2, 3, 2) }} className='value'>{atmRoutineInfo.accountNumber}</div>
+                <div style={{ ...dim(1, 3, 1, 3) }} className='caption'>Amount</div>
+                <div style={{ ...dim(2, 3, 2, 3) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
+                <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Carrier</div>
+                <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{auxiliary.mobileCarriers.find(v => v.id === atmRoutineInfo.carrierId)?.name}</div>
+                <div style={{ ...dim(1, 5, 1, 4) }} className='caption'>Phone number</div>
+                <div style={{ ...dim(2, 5, 2, 4) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 5, 3, 4) }} className='value'>{atmRoutineInfo.phoneNumber}</div>
+                <div style={{ ...dim(1, 6, 1, 4) }} className='caption'>Payed At</div>
+                <div style={{ ...dim(2, 6, 2, 4) }} className='delimiter'>:</div>
+                <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.payedAt)}</div>
+              </div>
             </div>
             <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
