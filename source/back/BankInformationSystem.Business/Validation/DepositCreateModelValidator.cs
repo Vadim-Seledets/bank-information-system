@@ -21,7 +21,7 @@ namespace BankInformationSystem.Business.Validation
 
             RuleFor(x => x.Rate)
                 .ExclusiveBetween(0, MaximalDepositRate)
-                .WithMessage($"'{{PropertyName}}' must be a positive number less than {MaximalDepositRate}");
+                .WithMessage($"'{{PropertyName}}' must be a positive number less than {MaximalDepositRate}.");
         }
     }
 }
