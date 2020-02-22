@@ -58,6 +58,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             >
               <div>Enter</div>
             </button>
+            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+              onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
+            >
+              <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
+              <div>Return Card</div>
+            </button>
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'PinCodePage' && (
@@ -84,6 +90,12 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[2] : '*'}</div>
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[3] : '*'}</div>
             </div>
+            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+              onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
+            >
+              <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
+              <div>Return Card</div>
+            </button>
           </React.Fragment>
         )}
         {p.atmPage.currentPageName === 'MainMenuPage' && (
