@@ -160,13 +160,13 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = loanContract.ContractNumber,
                     CurrencyId = loanContract.CurrencyId,
                     Amount = loanContract.Amount /
-                        (decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
-                        _configuration.GetValue<int>("LoanTermDays") + loanContract.Amount * loanContract.Rate,
+                        ((decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
+                        _configuration.GetValue<int>("LoanTermDays")) + loanContract.Amount * loanContract.Rate,
                     CreatedAt = now,
-                    SenderAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
-                    SenderAccount = bankDevelopmentFunds[loanContract.CurrencyId],
-                    ReceiverAccountNumber = loanContract.LoanPaymentAccountNumber,
-                    ReceiverAccount = loanContract.LoanPaymentAccount
+                    SenderAccountNumber = loanContract.LoanPaymentAccountNumber,
+                    SenderAccount = loanContract.LoanPaymentAccount,
+                    ReceiverAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
+                    ReceiverAccount = bankDevelopmentFunds[loanContract.CurrencyId]
                 }).Entity;
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
@@ -186,8 +186,8 @@ namespace BankInformationSystem.Business.Services
             foreach (var loanContract in loanContracts)
             {
                 var mainPart = loanContract.Amount /
-                    (decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
-                    _configuration.GetValue<int>("LoanTermDays");
+                    ((decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
+                    _configuration.GetValue<int>("LoanTermDays"));
                 var loanRepaymentsPart = (decimal)loanContract.ProgramEndDate.Subtract(
                     loanContract.LatestPaymentTransaction?.CreatedAt ?? loanContract.ProgramStartDate).TotalDays /
                     _configuration.GetValue<int>("LoanTermDays") * loanContract.Rate * loanContract.Amount;
@@ -198,10 +198,10 @@ namespace BankInformationSystem.Business.Services
                     CurrencyId = loanContract.CurrencyId,
                     Amount = mainPart + loanRepaymentsPart,
                     CreatedAt = now,
-                    SenderAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
-                    SenderAccount = bankDevelopmentFunds[loanContract.CurrencyId],
-                    ReceiverAccountNumber = loanContract.LoanPaymentAccountNumber,
-                    ReceiverAccount = loanContract.LoanPaymentAccount
+                    SenderAccountNumber = loanContract.LoanPaymentAccountNumber,
+                    SenderAccount = loanContract.LoanPaymentAccount,
+                    ReceiverAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
+                    ReceiverAccount = bankDevelopmentFunds[loanContract.CurrencyId]
                 }).Entity;
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
