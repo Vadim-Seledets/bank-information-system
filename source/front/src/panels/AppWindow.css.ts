@@ -32,9 +32,10 @@ export const style = restyle(() => {
         cursor: pointer;
         display: flex;
         align-items: center;
+        border: ${theme.buttonBorder};
 
         &:hover {
-          box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
+          box-shadow: ${theme.buttonBoxShadow};
         }
 
         transition: opacity 0.2s ease, box-shadow ease 0.2s;
@@ -46,9 +47,11 @@ export const style = restyle(() => {
     `,
 
     menu: css`
+      z-index: 6;
       display: flex;
       align-items: center;
-      background-color: ${theme.menuBackground};
+      background: ${theme.menuBackground};
+      box-shadow: 0 0.2em 0.4em ${theme.menuBottomBoxShadow};
 
       .space {
         flex-grow: 1;
@@ -97,7 +100,7 @@ export const style = restyle(() => {
       text-transform: uppercase;
 
       &:hover {
-        color: ${theme.sidebarSelectedTabForeground};
+        color: ${theme.sidebarHoveredTabForeground};
         background: ${theme.sidebarHoveredTabBackground};
       }
 
