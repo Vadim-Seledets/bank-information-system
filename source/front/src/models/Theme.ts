@@ -3,13 +3,16 @@ import { Stateful, Action, action } from 'reactronic'
 export interface ITheme {
   readonly name: string
   readonly applicationBackground: string
-  readonly applicationBackgroundDemmed: string
   readonly applicationForeground: string
-  readonly buttonHover: string
+  readonly buttonBackground: string
+  readonly buttonBorder: string
+  readonly buttonBoxShadow: string
   readonly menuBackground: string
+  readonly menuBottomBoxShadow: string
   readonly sidebarBackground: string
   readonly sidebarForeground: string
   readonly sidebarHoveredTabBackground: string
+  readonly sidebarHoveredTabForeground: string
   readonly sidebarSelectedTabBackground: string
   readonly sidebarSelectedTabForeground: string
   readonly highlighter: string
@@ -28,13 +31,16 @@ export interface ITheme {
 export class BlankTheme extends Stateful implements ITheme {
   readonly name = "blank"
   readonly applicationBackground = ""
-  readonly applicationBackgroundDemmed = ""
   readonly applicationForeground = ""
-  readonly buttonHover = ""
+  readonly buttonBackground = ""
+  readonly buttonBorder = ""
+  readonly buttonBoxShadow = ""
   readonly menuBackground = ""
+  readonly menuBottomBoxShadow = ""
   readonly sidebarBackground = ""
   readonly sidebarForeground = ""
   readonly sidebarHoveredTabBackground = ""
+  readonly sidebarHoveredTabForeground = ""
   readonly sidebarSelectedTabBackground = ""
   readonly sidebarSelectedTabForeground = ""
   readonly highlighter = ""

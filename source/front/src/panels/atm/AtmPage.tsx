@@ -5,6 +5,7 @@ import { AtmPage } from '../../models/atm/AtmPage'
 import { dim } from '../../common/css'
 import { cx } from 'emotion'
 import { getFormatedDate, getFormatedTime } from '../../models/atm/PaymentAndAccountModels'
+import { commonStyle } from '../../common/CommonStyles.css'
 
 export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
   const setPinInputElement = React.useCallback(element => {
@@ -15,6 +16,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
   }, [])
   return reactive(() => {
     const css = style.classes
+    const commonCss = commonStyle.classes
     const apiErrors = p.atmPage.apiErrors
     const auxiliary = p.atmPage.app.auxiliary
     const atmRoutineInfo = p.atmPage.atmRoutineInfo
@@ -36,7 +38,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             <img style={{ ...dim(10, 6, 14, 11), width: '13em' }} src="assets/images/faith.png" />
             <div className={css.centeredText} style={{ ...dim(10, 14, 14, 16), fontSize: '2em' }}>BIS ATM SERVICES</div>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 19, 14, 19) }}>Please insert card</div>
-            <button style={{ ...dim(12, 20, 12, 20) }} className={css.greenButton}
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('AccountNumberPage')}
             >
               <span className='las la-credit-card' style={{ marginRight: '0.5em' }} />
@@ -52,13 +54,13 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
             />
-            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber')}`}
               onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
             >
               <div>Enter</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
               <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
@@ -90,7 +92,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[2] : '*'}</div>
               <div className='digit'>{p.atmPage.isPinVisible ? atmRoutineInfo.pin[3] : '*'}</div>
             </div>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
               <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
@@ -101,25 +103,25 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'MainMenuPage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Choose the operation</div>
-            <button style={{ ...dim(12, 8, 12, 8), justifySelf: 'stretch' }} className={css.greenButton}
+            <button style={{ ...dim(12, 8, 12, 8), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('CashWithdrawalPage')}
             >
               <span className='las la-coins' style={{ marginRight: '0.5em' }} />
               <div>Cash Withdrawal</div>
             </button>
-            <button style={{ ...dim(12, 10, 12, 10), justifySelf: 'stretch' }} className={css.greenButton}
+            <button style={{ ...dim(12, 10, 12, 10), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('AccountBalancePage')}
             >
               <span className='las la-wallet' style={{ marginRight: '0.5em' }} />
               <div>Account Balance</div>
             </button>
-            <button style={{ ...dim(12, 12, 12, 12), justifySelf: 'stretch' }} className={css.greenButton}
+            <button style={{ ...dim(12, 12, 12, 12), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('MobilePaymentPage')}
             >
               <span className='las la-money-bill' style={{ marginRight: '0.5em' }} />
               <div>Mobile Payment</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
               <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
@@ -141,13 +143,13 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
               </span>
             </div>
-            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount')}`}
               onClick={() => p.atmPage.withdrawCashRequest()}
             >
               <div>Enter</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <div>Back</div>
@@ -161,7 +163,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div className='caption'>Current Balance:</div>
               <div className='value'>{`${atmRoutineInfo.amount.toFixed(2)} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
             </div>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.greenButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton)}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <div>Back</div>
@@ -193,22 +195,18 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}
                 onChange={e => atmRoutineInfo.setAmount(parseFloat(e.currentTarget.value))}
               />
-              <select className='currency'
-                onChange={e => atmRoutineInfo.setCurrencyId(parseInt(e.currentTarget.value))}
-              >
-                {auxiliary.currencies.map((v, i) => (
-                  <option key={`${v.id}:${v.code}`} value={v.id}>{v.code}</option>
-                ))}
-              </select>
+              <span className='currency'>
+                {auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}
+              </span>
             </div>
-            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               is-enabled={`${p.atmPage.validation.isValid(atmRoutineInfo, 'amount') && p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber')}`}
               onClick={() => p.atmPage.payForMobilePhoneRequest()}
             >
               <span className='las la-money-bill-wave' style={{ marginRight: '0.5em' }} />
               <div>Pay</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <div>Back</div>
@@ -219,10 +217,10 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Do you need a receipt?</div>
             <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
-              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}>
+              <button className={cx(commonCss.button, css.greenButton)} onClick={() => p.atmPage.setCurrentPage('ReceiptPage')}>
                 <div>Yes</div>
               </button>
-              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}>
+              <button className={cx(commonCss.button, css.greenButton)} onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}>
                 <div>No</div>
               </button>
             </div>
@@ -232,10 +230,10 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 8, 14, 8) }}>Do you want to do another operation?</div>
             <div style={{ ...dim(12, 10, 12, 10), display: 'flex', justifySelf: 'stretch', justifyContent: 'space-around' }}>
-              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('PinCodePage')}>
+              <button className={cx(commonCss.button, css.greenButton)} onClick={() => p.atmPage.setCurrentPage('PinCodePage')}>
                 <div>Yes</div>
               </button>
-              <button className={css.greenButton} onClick={() => p.atmPage.setCurrentPage('WelcomePage')}>
+              <button className={cx(commonCss.button, css.greenButton)} onClick={() => p.atmPage.setCurrentPage('WelcomePage')}>
                 <div>No</div>
               </button>
             </div>
@@ -245,7 +243,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.tip} style={{ ...dim(10, 8, 14, 8) }}>{`You've tried to enter your pin too many times`}</div>
             <div className={css.tip} style={{ ...dim(10, 9, 14, 9) }}>{`You can return your card and try again`}</div>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={css.redButton}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
               <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
@@ -277,13 +275,13 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.withdrawnAt)}</div>
               </div>
             </div>
-            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
             >
               <span className='las la-print' style={{ marginRight: '0.5em' }} />
               <div>Print</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
             >
               <div>Done</div>
@@ -320,13 +318,13 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
                 <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.payedAt)}</div>
               </div>
             </div>
-            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(18, 20, 19, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
             >
               <span className='las la-print' style={{ marginRight: '0.5em' }} />
               <div>Print</div>
             </button>
-            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(css.greenButton, css.disable)}
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
               onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
             >
               <div>Done</div>

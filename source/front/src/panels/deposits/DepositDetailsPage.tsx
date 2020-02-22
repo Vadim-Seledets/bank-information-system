@@ -15,7 +15,7 @@ export function DepositDetailsPageView(p: { depositsPage: DepositsPage }): JSX.E
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={cx(css.button, css.deleteButton)}
+          <button className={cx(commonCss.button, css.button, css.deleteButton)}
             is-visible={`${depositDetailes?.depositTypeId === 1 && depositDetailes.isRevoked === false && depositDetailes.isCompleted === false}`}>
             <span className='las la-undo icon' style={{ marginRight: '0.5em' }} />
             <div onClick={() => p.depositsPage.setRevokeIsRequested(!p.depositsPage.revokeIsRequested)}>Revoke Deposit</div>
@@ -31,7 +31,7 @@ export function DepositDetailsPageView(p: { depositsPage: DepositsPage }): JSX.E
             </div>
           </button>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.depositsPage.app.currentTab?.setCurrentPageName('DepositsListPage')}>
             Back
           </button>
         </div>

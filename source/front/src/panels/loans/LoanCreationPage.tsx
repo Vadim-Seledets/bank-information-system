@@ -16,7 +16,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={css.editOrPublishButton}
+          <button className={cx(commonCss.button, css.editOrPublishButton)}
             is-enabled={`${p.loansPage.loanCreationPage.validation.areAllValid(creatingLoan!)}`}
             onClick={() => p.loansPage.loanCreationPage.publishNewLoanRequest()}
           >
@@ -26,7 +26,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
             </React.Fragment>
           </button>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.loansPage.loanCreationPage.cancelCreation()}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.loansPage.loanCreationPage.cancelCreation()}>
             Cancel
           </button>
         </div>

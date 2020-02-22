@@ -16,7 +16,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={css.editOrPublishButton}
+          <button className={cx(commonCss.button, css.editOrPublishButton)}
             is-enabled={`${p.depositsPage.depositCreationPage.validation.areAllValid(creatingDeposit!)}`}
             onClick={() => p.depositsPage.depositCreationPage.publishNewDepositRequest()}
           >
@@ -26,7 +26,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
             </React.Fragment>
           </button>
           <div className='space' />
-          <button className={commonCss.backButton} onClick={() => p.depositsPage.depositCreationPage.cancelCreation()}>
+          <button className={cx(commonCss.button, commonCss.backButton)} onClick={() => p.depositsPage.depositCreationPage.cancelCreation()}>
             Cancel
           </button>
         </div>

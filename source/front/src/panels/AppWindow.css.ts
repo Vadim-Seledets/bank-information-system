@@ -22,33 +22,17 @@ export const style = restyle(() => {
       grid-template-columns: 2fr repeat(11, 1fr);
       grid-template-rows: 2em 1.5em repeat(10, 1fr);
 
-      button {
-        align-self: center;
-        font-size: 0.8em;
-        padding: 0.25em 0.75em;
-        border-radius: 0.2em;
-        white-space: nowrap;
-        user-select: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-
-        &:hover {
-          box-shadow: 0.1em 0.1em 0.3em rgba(127, 127, 127, 0.5);
-        }
-
-        transition: opacity 0.2s ease, box-shadow ease 0.2s;
-      }
-
       input {
         transition: background-color ease 0.2s, border ease 0.2s, box-shadow ease 0.2s;
       }
     `,
 
     menu: css`
+      z-index: 6;
       display: flex;
       align-items: center;
-      background-color: ${theme.menuBackground};
+      background: ${theme.menuBackground};
+      box-shadow: 0 0.2em 0.4em ${theme.menuBottomBoxShadow};
 
       .space {
         flex-grow: 1;
@@ -97,7 +81,7 @@ export const style = restyle(() => {
       text-transform: uppercase;
 
       &:hover {
-        color: ${theme.sidebarSelectedTabForeground};
+        color: ${theme.sidebarHoveredTabForeground};
         background: ${theme.sidebarHoveredTabBackground};
       }
 

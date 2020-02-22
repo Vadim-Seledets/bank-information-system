@@ -36,7 +36,7 @@ export class App extends Stateful {
       new Tab('loans', 'Loans', 'LoansListPage', 'las la-credit-card'),
       new Tab('atm', 'ATM', 'AtmPage', 'las la-money-check'),
     )
-    this.currentTab = this.tabs[3]
+    this.currentTab = this.tabs[0]
     this.customersPage = new CustomersPage(this)
     this.depositsPage = new DepositsPage(this)
     this.loansPage = new LoansPage(this)

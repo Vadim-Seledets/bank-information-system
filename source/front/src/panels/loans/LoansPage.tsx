@@ -13,7 +13,7 @@ export function LoansPageView(p: { loansPage: LoansPage }): JSX.Element {
     return (
       <div className={commonCss.main}>
         <div className={commonCss.headLine} style={{ ...dim(2, 1, 11, 1) }}>
-          <button className={cx(css.addNewLoanButton, 'headLineItem')} onClick={() => p.loansPage.addNewLoan()}>
+          <button className={cx(commonCss.button, css.addNewLoanButton, 'headLineItem')} onClick={() => p.loansPage.addNewLoan()}>
             <span className='las la-plus' style={{ marginRight: '0.5em' }} />
             <div>Add a New Loan</div>
           </button>

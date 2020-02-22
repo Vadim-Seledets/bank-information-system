@@ -13,6 +13,7 @@ export const commonStyle = restyle(() => {
     `,
 
     headLine: css`
+      padding-top: 0.5em;
       position: sticky;
       top: 0;
       z-index: 2;
@@ -34,6 +35,26 @@ export const commonStyle = restyle(() => {
         font-size: 0.8em;
         color: #ee3333;
       }
+    `,
+
+    button: css`
+      align-self: center;
+      font-size: 0.8em;
+      padding: 0.25em 0.75em;
+      border-radius: 0.2em;
+      white-space: nowrap;
+      user-select: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      border: ${theme.buttonBorder};
+      background: ${theme.buttonBackground};
+
+      &:hover {
+        box-shadow: ${theme.buttonBoxShadow};
+      }
+
+        transition: opacity 0.2s ease, box-shadow ease 0.2s;
     `,
 
     backButton: css`
