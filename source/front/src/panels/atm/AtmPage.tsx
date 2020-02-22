@@ -69,8 +69,8 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               onKeyDown={e => e.key !== 'Backspace' && Number.isNaN(parseInt(e.key)) && e.preventDefault()}
             />
             <div style={{ ...dim(12, 10, 12, 10) }} className={css.pin} onClick={() => p.atmPage.pinInputElement?.focus()}
-              is-invalid={`${atmRoutineInfo.pin.length === 4 && !p.atmPage.isPinCorrect}`}
-              is-correct={`${atmRoutineInfo.pin.length === 4 && p.atmPage.isPinCorrect}`}
+              is-invalid={`${p.atmPage.pinIsCorrect() === false}`}
+              is-correct={`${p.atmPage.pinIsCorrect()}`}
               onAnimationEnd={() => {
                 if (p.atmPage.isPinCorrect) {
                   p.atmPage.setCurrentPage('MainMenuPage')

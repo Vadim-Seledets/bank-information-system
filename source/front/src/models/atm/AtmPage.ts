@@ -1,9 +1,10 @@
-import { Stateful, action, trigger } from 'reactronic'
+import { Stateful, action, trigger, nonreactive, cached } from 'reactronic'
 import { App } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
 import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, CashWithdrawalChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
 import { digestMessageInBase64 } from './AtmUtils'
+import { cache } from 'emotion'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
   | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
@@ -19,7 +20,7 @@ export class AtmPage extends Stateful {
   receiptEmement: HTMLElement | null
 
   isPinVisible: boolean
-  isPinCorrect: boolean
+  isPinCorrect: boolean | undefined
   currentTime: Date
 
   constructor(app: App) {
@@ -41,7 +42,7 @@ export class AtmPage extends Stateful {
     this.pinInputElement = null
     this.receiptEmement = null
     this.isPinVisible = true
-    this.isPinCorrect = false
+    this.isPinCorrect = undefined
     this.currentTime = new Date()
     setInterval(this.setCurrentTime, 1000)
   }
@@ -76,7 +77,7 @@ export class AtmPage extends Stateful {
         break
       case 'PinCodePage':
         this.atmRoutineInfo.reset()
-        this.isPinCorrect = false
+        this.isPinCorrect = undefined
         this.atmRoutineInfo.setPin('')
         this.pinInputElement?.focus()
         break
@@ -102,7 +103,15 @@ export class AtmPage extends Stateful {
   async updatePinCorrectnessStatus(): Promise<void> {
     if (this.atmRoutineInfo.pin.length === 4) {
       this.isPinCorrect = await this.checkPinCorrectness()
+    } else {
+      this.isPinCorrect = undefined
     }
+  }
+
+  @cached
+  pinIsCorrect(): boolean | undefined {
+    this.isPinCorrect
+    return nonreactive(() => this.atmRoutineInfo.pin.length) === 4 ? this.isPinCorrect : undefined
   }
 
   @action
