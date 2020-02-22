@@ -28,11 +28,11 @@ namespace BankInformationSystem.Business.Validation
 
             RuleFor(x => x.Rate)
                 .GreaterThanOrEqualTo(MinimalLoanRate)
-                .WithMessage($"'{{PropertyName}}' must be greater than or equal to {MinimalLoanRate}");
+                .WithMessage($"'{{PropertyName}}' must be greater than or equal to {MinimalLoanRate}.");
 
             RuleFor(x => x.ProgramEndDate)
                 .Must(BeNDaysLaterThanProgramStartDateWhereNIsMultipleOfLoanTermDays)
-                .WithMessage($"Difference between program end and start dates must be a multiple of {_configuration.GetValue<int>("LoanTermDays")}");
+                .WithMessage($"Difference between program end and start dates must be a multiple of {_configuration.GetValue<int>("LoanTermDays")}.");
         }
         
         private bool BeNDaysLaterThanProgramStartDateWhereNIsMultipleOfLoanTermDays(LoanCreateModel model, DateTime endDate)
