@@ -131,6 +131,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
 
   getJson(): string {
     const deposit = {
+      loanTypeId: this.loanTypeId,
       contractNumber: this.contractNumber,
       programStartDate: this.programStartDate,
       programEndDate: this.programEndDate,
