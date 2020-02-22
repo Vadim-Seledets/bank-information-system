@@ -4,6 +4,7 @@ import { style } from './AtmPage.css'
 import { AtmPage } from '../../models/atm/AtmPage'
 import { dim } from '../../common/css'
 import { cx } from 'emotion'
+import { getFormatedDate } from '../../models/atm/PaymentAndAccountModels'
 
 export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
   const setPinInputElement = React.useCallback(element => {
@@ -242,7 +243,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div style={{ ...dim(3, 3, 3, 3) }} className='value'>{`${atmRoutineInfo.amount} ${auxiliary.currencies.find(v => v.id === atmRoutineInfo.currencyId)?.code}`}</div>
               <div style={{ ...dim(1, 4, 1, 4) }} className='caption'>Withdrawn At</div>
               <div style={{ ...dim(2, 4, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{atmRoutineInfo.withdrawnAt.substr(0, 10)}</div>
+              <div style={{ ...dim(3, 4, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.withdrawnAt)}</div>
             </div>
             <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}
@@ -275,7 +276,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div style={{ ...dim(3, 5, 3, 4) }} className='value'>{atmRoutineInfo.phoneNumber}</div>
               <div style={{ ...dim(1, 6, 1, 4) }} className='caption'>Payed At</div>
               <div style={{ ...dim(2, 6, 2, 4) }} className='delimiter'>:</div>
-              <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{atmRoutineInfo.payedAt.substr(0, 10)}</div>
+              <div style={{ ...dim(3, 6, 3, 4) }} className='value'>{getFormatedDate(atmRoutineInfo.payedAt)}</div>
             </div>
             <button style={{ ...dim(18, 20, 19, 20) }} className={cx(css.greenButton, css.disable)}
               onClick={() => p.atmPage.printReceipt()}

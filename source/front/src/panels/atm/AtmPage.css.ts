@@ -159,11 +159,12 @@ export const style = restyle(() => {
       justify-self: center;
       align-self: start;
       display: grid;
-      grid-template-columns: 2fr 1em 1fr;
+      grid-template-columns: 1fr 1em 1fr;
       align-items: center;
-      padding: 0.25em;
+      padding: 0.5em;
       font-size: 0.8em;
       font-family: monospace;
+      border-radius: 0.2em;
       color: ${theme.customerInfoBubbleValueForeground};
       background-color: ${theme.customerInfoBubbleBackground};
 
