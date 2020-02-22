@@ -92,10 +92,10 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Choose the operation</div>
             <button style={{ ...dim(12, 8, 12, 8), justifySelf: 'stretch' }} className={css.greenButton}
-              onClick={() => p.atmPage.setCurrentPage('WithdrawPage')}
+              onClick={() => p.atmPage.setCurrentPage('CashWithdrawalPage')}
             >
               <span className='las la-coins' style={{ marginRight: '0.5em' }} />
-              <div>Withdraw</div>
+              <div>Cash Withdrawal</div>
             </button>
             <button style={{ ...dim(12, 10, 12, 10), justifySelf: 'stretch' }} className={css.greenButton}
               onClick={() => p.atmPage.setCurrentPage('AccountBalancePage')}
@@ -117,7 +117,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             </button>
           </React.Fragment>
         )}
-        {p.atmPage.currentPageName === 'WithdrawPage' && (
+        {p.atmPage.currentPageName === 'CashWithdrawalPage' && (
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Cash Withdrawal</div>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 7, 14, 7) }}>Please enter the amount</div>

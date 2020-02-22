@@ -5,7 +5,7 @@ import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, C
 import { Validation, PropertyValidator } from '../Validation'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
-  | 'WithdrawPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
+  | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
   | 'ReceiptPage' | 'ShouldDoAnotherOperation'
 
 export class AtmPage extends Stateful {
@@ -77,7 +77,7 @@ export class AtmPage extends Stateful {
       case 'MainMenuPage':
         this.atmRoutineInfo.reset()
         break
-      case 'WithdrawPage':
+      case 'CashWithdrawalPage':
         await this.getAccountBalance()
         this.atmRoutineInfo.setAmount(0)
         this.atmRoutineInfo.setOperation('withdraw')
