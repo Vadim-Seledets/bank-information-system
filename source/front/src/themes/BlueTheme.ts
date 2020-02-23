@@ -20,7 +20,7 @@ export class BlueTheme extends Stateful implements ITheme {
   readonly markForeground = "#cc0000"
   readonly searchInputBackground = "#17264F"
   readonly searchInputBorderBottom = "1px solid #5FA895"
-  readonly customerListRowBottomBorder = "#111110"
+  readonly listRowBottomBorder = "1px solid #111110"
   readonly customerListOddRowBackground = "#354670"
   readonly customerListHoveredRowBackground = "#465781"
   readonly customerListHighlightedRowBackground = "#6ECBA4"

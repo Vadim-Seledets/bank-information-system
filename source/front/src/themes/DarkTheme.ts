@@ -20,7 +20,7 @@ export class DarkTheme extends Stateful implements ITheme {
   readonly markForeground = "#fbe03c"
   readonly searchInputBackground = "#434341"
   readonly searchInputBorderBottom = "1px solid #7c7c7b"
-  readonly customerListRowBottomBorder = "#111110"
+  readonly listRowBottomBorder = "1px solid #111110"
   readonly customerListOddRowBackground = "#333332"
   readonly customerListHoveredRowBackground = "#414141"
   readonly customerListHighlightedRowBackground = "#0e5ccd"

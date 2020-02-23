@@ -91,7 +91,7 @@ export const commonStyle = restyle(() => {
         z-index: 1;
         width: 100%;
         padding: 1em 0;
-        border-bottom: 1px solid ${theme.customerListRowBottomBorder};
+        border-bottom: ${theme.listRowBottomBorder};
       }
       
       .row {

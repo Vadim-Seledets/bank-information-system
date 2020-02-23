@@ -115,7 +115,7 @@ export const style = restyle(() => {
     `,
 
     transactionFirstRow: css`
-      border-bottom: 1px solid ${theme.customerListRowBottomBorder};
+      border-bottom: ${theme.listRowBottomBorder};
     `,
   }
 })
