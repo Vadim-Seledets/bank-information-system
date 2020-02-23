@@ -26,7 +26,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
             <div>Edit Customer</div>
           </button>
           <div className='space' />
-          <div className={css.search}>
+          <div className={commonCss.search}>
             <div className='las la-search icon' />
             <input className='input' type='text' placeholder='Search' value={p.customersPage.filter}
               onFocus={() => p.customersPage.setSelectedCustomer(undefined)}  

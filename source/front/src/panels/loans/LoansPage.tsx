@@ -18,7 +18,7 @@ export function LoansPageView(p: { loansPage: LoansPage }): JSX.Element {
             <div>Add a New Loan</div>
           </button>
           <div className='space' />
-          <div className={css.search}>
+          <div className={commonCss.search}>
             <div className='las la-search icon' />
             <input className='input' type='text' placeholder='Search' value={p.loansPage.filter}
               onFocus={() => p.loansPage.setSelectedLoan(undefined)}  
