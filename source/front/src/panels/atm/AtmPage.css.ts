@@ -127,26 +127,6 @@ export const style = restyle(() => {
       color: ${theme.customerInfoBubbleForeground};
     `,
 
-    input: css`
-      justify-self: stretch;
-      padding: 0;
-      border: 1px solid ${theme.applicationForeground};
-      border-radius: 0.2em;
-      font-size: 0.8em;
-      height: 1.4em;
-      outline: none;
-      color: ${theme.applicationForeground};
-      background-color: ${theme.applicationBackground};
-
-      &[is-invalid=true] {
-        border-color: #ee3333;
-      }
-
-      &:disabled {
-        color: ${theme.customerInfoBubbleForeground};
-      }
-    `,
-
     money: css`
       display: flex;
       align-items: center;
