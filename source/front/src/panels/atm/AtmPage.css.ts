@@ -11,7 +11,6 @@ export const style = restyle(() => {
       grid-template-rows: repeat(24, 1fr);
       align-items: center;
       justify-items: center;
-      /* border: 1px solid ${theme.highlighter}; */
       flex-grow: 1;
       color: ${theme.applicationForeground};
     `,

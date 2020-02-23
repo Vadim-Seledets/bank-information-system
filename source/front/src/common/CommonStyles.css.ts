@@ -52,13 +52,13 @@ export const commonStyle = restyle(() => {
 
     input: css`
       margin: 0.25em 0;
-      border: 1px solid ${theme.applicationForeground};
+      border: ${theme.inputBorder};
       border-radius: 0.2em;
       font-size: 0.8em;
       height: 1.4em;
       outline: none;
-      color: ${theme.applicationForeground};
-      background-color: ${theme.applicationBackground};
+      color: ${theme.inputForeground};
+      background-color: ${theme.inputBackground};
 
       &[is-invalid=true] {
         border-color: #ee3333;
