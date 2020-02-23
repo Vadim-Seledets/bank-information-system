@@ -30,7 +30,7 @@ export class CustomersPage extends Stateful {
 
   @action
   toggleCustomerSelection(customer: Customer): void {
-    if (this.selectedCustomer === customer) {
+    if (this.selectedCustomer?.id === customer.id) {
       this.setSelectedCustomer(undefined)
     } else {
       this.setSelectedCustomer(customer)

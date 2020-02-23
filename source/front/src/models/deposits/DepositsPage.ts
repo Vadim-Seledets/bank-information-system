@@ -32,7 +32,7 @@ export class DepositsPage extends Stateful {
 
   @action
   toggleDepositSelection(deposit: Deposit): void {
-    if (this.selectedDeposit === deposit) {
+    if (this.selectedDeposit?.contractNumber === deposit.contractNumber) {
       this.setSelectedDeposit(undefined)
     } else {
       this.setSelectedDeposit(deposit)
