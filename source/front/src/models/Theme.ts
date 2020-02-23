@@ -18,7 +18,7 @@ export interface ITheme {
   readonly highlighter: string
   readonly markForeground: string
   readonly searchInputBackground: string
-  readonly searchInputBorderColor: string
+  readonly searchInputBorderBottom: string
   readonly customerListRowBottomBorder: string
   readonly customerListOddRowBackground: string
   readonly customerListHoveredRowBackground: string
@@ -46,7 +46,7 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly highlighter = ""
   readonly markForeground = ""
   readonly searchInputBackground = ""
-  readonly searchInputBorderColor = ""
+  readonly searchInputBorderBottom = ""
   readonly customerListRowBottomBorder = ""
   readonly customerListOddRowBackground = ""
   readonly customerListHoveredRowBackground = ""

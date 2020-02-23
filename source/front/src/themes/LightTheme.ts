@@ -19,7 +19,7 @@ export class LightTheme extends Stateful implements ITheme {
   readonly highlighter = "#6dac37"
   readonly markForeground = "#ff0000"
   readonly searchInputBackground = "#ffffff"
-  readonly searchInputBorderColor = "grey"
+  readonly searchInputBorderBottom = "1px solid grey"
   readonly customerListRowBottomBorder = "#111110"
   readonly customerListOddRowBackground = "#f9fafb"
   readonly customerListHoveredRowBackground = "#eaebec"
