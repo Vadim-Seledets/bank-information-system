@@ -37,6 +37,19 @@ export const commonStyle = restyle(() => {
       }
     `,
 
+    search: css`
+      align-self: center;
+      justify-self: right;
+      display: flex;
+      align-items: center;
+      padding: 0.1em 0.3em;
+      color: ${theme.applicationForeground};
+      background: ${theme.searchInputBackground};
+      border-bottom: ${theme.searchInputBorderBottom};
+      border-radius: 0.2em;
+      font-size: 0.8em;
+    `,
+
     button: css`
       align-self: center;
       font-size: 0.8em;
