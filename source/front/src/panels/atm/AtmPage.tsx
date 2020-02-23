@@ -49,7 +49,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         {p.atmPage.currentPageName === 'AccountNumberPage' && (
           <React.Fragment>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your account number</div>
-            <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text"
+            <input style={{ ...dim(12, 10, 12, 10) }} className={commonCss.input} type="text"
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'accountNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
               onChange={e => atmRoutineInfo.setAccountNumber(e.currentTarget.value)}
@@ -72,7 +72,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 9, 14, 9) }}>Please enter your PIN</div>
             <input ref={setPinInputElement} style={{ ...dim(12, 1, 12, 1), opacity: '0', pointerEvents: 'none' }}
-              className={css.input} type="text" maxLength={4} value={atmRoutineInfo.pin}
+              className={commonCss.input} type="text" maxLength={4} value={atmRoutineInfo.pin}
               onChange={e => atmRoutineInfo.setPin(e.currentTarget.value)}
               onKeyDown={e => e.key !== 'Backspace' && Number.isNaN(parseInt(e.key)) && e.preventDefault()}
             />
@@ -133,7 +133,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Cash Withdrawal</div>
             <div className={cx(css.centeredText, css.tip)} style={{ ...dim(10, 7, 14, 7) }}>Please enter the amount</div>
-            <div style={{ ...dim(12, 8, 12, 8) }} className={cx(css.input, css.money)}
+            <div style={{ ...dim(12, 8, 12, 8) }} className={cx(commonCss.input, css.money)}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >
               <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}
@@ -174,7 +174,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Mobile Payment</div>
             <div style={{ ...dim(12, 7, 12, 7) }} className={css.tip}>Carrier</div>
-            <select style={{ ...dim(12, 8, 12, 8) }} className={css.input}
+            <select style={{ ...dim(12, 8, 12, 8) }} className={commonCss.input}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'carrierId') || apiErrors?.has('')}`}
               onChange={e => atmRoutineInfo.setCarrierId(parseInt(e.currentTarget.value))}
             >
@@ -183,13 +183,13 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               ))}
             </select>
             <div style={{ ...dim(12, 9, 12, 9) }} className={css.tip}>Phone Number</div>
-            <input style={{ ...dim(12, 10, 12, 10) }} className={css.input} type="text"
+            <input style={{ ...dim(12, 10, 12, 10) }} className={commonCss.input} type="text"
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'phoneNumber') || apiErrors?.has('')}`}
               // onFocus={() => apiErrors?.deleteError('Contacts.MobilePhoneNumber')}
               onChange={e => atmRoutineInfo.setPhoneNumber(e.currentTarget.value)}
             />
             <div style={{ ...dim(12, 11, 12, 11) }} className={css.tip}>Amount</div>
-            <div style={{ ...dim(12, 12, 12, 12) }} className={cx(css.input, css.money)}
+            <div style={{ ...dim(12, 12, 12, 12) }} className={cx(commonCss.input, css.money)}
               is-invalid={`${!p.atmPage.validation.isValid(atmRoutineInfo, 'amount') || apiErrors?.has('')}`}
             >
               <input className='amount' type="text" defaultValue={`${atmRoutineInfo.amount}`}

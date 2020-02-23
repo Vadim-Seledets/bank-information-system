@@ -39,7 +39,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               </div>
 
               <div style={{ ...dim(1, 2, 1, 2) }} className={css.caption}>Loan Type</div>
-              <select style={{ ...dim(3, 2, 3, 2) }} className={css.input} value={creatingLoan.loanTypeId}
+              <select style={{ ...dim(3, 2, 3, 2) }} className={commonCss.input} value={creatingLoan.loanTypeId}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'loanTypeId') || apiErrors?.has('LoanTypeId')}`}
                 onChange={e => creatingLoan.setLoanTypeId(parseInt(e.currentTarget.value))}
               >
@@ -50,13 +50,13 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('LoanTypeId') && <div style={{ ...dim(5, 2, 5, 2) }} className={css.error}>{apiErrors?.getPropertyErrors('LoanTypeId')[0]}</div>}
 
               <div style={{ ...dim(1, 3, 1, 3) }} className={css.caption}>Contract Number</div>
-              <input style={{ ...dim(3, 3, 3, 3) }} className={css.input} disabled={true} type="text" value={creatingLoan.contractNumber}
+              <input style={{ ...dim(3, 3, 3, 3) }} className={commonCss.input} disabled={true} type="text" value={creatingLoan.contractNumber}
                 onFocus={() => apiErrors?.deleteError('ContractNumber')}
               />
               {apiErrors?.has('ContractNumber') && <div style={{ ...dim(5, 3, 5, 3) }} className={css.error}>{apiErrors?.getPropertyErrors('ContractNumber')[0]}</div>}
 
               <div style={{ ...dim(1, 4, 1, 4) }} className={css.caption}>Program Start Date</div>
-              <input style={{ ...dim(3, 4, 3, 4) }} className={css.input} type="date" value={creatingLoan.programStartDate}
+              <input style={{ ...dim(3, 4, 3, 4) }} className={commonCss.input} type="date" value={creatingLoan.programStartDate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
                 onChange={e => creatingLoan.setProgramStartDate(e.currentTarget.value)}
@@ -64,7 +64,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ProgramStartDate') && <div style={{ ...dim(5, 4, 5, 4) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramStartDate')[0]}</div>}
 
               <div style={{ ...dim(1, 5, 1, 5) }} className={css.caption}>Program End Date</div>
-              <input style={{ ...dim(3, 5, 3, 5) }} className={css.input} type="date" value={creatingLoan.programEndDate}
+              <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="date" value={creatingLoan.programEndDate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramEndDate')}
                 onChange={e => creatingLoan.setProgramEndDate(e.currentTarget.value)}
@@ -72,7 +72,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ProgramEndDate') && <div style={{ ...dim(5, 5, 5, 5) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramEndDate')[0]}</div>}
 
               <div style={{ ...dim(1, 6, 1, 6) }} className={css.caption}>Contract Valid Until</div>
-              <input style={{ ...dim(3, 6, 3, 6) }} className={css.input} type="date" value={creatingLoan.contractValidUntil}
+              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" value={creatingLoan.contractValidUntil}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'contractValidUntil') || apiErrors?.has('ContractValidUntil')}`}
                 onFocus={() => apiErrors?.deleteError('ContractValidUntil')}
                 onChange={e => creatingLoan.setContractValidUntil(e.currentTarget.value)}
@@ -80,7 +80,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ContractValidUntil') && <div style={{ ...dim(5, 6, 5, 6) }} className={css.error}>{apiErrors?.getPropertyErrors('ContractValidUntil')[0]}</div>}
 
               <div style={{ ...dim(1, 7, 1, 7) }} className={css.caption}>Customer</div>
-              <select style={{ ...dim(3, 7, 3, 7) }} className={css.input} value={creatingLoan.customerId}
+              <select style={{ ...dim(3, 7, 3, 7) }} className={commonCss.input} value={creatingLoan.customerId}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'customerId') || apiErrors?.has('CustomerId')}`}
                 onChange={e => creatingLoan.setCustomerId(parseInt(e.currentTarget.value))}
               >
@@ -91,7 +91,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('CustomerId') && <div style={{ ...dim(5, 7, 5, 7) }} className={css.error}>{apiErrors?.getPropertyErrors('CustomerId')[0]}</div>}
 
               <div style={{ ...dim(1, 8, 1, 8) }} className={css.caption}>Amount</div>
-              <div style={{ ...dim(3, 8, 3, 8) }} className={cx(css.input, css.money)}
+              <div style={{ ...dim(3, 8, 3, 8) }} className={cx(commonCss.input, css.money)}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'amount') || apiErrors?.has('Amount')}`}
               >
                 <input className='amount' type="text" defaultValue={creatingLoan.amount}
@@ -108,7 +108,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('Amount') && <div style={{ ...dim(5, 8, 5, 8) }} className={css.error}>{apiErrors?.getPropertyErrors('Amount')[0]}</div>}
 
               <div style={{ ...dim(1, 9, 1, 9) }} className={css.caption}>Rate</div>
-              <input style={{ ...dim(3, 9, 3, 9) }} className={css.input} type="number" max={100} min={0} step={1} defaultValue={creatingLoan.rate}
+              <input style={{ ...dim(3, 9, 3, 9) }} className={commonCss.input} type="number" max={100} min={0} step={1} defaultValue={creatingLoan.rate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'rate') || apiErrors?.has('Rate')}`}
                 onFocus={() => apiErrors?.deleteError('Rate')}
                 onChange={e => creatingLoan.setRate(e.currentTarget.value !== '' ? parseFloat(e.currentTarget.value) : 0)}
