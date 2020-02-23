@@ -55,6 +55,7 @@ export const style = restyle(() => {
         text-align: center;
         margin-left: 1em;
         border-radius: 0.2em;
+        font-size: 0.9em;
         color: ${theme.customerInfoBubbleValueForeground};
         background-color: ${theme.customerInfoBubbleBackground};
         border: 1px solid ${theme.applicationForeground};
