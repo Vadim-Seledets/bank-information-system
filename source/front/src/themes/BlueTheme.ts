@@ -6,7 +6,7 @@ export class BlueTheme extends Stateful implements ITheme {
   readonly applicationBackground = "#1B2F60"
   readonly applicationForeground = "#A9AEC2"
   readonly buttonBackground = "#17264F"
-  readonly buttonBorder = "1px solid #5FA895"
+  readonly buttonBorder = "1px solid #5FA895aa"
   readonly buttonBoxShadow = "0 0 0.7em #5FA895"
   readonly menuBackground = "#1B2F60"
   readonly menuBottomBoxShadow = "#122448"
