@@ -12,8 +12,8 @@ export const style = restyle(() => {
       align-items: center;
       padding: 0.1em 0.3em;
       color: ${theme.applicationForeground};
-      background-color: ${theme.customerSearchBackground};
-      border-bottom: 1px solid ${theme.customerSearchBorderColor};
+      background-color: ${theme.searchInputBackground};
+      border-bottom: 1px solid ${theme.searchInputBorderColor};
       border-radius: 0.2em;
       font-size: 0.8em;
     `,
