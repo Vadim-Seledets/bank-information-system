@@ -47,8 +47,9 @@ export function LoansPageView(p: { loansPage: LoansPage }): JSX.Element {
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='rowContent programDate'
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
               >{l.programEndDate}</div>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row`}
                 is-selected={`${p.loansPage.selectedLoan?.contractNumber === l.contractNumber}`}
+                is-odd={`${(i + 1) % 2 === 1}`}
                 onClick={() => p.loansPage.toggleLoanSelection(l)}
               />
             </React.Fragment>

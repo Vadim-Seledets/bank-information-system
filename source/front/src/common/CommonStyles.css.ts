@@ -91,14 +91,18 @@ export const commonStyle = restyle(() => {
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
         }
-      }
 
-      .oddRow {
-        background-color: ${theme.customerListOddRowBackground};
+        &[is-odd=true][is-selected=false]:not(:hover) {
+          background-color: ${theme.customerListOddRowBackground};
+        }
       }
 
       .rowContent:hover ~ .row {
         background-color: ${theme.customerListHoveredRowBackground};
+
+        &:not(:hover) {
+          background-color: ${theme.customerListHoveredRowBackground};
+        }
 
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
@@ -110,6 +114,10 @@ export const commonStyle = restyle(() => {
 
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
+        }
+
+        &[is-odd=true][is-selected=false] {
+          background-color: ${theme.customerListOddRowBackground};
         }
       }
     `,
