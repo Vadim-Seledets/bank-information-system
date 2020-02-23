@@ -7,7 +7,7 @@ import { digestMessageInBase64 } from './AtmUtils'
 
 export type AtmPageName = 'WelcomePage' | 'AccountNumberPage' | 'PinCodePage' | 'MainMenuPage'
   | 'CashWithdrawalPage' | 'AccountBalancePage' | 'MobilePaymentPage' | 'ShouldShowReceiptPage'
-  | 'ReceiptPage' | 'ShouldDoAnotherOperation' | 'IncorrectPinPage'
+  | 'ReceiptPage' | 'ShouldDoAnotherOperation' | 'IncorrectPinPage' | 'ErrorPage'
 
 export class AtmPage extends Stateful {
   readonly maxNumberOfTriesToEnterPin = 3
@@ -71,9 +71,17 @@ export class AtmPage extends Stateful {
   }
 
   @trigger
+  checkIfErrorsOccured(): void {
+    if (this.apiErrors) {
+      this.setCurrentPage('ErrorPage')
+    }
+  }
+
+  @trigger
   async updateAtmRoutineInfo(): Promise<void> {
     switch (this.currentPageName) {
       case 'WelcomePage':
+        this.apiErrors = undefined
         this.atmRoutineInfo.reset()
         this.atmRoutineInfo.setAccountNumber('')
         this.atmRoutineInfo.setPin('')
@@ -160,6 +168,8 @@ export class AtmPage extends Stateful {
       carrierId: this.atmRoutineInfo.carrierId,
     }
     const receipt = await this.app.httpClient.post<MobileCarrierPaymentChequeModel>(url, JSON.stringify(mobileCarrierPaymentInfo), {'Authorization': pinInBase64})
+    const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+    this.setApiErrors(errors)
     if (receipt) {
       this.atmRoutineInfo.setPayedAt(receipt.payedAt)
       this.setCurrentPage('ShouldShowReceiptPage')
@@ -174,6 +184,8 @@ export class AtmPage extends Stateful {
       amount: this.atmRoutineInfo.amount,
     }
     const receipt = await this.app.httpClient.post<CashWithdrawalChequeModel>(url, JSON.stringify(cashWithdrawalModel), {'Authorization': pinInBase64})
+    const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
+    this.setApiErrors(errors)
     if (receipt) {
       this.atmRoutineInfo.setWithdrawnAt(receipt.withdrawnAt)
       this.setCurrentPage('ShouldShowReceiptPage')

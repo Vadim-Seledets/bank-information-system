@@ -24,6 +24,7 @@ export const style = restyle(() => {
     tip: css`
       font-size: 0.8em;
       color: ${theme.customerInfoBubbleForeground};
+      text-align: center;
     `,
     
     propertyValueTuple: css`

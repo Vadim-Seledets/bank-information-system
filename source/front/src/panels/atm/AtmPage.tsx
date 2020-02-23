@@ -251,6 +251,23 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
             </button>
           </React.Fragment>
         )}
+        {p.atmPage.currentPageName === 'ErrorPage' && (
+          <React.Fragment>
+            <div className={css.tip} style={{ ...dim(10, 8, 14, 8) }}>{`${p.atmPage.apiErrors?.getMainError()}`}</div>
+            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton)}
+              onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
+            >
+              <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
+              <div>Try again</div>
+            </button>
+            <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
+              onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
+            >
+              <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
+              <div>Return Card</div>
+            </button>
+          </React.Fragment>
+        )}
         {p.atmPage.currentPageName === 'ReceiptPage' && atmRoutineInfo.operation === 'withdraw' && (
           <React.Fragment>
             <div ref={setReceiptElement} style={{ ...dim(10, 7, 14, 11), justifySelf: 'center', alignSelf: 'start' }}>
