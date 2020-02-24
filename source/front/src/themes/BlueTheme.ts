@@ -21,6 +21,7 @@ export class BlueTheme extends Stateful implements ITheme {
   readonly sidebarSelectedTabForeground = "#ffffff"
   readonly highlighter = "#78CFB0"
   readonly markForeground = "#cc0000"
+  readonly emailForeground = "#73AE41"
   readonly searchInputBackground = "#17264F"
   readonly searchInputBorderBottom = "1px solid #5FA895"
   readonly listRowBottomBorder = "none"

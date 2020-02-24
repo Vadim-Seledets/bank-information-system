@@ -28,9 +28,12 @@ export const style = restyle(() => {
       
       .icon {
         font-size: 1.2em;
+        color: ${theme.inputForeground};
       }
 
       .fullName {
+        color: ${theme.inputForeground};
+
         mark {
           color: ${theme.markForeground};
           background-color: transparent;
@@ -43,7 +46,7 @@ export const style = restyle(() => {
       }
 
       .email {
-        color: #629D30;
+        color: ${theme.emailForeground};
       }
     `,
   }

@@ -20,6 +20,7 @@ export interface ITheme {
   readonly sidebarSelectedTabForeground: string
   readonly highlighter: string
   readonly markForeground: string
+  readonly emailForeground: string
   readonly searchInputBackground: string
   readonly searchInputBorderBottom: string
   readonly listRowBottomBorder: string
@@ -51,6 +52,7 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly sidebarSelectedTabForeground = ""
   readonly highlighter = ""
   readonly markForeground = ""
+  readonly emailForeground = ""
   readonly searchInputBackground = ""
   readonly searchInputBorderBottom = ""
   readonly listRowBottomBorder = ""
