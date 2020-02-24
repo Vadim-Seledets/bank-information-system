@@ -10,7 +10,7 @@ namespace BankInformationSystem.Business.Validation
     public class LoanCreateModelValidator : ProgramContractValidatorBase<LoanCreateModel>
     {
         private const int MinimalLoanAmount = 50;
-        private const decimal MinimalLoanRate = 0.1M;
+        private const decimal MinimalLoanRate = 0.001M;
         
         private readonly IConfiguration _configuration;
 

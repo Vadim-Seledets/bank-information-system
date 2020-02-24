@@ -74,18 +74,6 @@ namespace BankInformationSystem.Business.Validation
             RuleFor(x => x.WorkInfo.Position)
                 .NotNull()
                 .When(x => x.WorkInfo != null);
-            
-            // RuleFor(x => x)
-            //     .MustAsync(HaveUniqueNameAsync)
-            //     .When(x => x is CustomerCreateModel)
-            //     .WithMessage("Customer with specified name already exists.");
-            // RuleFor(x => x.Passport)
-            //     .MustAsync(async (customer, passport, token) =>
-            //         await HaveUniqueFullPassportNumberAsync(passport, customer.))
-            //     .WithMessage("Customer with specified passport already exists.");
-            // RuleFor(x => x.Passport)
-            //     .MustAsync(HaveUniqueIdNumberAsync)
-            //     .WithMessage("Customer with specified id number already exists.");
         }
 
         protected async Task<bool> HaveUniqueNameAsync(
