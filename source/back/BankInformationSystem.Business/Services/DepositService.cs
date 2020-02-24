@@ -105,7 +105,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    CreatedAt = depositContract.ProgramStartDate,
                     SenderAccountNumber = BankConstants.CashDeskAccountNumber,
                     ReceiverAccountNumber = regularAccount.AccountNumber
                 },
@@ -114,7 +114,7 @@ namespace BankInformationSystem.Business.Services
                     ContractNumber = depositContract.ContractNumber,
                     CurrencyId = depositContract.CurrencyId,
                     Amount = depositContract.Amount,
-                    CreatedAt = _currentDateTimeProvider.Now(),
+                    CreatedAt = depositContract.ProgramStartDate,
                     SenderAccountNumber = regularAccount.AccountNumber,
                     ReceiverAccountNumber = bankDevelopmentFundAccount.AccountNumber
                 }

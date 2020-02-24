@@ -102,7 +102,7 @@ namespace BankInformationSystem.Business.Services
                 ContractNumber = loanContract.ContractNumber,
                 CurrencyId = loanContract.CurrencyId,
                 Amount = loanContract.Amount,
-                CreatedAt = _currentDateTimeProvider.Now(),
+                CreatedAt = loanContract.ProgramStartDate,
                 SenderAccountNumber = bankDevelopmentFundAccount.AccountNumber,
                 ReceiverAccountNumber = regularAccount.AccountNumber
             };

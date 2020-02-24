@@ -168,6 +168,11 @@ namespace BankInformationSystem.Business.Services
                     ReceiverAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
                     ReceiverAccount = bankDevelopmentFunds[loanContract.CurrencyId]
                 }).Entity;
+                
+                if (loanContract.ProgramEndDate == now.Date)
+                {
+                    loanContract.IsCompleted = true;
+                }
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
                 transactions.Add(loanPaymentTransaction);
@@ -188,9 +193,8 @@ namespace BankInformationSystem.Business.Services
                 var mainPart = loanContract.Amount /
                     ((decimal)loanContract.ProgramEndDate.Subtract(loanContract.ProgramStartDate).TotalDays /
                     _configuration.GetValue<int>("LoanTermDays"));
-                var loanRepaymentsPart = (decimal)loanContract.ProgramEndDate.Subtract(
-                    loanContract.LatestPaymentTransaction?.CreatedAt ?? loanContract.ProgramStartDate).TotalDays /
-                    _configuration.GetValue<int>("LoanTermDays") * loanContract.Rate * loanContract.Amount;
+                var loanRepaymentsPart = (loanContract.Amount - (decimal)(loanContract.LatestPaymentTransaction?.CreatedAt ?? loanContract.ProgramStartDate)
+                    .Subtract(loanContract.ProgramStartDate).TotalDays / _configuration.GetValue<int>("LoanTermDays") * mainPart) * loanContract.Rate;
 
                 var loanPaymentTransaction = _context.Transactions.Add(new Transaction
                 {
@@ -203,6 +207,11 @@ namespace BankInformationSystem.Business.Services
                     ReceiverAccountNumber = bankDevelopmentFunds[loanContract.CurrencyId].AccountNumber,
                     ReceiverAccount = bankDevelopmentFunds[loanContract.CurrencyId]
                 }).Entity;
+                
+                if (loanContract.ProgramEndDate == now.Date)
+                {
+                    loanContract.IsCompleted = true;
+                }
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
                 transactions.Add(loanPaymentTransaction);
@@ -310,8 +319,10 @@ namespace BankInformationSystem.Business.Services
 
         private async Task CommitActiveTransactionsAsync(IEnumerable<Transaction> freshTransactions)
         {
+            var tomorrow = _currentDateTimeProvider.Now().Date.AddDays(1);
+            
             var transactions = await _context.Transactions
-                .Where(x => !x.IsCommitted)
+                .Where(x => !x.IsCommitted && x.CreatedAt < tomorrow)
                 .Include(x => x.SenderAccount)
                 .Include(x => x.ReceiverAccount)
                 .ToListAsync();
