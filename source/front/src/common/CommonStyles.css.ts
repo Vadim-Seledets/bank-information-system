@@ -51,6 +51,7 @@ export const commonStyle = restyle(() => {
     `,
 
     input: css`
+      justify-self: stretch;
       margin: 0.25em 0;
       border: ${theme.inputBorder};
       border-radius: 0.2em;
