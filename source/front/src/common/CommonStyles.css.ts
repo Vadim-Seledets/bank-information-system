@@ -121,7 +121,7 @@ export const commonStyle = restyle(() => {
         }
 
         &[is-odd=true][is-selected=false]:not(:hover) {
-          background-color: ${theme.customerListOddRowBackground};
+          background-color: ${theme.listOddRowBackground};
         }
       }
 
@@ -145,7 +145,7 @@ export const commonStyle = restyle(() => {
         }
 
         &[is-odd=true][is-selected=false] {
-          background-color: ${theme.customerListOddRowBackground};
+          background-color: ${theme.listOddRowBackground};
         }
       }
     `,

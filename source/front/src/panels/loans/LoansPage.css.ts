@@ -22,7 +22,6 @@ export const style = restyle(() => {
 
     addNewLoanButton: css`
       background-color: ${theme.sidebarSelectedTabBackground};
-      pointer-events: none;
     `,
 
     loanList: css`
