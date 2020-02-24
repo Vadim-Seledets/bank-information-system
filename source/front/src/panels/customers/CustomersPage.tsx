@@ -26,7 +26,7 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
             <div>Edit Customer</div>
           </button>
           <div className='space' />
-          <div className={css.search}>
+          <div className={commonCss.search}>
             <div className='las la-search icon' />
             <input className='input' type='text' placeholder='Search' value={p.customersPage.filter}
               onFocus={() => p.customersPage.setSelectedCustomer(undefined)}  
@@ -56,8 +56,9 @@ export function CustomersPageView(p: { customersPage: CustomersPage }): JSX.Elem
               <a style={{ ...dim(6, i + 2, 6, i + 2) }} className='email rowContent' href={`mailto:${v.email}`}
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
               >{v.email}</a>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row`}
                 is-selected={`${p.customersPage.selectedCustomer?.id === v.id}`}
+                is-odd={`${(i + 1) % 2 === 1}`}
                 onClick={() => p.customersPage.toggleCustomerSelection(v)}
               />
             </React.Fragment>

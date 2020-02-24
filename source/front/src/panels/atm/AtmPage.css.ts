@@ -11,7 +11,6 @@ export const style = restyle(() => {
       grid-template-rows: repeat(24, 1fr);
       align-items: center;
       justify-items: center;
-      /* border: 1px solid ${theme.highlighter}; */
       flex-grow: 1;
       color: ${theme.applicationForeground};
     `,
@@ -24,6 +23,7 @@ export const style = restyle(() => {
     tip: css`
       font-size: 0.8em;
       color: ${theme.customerInfoBubbleForeground};
+      text-align: center;
     `,
     
     propertyValueTuple: css`
@@ -55,6 +55,7 @@ export const style = restyle(() => {
         text-align: center;
         margin-left: 1em;
         border-radius: 0.2em;
+        font-size: 0.9em;
         color: ${theme.customerInfoBubbleValueForeground};
         background-color: ${theme.customerInfoBubbleBackground};
         border: 1px solid ${theme.applicationForeground};
@@ -124,26 +125,6 @@ export const style = restyle(() => {
       justify-self: right;
       font-size: 0.8em;
       color: ${theme.customerInfoBubbleForeground};
-    `,
-
-    input: css`
-      justify-self: stretch;
-      padding: 0;
-      border: 1px solid ${theme.applicationForeground};
-      border-radius: 0.2em;
-      font-size: 0.8em;
-      height: 1.4em;
-      outline: none;
-      color: ${theme.applicationForeground};
-      background-color: ${theme.applicationBackground};
-
-      &[is-invalid=true] {
-        border-color: #ee3333;
-      }
-
-      &:disabled {
-        color: ${theme.customerInfoBubbleForeground};
-      }
     `,
 
     money: css`

@@ -32,7 +32,7 @@ export class LoansPage extends Stateful {
 
   @action
   toggleLoanSelection(loan: Loan): void {
-    if (this.selectedLoan === loan) {
+    if (this.selectedLoan?.contractNumber === loan.contractNumber) {
       this.setSelectedLoan(undefined)
     } else {
       this.setSelectedLoan(loan)

@@ -37,6 +37,35 @@ export const commonStyle = restyle(() => {
       }
     `,
 
+    search: css`
+      align-self: center;
+      justify-self: right;
+      display: flex;
+      align-items: center;
+      padding: 0.1em 0.3em;
+      color: ${theme.applicationForeground};
+      background: ${theme.searchInputBackground};
+      border-bottom: ${theme.searchInputBorderBottom};
+      border-radius: 0.2em;
+      font-size: 0.8em;
+    `,
+
+    input: css`
+      justify-self: stretch;
+      margin: 0.25em 0;
+      border: ${theme.inputBorder};
+      border-radius: 0.2em;
+      font-size: 0.8em;
+      height: 1.4em;
+      outline: none;
+      color: ${theme.inputForeground};
+      background-color: ${theme.inputBackground};
+
+      &[is-invalid=true] {
+        border-color: #ee3333;
+      }
+    `,
+    
     button: css`
       align-self: center;
       font-size: 0.8em;
@@ -78,7 +107,7 @@ export const commonStyle = restyle(() => {
         z-index: 1;
         width: 100%;
         padding: 1em 0;
-        border-bottom: 1px solid ${theme.customerListRowBottomBorder};
+        border-bottom: ${theme.listRowBottomBorder};
       }
       
       .row {
@@ -91,14 +120,18 @@ export const commonStyle = restyle(() => {
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
         }
-      }
 
-      .oddRow {
-        background-color: ${theme.customerListOddRowBackground};
+        &[is-odd=true][is-selected=false]:not(:hover) {
+          background-color: ${theme.listOddRowBackground};
+        }
       }
 
       .rowContent:hover ~ .row {
         background-color: ${theme.customerListHoveredRowBackground};
+
+        &:not(:hover) {
+          background-color: ${theme.customerListHoveredRowBackground};
+        }
 
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
@@ -110,6 +143,10 @@ export const commonStyle = restyle(() => {
 
         &[is-selected=true] {
           background-color: ${theme.customerListHighlightedRowBackground};
+        }
+
+        &[is-odd=true][is-selected=false] {
+          background-color: ${theme.listOddRowBackground};
         }
       }
     `,

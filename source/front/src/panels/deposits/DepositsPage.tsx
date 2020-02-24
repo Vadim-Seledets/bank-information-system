@@ -18,7 +18,7 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
             <div>Add a New Deposit</div>
           </button>
           <div className='space' />
-          <div className={css.search}>
+          <div className={commonCss.search}>
             <div className='las la-search icon' />
             <input className='input' type='text' placeholder='Search' value={p.depositsPage.filter}
               onFocus={() => p.depositsPage.setSelectedDeposit(undefined)}  
@@ -47,8 +47,9 @@ export function DepositsPageView(p: { depositsPage: DepositsPage }): JSX.Element
               <div style={{ ...dim(8, i + 2, 8, i + 2) }} className='rowContent programDate'
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
               >{d.programEndDate}</div>
-              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row ${(i + 1) % 2 === 0 ? 'evenRow' : 'oddRow'}`}
+              <div style={{ ...dim(1, i + 2, 9, i + 2) }} className={`rowBase row`}
                 is-selected={`${p.depositsPage.selectedDeposit?.contractNumber === d.contractNumber}`}
+                is-odd={`${(i + 1) % 2 === 1}`}
                 onClick={() => p.depositsPage.toggleDepositSelection(d)}
               />
             </React.Fragment>

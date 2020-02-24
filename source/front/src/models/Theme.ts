@@ -7,6 +7,9 @@ export interface ITheme {
   readonly buttonBackground: string
   readonly buttonBorder: string
   readonly buttonBoxShadow: string
+  readonly inputBackground: string
+  readonly inputForeground: string
+  readonly inputBorder: string
   readonly menuBackground: string
   readonly menuBottomBoxShadow: string
   readonly sidebarBackground: string
@@ -17,10 +20,11 @@ export interface ITheme {
   readonly sidebarSelectedTabForeground: string
   readonly highlighter: string
   readonly markForeground: string
-  readonly customerSearchBackground: string
-  readonly customerSearchBorderColor: string
-  readonly customerListRowBottomBorder: string
-  readonly customerListOddRowBackground: string
+  readonly emailForeground: string
+  readonly searchInputBackground: string
+  readonly searchInputBorderBottom: string
+  readonly listRowBottomBorder: string
+  readonly listOddRowBackground: string
   readonly customerListHoveredRowBackground: string
   readonly customerListHighlightedRowBackground: string
   readonly customerInfoBubbleBackground: string
@@ -35,6 +39,9 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly buttonBackground = ""
   readonly buttonBorder = ""
   readonly buttonBoxShadow = ""
+  readonly inputBackground = ""
+  readonly inputForeground = ""
+  readonly inputBorder = ""
   readonly menuBackground = ""
   readonly menuBottomBoxShadow = ""
   readonly sidebarBackground = ""
@@ -45,10 +52,11 @@ export class BlankTheme extends Stateful implements ITheme {
   readonly sidebarSelectedTabForeground = ""
   readonly highlighter = ""
   readonly markForeground = ""
-  readonly customerSearchBackground = ""
-  readonly customerSearchBorderColor = ""
-  readonly customerListRowBottomBorder = ""
-  readonly customerListOddRowBackground = ""
+  readonly emailForeground = ""
+  readonly searchInputBackground = ""
+  readonly searchInputBorderBottom = ""
+  readonly listRowBottomBorder = ""
+  readonly listOddRowBackground = ""
   readonly customerListHoveredRowBackground = ""
   readonly customerListHighlightedRowBackground = ""
   readonly customerInfoBubbleBackground = ""

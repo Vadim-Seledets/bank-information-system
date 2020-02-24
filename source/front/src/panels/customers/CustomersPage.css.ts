@@ -5,19 +5,6 @@ import { themes } from '../../models/Theme'
 export const style = restyle(() => {
   const theme = themes.active
   return {
-    search: css`
-      align-self: center;
-      justify-self: right;
-      display: flex;
-      align-items: center;
-      padding: 0.1em 0.3em;
-      color: ${theme.applicationForeground};
-      background-color: ${theme.customerSearchBackground};
-      border-bottom: 1px solid ${theme.customerSearchBorderColor};
-      border-radius: 0.2em;
-      font-size: 0.8em;
-    `,
-
     button: css`
       justify-self: left;
       color: ${theme.sidebarSelectedTabForeground};
@@ -41,9 +28,12 @@ export const style = restyle(() => {
       
       .icon {
         font-size: 1.2em;
+        color: ${theme.inputForeground};
       }
 
       .fullName {
+        color: ${theme.inputForeground};
+
         mark {
           color: ${theme.markForeground};
           background-color: transparent;
@@ -56,7 +46,7 @@ export const style = restyle(() => {
       }
 
       .email {
-        color: #629D30;
+        color: ${theme.emailForeground};
       }
     `,
   }
