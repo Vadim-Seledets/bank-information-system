@@ -11,7 +11,7 @@ export class PropertyValidator<TValidatingObject> {
     let isValid = true
     if (this.validationRule) {
       const propertyValue = validatingObject[this.propertyName]
-      if (propertyValue) {
+      if (propertyValue !== null) {
         isValid = RegExp(this.validationRule).test(`${propertyValue}`)
       }
     }
