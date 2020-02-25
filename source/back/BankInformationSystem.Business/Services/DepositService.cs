@@ -52,10 +52,12 @@ namespace BankInformationSystem.Business.Services
 
         public async Task<DepositContractDetailsModel> GetDepositContractDetailsAsync(Guid contractNumber)
         {
+            var now = _currentDateTimeProvider.Now();
+            
             var query = from contract in _context.DepositContracts.Include(x => x.Customer)
                         where !contract.Customer.IsDeleted
                         where contract.ContractNumber == contractNumber
-                        join transaction in _context.Transactions
+                        join transaction in _context.Transactions.Where(x => x.CreatedAt <= now)
                             on contract.ContractNumber equals transaction.ContractNumber into contractTransactions
                         from transaction in contractTransactions.DefaultIfEmpty()
                         select new { Contract = contract, Transaction = transaction };
@@ -64,7 +66,7 @@ namespace BankInformationSystem.Business.Services
             var deposit = queryResult
                 .GroupBy(
                     x => x.Contract.ContractNumber,
-                    (key, value) => new { value.FirstOrDefault()?.Contract, Transactions = value.Select(x => x.Transaction).ToList() })
+                    (key, value) => new { value.FirstOrDefault()?.Contract, Transactions = value.Select(x => x.Transaction).Where(x => x != null).ToList() })
                 .SingleOrDefault();
             if (deposit?.Contract == null)
             {
