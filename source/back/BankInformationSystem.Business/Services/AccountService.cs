@@ -97,11 +97,13 @@ namespace BankInformationSystem.Business.Services
             {
                 throw new ValidationException($"Account with id {accountNumber} doesn't exist");
             }
+
+            var now = _currentDateTimeProvider.Now();
             
             var notCommittedTransactions = await context.Transactions
                 .Include(x => x.ReceiverAccount)
                 .Include(x => x.SenderAccount)
-                .Where(x => !x.IsCommitted
+                .Where(x => !x.IsCommitted && x.CreatedAt <= now
                     && (x.SenderAccountNumber == accountNumber || x.ReceiverAccountNumber == accountNumber))
                 .ToListAsync();
             notCommittedTransactions.ForEach(x => x.Commit());
