@@ -125,7 +125,7 @@ export class AtmRoutineInfo extends Stateful
     this.carrierId = 1
     this.withdrawnAt = ''
     this.payedAt = ''
-    this.operation = 'none'
+    // this.operation = 'none'
   }
 }
 

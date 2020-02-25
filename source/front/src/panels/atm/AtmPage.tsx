@@ -81,7 +81,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               is-correct={`${p.atmPage.pinIsCorrect()}`}
               onAnimationEnd={() => {
                 if (p.atmPage.isPinCorrect) {
-                  p.atmPage.setCurrentPage('MainMenuPage')
+                  p.atmPage.changeCurrentPage()
                 } else {
                   atmRoutineInfo.setPin('')
                 }
@@ -104,19 +104,28 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
           <React.Fragment>
             <div className={css.centeredText} style={{ ...dim(10, 5, 14, 5) }}>Choose the operation</div>
             <button style={{ ...dim(12, 8, 12, 8), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
-              onClick={() => p.atmPage.setCurrentPage('CashWithdrawalPage')}
+              onClick={() => {
+                atmRoutineInfo.setOperation('withdraw')
+                p.atmPage.setCurrentPage('PinCodePage')
+              }}
             >
               <span className='las la-coins' style={{ marginRight: '0.5em' }} />
               <div>Cash Withdrawal</div>
             </button>
             <button style={{ ...dim(12, 10, 12, 10), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
-              onClick={() => p.atmPage.setCurrentPage('AccountBalancePage')}
+              onClick={() => {
+                atmRoutineInfo.setOperation('balance')
+                p.atmPage.setCurrentPage('PinCodePage')
+              }}
             >
               <span className='las la-wallet' style={{ marginRight: '0.5em' }} />
               <div>Account Balance</div>
             </button>
             <button style={{ ...dim(12, 12, 12, 12), justifySelf: 'stretch' }} className={cx(commonCss.button, css.greenButton)}
-              onClick={() => p.atmPage.setCurrentPage('MobilePaymentPage')}
+              onClick={() => {
+                atmRoutineInfo.setOperation('phonePayment')
+                p.atmPage.setCurrentPage('PinCodePage')
+              }}
             >
               <span className='las la-money-bill' style={{ marginRight: '0.5em' }} />
               <div>Mobile Payment</div>
@@ -253,13 +262,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
         )}
         {p.atmPage.currentPageName === 'ErrorPage' && (
           <React.Fragment>
-            <div className={css.tip} style={{ ...dim(10, 8, 14, 8) }}>{`${p.atmPage.apiErrors?.getMainError()}`}</div>
-            <button style={{ ...dim(12, 20, 12, 20) }} className={cx(commonCss.button, css.greenButton)}
-              onClick={() => p.atmPage.setCurrentPage('PinCodePage')}
-            >
-              <span className='las la-door-open' style={{ marginRight: '0.5em' }} />
-              <div>Try again</div>
-            </button>
+            <div className={css.tip} style={{ ...dim(10, 8, 14, 8) }}>{`${p.atmPage.apiErrors?.getMainError()} ${p.atmPage.apiErrors?.getPropertyErrors('Amount')}`}</div>
             <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.redButton)}
               onClick={() => p.atmPage.setCurrentPage('WelcomePage')}
             >
@@ -299,7 +302,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div>Print</div>
             </button>
             <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
-              onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
+              onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <div>Done</div>
             </button>
@@ -342,7 +345,7 @@ export function AtmPageView(p: { atmPage: AtmPage }): JSX.Element {
               <div>Print</div>
             </button>
             <button style={{ ...dim(20, 20, 21, 20) }} className={cx(commonCss.button, css.greenButton, css.disable)}
-              onClick={() => p.atmPage.setCurrentPage('ShouldDoAnotherOperation')}
+              onClick={() => p.atmPage.setCurrentPage('MainMenuPage')}
             >
               <div>Done</div>
             </button>

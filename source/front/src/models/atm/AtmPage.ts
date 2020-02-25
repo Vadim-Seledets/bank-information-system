@@ -36,7 +36,7 @@ export class AtmPage extends Stateful {
         ['accountNumber', new PropertyValidator<AtmRoutineInfo>('accountNumber', /^\d{13}$/)],
         ['pin', new PropertyValidator<AtmRoutineInfo>('pin', /^\d{4}$/)],
         ['phoneNumber', new PropertyValidator<AtmRoutineInfo>('phoneNumber', /^\+(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/)],
-        ['amount', new PropertyValidator<AtmRoutineInfo>('amount', /^\d{1,10}$/)],
+        ['amount', new PropertyValidator<AtmRoutineInfo>('amount', /^[1-9]\d{0,10}$/)],
         ['currencyId', new PropertyValidator<AtmRoutineInfo>('currencyId')],
         ['carrierId', new PropertyValidator<AtmRoutineInfo>('carrierId')],
       ])
@@ -85,6 +85,7 @@ export class AtmPage extends Stateful {
         this.atmRoutineInfo.reset()
         this.atmRoutineInfo.setAccountNumber('')
         this.atmRoutineInfo.setPin('')
+        this.atmRoutineInfo.setOperation('none')
         break
       case 'PinCodePage':
         this.numberOfTriesToEnterPin = 0
@@ -99,7 +100,6 @@ export class AtmPage extends Stateful {
       case 'CashWithdrawalPage':
         await this.getAccountBalance()
         this.atmRoutineInfo.setAmount(0)
-        this.atmRoutineInfo.setOperation('withdraw')
         break
       case 'AccountBalancePage':
         await this.getAccountBalance()
@@ -107,6 +107,24 @@ export class AtmPage extends Stateful {
         break
       case 'MobilePaymentPage':
         this.atmRoutineInfo.setOperation('phonePayment')
+        break
+    }
+  }
+
+  @action
+  changeCurrentPage(): void {
+    switch (this.atmRoutineInfo.operation) {
+      case 'none':
+        this.setCurrentPage('MainMenuPage')
+        break
+      case 'withdraw':
+        this.setCurrentPage('CashWithdrawalPage')
+        break
+      case 'balance':
+        this.setCurrentPage('AccountBalancePage')
+        break
+      case 'phonePayment':
+        this.setCurrentPage('MobilePaymentPage')
         break
     }
   }
