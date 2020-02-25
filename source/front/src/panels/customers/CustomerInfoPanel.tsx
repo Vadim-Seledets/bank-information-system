@@ -174,7 +174,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             {apiErrors?.has('PlaceOfRegistration.Address') && <div style={{ ...dim(5, 19, 5, 19) }} className={css.error}>{apiErrors?.getPropertyErrors('PlaceOfRegistration.Address')[0]}</div>}
             
             <div style={{ ...dim(1, 20, 1, 20)}} className={css.caption}>Home Phone Number</div>
-            <input style={{ ...dim(3, 20, 3, 20) }} className={commonCss.input} type="text" value={customer.homePhoneNumber}
+            <input style={{ ...dim(3, 20, 3, 20) }} className={commonCss.input} type="text" value={customer.homePhoneNumber ?? ''}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'homePhoneNumber') || apiErrors?.has('Contacts.HomePhoneNumber')}`}
               onFocus={() => apiErrors?.deleteError('Contacts.HomePhoneNumber')}
               onChange={e => customer.setHomePhoneNumber(e.currentTarget.value)}
@@ -182,7 +182,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             {apiErrors?.has('Contacts.HomePhoneNumber') && <div style={{ ...dim(5, 20, 5, 20) }} className={css.error}>{apiErrors?.getPropertyErrors('Contacts.HomePhoneNumber')[0]}</div>}
             
             <div style={{ ...dim(1, 21, 1, 21)}} className={css.caption}>Mobile Phone Number</div>
-            <input style={{ ...dim(3, 21, 3, 21) }} className={commonCss.input} type="text" value={customer.mobilePhoneNumber}
+            <input style={{ ...dim(3, 21, 3, 21) }} className={commonCss.input} type="text" value={customer.mobilePhoneNumber ?? ''}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'mobilePhoneNumber') || apiErrors?.has('Contacts.MobilePhoneNumber')}`}
               onFocus={() => apiErrors?.deleteError('Contacts.MobilePhoneNumber')}
               onChange={e => customer.setMobilePhoneNumber(e.currentTarget.value)}
@@ -190,7 +190,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             {apiErrors?.has('Contacts.MobilePhoneNumber') && <div style={{ ...dim(5, 21, 5, 21) }} className={css.error}>{apiErrors?.getPropertyErrors('Contacts.MobilePhoneNumber')[0]}</div>}
             
             <div style={{ ...dim(1, 22, 1, 22)}} className={css.caption}>Email</div>
-            <input style={{ ...dim(3, 22, 3, 22) }} className={commonCss.input} type="text" value={customer.email}
+            <input style={{ ...dim(3, 22, 3, 22) }} className={commonCss.input} type="text" value={customer.email ?? ''}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'email') || apiErrors?.has('Contacts.Email')}`}
               onFocus={() => apiErrors?.deleteError('Contacts.Email')}
               onChange={e => customer.setEmail(e.currentTarget.value)}
