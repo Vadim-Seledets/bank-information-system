@@ -110,14 +110,22 @@ namespace BankInformationSystem.Business.Services
                 .ToDictionary(x => x.Key, x => x.ToList());
 
             var loanContractPaymentsToProcessLatestTransactionDate = today.AddDays(-_configuration.GetValue<int>("LoanTermDays")).Date;
-            var loanContractsQuery = _context.LoanContracts
-                .Include(x => x.LoanPaymentAccount)
-                .Include(x => x.RegularAccount)
-                .Include(x => x.LatestPaymentTransaction)
-                .Where(x => !x.IsCompleted && x.ProgramStartDate < today && x.ProgramEndDate >= today)
-                .Where(x => x.LatestPaymentTransaction.CreatedAt.Date == loanContractPaymentsToProcessLatestTransactionDate
-                    || x.ProgramStartDate == loanContractPaymentsToProcessLatestTransactionDate);
-            var loanContracts = (await loanContractsQuery.ToListAsync())
+            
+            // If any cached loan contracts to process exist, take cached versions, not the ones from DB.
+            var localLoanContracts = GetQueryForLoanContractsToProcess(
+                _context.ChangeTracker.Entries<LoanContract>()
+                    .Where(x => x.State == EntityState.Modified)
+                    .Select(x => x.Entity)
+                    .AsQueryable(),
+                loanContractPaymentsToProcessLatestTransactionDate,
+                today).ToList();
+            var localLoanContractsIds = localLoanContracts.Select(x => x.ContractNumber).ToList();
+            var loadedLoanContracts = await GetQueryForLoanContractsToProcess(_context.LoanContracts, loanContractPaymentsToProcessLatestTransactionDate, today)
+                .Where(x => !localLoanContractsIds.Contains(x.ContractNumber))
+                .ToListAsync();
+            var loanContracts = loadedLoanContracts.Union(localLoanContracts);
+
+            var loanContractsDictionary = loanContracts
                 .GroupBy(x => x.LoanTypeId)
                 .ToDictionary(x => x.Key, x => x.ToList());
             
@@ -133,12 +141,12 @@ namespace BankInformationSystem.Business.Services
                 transactions.AddRange(ProcessRevocableDeposits(revocableDeposits, bankDevelopmentFunds, now));
             }
             
-            if (loanContracts.TryGetValue((int) MainLoanType.Annuity, out var annuityLoans))
+            if (loanContractsDictionary.TryGetValue((int) MainLoanType.Annuity, out var annuityLoans))
             {
                 transactions.AddRange(ProcessAnnuityLoans(annuityLoans, bankDevelopmentFunds, now));
             }
             
-            if (loanContracts.TryGetValue((int) MainLoanType.Differential, out var differentialLoans))
+            if (loanContractsDictionary.TryGetValue((int) MainLoanType.Differential, out var differentialLoans))
             {
                 transactions.AddRange(ProcessDifferentialLoans(differentialLoans, bankDevelopmentFunds, now));
             }
@@ -315,6 +323,20 @@ namespace BankInformationSystem.Business.Services
             }
 
             return transactions;
+        }
+
+        private IQueryable<LoanContract> GetQueryForLoanContractsToProcess(
+            IQueryable<LoanContract> loanContracts,
+            DateTime loanContractPaymentsToProcessLatestTransactionDate,
+            DateTime today)
+        {
+            return loanContracts
+                .Include(x => x.LoanPaymentAccount)
+                .Include(x => x.RegularAccount)
+                .Include(x => x.LatestPaymentTransaction)
+                .Where(x => !x.IsCompleted && x.ProgramStartDate < today && x.ProgramEndDate >= today)
+                .Where(x => x.LatestPaymentTransaction.CreatedAt.Date == loanContractPaymentsToProcessLatestTransactionDate
+                            || x.ProgramStartDate == loanContractPaymentsToProcessLatestTransactionDate);
         }
 
         private async Task CommitActiveTransactionsAsync(IEnumerable<Transaction> freshTransactions)

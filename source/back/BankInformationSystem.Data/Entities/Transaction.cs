@@ -17,6 +17,7 @@ namespace BankInformationSystem.Data.Entities
 
         public decimal Amount { get; set; }
 
+        // TODO: Rename to "ActiveSince" or similar
         public DateTime CreatedAt { get; set; }
 
         public bool IsCommitted { get; set; }
