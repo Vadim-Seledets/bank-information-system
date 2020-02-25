@@ -1,5 +1,5 @@
 export interface IContacts {
-  email: string
-  homePhoneNumber: string
-  mobilePhoneNumber: string
+  email: string | null
+  homePhoneNumber: string | null
+  mobilePhoneNumber: string | null
 }

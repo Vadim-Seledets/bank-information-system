@@ -70,9 +70,9 @@ export class Customer extends Stateful {
   placeOfRegistrationCityId: number = 1
   placeOfRegistrationAddress: string = ''
   // Contacts
-  email: string = ''
-  homePhoneNumber: string = ''
-  mobilePhoneNumber: string = ''
+  email: string | null = null
+  homePhoneNumber: string | null = null
+  mobilePhoneNumber: string | null = null
   // Income Per Month
   amount: string = ''
   currencyId: number = 1
@@ -252,17 +252,29 @@ export class Customer extends Stateful {
 
   @action
   setEmail(value: string): void {
-    this.email = value
+    if (value === '') {
+      this.email = null
+    } else {
+      this.email = value
+    }
   }
 
   @action
   setHomePhoneNumber(value: string): void {
-    this.homePhoneNumber = value
+    if (value === '') {
+      this.homePhoneNumber = null
+    } else {
+      this.homePhoneNumber = value
+    }
   }
 
   @action
   setMobilePhoneNumber(value: string): void {
-    this.mobilePhoneNumber = value
+    if (value === '') {
+      this.mobilePhoneNumber = null
+    } else {
+      this.mobilePhoneNumber = value
+    }
   }
 
   // Income Per Month
