@@ -136,7 +136,7 @@ export function getFormatedDate(dateString: string): string {
   const day = date.getDay()+1 < 10 ? `0${date.getDay()+1}` : date.getDay()+1
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
   const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
-  return `${year}-${month}-${day} ${hours}:${minutes}`
+  return dateString ? `${year}-${month}-${day} ${hours}:${minutes}` : ''
 }
 
 export function getFormatedTime(date: Date): string {
