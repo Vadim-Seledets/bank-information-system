@@ -84,6 +84,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'customerId') || apiErrors?.has('CustomerId')}`}
                 onChange={e => creatingLoan.setCustomerId(parseInt(e.currentTarget.value))}
               >
+                <option value={0}>Not selected</option>
                 {p.loansPage.app.customersPage.customers.map((v, i) => (
                   <option key={`${v.id}`} value={v.id}>{`${v.firstName} ${v.middleName} ${v.lastName}`}</option>
                 ))}

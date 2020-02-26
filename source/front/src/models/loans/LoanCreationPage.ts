@@ -17,11 +17,11 @@ export class LoanCreationPage extends Stateful {
     this.creatingLoan = undefined
     this.validation = new Validation(
       new Map([
-        ['contractNumber', new PropertyValidator<LoanCreateModel>('contractNumber')],
+        ['contractNumber', new PropertyValidator<LoanCreateModel>('contractNumber', /^[1-9]\d*$/)],
         ['programStartDate', new PropertyValidator<LoanCreateModel>('programStartDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['programEndDate', new PropertyValidator<LoanCreateModel>('programEndDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['contractValidUntil', new PropertyValidator<LoanCreateModel>('contractValidUntil', /^\d{4}-\d{2}-\d{2}$/)],
-        ['customerId', new PropertyValidator<LoanCreateModel>('customerId')],
+        ['customerId', new PropertyValidator<LoanCreateModel>('customerId', /^[1-9]\d*$/)],
         ['amount', new PropertyValidator<LoanCreateModel>('amount', /^\d{1,10}$/)],
         ['rate', new PropertyValidator<LoanCreateModel>('rate')],
         ['currencyId', new PropertyValidator<LoanCreateModel>('currencyId')],

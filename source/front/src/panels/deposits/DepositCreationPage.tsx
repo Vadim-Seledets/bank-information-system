@@ -84,6 +84,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
                 is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'customerId') || apiErrors?.has('CustomerId')}`}
                 onChange={e => creatingDeposit.setCustomerId(parseInt(e.currentTarget.value))}
               >
+                <option value={0}>Not selected</option>
                 {p.depositsPage.app.customersPage.customers.map((v, i) => (
                   <option key={`${v.id}`} value={v.id}>{`${v.firstName} ${v.middleName} ${v.lastName}`}</option>
                 ))}

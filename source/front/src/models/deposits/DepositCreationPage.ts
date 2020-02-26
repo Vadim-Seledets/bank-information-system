@@ -17,12 +17,12 @@ export class DepositCreationPage extends Stateful {
     this.creatingDeposit = undefined
     this.validation = new Validation(
       new Map([
-        ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId')],
+        ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId', /^[1-9]\d*$/)],
         ['contractNumber', new PropertyValidator<DepositCreateModel>('contractNumber')],
         ['programStartDate', new PropertyValidator<DepositCreateModel>('programStartDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['programEndDate', new PropertyValidator<DepositCreateModel>('programEndDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['contractValidUntil', new PropertyValidator<DepositCreateModel>('contractValidUntil', /^\d{4}-\d{2}-\d{2}$/)],
-        ['customerId', new PropertyValidator<DepositCreateModel>('customerId')],
+        ['customerId', new PropertyValidator<DepositCreateModel>('customerId', /^[1-9]\d*$/)],
         ['amount', new PropertyValidator<DepositCreateModel>('amount', /^\d{1,10}$/)],
         ['rate', new PropertyValidator<DepositCreateModel>('rate', /^(0[.,][0-9]+)|1$/)],
         ['currencyId', new PropertyValidator<DepositCreateModel>('currencyId')],
