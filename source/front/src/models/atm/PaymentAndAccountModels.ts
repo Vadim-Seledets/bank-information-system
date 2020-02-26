@@ -133,7 +133,7 @@ export function getFormatedDate(dateString: string): string {
   const date = new Date(dateString)
   const year = date.getFullYear()
   const month = date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1
-  const day = date.getDay()+1 < 10 ? `0${date.getDay()+1}` : date.getDay()+1
+  const day = date.getDate()+1 < 10 ? `0${date.getDate()+1}` : date.getDate()+1
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
   const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
   return dateString ? `${year}-${month}-${day} ${hours}:${minutes}` : ''
