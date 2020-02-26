@@ -17,7 +17,7 @@ export class DepositCreationPage extends Stateful {
     this.creatingDeposit = undefined
     this.validation = new Validation(
       new Map([
-        ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId', /^[1-9]\d*$/)],
+        ['depositTypeId', new PropertyValidator<DepositCreateModel>('depositTypeId')],
         ['contractNumber', new PropertyValidator<DepositCreateModel>('contractNumber')],
         ['programStartDate', new PropertyValidator<DepositCreateModel>('programStartDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['programEndDate', new PropertyValidator<DepositCreateModel>('programEndDate', /^\d{4}-\d{2}-\d{2}$/)],
@@ -33,6 +33,10 @@ export class DepositCreationPage extends Stateful {
   @action
   createNewDeposit(): void {
     this.creatingDeposit = new CreatingDeposit(this.generateGuid())
+    const currentDate = this.depositsPage.app.getCurrentDate()
+    this.creatingDeposit.setProgramStartDate(currentDate)
+    this.creatingDeposit.setProgramEndDate(currentDate)
+    this.creatingDeposit.setContractValidUntil(currentDate)
   }
 
   @action

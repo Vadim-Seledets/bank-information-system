@@ -17,13 +17,13 @@ export class LoanCreationPage extends Stateful {
     this.creatingLoan = undefined
     this.validation = new Validation(
       new Map([
-        ['contractNumber', new PropertyValidator<LoanCreateModel>('contractNumber', /^[1-9]\d*$/)],
+        ['contractNumber', new PropertyValidator<LoanCreateModel>('contractNumber')],
         ['programStartDate', new PropertyValidator<LoanCreateModel>('programStartDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['programEndDate', new PropertyValidator<LoanCreateModel>('programEndDate', /^\d{4}-\d{2}-\d{2}$/)],
         ['contractValidUntil', new PropertyValidator<LoanCreateModel>('contractValidUntil', /^\d{4}-\d{2}-\d{2}$/)],
         ['customerId', new PropertyValidator<LoanCreateModel>('customerId', /^[1-9]\d*$/)],
         ['amount', new PropertyValidator<LoanCreateModel>('amount', /^\d{1,10}$/)],
-        ['rate', new PropertyValidator<LoanCreateModel>('rate')],
+        ['rate', new PropertyValidator<LoanCreateModel>('rate', /^(0[.,][0-9]+)|1$/)],
         ['currencyId', new PropertyValidator<LoanCreateModel>('currencyId')],
       ])
     )
@@ -32,6 +32,10 @@ export class LoanCreationPage extends Stateful {
   @action
   createNewLoan(): void {
     this.creatingLoan = new CreatingLoan(this.generateGuid())
+    const currentDate = this.loansPage.app.getCurrentDate()
+    this.creatingLoan.setProgramStartDate(currentDate)
+    this.creatingLoan.setProgramEndDate(currentDate)
+    this.creatingLoan.setContractValidUntil(currentDate)
   }
 
   @action
