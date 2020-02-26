@@ -65,12 +65,13 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
 
               <div style={{ ...dim(1, 5, 1, 5) }} className={css.caption}>Number of Payment Terms</div>
               <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="number" min={1} max={500} step={1} defaultValue={creatingLoan.numberOfPaymentTerms}
+                is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'numberOfPaymentTerms')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramEndDate')}
                 onChange={e => creatingLoan.setNumberOfPaymentTerms(parseInt(e.currentTarget.value))}
               />
               
               <div style={{ ...dim(1, 6, 1, 6) }} className={css.caption}>Program End Date</div>
-              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" disabled={true} value={creatingLoan.getProgramEndDate()}
+              <input style={{ ...dim(3, 6, 3, 6), pointerEvents: 'none' }} className={commonCss.input} type="date" value={creatingLoan.getProgramEndDate()}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
               />
               {apiErrors?.has('ProgramEndDate') && <div style={{ ...dim(5, 6, 5, 6) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramEndDate')[0]}</div>}
