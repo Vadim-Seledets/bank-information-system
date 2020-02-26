@@ -129,7 +129,7 @@ export class AtmRoutineInfo extends Stateful
   }
 }
 
-export function getFormatedDate(dateString: string): string {
+export function getFormatedDateFromString(dateString: string): string {
   const date = new Date(dateString)
   const year = date.getFullYear()
   const month = date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1
@@ -137,6 +137,20 @@ export function getFormatedDate(dateString: string): string {
   const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
   const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
   return dateString ? `${year}-${month}-${day} ${hours}:${minutes}` : ''
+}
+
+export function getFormatedDate(date: Date): string {
+  const year = date.getFullYear()
+  const month = date.getMonth()+1 < 10 ? `0${date.getMonth()+1}` : date.getMonth()+1
+  const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+  const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+  return `${year}-${month}-${day} ${hours}:${minutes}`
+}
+
+export function getNormalizedDate(date: Date): string {
+  const month = date.getMonth() + 1
+  return `${date.getFullYear()}-${month < 10 ? `0${month}` : month}-${date.getDate()}`
 }
 
 export function getFormatedTime(date: Date): string {

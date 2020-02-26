@@ -5,7 +5,7 @@ import { style } from './LoanDetailsPage.css'
 import { commonStyle } from '../../common/CommonStyles.css'
 import { cx } from 'emotion'
 import { LoansPage } from '../../models/loans/LoansPage'
-import { getFormatedDate } from '../../models/atm/PaymentAndAccountModels'
+import { getFormatedDateFromString } from '../../models/atm/PaymentAndAccountModels'
 
 export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
   return reactive(() => {
@@ -55,7 +55,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
               </div>
               <div className={css.property}>
                 <div className='name'>Completed At</div>
-                <div className={`value ${loanDetailes.isCompleted ? 'highlighted-green' : ''}`}>{getFormatedDate(loanDetailes.completedAt)}</div>
+                <div className={`value ${loanDetailes.isCompleted ? 'highlighted-green' : ''}`}>{getFormatedDateFromString(loanDetailes.completedAt)}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Rate</div>
@@ -99,7 +99,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
                 <div style={{ ...dim(1, 1, 7, 1) }} className={cx(css.transactionRow, css.transactionFirstRow)} />
                 {loanDetailes.transactions.map((t, i) => (
                   <React.Fragment key={i}>
-                    <div style={{ ...dim(1, i + 2, 1, i + 2) }}>{getFormatedDate(t.createdAt)}</div>
+                    <div style={{ ...dim(1, i + 2, 1, i + 2) }}>{getFormatedDateFromString(t.createdAt)}</div>
                     <div style={{ ...dim(3, i + 2, 3, i + 2) }}>{`${t.amount.toFixed(4)} ${auxiliary.currencies.find(v => v.id === t.currencyId)?.code}`}</div>
                     <div style={{ ...dim(5, i + 2, 5, i + 2), color: `hsl(${parseInt(t.senderAccountNumber?.substr(0, 2)) + parseInt(t.senderAccountNumber?.substr(11, 2))}, 70%, 50%)` }} className='accountNumber'>{t.senderAccountNumber}</div>
                     <div style={{ ...dim(6, i + 2, 6, i + 2) }} className='las la-long-arrow-alt-right' />
