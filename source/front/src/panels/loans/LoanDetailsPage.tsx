@@ -55,7 +55,7 @@ export function LoanDetailsPageView(p: { loansPage: LoansPage }): JSX.Element {
               </div>
               <div className={css.property}>
                 <div className='name'>Completed At</div>
-                <div className={'value'}>{loanDetailes.completedAt}</div>
+                <div className={`value ${loanDetailes.isCompleted ? 'highlighted-green' : ''}`}>{getFormatedDate(loanDetailes.completedAt)}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Rate</div>
