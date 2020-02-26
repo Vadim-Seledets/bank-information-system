@@ -70,7 +70,7 @@ export function DepositDetailsPageView(p: { depositsPage: DepositsPage }): JSX.E
               </div>
               <div className={css.property}>
                 <div className='name'>Completed At</div>
-                <div className={`value ${depositDetailes.isCompleted ? 'highlighted-green' : ''}`}>{depositDetailes.completedAt}</div>
+                <div className={`value ${depositDetailes.isCompleted ? 'highlighted-green' : ''}`}>{getFormatedDate(depositDetailes.completedAt)}</div>
               </div>
               <div className={css.property}>
                 <div className='name'>Is Revoked</div>
