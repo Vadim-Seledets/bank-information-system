@@ -56,7 +56,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               {apiErrors?.has('ContractNumber') && <div style={{ ...dim(5, 3, 5, 3) }} className={css.error}>{apiErrors?.getPropertyErrors('ContractNumber')[0]}</div>}
 
               <div style={{ ...dim(1, 4, 1, 4) }} className={css.caption}>Program Start Date</div>
-              <input style={{ ...dim(3, 4, 3, 4) }} className={commonCss.input} type="date" value={creatingDeposit.programStartDate}
+              <input style={{ ...dim(3, 4, 3, 4) }} className={commonCss.input} type="date" defaultValue={p.depositsPage.app.getCurrentDate()}
                 is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
                 onChange={e => creatingDeposit.setProgramStartDate(e.currentTarget.value)}
@@ -64,7 +64,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               {apiErrors?.has('ProgramStartDate') && <div style={{ ...dim(5, 4, 5, 4) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramStartDate')[0]}</div>}
 
               <div style={{ ...dim(1, 5, 1, 5) }} className={css.caption}>Program End Date</div>
-              <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="date" value={creatingDeposit.programEndDate}
+              <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="date" defaultValue={p.depositsPage.app.getCurrentDate()}
                 is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramEndDate')}
                 onChange={e => creatingDeposit.setProgramEndDate(e.currentTarget.value)}
@@ -72,7 +72,7 @@ export function DepositCreationPageView(p: { depositsPage: DepositsPage }): JSX.
               {apiErrors?.has('ProgramEndDate') && <div style={{ ...dim(5, 5, 5, 5) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramEndDate')[0]}</div>}
 
               <div style={{ ...dim(1, 6, 1, 6) }} className={css.caption}>Contract Valid Until</div>
-              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" value={creatingDeposit.contractValidUntil}
+              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" defaultValue={p.depositsPage.app.getCurrentDate()}
                 is-invalid={`${!p.depositsPage.depositCreationPage.validation.isValid(creatingDeposit, 'contractValidUntil') || apiErrors?.has('ContractValidUntil')}`}
                 onFocus={() => apiErrors?.deleteError('ContractValidUntil')}
                 onChange={e => creatingDeposit.setContractValidUntil(e.currentTarget.value)}
