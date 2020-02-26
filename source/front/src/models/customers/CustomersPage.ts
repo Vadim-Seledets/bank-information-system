@@ -154,6 +154,7 @@ export class CustomersPage extends Stateful {
           const start = this.customers.indexOf(customer)
           this.customers.splice(start, 1)
           this.setSelectedCustomer(undefined)
+          this.app.currentTab?.setCurrentPageName('CustomersListPage')
         }
       }
     }
