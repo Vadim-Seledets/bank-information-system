@@ -23,7 +23,7 @@ export class LoanCreationPage extends Stateful {
         ['contractValidUntil', new PropertyValidator<CreatingLoan>('contractValidUntil', /^\d{4}-\d{2}-\d{2}$/)],
         ['customerId', new PropertyValidator<CreatingLoan>('customerId', /^[1-9]\d*$/)],
         ['amount', new PropertyValidator<CreatingLoan>('amount', /^\d{1,10}$/)],
-        ['rate', new PropertyValidator<CreatingLoan>('rate', /^(0[.,][0-9]{0,2}[1-9])|1$/)],
+        ['rate', new PropertyValidator<CreatingLoan>('rate', /^(0[.,][0-9]{0,2}[1-9])$|^1$/)],
         ['currencyId', new PropertyValidator<CreatingLoan>('currencyId')],
         ['numberOfPaymentTerms', new PropertyValidator<CreatingLoan>('numberOfPaymentTerms', /^[1-9]\d{0,2}$/)],
       ])
