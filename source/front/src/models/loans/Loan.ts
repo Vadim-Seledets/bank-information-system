@@ -138,9 +138,9 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
   }
 
   getProgramEndDate(): string {
-    const programEndDate = new Date(this.programEndDate)
-    programEndDate.setDate((this.numberOfPaymentTerms + 1) * 30)
-    return getNormalizedDate(programEndDate)
+    const date = new Date(this.programStartDate)
+    date.setDate(date.getDate() + this.numberOfPaymentTerms * 30)
+    return getNormalizedDate(date)
   }
 
   getJson(): string {
@@ -148,7 +148,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
       loanTypeId: this.loanTypeId,
       contractNumber: this.contractNumber,
       programStartDate: this.programStartDate,
-      programEndDate: this.programEndDate,
+      programEndDate: this.getProgramEndDate(),
       contractValidUntil: this.contractValidUntil,
       customerId: this.customerId,
       amount: this.amount,
