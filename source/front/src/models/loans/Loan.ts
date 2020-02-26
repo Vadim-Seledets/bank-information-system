@@ -135,9 +135,12 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
   @action
   setNumberOfPaymentTerms(value: number): void {
     this.numberOfPaymentTerms = value
+  }
+
+  getProgramEndDate(): string {
     const programEndDate = new Date(this.programEndDate)
-    programEndDate.setDate(this.numberOfPaymentTerms * 30)
-    this.programEndDate = getNormalizedDate(programEndDate)
+    programEndDate.setDate((this.numberOfPaymentTerms + 1) * 30)
+    return getNormalizedDate(programEndDate)
   }
 
   getJson(): string {
