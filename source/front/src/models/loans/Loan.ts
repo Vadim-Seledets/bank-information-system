@@ -2,6 +2,7 @@ import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from '../deposits/Transaction'
 import { Stateful, cached, action } from 'reactronic'
 import { ProgramContractShortInfoModel } from '../deposits/Deposit'
+import { getNormalizedDate } from '../atm/PaymentAndAccountModels'
 
 export interface CreateLoanResponseModel {
   regularAccountPin: string
@@ -75,6 +76,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
   amount: number
   rate: number
   currencyId: number
+  numberOfPaymentTerms: number
 
   constructor(contractNumber: string) {
     super()
@@ -87,6 +89,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
     this.amount = 0
     this.rate = 0
     this.currencyId = 1
+    this.numberOfPaymentTerms = 1
   }
 
   @action
@@ -127,6 +130,14 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
   @action
   setCurrencyId(value: number): void {
     this.currencyId = value
+  }
+
+  @action
+  setNumberOfPaymentTerms(value: number): void {
+    this.numberOfPaymentTerms = value
+    const programEndDate = new Date(this.programEndDate)
+    programEndDate.setDate(this.numberOfPaymentTerms * 30)
+    this.programEndDate = getNormalizedDate(programEndDate)
   }
 
   getJson(): string {
