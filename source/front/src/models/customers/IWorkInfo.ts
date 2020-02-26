@@ -1,4 +1,4 @@
 export interface IWorkInfo {
-  company: string
-  position: string
+  company: string | null
+  position: string | null
 }
