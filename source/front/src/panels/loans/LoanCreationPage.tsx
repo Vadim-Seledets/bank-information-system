@@ -56,7 +56,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ContractNumber') && <div style={{ ...dim(5, 3, 5, 3) }} className={css.error}>{apiErrors?.getPropertyErrors('ContractNumber')[0]}</div>}
 
               <div style={{ ...dim(1, 4, 1, 4) }} className={css.caption}>Program Start Date</div>
-              <input style={{ ...dim(3, 4, 3, 4) }} className={commonCss.input} type="date" defaultValue={p.loansPage.app.getCurrentDate()}
+              <input style={{ ...dim(3, 4, 3, 4) }} className={commonCss.input} type="date" defaultValue={creatingLoan.programStartDate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programStartDate') || apiErrors?.has('ProgramStartDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramStartDate')}
                 onChange={e => creatingLoan.setProgramStartDate(e.currentTarget.value)}
@@ -64,7 +64,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ProgramStartDate') && <div style={{ ...dim(5, 4, 5, 4) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramStartDate')[0]}</div>}
 
               <div style={{ ...dim(1, 5, 1, 5) }} className={css.caption}>Program End Date</div>
-              <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="date" defaultValue={p.loansPage.app.getCurrentDate()}
+              <input style={{ ...dim(3, 5, 3, 5) }} className={commonCss.input} type="date" defaultValue={creatingLoan.programEndDate}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
                 onFocus={() => apiErrors?.deleteError('ProgramEndDate')}
                 onChange={e => creatingLoan.setProgramEndDate(e.currentTarget.value)}
@@ -72,7 +72,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               {apiErrors?.has('ProgramEndDate') && <div style={{ ...dim(5, 5, 5, 5) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramEndDate')[0]}</div>}
 
               <div style={{ ...dim(1, 6, 1, 6) }} className={css.caption}>Contract Valid Until</div>
-              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" defaultValue={p.loansPage.app.getCurrentDate()}
+              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" defaultValue={creatingLoan.contractValidUntil}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'contractValidUntil') || apiErrors?.has('ContractValidUntil')}`}
                 onFocus={() => apiErrors?.deleteError('ContractValidUntil')}
                 onChange={e => creatingLoan.setContractValidUntil(e.currentTarget.value)}
