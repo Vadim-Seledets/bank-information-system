@@ -70,7 +70,7 @@ export function LoanCreationPageView(p: { loansPage: LoansPage }): JSX.Element {
               />
               
               <div style={{ ...dim(1, 6, 1, 6) }} className={css.caption}>Program End Date</div>
-              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" disabled={true} value={creatingLoan.programEndDate}
+              <input style={{ ...dim(3, 6, 3, 6) }} className={commonCss.input} type="date" disabled={true} value={creatingLoan.getProgramEndDate()}
                 is-invalid={`${!p.loansPage.loanCreationPage.validation.isValid(creatingLoan, 'programEndDate') || apiErrors?.has('ProgramEndDate')}`}
               />
               {apiErrors?.has('ProgramEndDate') && <div style={{ ...dim(5, 6, 5, 6) }} className={css.error}>{apiErrors?.getPropertyErrors('ProgramEndDate')[0]}</div>}
