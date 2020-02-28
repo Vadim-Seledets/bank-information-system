@@ -26,17 +26,6 @@
         "${workspaceFolder}/source/front/node_modules/**/*.js",
         "<node_internals>/**/*.js"
       ]
-    },
-    {
-      "name": "Attach to Chrome",
-      "type": "chrome",
-      "request": "attach",
-      "port": 9222,
-      "webRoot": "${workspaceFolder}/source/front",
-      "skipFiles": [
-        "${workspaceFolder}/source/front/node_modules/**/*.js",
-        "<node_internals>/**/*.js"
-      ]
     }
   ]
 }
