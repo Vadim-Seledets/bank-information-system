@@ -200,7 +200,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             <div style={{ ...dim(1, 23, 5, 23)}} className={css.header}>Job Information</div>
             
             <div style={{ ...dim(1, 24, 1, 24)}} className={css.caption}>Company</div>
-            <input style={{ ...dim(3, 24, 3, 24) }} className={commonCss.input} type="text" value={customer.company}
+            <input style={{ ...dim(3, 24, 3, 24) }} className={commonCss.input} type="text" value={customer.company ?? ''}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'company') || apiErrors?.has('WorkInfo.Company')}`}
               onFocus={() => apiErrors?.deleteError('WorkInfo.Company')}
               onChange={e => customer.setCompany(e.currentTarget.value)}
@@ -208,7 +208,7 @@ export function CustomerInfoPanel(p: { customerInfo: CustomerInfo }): JSX.Elemen
             {apiErrors?.has('WorkInfo.Company') && <div style={{ ...dim(5, 24, 5, 24) }} className={css.error}>{apiErrors?.getPropertyErrors('WorkInfo.Company')[0]}</div>}
             
             <div style={{ ...dim(1, 25, 1, 25)}} className={css.caption}>Position</div>
-            <input style={{ ...dim(3, 25, 3, 25) }} className={commonCss.input} type="text" value={customer.position}
+            <input style={{ ...dim(3, 25, 3, 25) }} className={commonCss.input} type="text" value={customer.position ?? ''}
               is-invalid={`${!p.customerInfo.validation.isValid(customer, 'position') || apiErrors?.has('WorkInfo.Position')}`}
               onFocus={() => apiErrors?.deleteError('WorkInfo.Position')}
               onChange={e => customer.setPosition(e.currentTarget.value)}

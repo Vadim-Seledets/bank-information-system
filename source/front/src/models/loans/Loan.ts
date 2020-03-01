@@ -2,6 +2,7 @@ import { ICustomerShortInfo, IHighlightingRange } from '../customers/Customer'
 import { Transaction } from '../deposits/Transaction'
 import { Stateful, cached, action } from 'reactronic'
 import { ProgramContractShortInfoModel } from '../deposits/Deposit'
+import { getNormalizedDate } from '../atm/PaymentAndAccountModels'
 
 export interface CreateLoanResponseModel {
   regularAccountPin: string
@@ -75,6 +76,7 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
   amount: number
   rate: number
   currencyId: number
+  numberOfPaymentTerms: number
 
   constructor(contractNumber: string) {
     super()
@@ -83,10 +85,11 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
     this.programStartDate = '1990-01-01'
     this.programEndDate = '1990-01-01'
     this.contractValidUntil = '1990-01-01'
-    this.customerId = 1
+    this.customerId = 0
     this.amount = 0
     this.rate = 0
     this.currencyId = 1
+    this.numberOfPaymentTerms = 1
   }
 
   @action
@@ -129,12 +132,23 @@ export class CreatingLoan extends Stateful implements LoanCreateModel {
     this.currencyId = value
   }
 
+  @action
+  setNumberOfPaymentTerms(value: number): void {
+    this.numberOfPaymentTerms = value
+  }
+
+  getProgramEndDate(): string {
+    const date = new Date(this.programStartDate)
+    date.setDate(date.getDate() + this.numberOfPaymentTerms * 30)
+    return getNormalizedDate(date)
+  }
+
   getJson(): string {
     const deposit = {
       loanTypeId: this.loanTypeId,
       contractNumber: this.contractNumber,
       programStartDate: this.programStartDate,
-      programEndDate: this.programEndDate,
+      programEndDate: this.getProgramEndDate(),
       contractValidUntil: this.contractValidUntil,
       customerId: this.customerId,
       amount: this.amount,

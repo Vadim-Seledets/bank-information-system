@@ -41,17 +41,17 @@ namespace BankInformationSystem.Business.Validation
             RuleFor(x => x.BirthInfo)
                 .NotNull();
             RuleFor(x => x.BirthInfo.PlaceOfBirth)
-                .NotNull();
+                .NotEmpty();
 
             RuleFor(x => x.PlaceOfLiving)
                 .NotNull();
             RuleFor(x => x.PlaceOfLiving.Address)
-                .NotNull();
+                .NotEmpty();
             
             RuleFor(x => x.PlaceOfRegistration)
                 .NotNull();
             RuleFor(x => x.PlaceOfRegistration.Address)
-                .NotNull();
+                .NotEmpty();
             
             RuleFor(x => x.Contacts)
                 .NotNull();
@@ -69,10 +69,10 @@ namespace BankInformationSystem.Business.Validation
                 .When(x => x.IncomePerMonth != null);
 
             RuleFor(x => x.WorkInfo.Company)
-                .NotNull()
+                .NotEmpty()
                 .When(x => x.WorkInfo != null);
             RuleFor(x => x.WorkInfo.Position)
-                .NotNull()
+                .NotEmpty()
                 .When(x => x.WorkInfo != null);
         }
 

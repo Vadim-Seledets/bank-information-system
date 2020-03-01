@@ -77,8 +77,8 @@ export class Customer extends Stateful {
   amount: string = ''
   currencyId: number = 1
   // Work Info
-  company: string = ''
-  position: string = ''
+  company: string | null = null
+  position: string | null = null
 
   isFullInfoModelLoaded = false
   hilightingRange: IHighlightingRange = { start: 0, length: 0 }
@@ -293,12 +293,20 @@ export class Customer extends Stateful {
 
   @action
   setCompany(value: string): void {
-    this.company = value
+    if (value === '') {
+      this.company = null
+    } else {
+      this.company = value
+    }
   }
 
   @action
   setPosition(value: string): void {
-    this.position = value
+    if (value === '') {
+      this.position = null
+    } else {
+      this.position = value
+    }
   }
 
   @action

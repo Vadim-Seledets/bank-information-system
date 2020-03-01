@@ -106,6 +106,7 @@ export class AtmPage extends Stateful {
         this.atmRoutineInfo.setOperation('balance')
         break
       case 'MobilePaymentPage':
+        await this.getAccountBalance()
         this.atmRoutineInfo.setOperation('phonePayment')
         break
     }

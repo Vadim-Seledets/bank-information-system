@@ -180,6 +180,7 @@ namespace BankInformationSystem.Business.Services
                 if (loanContract.ProgramEndDate == now.Date)
                 {
                     loanContract.IsCompleted = true;
+                    loanContract.CompletedAt = now;
                 }
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
@@ -219,6 +220,7 @@ namespace BankInformationSystem.Business.Services
                 if (loanContract.ProgramEndDate == now.Date)
                 {
                     loanContract.IsCompleted = true;
+                    loanContract.CompletedAt = now;
                 }
 
                 loanContract.LatestPaymentTransaction = loanPaymentTransaction;
