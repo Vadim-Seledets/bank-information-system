@@ -1,4 +1,4 @@
-import { Stateful, action, trigger, isolated, cached } from 'reactronic'
+import { Stateful, action, trigger } from 'reactronic'
 import { Tab } from './Tab'
 import { HttpClient } from './HttpClient'
 import { Auxiliary, CloseBankDayData } from './BankMetaOperations'
@@ -16,7 +16,6 @@ export class App extends Stateful {
   auxiliary: Auxiliary
   tabs: Array<Tab>
   currentTab?: Tab
-  // currentPageName: PageName /* TO BE REPLACED with '*Page' models */
   customersPage: CustomersPage
   depositsPage: DepositsPage
   loansPage: LoansPage
