@@ -1,5 +1,5 @@
 import { Stateful, action, trigger, isolated } from 'reactronic'
-import { App } from '../App'
+import { App, BASE_URL } from '../App'
 import { ProgramContractShortInfoModel, Deposit, DepositFullInfoModel, DepositDetails } from './Deposit'
 import { DepositCreationPage } from './DepositCreationPage'
 import { IApiErrors } from '../ApiErrors'
@@ -79,7 +79,7 @@ export class DepositsPage extends Stateful {
 
   @action
   async getAllDepositsInShortInfoModelRequest(): Promise<void> {
-    const deposits = await this.app.httpClient.get<Array<ProgramContractShortInfoModel>>(`https://localhost:5001/deposits`)
+    const deposits = await this.app.httpClient.get<Array<ProgramContractShortInfoModel>>(`${BASE_URL}/deposits`)
     if (deposits) {
       this.deposits = deposits.map(depositShortInfoModel => {
         const deposit = new Deposit(
@@ -95,7 +95,7 @@ export class DepositsPage extends Stateful {
 
   @action
   async getDepositDetailsRequest(contractNumber: string): Promise<void> {
-    const depositDetails = await this.app.httpClient.get<DepositFullInfoModel>(`https://localhost:5001/deposits/${contractNumber}`)
+    const depositDetails = await this.app.httpClient.get<DepositFullInfoModel>(`${BASE_URL}/deposits/${contractNumber}`)
     if (depositDetails) {
       this.depositDetailes = new DepositDetails(
         depositDetails.isRevoked,
@@ -119,7 +119,7 @@ export class DepositsPage extends Stateful {
 
   @action
   async revokeDeposit(contractNumber: string): Promise<void> {
-    const url = `https://localhost:5001/deposits/${contractNumber}/revoke`
+    const url = `${BASE_URL}/deposits/${contractNumber}/revoke`
     await this.app.httpClient.post(url)
     const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
     if (errors) {

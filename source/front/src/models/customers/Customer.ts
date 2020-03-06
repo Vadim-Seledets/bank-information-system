@@ -7,6 +7,7 @@ import { IPlaceOfRegistration } from "./IPlaceOfRegistration"
 import { IContacts } from "./IContacts"
 import { IIncomePerMonth } from "./IIncomePerMonth"
 import { IWorkInfo } from "./IWorkInfo"
+import { BASE_URL } from "../App"
 
 export interface ICustomerShortInfo {
   id: number
@@ -95,7 +96,7 @@ export class Customer extends Stateful {
 
   @action
   async getFullInfoModel(): Promise<void> {
-    const json = await fetch(`https://localhost:5001/customers/${this.id}`)
+    const json = await fetch(`${BASE_URL}/customers/${this.id}`)
       .then(response => response.json())
     const customer = json as ICustomerFullInfo
     this.lastName = customer.lastName

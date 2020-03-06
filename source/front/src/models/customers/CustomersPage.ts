@@ -1,5 +1,5 @@
 import { Stateful, action, trigger, isolated, nonreactive } from 'reactronic'
-import { App } from '../App'
+import { App, BASE_URL } from '../App'
 import { CustomerInfo } from './CustomerInfo'
 import { IApiErrors } from '../ApiErrors'
 import { Customer, ICustomerShortInfo } from './Customer'
@@ -112,7 +112,7 @@ export class CustomersPage extends Stateful {
 
   @action
   async getAllCustomersInShortInfoModelRequest(): Promise<void> {
-    const customers = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`https://localhost:5001/customers`)
+    const customers = await this.app.httpClient.get<Array<ICustomerShortInfo>>(`${BASE_URL}/customers`)
     if (customers) {
       this.customers = customers.map(customerShortInfo => {
         const customer = new Customer()
@@ -124,7 +124,7 @@ export class CustomersPage extends Stateful {
 
   @action
   async publishNewCustomerRequest(customer: Customer): Promise<void> {
-    const url = `https://localhost:5001/customers`
+    const url = `${BASE_URL}/customers`
     const customerId = await this.app.httpClient.post<string>(url, customer.getJson())
     if (customerId) {
       customer.setId(customerId)
@@ -136,7 +136,7 @@ export class CustomersPage extends Stateful {
 
   @action
   async editCustomerInfoRequest(customer: Customer): Promise<void> {
-    const url = `https://localhost:5001/customers/${customer.id}`
+    const url = `${BASE_URL}/customers/${customer.id}`
     await this.app.httpClient.put(url, customer.getJson())
     const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('PUT', url)
     this.customerInfo.setApiErrors(errors)
@@ -146,7 +146,7 @@ export class CustomersPage extends Stateful {
   async deleteCustomerRequest(customer?: Customer): Promise<void> {
     if (customer) {
       if (customer.id) {
-        const url = `https://localhost:5001/customers/${customer.id}`
+        const url = `${BASE_URL}/customers/${customer.id}`
         await this.app.httpClient.delete(url)
         const errors = this.app.httpClient.getAndDeleteLastError<IApiErrors>('DELETE', url)
         this.customerInfo.setApiErrors(errors)

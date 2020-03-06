@@ -3,6 +3,7 @@ import { CreatingDeposit, DepositCreateModel, OpenDepositResponseModel } from ".
 import { DepositsPage } from "./DepositsPage"
 import { IApiErrors, ApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
+import { BASE_URL } from "../App"
 
 export class DepositCreationPage extends Stateful {
   apiErrors: ApiErrors | undefined
@@ -60,7 +61,7 @@ export class DepositCreationPage extends Stateful {
   async publishNewDepositRequest(): Promise<void> {
     this.setApiErrors(undefined)
     if (this.creatingDeposit) {
-      const url = `https://localhost:5001/deposits`
+      const url = `${BASE_URL}/deposits`
       const pin = await this.depositsPage.app.httpClient.post<OpenDepositResponseModel>(url, this.creatingDeposit.getJson())
       const errors = this.depositsPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
       this.setApiErrors(errors)

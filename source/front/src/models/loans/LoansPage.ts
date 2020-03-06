@@ -3,6 +3,7 @@ import { App } from '../App'
 import { LoanDetails, Loan, LoanFullInfoModel } from './Loan'
 import { LoanCreationPage } from './LoanCreationPage'
 import { ProgramContractShortInfoModel } from '../deposits/Deposit'
+import { BASE_URL } from "../App"
 
 export class LoansPage extends Stateful {
   app: App
@@ -79,7 +80,7 @@ export class LoansPage extends Stateful {
 
   @action
   async getAllLoansInShortInfoModelRequest(): Promise<void> {
-    const loans = await this.app.httpClient.get<Array<ProgramContractShortInfoModel>>(`https://localhost:5001/loans`)
+    const loans = await this.app.httpClient.get<Array<ProgramContractShortInfoModel>>(`${BASE_URL}/loans`)
     if (loans) {
       this.loans = loans.map(loanShortInfoModel => {
         const loan = new Loan(
@@ -95,7 +96,7 @@ export class LoansPage extends Stateful {
 
   @action
   async getLoanDetailsRequest(contractNumber: string): Promise<void> {
-    const loanDetails = await this.app.httpClient.get<LoanFullInfoModel>(`https://localhost:5001/loans/${contractNumber}`)
+    const loanDetails = await this.app.httpClient.get<LoanFullInfoModel>(`${BASE_URL}/loans/${contractNumber}`)
     if (loanDetails) {
       this.loanDetailes = new LoanDetails(loanDetails)
     }

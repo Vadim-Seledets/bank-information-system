@@ -7,6 +7,8 @@ import { DepositsPage } from './deposits/DepositsPage'
 import { LoansPage } from './loans/LoansPage'
 import { AtmPage } from './atm/AtmPage'
 
+export const BASE_URL = 'https://localhost:5001'
+
 export type PageName = 'CustomersListPage' | 'EditCustomerPage' | 'CustomerInfoPage'
   | 'DepositsListPage' | 'AddNewDepositPage' | 'DepositDetailsPage'
   | 'LoansListPage' | 'AddNewLoanPage' | 'LoanDetailsPage' | 'AtmPage'
@@ -80,18 +82,18 @@ export class App extends Stateful {
 
   @action
   async initializeBankAccounts(): Promise<void> {
-    await this.httpClient.get(`https://localhost:5001/accounts/bank-funds/initialize`)
+    await this.httpClient.get(`${BASE_URL}/accounts/bank-funds/initialize`)
   }
 
   @action
   async closeBankDayAndGetNewDateRequst(): Promise<void> {
-    await this.httpClient.post<CloseBankDayData>(`https://localhost:5001/meta-operations/commit`, JSON.stringify(this.closeBankDayData))
+    await this.httpClient.post<CloseBankDayData>(`${BASE_URL}/meta-operations/commit`, JSON.stringify(this.closeBankDayData))
     this.getCurrentDateRequest()
   }
 
   @action
   async getCurrentDateRequest(): Promise<void> {
-    const date = await this.httpClient.get<string>(`https://localhost:5001/environment/now`)
+    const date = await this.httpClient.get<string>(`${BASE_URL}/environment/now`)
     if (date !== undefined) {
       this.currentDate = new Date(Date.parse(date))
     }
@@ -99,7 +101,7 @@ export class App extends Stateful {
 
   @action
   async getAuxiliaryInfo(): Promise<void> {
-    const auxiliary = await this.httpClient.get<Auxiliary>(`https://localhost:5001/meta-operations/auxiliary`)
+    const auxiliary = await this.httpClient.get<Auxiliary>(`${BASE_URL}/meta-operations/auxiliary`)
     if (auxiliary) {
       this.auxiliary = auxiliary
     }

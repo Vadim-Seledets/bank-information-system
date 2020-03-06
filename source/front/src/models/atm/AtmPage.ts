@@ -1,5 +1,5 @@
 import { Stateful, action, trigger, nonreactive, cached } from 'reactronic'
-import { App } from '../App'
+import { App, BASE_URL } from '../App'
 import { ApiErrors, IApiErrors } from '../ApiErrors'
 import { AtmRoutineInfo, AccountBalanceModel, MobileCarrierPaymentChequeModel, CashWithdrawalChequeModel } from './PaymentAndAccountModels'
 import { Validation, PropertyValidator } from '../Validation'
@@ -139,7 +139,7 @@ export class AtmPage extends Stateful {
 
   @action
   async checkPinCorrectness(): Promise<boolean> {
-    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
+    const url = `${BASE_URL}/accounts/${this.atmRoutineInfo.accountNumber}/balance`
     const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     await this.app.httpClient.get(url, {'Authorization': pinInBase64})
     const errors = this.app.httpClient.getAndDeleteLastError('GET', url)
@@ -148,7 +148,7 @@ export class AtmPage extends Stateful {
 
   @action
   async getAccountBalance(): Promise<void> {
-    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/balance`
+    const url = `${BASE_URL}/accounts/${this.atmRoutineInfo.accountNumber}/balance`
     const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     const accountBalance = await this.app.httpClient.get<AccountBalanceModel>(url, {'Authorization': pinInBase64})
     if (accountBalance) {
@@ -159,7 +159,7 @@ export class AtmPage extends Stateful {
 
   @action
   async payForMobilePhoneRequest(): Promise<void> {
-    const url = `https://localhost:5001/payments/mobile-carrier`
+    const url = `${BASE_URL}/payments/mobile-carrier`
     const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     const mobileCarrierPaymentInfo = {
       accountNumber: this.atmRoutineInfo.accountNumber,
@@ -179,7 +179,7 @@ export class AtmPage extends Stateful {
   
   @action
   async withdrawCashRequest(): Promise<void> {
-    const url = `https://localhost:5001/accounts/${this.atmRoutineInfo.accountNumber}/withdraw`
+    const url = `${BASE_URL}/accounts/${this.atmRoutineInfo.accountNumber}/withdraw`
     const pinInBase64 = await digestMessageInBase64(this.atmRoutineInfo.pin)
     const cashWithdrawalModel = {
       amount: this.atmRoutineInfo.amount,

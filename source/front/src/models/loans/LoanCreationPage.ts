@@ -3,6 +3,7 @@ import { CreatingLoan, CreateLoanResponseModel } from "./Loan"
 import { LoansPage } from "./LoansPage"
 import { IApiErrors, ApiErrors } from "../ApiErrors"
 import { Validation, PropertyValidator } from "../Validation"
+import { BASE_URL } from "../App"
 
 export class LoanCreationPage extends Stateful {
   apiErrors: ApiErrors | undefined
@@ -60,7 +61,7 @@ export class LoanCreationPage extends Stateful {
   async publishNewLoanRequest(): Promise<void> {
     this.setApiErrors(undefined)
     if (this.creatingLoan) {
-      const url = `https://localhost:5001/loans`
+      const url = `${BASE_URL}/loans`
       const pin = await this.loansPage.app.httpClient.post<CreateLoanResponseModel>(url, this.creatingLoan.getJson())
       const errors = this.loansPage.app.httpClient.getAndDeleteLastError<IApiErrors>('POST', url)
       this.setApiErrors(errors)
