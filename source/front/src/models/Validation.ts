@@ -20,16 +20,9 @@ export class PropertyValidator<TValidatingObject> {
 }
 
 export class Validation<TValidatingObject> extends Stateful {
-  // validatingObject: TValidatingObject | undefined
-
   constructor(readonly validators: Map<keyof TValidatingObject, PropertyValidator<TValidatingObject>>) {
     super()
   }
-
-  // @action
-  // setValidationObject(validatingObject: TValidatingObject): void {
-  //   this.validatingObject = validatingObject
-  // }
 
   isValid(validatingObject: TValidatingObject, propertyName: keyof TValidatingObject): boolean | undefined {
     let isValid = true
